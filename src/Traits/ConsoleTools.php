@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace Support\Traits;
 
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Collection;
+use Support\Manipulate\FileManipulate;
+
 trait ConsoleTools
 {
+    use FileManipulate;
+
     /**
      * Publish package migrations.
      *
@@ -106,24 +112,23 @@ trait ConsoleTools
      *
      * @return void
      */
-    protected function registerCommandFolders($folders = false): void
+    protected function registerCommandFolders($folders): void
     {
-        if (!$folders) {
-            $folders = $this->commandFolders;
-        }
-        if (is_string($folders)) {
-            $folders = [$folders];
-        }
+        // if (!$folders) {
+        //     $folders = $this->commandFolders;
+        // }
+        // if (is_string($folders)) {
+        //     $folders = [$folders];
+        // }
 
         $commands = [];
         // Register artisan commands
-        foreach ($folders as $value) {
+        foreach ($folders as $key => $value) {
             $commands = array_merge(
                 $commands,
-                $this->loadCommandsFromPath($value)
+                $this->loadCommandsFromPath($key, $value)
             );
         }
-
         $this->commands(array_values($commands));
     }
 
@@ -131,7 +136,33 @@ trait ConsoleTools
      * @param string $path
      * @return $this
      */
-    private function loadCommandsFromPath($path) {
+    private function loadCommandsFromPath($path, $namespace) {
+        $path = $path.'/';
+        $commands = [];
+        
+        collect(scandir($path))
+            ->each(function ($item) use ($path, $namespace, &$commands) {
+                if (in_array($item, ['.', '..'])) return;
+                
+                if (is_dir($path . $item)) {
+                    $commands = array_merge(
+                        $commands,
+                        $this->loadCommandsFromPath($path . $item . '/', $namespace.'\\'.ucfirst($item))
+                    );
+                }
+
+                if (is_file($path . $item)) {
+                    $item = str_replace('.php', '', $item);
+                    $classNamespace = $namespace.'\\'.ucfirst($item);
+                    if (class_exists($classNamespace)) {
+                        $commands[] = $classNamespace;
+                    }                  
+                }
+            });
+        return $commands;
+    }
+
+    private function loadCommandsFromAppPath($path) {
         $realPath = app_path($path);
         $commands = [];
         
@@ -140,7 +171,7 @@ trait ConsoleTools
                 if (in_array($item, ['.', '..'])) return;
 
                 if (is_dir($realPath . $item)) {
-                    $this->loadCommandsFromPath($path . $item . '/');
+                    $this->loadCommandsFromAppPath($path . $item . '/');
                 }
 
                 if (is_file($realPath . $item)) {
@@ -159,20 +190,26 @@ trait ConsoleTools
     /**
      * Configs Paths
      */
-    private function getResourcesPath($folder)
+    protected function getResourcesPath($folder)
     {
-        return __DIR__.'/../resources/'.$folder;
+        return $this->getPackageFolder().'/../resources/'.$folder;
     }
 
-    private function getPublishesPath($folder)
+    protected function getPublishesPath($folder)
     {
-        return __DIR__.'/../publishes/'.$folder;
+        return $this->getPackageFolder().'/../publishes/'.$folder;
     }
 
-    private function getDistPath($folder)
+    protected function getDistPath($folder)
     {
-        return __DIR__.'/../dist/'.$folder;
+        return $this->getPackageFolder().'/../dist/'.$folder;
     }
+
+    private function getPackageFolder()
+    {
+        return $this->getFolderPathFromFile($this->getFileFromClass($this));
+    }
+
 
     /**
      * Load Alias and Providers
