@@ -100,4 +100,57 @@ trait ConsoleTools
 
         $this->commands(array_values($this->commands));
     }
+
+    /**
+     * Register console commands.
+     *
+     * @return void
+     */
+    protected function registerCommandFolders($folders = false): void
+    {
+        if (!$folders) {
+            $folders = $this->commandFolders;
+        }
+        if (is_string($folders)) {
+            $folders = [$folders];
+        }
+
+        $commands = [];
+        // Register artisan commands
+        foreach ($folders as $value) {
+            $commands = array_merge(
+                $commands,
+                $this->loadCommandsFromPath($value)
+            );
+        }
+
+        $this->commands(array_values($commands));
+    }
+
+    /**
+     * @param string $path
+     * @return $this
+     */
+    private function loadCommandsFromPath($path) {
+        $realPath = app_path($path);
+        $commands = [];
+        
+        collect(scandir($realPath))
+            ->each(function ($item) use ($path, $realPath) {
+                if (in_array($item, ['.', '..'])) return;
+
+                if (is_dir($realPath . $item)) {
+                    $this->loadCommandsFromPath($path . $item . '/');
+                }
+
+                if (is_file($realPath . $item)) {
+                    $item = str_replace('.php', '', $item);
+                    $class = str_replace('/', '\\', "Facilitador\\{$path}$item");
+
+                    if (class_exists($class)) {
+                        $commands[] = $class;
+                    }                  
+                }
+            });
+    }
 }
