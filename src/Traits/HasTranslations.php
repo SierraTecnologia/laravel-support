@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Support\Traits;
+namespace Support\Traits;
 
 use Spatie\Translatable\Events\TranslationHasBeenSet;
 use Spatie\Translatable\HasTranslations as BaseHasTranslations;

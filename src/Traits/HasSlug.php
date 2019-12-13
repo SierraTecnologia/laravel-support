@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Support\Traits;
+namespace Support\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug as BaseHasSlug;

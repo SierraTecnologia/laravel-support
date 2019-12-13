@@ -1,20 +1,20 @@
-# Rinvex Support
+# SierraTecnologia Support
 
-**Rinvex common** support helpers, contracts, and traits required by various Rinvex packages. Validator functionality, and basic controller included out-of-the-box.
+**SierraTecnologia common** support helpers, contracts, and traits required by various SierraTecnologia packages. Validator functionality, and basic controller included out-of-the-box.
 
-[![Packagist](https://img.shields.io/packagist/v/rinvex/laravel-support.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/rinvex/laravel-support)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/rinvex/laravel-support.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/rinvex/laravel-support/)
-[![Travis](https://img.shields.io/travis/rinvex/laravel-support.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/rinvex/laravel-support)
+[![Packagist](https://img.shields.io/packagist/v/sierratecnologia/laravel-support.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/sierratecnologia/laravel-support)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/sierratecnologia/laravel-support.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/sierratecnologia/laravel-support/)
+[![Travis](https://img.shields.io/travis/sierratecnologia/laravel-support.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/sierratecnologia/laravel-support)
 [![StyleCI](https://styleci.io/repos/60968880/shield)](https://styleci.io/repos/60968880)
-[![License](https://img.shields.io/packagist/l/rinvex/laravel-support.svg?label=License&style=flat-square)](https://github.com/rinvex/laravel-support/blob/develop/LICENSE)
+[![License](https://img.shields.io/packagist/l/sierratecnologia/laravel-support.svg?label=License&style=flat-square)](https://github.com/sierratecnologia/laravel-support/blob/develop/LICENSE)
 
 
-> **Note:** this package is just a support package for other Rinvex packages, which may not be useful on it's own, but contains some complementary generic functionality and also may not respect SemVer and break backward compatibility.
+> **Note:** this package is just a support package for other SierraTecnologia packages, which may not be useful on it's own, but contains some complementary generic functionality and also may not respect SemVer and break backward compatibility.
 
 
 ## Installation
 
-Install via `composer require rinvex/laravel-support`
+Install via `composer require sierratecnologia/laravel-support`
 
 
 ## Usage
@@ -71,9 +71,9 @@ Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
 
 The following support channels are available at your fingertips:
 
-- [Chat on Slack](https://bit.ly/rinvex-slack)
-- [Help on Email](mailto:help@rinvex.com)
-- [Follow on Twitter](https://twitter.com/rinvex)
+- [Chat on Slack](https://bit.ly/sierratecnologia-slack)
+- [Help on Email](mailto:help@sierratecnologia.com)
+- [Follow on Twitter](https://twitter.com/sierratecnologia)
 
 
 ## Contributing & Protocols
@@ -91,16 +91,16 @@ Bug reports, feature requests, and pull requests are very welcome.
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within this project, please send an e-mail to [help@rinvex.com](help@rinvex.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this project, please send an e-mail to [help@sierratecnologia.com](help@sierratecnologia.com). All security vulnerabilities will be promptly addressed.
 
 
-## About Rinvex
+## About SierraTecnologia
 
-Rinvex is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016. We believe that our drive The Value, The Reach, and The Impact is what differentiates us and unleash the endless possibilities of our philosophy through the power of software. We like to call it Innovation At The Speed Of Life. That’s how we do our share of advancing humanity.
+SierraTecnologia is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Alexandria, Egypt since June 2016. We believe that our drive The Value, The Reach, and The Impact is what differentiates us and unleash the endless possibilities of our philosophy through the power of software. We like to call it Innovation At The Speed Of Life. That’s how we do our share of advancing humanity.
 
 
 ## License
 
 This software is released under [The MIT License (MIT)](LICENSE).
 
-(c) 2016-2020 Rinvex LLC, Some rights reserved.
+(c) 2016-2020 SierraTecnologia LLC, Some rights reserved.
