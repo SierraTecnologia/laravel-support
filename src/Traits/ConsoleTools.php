@@ -153,4 +153,44 @@ trait ConsoleTools
                 }
             });
     }
+
+
+
+    /**
+     * Configs Paths
+     */
+    private function getResourcesPath($folder)
+    {
+        return __DIR__.'/../resources/'.$folder;
+    }
+
+    private function getPublishesPath($folder)
+    {
+        return __DIR__.'/../publishes/'.$folder;
+    }
+
+    private function getDistPath($folder)
+    {
+        return __DIR__.'/../dist/'.$folder;
+    }
+
+    /**
+     * Load Alias and Providers
+     */
+    private function setProviders()
+    {
+        $this->setDependencesAlias();
+        (new Collection(self::$providers))->map(function ($provider) {
+            if (class_exists($provider)) {
+                $this->app->register($provider);
+            }
+        });
+    }
+    private function setDependencesAlias()
+    {
+        $loader = AliasLoader::getInstance();
+        (new Collection(self::$aliasProviders))->map(function ($class, $alias) use ($loader) {
+            $loader->alias($alias, $class);
+        });
+    }
 }
