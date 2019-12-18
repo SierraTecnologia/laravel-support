@@ -72,7 +72,7 @@
     },
     "autoload": {
         "files": [
-            "src/Support/helpers.php"
+            "utils/helpers.php"
         ],
         "psr-4": {
             "Support\\": "src/"
