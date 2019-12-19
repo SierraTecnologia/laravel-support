@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Fields\Traits;
+namespace Support\Fields\Traits;
 
 /**
  * Save a scope

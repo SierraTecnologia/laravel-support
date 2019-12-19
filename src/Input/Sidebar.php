@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Input;
+namespace Support\Input;
 
 /**
  * Utilities that the Decoy base controller can use to generate

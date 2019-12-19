@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Markup;
+namespace Support\Markup;
 
 use Illuminate\Pagination\UrlWindow as LaravelUrlWindow;
 

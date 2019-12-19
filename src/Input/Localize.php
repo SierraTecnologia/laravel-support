@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Input;
+namespace Support\Input;
 
 use View;
 use Config;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Input\EncodingProviders;
+namespace Support\Input\EncodingProviders;
 
 use Config;
 use Services_Zencoder;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Fields\Traits;
+namespace Support\Fields\Traits;
 
 /**
  * Store block help attributes so I can access them later in the

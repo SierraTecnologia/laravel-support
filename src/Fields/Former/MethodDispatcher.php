@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Fields\Former;
+namespace Support\Fields\Former;
 
 use Illuminate\Support\Str;
 use Former\MethodDispatcher as FormerDispatcher;

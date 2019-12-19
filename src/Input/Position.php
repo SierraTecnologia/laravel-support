@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Input;
+namespace Support\Input;
 
 use Request;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

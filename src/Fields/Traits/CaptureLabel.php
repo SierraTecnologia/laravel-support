@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Fields\Traits;
+namespace Support\Fields\Traits;
 
 /**
  * Store the raw label text since Former immediately transforms it

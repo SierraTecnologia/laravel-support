@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Fields;
+namespace Support\Fields;
 
 use Former;
 use Bkwld\Library;

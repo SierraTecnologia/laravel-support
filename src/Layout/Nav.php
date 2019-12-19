@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Layout;
+namespace Support\Layout;
 
 use URL;
 use Config;
