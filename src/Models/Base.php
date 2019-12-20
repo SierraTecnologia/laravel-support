@@ -605,4 +605,24 @@ abstract class Base extends Eloquent
     {
         $this->guarded[] = $field;
     }
+
+    /**
+     * Criado por mim posteriormente
+     */
+
+    /**
+     * 
+     */
+    public static function createOrReturn($data)
+    {
+        // Model not found, throw exception
+        if (!$item = static::findBySlug($slug)) {
+            throw (new ModelNotFoundException)->setModel(get_called_class());
+        }
+
+        // Return the model if visible
+        $item->enforceVisibility();
+
+        return $item;
+    }
 }
