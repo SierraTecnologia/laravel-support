@@ -25,11 +25,12 @@ class ModelEloquent
     protected $modelClass;
 
     /**
-     * Helpers for Development
+     * Helpers for Development @todo Tirar daqui
      */ 
     public $debug = false;
     public $modelsForDebug = [
-        \Population\Models\Identity\Digital\Account::class,
+        // \Population\Models\Identity\Digital\Account::class,
+        // \Population\Models\Identity\Digital\Email::class,
     ];
 
     /**
@@ -38,7 +39,6 @@ class ModelEloquent
     public function __construct($modelClass = false)
     {
         if (in_array($modelClass, $this->modelsForDebug)) {
-            dd($modelClass);
             $this->debug = true;
         }
 
@@ -61,11 +61,15 @@ class ModelEloquent
         $this->schemaManagerTable = SchemaManager::listTableDetails(
             ParseModelClass::getTableName($this->modelClass)
         );
+        $describeTable = SchemaManager::describeTable(
+            ParseModelClass::getTableName($this->modelClass)
+        );
 
         // Debug
         $this->sendToDebug([
+            $describeTable,
             $this->getRelations(),
-            $this->schemaManagerTable
+            $this->schemaManagerTable->getIndexes()
         ]);
     }
 
@@ -93,6 +97,38 @@ class ModelEloquent
         // dd($this->getAtributes(), $this->schemaManagerTable->getColumns());
         return $this->schemaManagerTable->getColumns();
     }
+    public function getIndices()
+    {
+        return $this->schemaManagerTable->getIndexes();
+    }
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Helpers Generates
+     */ 
+    public function generateWhere($columns, $data)
+    {
+        $where = [];
+        foreach ($columns as $column) {
+            if (isset($data[$column]) && !empty($data[$column])) {
+                $where[$column] = $data[$column];
+                // @todo resolver
+                // $where[$column] = static::cleanCodeSlug($data[$column]);
+            }
+        }
+        return $where;
+    }
+
+
+
 
 
     /**
@@ -110,7 +146,7 @@ class ModelEloquent
     /**
      * Static functions
      */ 
-    public static function getForModel($modelClass)
+    public static function make($modelClass)
     {
         return new self($modelClass);
     }

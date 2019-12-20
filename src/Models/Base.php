@@ -13,14 +13,14 @@ use FacilitadorURL;
 use Bkwld\Cloner\Cloneable;
 use Bkwld\Upchuck\SupportsUploads;
 use Bkwld\Library\Utils\Collection;
-use Facilitador\Exceptions\Exception;
+use Support\Exceptions\Exception;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Population\Models\Identity\Digital\Email;
 use Cocur\Slugify\Slugify;
+use Log;
 
 abstract class Base extends Eloquent
 {
@@ -635,18 +635,25 @@ abstract class Base extends Eloquent
             $data['name'] = static::convertSlugToName($data[$keyName]);
         }
 
-        /**
-         * VErifica primeiro se existe via 
-         */
-        if (isset($data[$keyName]) && !empty($data[$keyName])) {
-            if ($modelFind = static::where([
-                $keyName => static::cleanCodeSlug($data[$keyName])
-            ])->first()) {
-                return static::mergeWithAttributes($modelFind, $data);
+
+        $modelData = \Support\Discovers\Eloquent\ModelEloquent::make(static::class);
+        $indices = $modelData->getIndices();
+        foreach ($indices as $index) {
+            if ($index->isPrimary() || $index->isUnique()) {
+                if ($modelFind = static::where(
+                    $modelData->generateWhere(
+                        $index->getColumns(),
+                        $data
+                    )
+                )->first()) {
+                    Log::debug('Encontrado com tributos: '.print_r($index->getColumns()).' e Data: '.print_r($data));
+                    return static::mergeWithAttributes($modelFind, $data);
+                }
             }
         }
 
-        $modelData = \Support\Discovers\Eloquent\ModelEloquent::getForModel(static::class);
+
+
 
         if ($modelData->debug) {
             dd($data, $keyName, $dataOrPrimaryCode, $modelData);
