@@ -82,6 +82,7 @@ class Table extends DoctrineTable
         return $matched;
     }
 
+
     public function diff(DoctrineTable $compareTable)
     {
         return (new Comparator())->diffTable($this, $compareTable);
@@ -169,5 +170,35 @@ class Table extends DoctrineTable
         }
 
         return $this->$getter();
+    }
+
+
+    public function columnIsType($columnName, $typeClass)
+    {
+        $column = $this->getColumn($columnName);
+        
+        if ($column->getType() instanceof $typeClass) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public function getColumn($columnName)
+    {
+        foreach ($this->getColumns() as $name => $column) {
+            if ($column == $columnName) {
+                return $column;
+            }
+        }
+        return false;
+    }
+
+    public function hasColumn($columnName)
+    {
+        if ($this->getColumn($columnName)) {
+            return true;
+        }
+        return false;
     }
 }

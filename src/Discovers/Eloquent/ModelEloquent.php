@@ -67,9 +67,10 @@ class ModelEloquent
 
         // Debug
         $this->sendToDebug([
-            $describeTable,
+            // $describeTable,
             $this->getRelations(),
-            $this->schemaManagerTable->getIndexes()
+            $this->schemaManagerTable,
+            // $this->schemaManagerTable->getIndexes()
         ]);
     }
 
@@ -104,6 +105,25 @@ class ModelEloquent
 
 
 
+
+
+
+
+    /**
+     * Helpers Generates
+     */ 
+    public function hasColumn($columns, $data)
+    {
+        $where = [];
+        foreach ($columns as $column) {
+            if (isset($data[$column]) && !empty($data[$column])) {
+                $where[$column] = $data[$column];
+                // @todo resolver
+                // $where[$column] = static::cleanCodeSlug($data[$column]);
+            }
+        }
+        return $where;
+    }
 
 
 

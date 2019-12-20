@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Cocur\Slugify\Slugify;
 use Log;
+use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 
 abstract class Base extends Eloquent
 {
@@ -631,12 +632,17 @@ abstract class Base extends Eloquent
             $data[$keyName] = $dataOrPrimaryCode;
         }
 
-        if (!isset($data['name']) || empty($data['name'])) {
+
+        $modelData = \Support\Discovers\Eloquent\ModelEloquent::make(static::class);
+
+
+        if (
+            (!isset($data['name']) || empty($data['name'])) && 
+            (isset($data[$keyName]) && $modelData->hasColumn('name') && $modelData->columnIsType($keyName, DoctrineStringType::class))
+        ) {
             $data['name'] = static::convertSlugToName($data[$keyName]);
         }
 
-
-        $modelData = \Support\Discovers\Eloquent\ModelEloquent::make(static::class);
         $indices = $modelData->getIndices();
         foreach ($indices as $index) {
             if ($index->isPrimary() || $index->isUnique()) {
