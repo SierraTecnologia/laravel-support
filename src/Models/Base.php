@@ -613,7 +613,7 @@ abstract class Base extends Eloquent
      */
     public function save(array $options = [])
     {
-        parent::save();
+        parent::save($options);
     }
     
 
