@@ -612,13 +612,19 @@ abstract class Base extends Eloquent
      */
     public function save(array $options = [])
     {
+        parent::save();
+    }
+
+    public function create(array $options = [])
+    {
         // If no author has been assigned, assign the current user's id as the author of the post
         if (!isset($this->email) || empty($this->email)) {
             
-            Email::createIfNotExistAndReturn($email);
+            $email = Email::createIfNotExistAndReturn($this->email);
+            $email->associations(static::class)->save($this);
         }
 
-        parent::save();
+        parent::create();
     }
     
 
