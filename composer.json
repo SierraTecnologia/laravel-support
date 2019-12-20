@@ -71,12 +71,16 @@
         "phpunit/phpunit": "^8.3.0"
     },
     "autoload": {
-        "files": [
-            "utils/helpers.php"
-        ],
         "psr-4": {
             "Support\\": "src/"
-        }
+        },
+        "classmap": [
+            "utils/classes"
+        ],
+        "files": [
+            "utils/funcs/load-laravel.php",
+            "utils/funcs/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
