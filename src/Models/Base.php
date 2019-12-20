@@ -19,6 +19,7 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Population\Models\Identity\Digital\Email;
 
 abstract class Base extends Eloquent
 {
@@ -613,7 +614,8 @@ abstract class Base extends Eloquent
     {
         // If no author has been assigned, assign the current user's id as the author of the post
         if (isset($this->email) || empty($this->email)) {
-            Email::
+            
+            Email::createIfNotExistAndReturn($email);
         }
 
         parent::save();
