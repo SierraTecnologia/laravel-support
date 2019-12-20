@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Population\Models\Identity\Digital\Email;
+use Cocur\Slugify\Slugify;
 
 abstract class Base extends Eloquent
 {
