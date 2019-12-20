@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Support\ClassesHelpers\Traits\Manipulate;
 
+use Support\Discovers\Code\ParseClass;
+
 trait FileManipulate
 {
 
@@ -24,6 +26,15 @@ trait FileManipulate
     
     protected function getFileFromClass($class)
     {
-        return (new \ReflectionClass(get_class($class)))->getFileName();
+        return ParseClass::getFileName(get_class($class));
+    }
+
+    /**
+     * Gets the class name.
+     * @return string
+     */
+    public static function getClassName()
+    {
+        return ParseClass::getClassName(static::class);
     }
 }
