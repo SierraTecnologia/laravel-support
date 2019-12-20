@@ -609,40 +609,40 @@ abstract class Base extends Eloquent
     /**
      * Criado por mim posteriormente
      */
+    public function save(array $options = [])
+    {
+        // If no author has been assigned, assign the current user's id as the author of the post
+        if (isset($this->email) || empty($this->email)) {
+            Email::
+        }
+
+        parent::save();
+    }
+    
 
     /**
      * 
      */
-    public static function createOrReturn($data)
+    public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
+        $data = [];
         $keyName = (new static)->getKeyName();
-
-        dd($keyName);
-
-        $person = static::where([
-            'code' => static::cleanCodeSlug($personCode)
-        ])->first();
-        if (!$person) {
-            $person = static::create([
-                'code' => static::cleanCodeSlug($personCode),
-                'name' => static::convertSlugToName($personCode),
-            ]);
+        if (is_array($dataOrPrimaryCode)) {
+            $data = $dataOrPrimaryCode;
+        } else {
+            $data[$keyName] = $dataOrPrimaryCode;
         }
 
-        return $person;
-    }
+        if (!isset($data['name']) || empty($data['name'])) {
+            $data['name'] = static::convertSlugToName($data[$keyName]);
+        }
 
-    public static function returnOrCreateByCode($personCode)
-    {
+        dd($data, $keyName, $dataOrPrimaryCode);
 
-        $person = static::where([
-            'code' => static::cleanCodeSlug($personCode)
-        ])->first();
-        if (!$person) {
-            $person = static::create([
-                'code' => static::cleanCodeSlug($personCode),
-                'name' => static::convertSlugToName($personCode),
-            ]);
+        if (!$person = static::where([
+            $keyName => static::cleanCodeSlug($data[$keyName])
+        ])->first()) {
+            $person = static::create($data);
         }
 
         return $person;
