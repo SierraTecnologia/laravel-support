@@ -514,7 +514,7 @@ abstract class Base extends Eloquent
      *
      * @throws Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public static function findBySlugOrFail($slug, array $columns = ['*'])
+    public static function findBySlugOrFail(string $slug, array $columns = ['*'])
     {
         // Model not found, throw exception
         if (!$item = static::findBySlug($slug)) {
