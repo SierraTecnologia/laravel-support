@@ -613,7 +613,7 @@ abstract class Base extends Eloquent
     public function save(array $options = [])
     {
         // If no author has been assigned, assign the current user's id as the author of the post
-        if (isset($this->email) || empty($this->email)) {
+        if (!isset($this->email) || empty($this->email)) {
             
             Email::createIfNotExistAndReturn($email);
         }
