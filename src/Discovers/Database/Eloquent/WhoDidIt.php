@@ -5,7 +5,7 @@
  * Date: 12/10/16 12:09 AM.
  */
 
-namespace Support\Discovers\Reliese\Database\Eloquent;
+namespace Support\Discovers\Database\Eloquent;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model as Eloquent;

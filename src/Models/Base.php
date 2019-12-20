@@ -615,14 +615,52 @@ abstract class Base extends Eloquent
      */
     public static function createOrReturn($data)
     {
-        // Model not found, throw exception
-        if (!$item = static::findBySlug($slug)) {
-            throw (new ModelNotFoundException)->setModel(get_called_class());
+        $keyName = (new static)->getKeyName();
+
+        dd($keyName);
+
+        $person = static::where([
+            'code' => static::cleanCodeSlug($personCode)
+        ])->first();
+        if (!$person) {
+            $person = static::create([
+                'code' => static::cleanCodeSlug($personCode),
+                'name' => static::convertSlugToName($personCode),
+            ]);
         }
 
-        // Return the model if visible
-        $item->enforceVisibility();
+        return $person;
+    }
 
-        return $item;
+    public static function returnOrCreateByCode($personCode)
+    {
+
+        $person = static::where([
+            'code' => static::cleanCodeSlug($personCode)
+        ])->first();
+        if (!$person) {
+            $person = static::create([
+                'code' => static::cleanCodeSlug($personCode),
+                'name' => static::convertSlugToName($personCode),
+            ]);
+        }
+
+        return $person;
+
+    }
+    
+    public static function cleanCodeSlug($slug)
+    {
+        $slugify = new Slugify();
+        
+        $slug = $slugify->slugify($slug, '.'); // hello-world
+        
+        return $slug;
+    }
+    public static function convertSlugToName($slug)
+    {
+        return collect(explode('.', static::cleanCodeSlug($slug)))->map(function($namePart) {
+            return ucfirst($namePart);
+        })->implode(' ');
     }
 }

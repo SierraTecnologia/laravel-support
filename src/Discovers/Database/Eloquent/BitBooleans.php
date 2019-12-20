@@ -5,7 +5,7 @@
  * Date: 09/10/16 07:34 PM.
  */
 
-namespace Support\Discovers\Reliese\Database\Eloquent;
+namespace Support\Discovers\Database\Eloquent;
 
 trait BitBooleans
 {

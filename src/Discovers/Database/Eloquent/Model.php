@@ -5,7 +5,7 @@
  * Date: 01/10/16 03:02 PM.
  */
 
-namespace Support\Discovers\Reliese\Database\Eloquent;
+namespace Support\Discovers\Database\Eloquent;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
