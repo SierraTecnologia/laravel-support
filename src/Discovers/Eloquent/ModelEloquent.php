@@ -27,8 +27,8 @@ class ModelEloquent
     /**
      * Helpers for Development
      */ 
-    protected $debug = false;
-    protected $modelsForDebug = [
+    public $debug = false;
+    public $modelsForDebug = [
         \Population\Models\Identity\Digital\Account::class,
     ];
 
