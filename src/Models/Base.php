@@ -623,6 +623,7 @@ abstract class Base extends Eloquent
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
         $data = [];
+        $modelFind = false;
         $keyName = (new static)->getKeyName();
         if (is_array($dataOrPrimaryCode)) {
             $data = $dataOrPrimaryCode;
@@ -634,16 +635,30 @@ abstract class Base extends Eloquent
             $data['name'] = static::convertSlugToName($data[$keyName]);
         }
 
-        dd($data, $keyName, $dataOrPrimaryCode);
-
-        if (!$person = static::where([
-            $keyName => static::cleanCodeSlug($data[$keyName])
-        ])->first()) {
-            $person = static::create($data);
+        /**
+         * VErifica primeiro se existe via 
+         */
+        if (isset($data[$keyName]) && !empty($data[$keyName])) {
+            if ($modelFind = static::where([
+                $keyName => static::cleanCodeSlug($data[$keyName])
+            ])->first()) {
+                return static::mergeWithAttributes($modelFind, $data);
+            }
         }
 
-        return $person;
+        $modelData = \Support\Discovers\Eloquent\ModelEloquent::getForModel(static::class);
 
+        if ($modelData->debug) {
+            dd($data, $keyName, $dataOrPrimaryCode, $modelData);
+        }
+        return static::create($data);
+
+    }
+
+    public static function mergeWithAttributes(Base $modelFind, array $data)
+    {
+        // @todo Fazer Atualizar Data
+        return $modelFind;
     }
     
     public static function cleanCodeSlug($slug)

@@ -17,14 +17,31 @@ use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Discovers\Eloquent\EloquentColumn;
 use Support\Discovers\Database\Schema\SchemaManager;
+use Support\Discovers\Code\ParseModelClass;
 
 class ModelEloquent
 {
     protected $schemaManagerTable = false;
     protected $modelClass;
 
+    /**
+     * Helpers for Development
+     */ 
+    protected $debug = false;
+    protected $modelsForDebug = [
+        \Population\Models\Identity\Digital\Account::class,
+    ];
+
+    /**
+     * Construct
+     */
     public function __construct($modelClass = false)
     {
+        if (in_array($modelClass, $this->modelsForDebug)) {
+            dd($modelClass);
+            $this->debug = true;
+        }
+
         if ($this->modelClass = $modelClass) {
             $this->renderTableInfos();
         }
@@ -38,15 +55,18 @@ class ModelEloquent
         // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
         return (new Relationships($this->modelClass))($key);
     }
+
     private function renderTableInfos()
     {
-        $this->schemaManagerTable = SchemaManager::listTableDetails($this->getTableName());
+        $this->schemaManagerTable = SchemaManager::listTableDetails(
+            ParseModelClass::getTableName($this->modelClass)
+        );
 
-        // $data = [
-        //     $this->getRelations(),
-        //     $this->schemaManagerTable
-        // ];
-        // dd($data);
+        // Debug
+        $this->sendToDebug([
+            $this->getRelations(),
+            $this->schemaManagerTable
+        ]);
     }
 
     /**
@@ -66,7 +86,7 @@ class ModelEloquent
      */
     public function getPrimaryKey()
     {
-        return App::make($this->modelClass)->getKeyName();
+        return ParseModelClass::getPrimaryKey($this->modelClass);
     }
     public function getColumns()
     {
@@ -75,30 +95,23 @@ class ModelEloquent
     }
 
 
-
-
     /**
-     * Helpers
-     */
-    public function getTableName()
+     * Helpers for Development
+     */ 
+    protected function sendToDebug($data)
     {
-        $name = $this->modelClass;
-        Log::warning($name);
-
-        if (!class_exists($name)) {
-            throw new Exception('Class não encontrada no ModelService' . $name);
+        if (!$this->debug) {
+            return ;
         }
 
-        $model = new $name;
-        return $model->getTable();
+        dd($data);
     }
 
-
     /**
-     * Modulos
-     */
-    public function getModules()
+     * Static functions
+     */ 
+    public static function getForModel($modelClass)
     {
-        $columns = $this->getRelations();
+        return new self($modelClass);
     }
 }
