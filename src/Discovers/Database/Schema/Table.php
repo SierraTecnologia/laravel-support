@@ -183,22 +183,24 @@ class Table extends DoctrineTable
         return false;
     }
 
+    /**
+     * As duas já existem
+     */
+    // public function getColumn($columnName)
+    // {
+    //     foreach ($this->getColumns() as $name => $column) {
+    //         if ($column == $columnName) {
+    //             return $column;
+    //         }
+    //     }
+    //     return false;
+    // }
 
-    public function getColumn($columnName)
-    {
-        foreach ($this->getColumns() as $name => $column) {
-            if ($column == $columnName) {
-                return $column;
-            }
-        }
-        return false;
-    }
-
-    public function hasColumn($columnName)
-    {
-        if ($this->getColumn($columnName)) {
-            return true;
-        }
-        return false;
-    }
+    // public function hasColumn($columnName)
+    // {
+    //     if ($this->getColumn($columnName)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }

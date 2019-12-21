@@ -643,7 +643,7 @@ abstract class Base extends Eloquent
             $data['name'] = static::convertSlugToName($data[$keyName]);
         }
 
-        $indices = $modelData->getIndices();
+        $indices = $modelData->getIndexes();
         foreach ($indices as $index) {
             if ($index->isPrimary() || $index->isUnique()) {
                 if ($modelFind = static::where(

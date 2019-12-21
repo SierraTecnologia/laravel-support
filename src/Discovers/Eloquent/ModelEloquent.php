@@ -98,7 +98,7 @@ class ModelEloquent
         // dd($this->getAtributes(), $this->schemaManagerTable->getColumns());
         return $this->schemaManagerTable->getColumns();
     }
-    public function getIndices()
+    public function getIndexes()
     {
         return $this->schemaManagerTable->getIndexes();
     }
@@ -112,17 +112,9 @@ class ModelEloquent
     /**
      * Helpers Generates
      */ 
-    public function hasColumn($columns, $data)
+    public function hasColumn($columns)
     {
-        $where = [];
-        foreach ($columns as $column) {
-            if (isset($data[$column]) && !empty($data[$column])) {
-                $where[$column] = $data[$column];
-                // @todo resolver
-                // $where[$column] = static::cleanCodeSlug($data[$column]);
-            }
-        }
-        return $where;
+        return $this->schemaManagerTable->hasColumn($columns);
     }
 
 
