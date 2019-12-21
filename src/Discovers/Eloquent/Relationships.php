@@ -79,8 +79,7 @@ class Relationships
 
                         $this->relationships[$rel->name] = $rel;
                     }
-                } catch(ErrorException $e) {}
-                catch (LogicException $e) {}
+                } catch(LogicException|ErrorException $e) {}
             }
         }
 
