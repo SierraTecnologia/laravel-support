@@ -621,6 +621,21 @@ abstract class Base extends Eloquent
     /**
      * 
      */
+    public static function createAndAssociate($dataOrPrimaryCode, $associateTo)
+    {
+        $model = self::createIfNotExistAndReturn($dataOrPrimaryCode);
+
+        //@todo Código Repetido
+        $method = Str::plural(Str::lower(class_basename($model)));
+        if (method_exists($associateTo, $method)) {
+            return call_user_func_array([$associateTo, $method], [])->save($model);
+        }
+        return false;
+    }
+
+    /**
+     * 
+     */
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
         $data = [];
