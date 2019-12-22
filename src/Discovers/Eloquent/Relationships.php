@@ -4,6 +4,7 @@ namespace Support\Discovers\Eloquent;
 
 use ErrorException;
 use LogicException;
+use RuntimeException;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -79,7 +80,7 @@ class Relationships
 
                         $this->relationships[$rel->name] = $rel;
                     }
-                } catch(LogicException|ErrorException $e) {}
+                } catch(LogicException|ErrorException|RuntimeException $e) {}
             }
         }
 

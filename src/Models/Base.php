@@ -22,6 +22,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Cocur\Slugify\Slugify;
 use Log;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
+use Illuminate\Support\Str;
 
 abstract class Base extends Eloquent
 {
@@ -623,7 +624,7 @@ abstract class Base extends Eloquent
      */
     public static function createAndAssociate($dataOrPrimaryCode, $associateTo)
     {
-        $model = self::createIfNotExistAndReturn($dataOrPrimaryCode);
+        $model = static::createIfNotExistAndReturn($dataOrPrimaryCode);
 
         //@todo Código Repetido
         $method = Str::plural(Str::lower(class_basename($model)));
@@ -667,7 +668,7 @@ abstract class Base extends Eloquent
                         $data
                     )
                 )->first()) {
-                    Log::debug('Encontrado com tributos: '.print_r($index->getColumns()).' e Data: '.print_r($data));
+                    Log::debug('Encontrado com tributos: '.print_r($index->getColumns(), true).' e Data: '.print_r($data, true));
                     return static::mergeWithAttributes($modelFind, $data);
                 }
             }

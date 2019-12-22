@@ -116,6 +116,10 @@ class ModelEloquent
     {
         return $this->schemaManagerTable->hasColumn($columns);
     }
+    public function columnIsType($columnName, $typeClass)
+    {
+        return $this->schemaManagerTable->columnIsType($columnName, $typeClass);
+    }
 
 
 
