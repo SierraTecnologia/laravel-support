@@ -673,7 +673,7 @@ abstract class Base extends Eloquent
                         $data
                     )
                 )->first()) {
-                    Log::debug('Encontrado com tributos: '.print_r($index->getColumns(), true).' e Data: '.print_r($data, true));
+                    Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($index->getColumns(), true).' e Data: '.print_r($data, true));
                     return static::mergeWithAttributes($modelFind, $data);
                 }
             }

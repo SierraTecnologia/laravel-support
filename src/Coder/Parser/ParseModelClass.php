@@ -29,9 +29,9 @@ class ParseModelClass extends ParseClass
 
     public static function returnModelForClass($class)
     {
-        Log::warning($class);
 
         if (!class_exists($class)) {
+            Log::warning('[Support] Code Parser -> Class não encontrada no ModelService' . $class);
             throw new Exception('Class não encontrada no ModelService' . $class);
         }
 
