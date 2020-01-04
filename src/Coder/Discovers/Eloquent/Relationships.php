@@ -69,8 +69,13 @@ class Relationships
                             $tmpForeignKey = $return->getForeignKey();
                         } else if ($tmpReturnReflectionClass->hasMethod('getForeignKeyName')) {
                             $tmpForeignKey = $return->getForeignKeyName();
+                        } else if ($tmpReturnReflectionClass->hasMethod('getForeignPivotKeyName')) {
+                            $tmpForeignKey = $return->getForeignPivotKeyName();
                         } else {
-                            Log::warning('[Support] Discover -> Relação de Tabelas sem Chave Privada: '.print_r($tmpReturnReflectionClass, true).print_r($return, true).print_r($this->model, true));
+                            dd('[Support] Discover (Não Deveria Cair Aqui) -> Relação de Tabelas sem Chave Privada: ', $tmpReturnReflectionClass, $return, $this->model,
+                            $tmpReturnReflectionClass->hasMethod('getForeignPivotKeyName'),
+                            $return->getForeignPivotKeyName()
+                        );
                         }
 
                         $rel = new Relationship([
