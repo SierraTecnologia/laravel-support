@@ -649,7 +649,7 @@ abstract class Base extends Eloquent
         }
 
 
-        $modelData = \Support\Discovers\Eloquent\ModelEloquent::make(static::class);
+        $modelData = \Support\Coder\Discovers\Eloquent\ModelEloquent::make(static::class);
 
 
         if (
