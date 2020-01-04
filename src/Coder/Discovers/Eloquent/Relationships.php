@@ -2,9 +2,12 @@
 
 namespace Support\Coder\Discovers\Eloquent;
 
+use Exception;
 use ErrorException;
 use LogicException;
 use RuntimeException;
+use Watson\Validating\ValidationException;
+
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -80,7 +83,13 @@ class Relationships
 
                         $this->relationships[$rel->name] = $rel;
                     }
-                } catch(LogicException|ErrorException|RuntimeException $e) {}
+                } catch(LogicException|ErrorException|RuntimeException $e) {
+                    // @todo Tratar aqui
+                } catch(ValidationException $e) {
+                    // @todo Tratar aqui
+                }catch(Exception $e) {
+                    // @todo Tratar aqui
+                }
             }
         }
 

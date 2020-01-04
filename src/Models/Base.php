@@ -23,9 +23,11 @@ use Cocur\Slugify\Slugify;
 use Log;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 use Illuminate\Support\Str;
+use Watson\Validating\ValidatingTrait;
 
 abstract class Base extends Eloquent
 {
+    use ValidatingTrait;
 
     //---------------------------------------------------------------------------
     // Overrideable properties
@@ -37,8 +39,11 @@ abstract class Base extends Eloquent
      *
      * @var array
      */
-    public static $rules = [];
-
+    // public $rules = [];
+	public $rules = [
+        
+    ];
+    
     /**
      * Should this model be localizable in the admin.  If not undefined, will
      * override the site config "auto_localize_root_models"
@@ -155,7 +160,7 @@ abstract class Base extends Eloquent
      */
     protected function needsSlugging()
     {
-        return array_key_exists('slug', static::$rules);
+        return array_key_exists('slug', $this->rules);
     }
 
     //---------------------------------------------------------------------------
@@ -248,7 +253,7 @@ abstract class Base extends Eloquent
     {
 
         // Get all the file validation rule keys
-        $attributes = array_keys(array_filter(static::$rules, function ($rules) {
+        $attributes = array_keys(array_filter($this->rules, function ($rules) {
             return preg_match('#file|image|mimes|video|dimensions#i', $rules);
         }));
 
