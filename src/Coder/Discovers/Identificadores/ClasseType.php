@@ -2,6 +2,8 @@
 
 namespace Support\Coder\Discovers\Identificadores;
 
+use ReflectionClass;
+
 class ClasseType
 {
     public $className = false;
@@ -24,12 +26,23 @@ class ClasseType
 
     protected function detectType()
     {
+        // Verify if is Abstract
+        if ($this->getReflectionClass()->isAbstract()) {
+            return 'abstract';
+        }
+
         foreach (static::$types as $type => $subClassName) {
+            // Detected
             if (is_subclass_of($this->className, $subClassName)) {
                 return $type;
             }
         }
 
         return 'other';
+    }
+
+    public function getReflectionClass()
+    {
+        return new ReflectionClass($this->className);
     }
 }
