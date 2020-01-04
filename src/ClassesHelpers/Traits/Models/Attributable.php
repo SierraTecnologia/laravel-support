@@ -157,7 +157,7 @@ trait Attributable
         $morphClass = $this->getMorphClass();
         static::$entityAttributes = static::$entityAttributes ?? collect();
 
-        if (! static::$entityAttributes->has($morphClass) && Schema::hasTable(config('facilitador.attributes.tables.attribute_entity'))) {
+        if (! static::$entityAttributes->has($morphClass) && Schema::hasTable(config('sitec.attributes.tables.attribute_entity'))) {
             $locale = app()->getLocale();
 
             /* This is a trial to implement per resource attributes,

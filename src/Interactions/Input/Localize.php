@@ -88,7 +88,7 @@ class Localize
         $class = $this->model; // Must be a local var to test
 
         // There aren't multiple locales specified
-        if (count(config('facilitador.site.locales')) <= 1 ) return true;
+        if (count(config('sitec.site.locales')) <= 1 ) return true;
 
         // We're editing a model with no locale attribute
         if ($this->item && !$this->item->locale) return true;
@@ -97,12 +97,12 @@ class Localize
         if ($class::$localizable === false ) return true;
 
         // Auto localize is turned on and we're on a child model
-        if (config('facilitador.site.auto_localize_root_models')
+        if (config('sitec.site.auto_localize_root_models')
             && app('facilitador.wildcard')->detectParent()) return true;
 
         // If auto-localizeable is turned off and this model doesn't have it
         // turned on
-        if (!config('facilitador.site.auto_localize_root_models')
+        if (!config('sitec.site.auto_localize_root_models')
             && !$class::$localizable) return true;
 
         // Otherwise, allow localization

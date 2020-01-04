@@ -49,10 +49,10 @@ class Varchar extends Value
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('facilitador.attributes.tables.attribute_varchar_values'));
+        $this->setTable(config('sitec.attributes.tables.attribute_varchar_values'));
         $this->setRules([
             'content' => 'required|string|max:150',
-            'attribute_id' => 'required|integer|exists:'.config('facilitador.attributes.tables.attributes').',id',
+            'attribute_id' => 'required|integer|exists:'.config('sitec.attributes.tables.attributes').',id',
             'entity_id' => 'required|integer',
             'entity_type' => 'required|string',
         ]);
