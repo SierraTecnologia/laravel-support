@@ -64,7 +64,7 @@
         "cviebrock/eloquent-sluggable": "~4.0",
         "spatie/eloquent-sortable": "^3.7",
         "spatie/laravel-sluggable": "^2.2",
-        "doctrine/orm": ">=^2.5",
+        "doctrine/orm": ">=2.5",
         "watson/validating": "^3.3.0"
     },
     "require-dev": {
