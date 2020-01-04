@@ -25,7 +25,7 @@ class ClasseType
     protected function detectType()
     {
         foreach (static::$types as $type => $subClassName) {
-            if (!is_subclass_of($this->className, $subClassName)) {
+            if (is_subclass_of($this->className, $subClassName)) {
                 return $type;
             }
         }

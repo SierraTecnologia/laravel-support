@@ -49,7 +49,13 @@ class ComposerParser
     public function returnClassesByAlias($alias)
     {
         return collect($this->classes)->filter(function ($path, $class) use ($alias) {
-            return Str::startsWith($class, $alias);
+            // if (!is_string($class)) dd($path, $class, $alias);
+            // try {
+                return Str::startsWith($class, $alias);
+
+            // }catch(\Exception $e) {
+            //     dd('Aqui', $path, $class, $alias);
+            // }
         });
     }
 
