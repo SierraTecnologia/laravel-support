@@ -70,7 +70,7 @@ class Relationships
                         } else if ($tmpReturnReflectionClass->hasMethod('getForeignKeyName')) {
                             $tmpForeignKey = $return->getForeignKeyName();
                         } else {
-                            Log::warning('[Support] Discover -> Relação de Tabelas sem Chave Privada: '.print_r($tmpReturnReflectionClass, true));
+                            Log::warning('[Support] Discover -> Relação de Tabelas sem Chave Privada: '.print_r($tmpReturnReflectionClass, true).print_r($return, true).print_r($this->model, true));
                         }
 
                         $rel = new Relationship([
