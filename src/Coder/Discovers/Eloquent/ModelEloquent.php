@@ -2,7 +2,6 @@
 
 namespace Support\Coder\Discovers\Eloquent;
 
-use ErrorException;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -12,7 +11,6 @@ use Illuminate\Http\Request;
 use Support\Coder\Discovers\Eloquent\Relationships;
 use App;
 use Log;
-use Exception;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Coder\Discovers\Eloquent\EloquentColumn;
@@ -58,20 +56,31 @@ class ModelEloquent
 
     private function renderTableInfos()
     {
-        $this->schemaManagerTable = SchemaManager::listTableDetails(
-            ParseModelClass::getTableName($this->modelClass)
-        );
-        $describeTable = SchemaManager::describeTable(
-            ParseModelClass::getTableName($this->modelClass)
-        );
+        try {
+            $tableName = ParseModelClass::getTableName($this->modelClass);
+            $this->schemaManagerTable = SchemaManager::listTableDetails(
+                $tableName
+            );
+            $describeTable = SchemaManager::describeTable(
+                $tableName
+            );
 
-        // Debug
-        $this->sendToDebug([
-            // $describeTable,
-            $this->getRelations(),
-            $this->schemaManagerTable,
-            // $this->schemaManagerTable->getIndexes()
-        ]);
+            // Debug
+            $this->sendToDebug([
+                // $describeTable,
+                $this->getRelations(),
+                $this->schemaManagerTable,
+                // $this->schemaManagerTable->getIndexes()
+            ]);
+        } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
+            dd($e);
+            //@todo fazer aqui
+        } catch(\Exception $e) {
+            // @todo Tratar aqui
+        } catch(\Throwable $e) {
+            dd($e);
+            // @todo Tratar aqui
+        }
     }
 
     /**

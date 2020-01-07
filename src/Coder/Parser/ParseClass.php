@@ -21,4 +21,16 @@ class ParseClass
     {
         return strtolower(array_slice(explode('\\', $class), -1, 1)[0]);
     }
+
+    public static function returnInstanceForClass($class)
+    {
+
+        if (!class_exists($class)) {
+            Log::warning('[Support] Code Parser -> Class não encontrada no ModelService' . $class);
+            throw new Exception('Class não encontrada no ModelService' . $class);
+        }
+
+        // return new $class;
+        return with(new $class);
+    }
 }
