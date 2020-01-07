@@ -709,4 +709,14 @@ abstract class Base extends Eloquent
             return ucfirst($namePart);
         })->implode(' ');
     }
+
+
+
+    /**
+     * Help for Class
+     */
+    public function hasAttribute($attr)                                                                                                                                                          
+    {                                                                                                                    
+        return array_key_exists($attr, $this->attributes);
+    }
 }
