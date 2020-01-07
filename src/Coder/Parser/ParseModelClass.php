@@ -8,6 +8,7 @@ namespace Support\Coder\Parser;
 use Log;
 use App;
 use Exception;
+use Support\Coder\Discovers\Identificadores\ClasseType;
 
 class ParseModelClass extends ParseClass
 {
@@ -16,7 +17,10 @@ class ParseModelClass extends ParseClass
         return App::make($class)->getKeyName();
     }
 
-
+    public static function isModelClass($class)
+    {
+        return ClasseType::fastExecute($class, 'typeIs', 'model');
+    }
 
     
     /**
@@ -24,31 +28,10 @@ class ParseModelClass extends ParseClass
      */
     public static function getTableName($class)
     {
-        return (static::returnModelForClass($class))->getTable();
-    }
-
-    public static function returnModelForClass($class)
-    {
-
-        if (!class_exists($class)) {
-            Log::warning('[Support] Code Parser -> Class não encontrada no ModelService' . $class);
-            throw new Exception('Class não encontrada no ModelService' . $class);
+        if (!self::isModelClass($class)) {
+            return false;
         }
 
-        return new $class;
-    }
-    
-    public static function getFileName($class)
-    {
-        return (new \ReflectionClass($class))->getFileName();
-    }
-
-    /**
-     * Gets the class name.
-     * @return string
-     */
-    public static function getClassName($class)
-    {
-        return strtolower(array_slice(explode('\\', $class), -1, 1)[0]);
+        return (static::returnInstanceForClass($class))->getTable();
     }
 }

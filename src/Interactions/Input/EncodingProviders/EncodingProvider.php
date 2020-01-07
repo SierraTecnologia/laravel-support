@@ -62,7 +62,7 @@ abstract class EncodingProvider
      * Handle notification requests from the SDK
      *
      * @param  array $input Request::input()
-     * @return mixed Reponse to the API
+     * @return mixed Response to the API
      */
     abstract public function handleNotification($input);
 

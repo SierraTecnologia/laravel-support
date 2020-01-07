@@ -13,6 +13,11 @@ class ClasseType
         'model' => 'Illuminate\Database\Eloquent\Model',
     ];
 
+    public static function fastExecute($class, $method, ...$args)
+    {
+        return (new static($class))->$method(...$args);
+    }
+
     public function __construct($className)
     {
         $this->className = $className;
