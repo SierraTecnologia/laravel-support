@@ -73,12 +73,12 @@ class ModelEloquent
                 // $this->schemaManagerTable->getIndexes()
             ]);
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-            dd($e);
+            // dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
             // @todo Tratar aqui
         } catch(\Throwable $e) {
-            dd($e);
+            // dd($e);
             // @todo Tratar aqui
         }
     }
