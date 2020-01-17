@@ -11,6 +11,7 @@ namespace Support\Mounters;
 class Menu
 {
 
+    protected $code = null;
     protected $slug = null;
 
     protected $text = null;
@@ -75,6 +76,23 @@ class Menu
         return is_null($this->$attribute);
     }
 
+    public function mergeWithMenu(Menu $menu)
+    {
+
+        foreach ($this->getAttributes() as $attribute) {
+            if ($this->attributeIsDefault($attribute) && !$menu->attributeIsDefault($attribute)) {
+                $methodName = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+                $getMethodName = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+                $this->{$methodName}(
+                    $menu->{$getMethodName}()
+                );
+                $this->isDivisory = false;
+            }
+        }
+
+        return $this;
+    }
+
     public function toArray()
     {
         $array = [];
@@ -96,12 +114,19 @@ class Menu
     public function getAttributes()
     {
         return [
+            'code',
+            
             'slug',
             'text',
-            'icon',
-            'nivel',
+
             'url',
             'route',
+
+            'icon',
+            'label_color',
+            'icon_color',
+
+            'nivel',
         ];
     }
 
@@ -119,6 +144,16 @@ class Menu
         return $group.$this->getSlug();
     }
 
+
+    public function getCode() {
+        if ($this->attributeIsDefault('code')) {
+            return $this->getAddressSlugGroup();
+        }
+        return $this->code;
+    }
+    public function setCode($value) {
+        $this->code = $value;
+    }
 
     public function getSlug() {
         return $this->slug;

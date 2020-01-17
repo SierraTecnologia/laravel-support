@@ -14,7 +14,18 @@ class MenuRepository
 
     public function __construct($menus = [])
     {
-        $this->menus = $menus;
+        $mergeByCode = [];
+        foreach ($menus as $menu) {
+            if (!isset($mergeByCode[$menu->getCode()])) {
+                $mergeByCode[$menu->getCode()] = $menu;
+            } else {
+                $mergeByCode[$menu->getCode()]->mergeWithMenu($menu);
+            }
+        }
+
+
+        $this->menus = array_values($mergeByCode);
+        // dd($this->menus);
     }
 
     public function getTreeInArray($parent = 'root')
@@ -31,7 +42,7 @@ class MenuRepository
                         $menuArrayList[] = $menuArray;
                         $menuArray = $this->getTreeInArray($menu->getAddressSlugGroup());
                     } else {
-                        $menuArray['subMenu'] = $this->getTreeInArray($menu->getAddressSlugGroup());
+                        $menuArray['submenu'] = $this->getTreeInArray($menu->getAddressSlugGroup());
                     }
                 }
                 if (Menu::isArrayMenu($menuArray)) {
@@ -115,12 +126,22 @@ class MenuRepository
 
                 $group .= $indice;
             }
-
-            if (self::isArraysFromMenus($values)) {
+            if (Menu::isArrayMenu($values, $indice)) {
+                if (!empty($group)) {
+                    if (!isset($values['group'])) {
+                        $values['group'] = $group;
+                    } else {
+                        $values['group'] = $group.'.'.$values[$indice]['group'];
+                    }
+                }
+                $values = [$values];
+            } else if (self::isArraysFromMenus($values)) {
                 if (!empty($group)) {
                     foreach ($values as $indice => $value) {
                         if (!isset($value['group'])) {
                             $values[$indice]['group'] = $group;
+                        } else {
+                            $values[$indice]['group'] = $group.'.'.$values[$indice]['group'];
                         }
                     }
                 }
