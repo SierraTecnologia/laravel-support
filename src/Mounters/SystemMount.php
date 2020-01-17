@@ -14,18 +14,24 @@ class SystemMount
     public function loadMenuForAdminlte($event)
     {
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-            $this->getAllMenus()->getTreeInArray()->map(function ($valor) use ($event) {
+            collect($this->getAllMenus()->getTreeInArray())->map(function ($valor) use ($event) {
                 $event->menu->add($valor);
             });
         // });
     }
 
-    protected function getAllMenus($event)
+    protected function getAllMenus()
     {
-        return MenuRepository::createFromMultiplosArray(collect([
-            \Finder\FinderProvider::class,
-        ]).map(function($class) {
-            return $class::$menuItens;
-        }));
+        return MenuRepository::createFromMultiplosArray(
+            collect(
+                [
+                    \Finder\FinderProvider::class,
+                ]
+            )->map(
+                function($class) {
+                    return $class::$menuItens;
+                }
+            )
+        );
     }
 }

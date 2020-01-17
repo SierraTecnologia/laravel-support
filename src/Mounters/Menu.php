@@ -15,10 +15,26 @@ class Menu
 
     protected $text = null;
     protected $icon = null;
+    protected $icon_color = null;
+    protected $label_color = null;
     protected $nivel = null;
 
-
+    protected $url = null;
+    protected $route = null;
+    /**
+     * 
+     */
     protected $group = null;
+    
+
+    
+
+    /**
+     * 
+     */
+    protected $isDivisory = false;
+    
+
     
     /**
      *  'text'    => 'Finder',
@@ -26,18 +42,28 @@ class Menu
      * 'nivel' => \App\Models\Role::$GOOD,
      * 'submenu' => \Finder\Services\MenuService::getAdminMenu(),
      */
-    public static function createByData($data)
+    public static function createFromArray($data)
     {
         $instance = new Menu;
-        foreach ($data as $atribute => $valor) {
-            $methodName = 'set'.ucfirst($atribute);
-            $array[$atribute] = $instance->{$methodName}($valor);
+
+        if (is_string($data)) {
+            $instance->isDivisory = true;
+            $instance->setText($data);
         }
+
+        if (is_array($data)) {
+            foreach ($data as $attribute => $valor) {
+                $methodName = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+                $array[$attribute] = $instance->{$methodName}($valor);
+            }
+        }
+
+        return $instance;
     }
 
-    public static function isArrayMenu($arrayMenu)
+    public static function isArrayMenu($arrayMenu, $indice=false)
     {
-        if (is_string($arrayMenu)) {
+        if (is_string($arrayMenu) && !is_string($indice)) {
             return true;
         }
 
@@ -53,10 +79,14 @@ class Menu
     {
         $array = [];
 
-        foreach ($this->getAttributes() as $atribute) {
-            if (!$this->attributeIsDefault($atribute)) {
-                $methodName = 'get'.ucfirst($atribute);
-                $array[$atribute] = $this->{$methodName}();
+        if ($this->isDivisory) {
+            return $this->getText();
+        }
+
+        foreach ($this->getAttributes() as $attribute) {
+            if (!$this->attributeIsDefault($attribute)) {
+                $methodName = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+                $array[$attribute] = $this->{$methodName}();
             }
         }
 
@@ -82,11 +112,11 @@ class Menu
     public function getAddressSlugGroup() {
         $group = '';
 
-        if ($this->attributeIsDefault('group')) {
+        if (!$this->attributeIsDefault('group')) {
             $group = $this->getGroup().'.';
         }
 
-        return $this->getSlug();
+        return $group.$this->getSlug();
     }
 
 
@@ -101,7 +131,22 @@ class Menu
         return $this->text;
     }
     public function setText($value) {
+        $this->setSlug($value);
         $this->text = $value;
+    }
+
+    public function getRoute() {
+        return $this->route;
+    }
+    public function setRoute($value) {
+        $this->route = $value;
+    }
+
+    public function getUrl() {
+        return $this->url;
+    }
+    public function setUrl($value) {
+        $this->url = $value;
     }
 
     public function getIcon() {
@@ -109,6 +154,20 @@ class Menu
     }
     public function setIcon($value) {
         $this->icon = $value;
+    }
+
+    public function getLabelColor() {
+        return $this->label_color;
+    }
+    public function setLabelColor($value) {
+        $this->label_color = $value;
+    }
+
+    public function getIconColor() {
+        return $this->icon_color;
+    }
+    public function setIconColor($value) {
+        $this->icon_color = $value;
     }
 
     public function getNivel() {
@@ -122,7 +181,7 @@ class Menu
         if ( is_null($this->group) || empty($this->group)) {
             return 'root';
         }
-        
+
         return $this->group;
     }
     public function setGroup($value) {

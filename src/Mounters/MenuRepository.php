@@ -19,33 +19,42 @@ class MenuRepository
 
     public function getTreeInArray($parent = 'root')
     {
-        $newArrayByGroupMenu = [];
+        $menuArrayList = [];
 
         $byGroup = $this->groupBy('group');
         
-        foreach($byGroup[$parent] as $menu) {
-            $menuArray = $menu->toArray();
-
-            if (!empty($byGroup[$menu->getAddressSlugGroup()])) {
-                $menuArray['subMenu'] = $this->getTreeInArray($menu->getAddressSlugGroup())->map(function ($menu) {
-                    return $menu->toArray();
-                });
+        if (isset($byGroup[$parent])) {
+            foreach($byGroup[$parent] as $menu) {
+                $menuArray = $menu->toArray();
+                if (!empty($byGroup[$menu->getAddressSlugGroup()])) {
+                    if (is_string($menuArray)) {
+                        $menuArrayList[] = $menuArray;
+                        $menuArray = $this->getTreeInArray($menu->getAddressSlugGroup());
+                    } else {
+                        $menuArray['subMenu'] = $this->getTreeInArray($menu->getAddressSlugGroup());
+                    }
+                }
+                if (Menu::isArrayMenu($menuArray)) {
+                    $menuArrayList[] = $menuArray;
+                } else {
+                    $menuArrayList = array_merge($menuArrayList, $menuArray);
+                }
             }
         }
 
-        return $this->getInOrder($newArrayByGroupMenu);
+        return $this->getInOrder($menuArrayList);
     }
 
     public function getInOrder($arrayMenu)
     {
         // @todo Ordenar
-        $arrayMenu;
+        return $arrayMenu;
     }
 
     public function groupBy($attribute)
     {
         $byGroup = [];
-        $getFunction = 'get'.ucfirst($attribute);
+        $getFunction = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
         
         foreach($this->menus as $menu) {
             if (!isset($byGroup[$menu->{$getFunction}()])) {
@@ -54,13 +63,13 @@ class MenuRepository
             $byGroup[$menu->{$getFunction}()][] = $menu;
         }
 
-        return [$byGroup, $byCode];
+// dd($byGroup, $this->menus);
+        return $byGroup;
     }
 
     public static function createFromArray($array)
     {
         $arrayFromMenuEntitys = [];
-
         foreach ($array as $value) {
             $arrayFromMenuEntitys[] = Menu::createFromArray($value);
         }
@@ -72,8 +81,10 @@ class MenuRepository
     {
         $mergeArray = [];
 
-        foreach ($array as $value) {
-            $mergeArray = array_merge($mergeArray, self::mergeDinamicGroups($value));
+        if (!self::isArraysFromMenus($array) && !empty($array)) {
+            foreach ($array as $value) {
+                $mergeArray = array_merge($mergeArray, self::mergeDinamicGroups($value));
+            }
         }
 
         return self::createFromArray($mergeArray);
@@ -83,10 +94,26 @@ class MenuRepository
     {
         $mergeArray = [];
 
+        if (self::isArraysFromMenus($array)) {
+            return $array;
+        }
+
         foreach ($array as $indice=>$values) {
             $group = $groupParent;
             if (is_string($indice)) {
-                $group .= '.'.$indice;
+                if (!empty($group)) {
+                    $mergeArray = array_merge($mergeArray, [
+                        [
+                            'text' => $indice,
+                            'group' => $group
+                        ]
+                    ]);
+                    $group .= '.';
+                } else {
+                    $mergeArray = array_merge($mergeArray, [$indice]);
+                }
+
+                $group .= $indice;
             }
 
             if (self::isArraysFromMenus($values)) {
@@ -101,7 +128,7 @@ class MenuRepository
                 $values = self::mergeDinamicGroups($values, $group);
             }
 
-            $mergeArray = array_merge($mergeArray, $value);
+            $mergeArray = array_merge($mergeArray, $values);
         }
 
         return $mergeArray;
@@ -117,7 +144,8 @@ class MenuRepository
         }
 
         foreach ($arrayMenu as $indice=>$values) {
-            if (!Menu::isArraysFromMenus($arrayMenu)) {
+            // dd($arrayMenu);
+            if (!Menu::isArrayMenu($values, $indice)) {
                 return false;
             }
         }
