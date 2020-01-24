@@ -118,6 +118,15 @@ abstract class Base extends Eloquent
         parent::__construct($attributes);
     }
 
+
+    /**
+     * @todo Fazer
+     */
+    public function getIdentificador()                                                                                                                                                          
+    {                                                                                                                    
+        return $this->code;
+    }
+
     /**
      * No-Op callbacks invoked by Observers\ModelCallbacks.  These allow quick handling
      * of model event states.

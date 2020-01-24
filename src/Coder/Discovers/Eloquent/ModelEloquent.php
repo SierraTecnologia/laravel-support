@@ -25,7 +25,8 @@ class ModelEloquent
     /**
      * Helpers for Development @todo Tirar daqui
      */ 
-    public $debug = false;
+    // @todo Tirar essa gambiarra
+    public $debug = true;
     public $modelsForDebug = [
         // \Population\Models\Identity\Digital\Account::class,
         // \Population\Models\Identity\Digital\Email::class,
@@ -67,10 +68,10 @@ class ModelEloquent
 
             // Debug
             $this->sendToDebug([
-                // $describeTable,
+                $describeTable,
                 $this->getRelations(),
                 $this->schemaManagerTable,
-                // $this->schemaManagerTable->getIndexes()
+                $this->schemaManagerTable->getIndexes()
             ]);
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
             // dd($e);
