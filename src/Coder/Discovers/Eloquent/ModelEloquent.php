@@ -65,14 +65,6 @@ class ModelEloquent
     }
 
     /**
-     * Relações
-     */
-    public function getAtributes()
-    {
-        return $this->getEloquentCached()->getAtributes();
-    }
-
-    /**
      * Caracteristicas das Tabelas
      */
     public function getPrimaryKey()

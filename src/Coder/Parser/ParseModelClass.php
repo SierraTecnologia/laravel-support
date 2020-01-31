@@ -12,17 +12,23 @@ use Support\Coder\Discovers\Identificadores\ClasseType;
 
 class ParseModelClass extends ParseClass
 {
-    public $reflectionClass = false;
+    public $instanceClass = false;
 
     public function __construct($classOrReflectionClass)
     {
         parent::__construct($classOrReflectionClass);
         $this->instanceClass = static::returnInstanceForClass($classOrReflectionClass);
+
+    }
+
+
+
+    public function toArray()
+    {
         // // @debug
         // dd(
         //     $this->instanceClass->getTable(), // Ex: persons
         //     $this->instanceClass->getMutatedAttributes(), // Ex: 
-        //     // $this->instanceClass->getMutatorMethods(), // Ex: 
         //     $this->instanceClass->getFillable(), // Ex: 
         //     $this->instanceClass->getDates(), // Ex: 
         //     $this->instanceClass->getCreatedAtColumn(), // Ex: created_at
@@ -42,7 +48,22 @@ class ParseModelClass extends ParseClass
         //     $this->instanceClass->getKey() // Ex: null
         // );
 
+            return [
 
+                'table' => $this->instanceClass->getTable(), // Ex: persons
+                'getMutatedAttributes' => $this->instanceClass->getMutatedAttributes(), // Ex: 
+                'fillable' => $this->instanceClass->getFillable(), // Ex: 
+                'dates' => $this->instanceClass->getDates(), // Ex: 
+                'createdAtColumn' => $this->instanceClass->getCreatedAtColumn(), // Ex: created_at
+                'getUpdatedAtColumn' => $this->instanceClass->getUpdatedAtColumn(), // Ex: updated_at
+                'getVisible' => $this->instanceClass->getVisible(), // Ex: []
+                'getGuarded' => $this->instanceClass->getGuarded(), // Ex: 
+                'getKeyName' => $this->instanceClass->getKeyName(), // Ex: code
+                'getKeyType' => $this->instanceClass->getKeyType(), // ^ "string"
+                'getIncrementing' => $this->instanceClass->getIncrementing(), // false or true
+                'getForeignKey' => $this->instanceClass->getForeignKey(), // Ex: person_code
+
+            ];
     }
 
 

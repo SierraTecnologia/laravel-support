@@ -42,8 +42,6 @@ class EloquentCached
     protected $primaryKey;
     protected $attributes;
 
-    protected $arrayTableClass;
-
     /**
      * NOt Cached
      */
@@ -73,18 +71,48 @@ class EloquentCached
     public function toArray()
     {
         $array = [];
+
+        $array['manager'] = $this->managerToArray();
+
+
+        $array['info'] = $this->infoToArray();
+
+        return $array;
+    }
+
+
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function infoToArray()
+    {
+        $array = [];
         $array['tableName'] = $this->tableName;
 
-        $array['tableManager'] = $this->arrayTableClass;
-
-
-        $array['colunasDaTabela'] = $this->colunasDaTabela;
+        $array['columnsForList'] = $this->columnsForList;
+        $array['columnsForEdit'] = $this->columnsForEdit;
         $array['columns'] = $this->columns;
         $array['indexes'] = $this->indexes;
         $array['primaryKey'] = $this->primaryKey;
         $array['attributes'] = $this->attributes;
 
+        $array['relations'] = $this->getRelations();
         return $array;
+    }
+
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function managerToArray()
+    {
+        $manager = [];
+        $manager['modelManager'] = $this->hardParserModelClass->toArray();
+        $manager['tableManager'] = $this->schemaManagerTable->toArray();
+        return $manager;
     }
 
     /**
@@ -100,7 +128,10 @@ class EloquentCached
             $this->analisando();
 
             $this->sendToDebug($this->toArray());
+        } catch(SchemaException $e) {
+            Log::error($e->getMessage());
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
+            // @todo Armazenar Erro em tabela
             dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
@@ -118,25 +149,22 @@ class EloquentCached
     private function renderDatabase()
     {
         if (!SchemaManager::tableExists($this->tableName)) {
-            throw SchemaException::tableDoesNotExist($this->tableName);
+            throw SchemaException::tableDoesNotExist($this->tableName.' ('.$this->modelClass.')');
         }
 
         $this->schemaManagerTable = SchemaManager::listTableDetails(
             $this->tableName
         );
 
-        $this->arrayTableClass = $this->schemaManagerTable->toArray();
 
 
         /**
          * Cached
          */
-        $this->colunasDaTabela = SchemaManager::describeTable(
-            $this->tableName
-        );
+        $this->columnsForList = [];
+        $this->columnsForEdit = []; 
         $this->indexes = $this->getIndexes();
         $this->columns = $this->getColumns();
-        $this->attributes = $this->getAtributes();
         $this->primaryKey = $this->getPrimaryKey();
 
 
@@ -163,18 +191,6 @@ class EloquentCached
     }
 
     /**
-     * Relações
-     */
-    public function getAtributes()
-    {
-        // dd(\Schema::getColumnListing($this->modelClass));
-        $fillables = collect(App::make($this->modelClass)->getFillable())->map(function ($value) {
-            return new EloquentColumn($value, new Varchar, true);
-        });
-        return $fillables;
-    }
-
-    /**
      * Caracteristicas das Tabelas
      */
     public function getPrimaryKey()
@@ -185,6 +201,18 @@ class EloquentCached
     {
         // dd($this->getAtributes(), $this->schemaManagerTable->getColumns());
         return $this->schemaManagerTable->getColumns();
+
+        // Ou assim
+        // SchemaManager::describeTable(
+        //     $this->tableName
+        // );
+
+        // Ou Assim
+        // // dd(\Schema::getColumnListing($this->modelClass));
+        // $fillables = collect(App::make($this->modelClass)->getFillable())->map(function ($value) {
+        //     return new EloquentColumn($value, new Varchar, true);
+        // });
+        // return $fillables;
     }
     public function getIndexes()
     {

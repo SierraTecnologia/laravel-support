@@ -11,7 +11,7 @@ trait DevDebug
      * Helpers for Development @todo Tirar daqui
      */ 
     // @todo Tirar essa gambiarra
-    public $debug = true;
+    public $debug = false;
     public $modelsForDebug = [
         // \Population\Models\Identity\Digital\Account::class,
         // \Population\Models\Identity\Digital\Email::class,

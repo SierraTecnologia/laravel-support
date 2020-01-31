@@ -5,7 +5,9 @@ namespace Support\Coder\Discovers\Eloquent;
 use Exception;
 use ErrorException;
 use LogicException;
+use OutOfBoundsException;
 use RuntimeException;
+use TypeError;
 use Watson\Validating\ValidationException;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -90,9 +92,18 @@ class Relationships
                     }
                 } catch(LogicException|ErrorException|RuntimeException $e) {
                     // @todo Tratar aqui
+                } catch (OutOfBoundsException|TypeError $e) {
+                    //@todo fazer aqui
+                    // dd($e);
                 } catch(ValidationException $e) {
                     // @todo Tratar aqui
-                }catch(Exception $e) {
+                } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
+                    dd($e);
+                    //@todo fazer aqui
+                } catch(\Exception $e) {
+                    dd($e);
+                } catch(\Throwable $e) {
+                    dd($e);
                     // @todo Tratar aqui
                 }
             }
