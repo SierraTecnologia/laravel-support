@@ -39,10 +39,9 @@ class DiscoverService
         $models = [
             'App\\',
         ];
-
-        dd($composerParser->returnClassesByAlias($models));
-
-        dd(SchemaManager::listTableNames());
+        dd('Aqui essa bagaca'
+        ,$composerParser->returnClassesByAlias($models)
+        ,SchemaManager::listTableNames());
         
     }
 }

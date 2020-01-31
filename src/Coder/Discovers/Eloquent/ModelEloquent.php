@@ -16,21 +16,15 @@ use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Coder\Discovers\Eloquent\EloquentColumn;
 use Support\Coder\Discovers\Database\Schema\SchemaManager;
 use Support\Coder\Parser\ParseModelClass;
+use Support\ClassesHelpers\Development\DevDebug;
+use Support\Coder\Cached\EloquentCached;
 
 class ModelEloquent
 {
-    protected $schemaManagerTable = false;
+    use DevDebug;
+    
+    protected $eloquentCached = false;
     protected $modelClass;
-
-    /**
-     * Helpers for Development @todo Tirar daqui
-     */ 
-    // @todo Tirar essa gambiarra
-    public $debug = true;
-    public $modelsForDebug = [
-        // \Population\Models\Identity\Digital\Account::class,
-        // \Population\Models\Identity\Digital\Email::class,
-    ];
 
     /**
      * Construct
@@ -42,46 +36,32 @@ class ModelEloquent
         }
 
         if ($this->modelClass = $modelClass) {
-            $this->renderTableInfos();
+            $this->eloquentCached = new EloquentCached($modelClass);
         }
     }
 
+
+
+
     /**
-     * Trabalhos Pesados
+     * Static functions
+     */ 
+    public static function make($modelClass)
+    {
+        return new self($modelClass);
+    }
+
+
+
+    /**********************************************************
+     *********************************************************
+     * Via Eloquent
+     *********************************************************
+     *********************************************************
      */
     public function getRelations($key = false)
     {
-        // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
-        return (new Relationships($this->modelClass))($key);
-    }
-
-    private function renderTableInfos()
-    {
-        try {
-            $tableName = ParseModelClass::getTableName($this->modelClass);
-            $this->schemaManagerTable = SchemaManager::listTableDetails(
-                $tableName
-            );
-            $describeTable = SchemaManager::describeTable(
-                $tableName
-            );
-
-            // Debug
-            $this->sendToDebug([
-                $describeTable,
-                $this->getRelations(),
-                $this->schemaManagerTable,
-                $this->schemaManagerTable->getIndexes()
-            ]);
-        } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-            // dd($e);
-            //@todo fazer aqui
-        } catch(\Exception $e) {
-            // @todo Tratar aqui
-        } catch(\Throwable $e) {
-            // dd($e);
-            // @todo Tratar aqui
-        }
+        return $this->getEloquentCached()->getRelations($key);
     }
 
     /**
@@ -89,11 +69,7 @@ class ModelEloquent
      */
     public function getAtributes()
     {
-        // dd(\Schema::getColumnListing($this->modelClass));
-        $fillables = collect(App::make($this->modelClass)->getFillable())->map(function ($value) {
-            return new EloquentColumn($value, new Varchar, true);
-        });
-        return $fillables;
+        return $this->getEloquentCached()->getAtributes();
     }
 
     /**
@@ -101,16 +77,15 @@ class ModelEloquent
      */
     public function getPrimaryKey()
     {
-        return ParseModelClass::getPrimaryKey($this->modelClass);
+        return $this->getEloquentCached()->getPrimaryKey();
     }
     public function getColumns()
     {
-        // dd($this->getAtributes(), $this->schemaManagerTable->getColumns());
-        return $this->schemaManagerTable->getColumns();
+        return $this->getEloquentCached()->getColumns();
     }
     public function getIndexes()
     {
-        return $this->schemaManagerTable->getIndexes();
+        return $this->getEloquentCached()->getIndexes();
     }
 
 
@@ -124,11 +99,11 @@ class ModelEloquent
      */ 
     public function hasColumn($columns)
     {
-        return $this->schemaManagerTable->hasColumn($columns);
+        return $this->getEloquentCached()->hasColumn($columns);
     }
     public function columnIsType($columnName, $typeClass)
     {
-        return $this->schemaManagerTable->columnIsType($columnName, $typeClass);
+        return $this->getEloquentCached()->columnIsType($columnName, $typeClass);
     }
 
 
@@ -142,38 +117,7 @@ class ModelEloquent
      */ 
     public function generateWhere($columns, $data)
     {
-        $where = [];
-        foreach ($columns as $column) {
-            if (isset($data[$column]) && !empty($data[$column])) {
-                $where[$column] = $data[$column];
-                // @todo resolver
-                // $where[$column] = static::cleanCodeSlug($data[$column]);
-            }
-        }
-        return $where;
+        return $this->getEloquentCached()->generateWhere($columns, $data);
     }
 
-
-
-
-
-    /**
-     * Helpers for Development
-     */ 
-    protected function sendToDebug($data)
-    {
-        if (!$this->debug) {
-            return ;
-        }
-
-        dd($data);
-    }
-
-    /**
-     * Static functions
-     */ 
-    public static function make($modelClass)
-    {
-        return new self($modelClass);
-    }
 }

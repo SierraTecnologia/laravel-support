@@ -528,12 +528,9 @@ abstract class Base extends Eloquent
             }
         }
 
+        // @debug Resolver essa gambiarra
+        $modelData->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $modelData]);
 
-
-
-        if ($modelData->debug) {
-            dd($data, $keyName, $dataOrPrimaryCode, $modelData);
-        }
         return static::create($data);
 
     }
