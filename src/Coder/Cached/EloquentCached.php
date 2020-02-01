@@ -202,7 +202,7 @@ class EloquentCached
     }
     public function getColumns()
     {
-        // dd($this->getColumns), $this->schemaManagerTable->getColumns());
+        // dd($this->getColumns()), $this->schemaManagerTable->getColumns());
         return $this->schemaManagerTable->getColumns();
 
         // Ou assim
