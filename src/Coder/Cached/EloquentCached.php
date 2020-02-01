@@ -3,7 +3,6 @@
 namespace Support\Coder\Cached;
 
 use Doctrine\DBAL\Schema\Column;
-use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\Schema\TableDiff;
 use Support\Coder\Discovers\Database\Schema\SchemaManager;
 use Support\Coder\Discovers\Database\Schema\Table;
@@ -23,6 +22,9 @@ use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Coder\Discovers\Eloquent\EloquentColumn;
 use Support\Coder\Parser\ParseModelClass;
 use Support\Coder\Cached\EloquentCached;
+
+use Doctrine\DBAL\Schema\SchemaException;
+use Doctrine\DBAL\DBALException;
 
 class EloquentCached
 {
@@ -128,7 +130,8 @@ class EloquentCached
             $this->analisando();
 
             $this->sendToDebug($this->toArray());
-        } catch(SchemaException $e) {
+        } catch(SchemaException|DBALException $e) {
+            // @todo Tratar, Tabela Nao existe
             Log::error($e->getMessage());
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
             // @todo Armazenar Erro em tabela
@@ -199,7 +202,7 @@ class EloquentCached
     }
     public function getColumns()
     {
-        // dd($this->getAtributes(), $this->schemaManagerTable->getColumns());
+        // dd($this->getColumns), $this->schemaManagerTable->getColumns());
         return $this->schemaManagerTable->getColumns();
 
         // Ou assim
