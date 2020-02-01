@@ -203,7 +203,7 @@ class EloquentCached
     public function getColumns()
     {
         // dd($this->getColumns()), $this->schemaManagerTable->getColumns());
-        return $this->schemaManagerTable->getColumns();
+        // return $this->schemaManagerTable->getColumns();
 
         // Ou assim
         // SchemaManager::describeTable(
@@ -212,10 +212,10 @@ class EloquentCached
 
         // Ou Assim
         // // dd(\Schema::getColumnListing($this->modelClass));
-        // $fillables = collect(App::make($this->modelClass)->getFillable())->map(function ($value) {
-        //     return new EloquentColumn($value, new Varchar, true);
-        // });
-        // return $fillables;
+        $fillables = collect(App::make($this->modelClass)->getFillable())->map(function ($value) {
+            return new EloquentColumn($value, new Varchar, true);
+        });
+        return $fillables;
     }
     public function getIndexes()
     {

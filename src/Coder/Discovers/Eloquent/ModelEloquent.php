@@ -43,6 +43,11 @@ class ModelEloquent
 
 
 
+    protected function getEloquentCached()
+    {
+        return $this->eloquentCached;
+    }
+
     /**
      * Static functions
      */ 
