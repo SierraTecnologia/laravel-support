@@ -21,7 +21,7 @@ trait DevDebug
     /**
      * Helpers for Development
      */ 
-    protected function sendToDebug($data)
+    public function sendToDebug($data)
     {
         if (!$this->debug) {
             return ;

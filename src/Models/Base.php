@@ -27,7 +27,15 @@ use Watson\Validating\ValidatingTrait;
 
 abstract class Base extends Eloquent
 {
-    use ValidatingTrait, SortableTrait;
+    /**
+     * @todo bug Resolver pra tirar esse coment
+     * [2020-02-02 08:18:39] local.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' (SQL: select count(*) as aggregate from `users` where `email` = rafacollares@hotmail.com and `2` <> 2) {"exception":"[object] (Illuminate\\Database\\QueryExcept
+    * ion(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' (SQL: select count(*) as aggregate from `users` where `email` = rafacollares@hotmail.com and `2` <> 2) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connecti
+    * on.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:63, PDOException(code: 42S22): SQLSTATE[42S22]: Col
+    * umn not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:61)                                                                                                                                   
+    * [stacktrace]                                                                                                                                   
+     */
+    use /*ValidatingTrait, */SortableTrait;
 
     //---------------------------------------------------------------------------
     // Overrideable properties
@@ -513,15 +521,19 @@ abstract class Base extends Eloquent
             $data['name'] = static::convertSlugToName($data[$keyName]);
         }
 
+
         $indices = $modelData->getIndexes();
         foreach ($indices as $index) {
             if ($index->isPrimary() || $index->isUnique()) {
-                if ($modelFind = static::where(
-                    $modelData->generateWhere(
-                        $index->getColumns(),
-                        $data
-                    )
-                )->first()) {
+                // Caso não tenha nada a procurar, entao pula
+                if (empty($generateWhere = $modelData->generateWhere(
+                    $index->getColumns(),
+                    $data
+                ))) {
+                    continue;
+                }
+
+                if ($modelFind = static::where($generateWhere)->first()) {
                     Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($index->getColumns(), true).' e Data: '.print_r($data, true));
                     return static::mergeWithAttributes($modelFind, $data);
                 }
