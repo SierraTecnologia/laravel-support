@@ -3,7 +3,7 @@
  * 
  */
 
-namespace Support\BigData\\HistoryType;
+namespace Support\BigData\HistoryType;
 
 
 abstract class AbstractHistoryType

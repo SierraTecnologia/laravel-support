@@ -3,7 +3,7 @@
  * 
  */
 
-namespace Support\BigData\\RegisterTypes;
+namespace Support\BigData\RegisterTypes;
 
 
 abstract class AbstractRegisterType

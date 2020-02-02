@@ -3,7 +3,7 @@
  * Algo em determinado Tempo
  */
 
-namespace Support\BigData\\RegisterTypes;
+namespace Support\BigData\RegisterTypes;
 
 
 class RegisterHistoricEntity extends AbstractRegisterType
