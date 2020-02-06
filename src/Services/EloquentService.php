@@ -61,6 +61,8 @@ class EloquentService
         if ($this->modelClass = $modelClass) {
             $this->render();
         }
+
+        dd($this->toArray());
     }
 
     /**
@@ -242,6 +244,22 @@ class EloquentService
         });
 
         // dd($fillables);
+
+        return $fillables;
+    }
+    public function getColumnsForList()
+    {
+        $fillables = $this->getColumns();
+
+        $fillables = $fillables->reject(function($column) {
+            if ($column->getColumnName === 'deleted_at') {
+                return false;
+            }
+            
+            return false;
+        });
+
+        dd($fillables);
 
         return $fillables;
     }
