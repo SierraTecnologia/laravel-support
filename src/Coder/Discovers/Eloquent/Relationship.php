@@ -27,4 +27,19 @@ class Relationship
             $this->ownerKey = $relationship['ownerKey'];
         }
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
 }

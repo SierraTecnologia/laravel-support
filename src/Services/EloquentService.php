@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Coder\Cached;
+namespace Support\Services;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
@@ -21,12 +21,11 @@ use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Coder\Discovers\Eloquent\EloquentColumn;
 use Support\Coder\Parser\ParseModelClass;
-use Support\Coder\Cached\EloquentCached;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-class EloquentCached
+class EloquentService
 {
     use DevDebug;
     /**
@@ -62,8 +61,26 @@ class EloquentCached
         if ($this->modelClass = $modelClass) {
             $this->render();
         }
-
     }
+
+    /**
+     * Static functions
+     */ 
+    public static function make($modelClass)
+    {
+        return new self($modelClass);
+    }
+
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
+
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+
 
     /**
      * Update the table.
@@ -183,6 +200,21 @@ class EloquentCached
 
     }
 
+    /**
+     * Trabalhos Leves
+     */
+    public function getName($plural = false)
+    {
+        $reflection = new ReflectionClass($this->modelClass);
+        $name = $reflection->getShortName();
+
+        if ($plural) {
+            $name .= '\'s';
+        }
+
+        return $name;
+    }
+
 
     /**
      * Trabalhos Pesados
@@ -202,19 +234,90 @@ class EloquentCached
     }
     public function getColumns()
     {
-        // dd($this->getColumns()), $this->schemaManagerTable->getColumns());
-        // return $this->schemaManagerTable->getColumns();
 
-        // Ou assim
-        // SchemaManager::describeTable(
-        //     $this->tableName
-        // );
+        // Ou Assim
+        // // dd(\Schema::getColumnListing($this->modelClass));
+        $fillables = collect($this->getTableDetailsArray())->map(function ($value) {
+            return new EloquentColumn($value['name'], new Varchar, true);
+        });
+
+        // dd($fillables);
+
+        return $fillables;
+    }
+    public function getColumnsArray()
+    {
+        return $this->schemaManagerTable->getColumns();
+    }
+    public function getTableDetailsArray()
+    {
+        /**
+         * ^ Illuminate\Support\Collection {#799 ▼
+         *   #items: array:6 [▼
+         * id" => array:19 [▶]
+         * name" => array:21 [▼
+           * name" => "name"
+           * type" => "varchar"
+           * default" => null
+           * notnull" => false
+           * length" => 255
+           * precision" => 10
+           * scale" => 0
+           * fixed" => false
+           * unsigned" => false
+           * autoincrement" => false
+           * columnDefinition" => null
+           * comment" => null
+           * charset" => "utf8mb4"
+           * collation" => "utf8mb4_unicode_ci"
+           * oldName" => "name"
+           * null" => "YES"
+           * extra" => ""
+           * composite" => false
+           * field" => "name"
+           * indexes" => []
+           * key" => null
+          *    ]
+         * description" => array:21 [▶]
+         * created_at" => array:19 [▼
+           * name" => "created_at"
+           * type" => "timestamp"
+           * default" => null
+           * notnull" => false
+           * length" => 0
+           * precision" => 10
+           * scale" => 0
+           * fixed" => false
+           * unsigned" => false
+           * autoincrement" => false
+           * columnDefinition" => null
+           * comment" => null
+           * oldName" => "created_at"
+           * null" => "YES"
+           * extra" => ""
+           * composite" => false
+           * field" => "created_at"
+           * indexes" => []
+           * key" => null
+          *    ]
+         * updated_at" => array:19 [▶]
+         * deleted_at" => array:19 [▶]
+          *  ]
+         * }
+         */
+        return SchemaManager::describeTable(
+            $this->tableName
+        );
+    }
+    public function getColumnsFillables()
+    {
 
         // Ou Assim
         // // dd(\Schema::getColumnListing($this->modelClass));
         $fillables = collect(App::make($this->modelClass)->getFillable())->map(function ($value) {
             return new EloquentColumn($value, new Varchar, true);
         });
+
         return $fillables;
     }
     public function getIndexes()
@@ -262,6 +365,15 @@ class EloquentCached
         return $where;
     }
 
+
+    /**
+     * 
+     */
+    public function getNamespace()
+    {
+        $namespaceWithoutModels = explode("Models\\", $this->modelClass);
+        return join(array_slice(explode("\\", $namespaceWithoutModels[1]), 0, -1), "\\");
+    }
 
 
 }
