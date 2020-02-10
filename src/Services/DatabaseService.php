@@ -84,7 +84,7 @@ class DatabaseService
             }
         }
 
-        // dd($this->renderModels, $this->renderTables, $this->renderRelations);
+        dd($this->renderModels, $this->renderTables, $this->renderRelations);
 
 
         return collect($this->renderModels);
@@ -98,10 +98,10 @@ class DatabaseService
             $this->renderModels[$indice] = [
                 'name' => $model->getName(),
                 'icon' => \Support\Template\Layout\Icons::getForNameAndCache($model->getName()),
+                'columns' => $model->getColumns(),
                 'relations' => $model->getRelations(),
 
                 'namespace' => $model->getNamespace(),
-                'group' => $model->getNamespace(),
             ];
         }
 

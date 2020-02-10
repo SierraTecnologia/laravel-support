@@ -35,6 +35,13 @@ class EloquentColumn
     public function displayFromModel(Model $resultModel)
     {
         $column = $this->getColumnName();
-        return $resultModel->$column;
+
+        $result = $resultModel->$column;
+
+        if (is_array($result)) {
+            return implode(' - ', $result);
+        }
+
+        return $result;
     }
 }

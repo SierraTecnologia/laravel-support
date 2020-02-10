@@ -180,6 +180,24 @@ abstract class Base extends Eloquent
         return array_key_exists('slug', $this->rules);
     }
 
+    public function getApresentationName()
+    {
+        if(isset($this->name)){
+            return $this->name;
+        }
+        if(isset($this->slug)){
+            return $this->slug;
+        }
+        if(isset($this->text)){
+            return $this->text;
+        }
+        if(isset($this->token)){
+            return $this->token;
+        }
+        $keyName = $this->getKeyName();
+        return $this->$keyName;
+    }
+
     //---------------------------------------------------------------------------
     // Accessors
     //---------------------------------------------------------------------------

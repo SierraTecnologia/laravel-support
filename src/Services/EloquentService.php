@@ -62,7 +62,7 @@ class EloquentService
             $this->render();
         }
 
-        dd($this->toArray());
+        // dd($this->toArray());
     }
 
     /**
@@ -236,7 +236,7 @@ class EloquentService
     }
     public function getColumns()
     {
-
+    //     dd($this->getTableDetailsArray());
         // Ou Assim
         // // dd(\Schema::getColumnListing($this->modelClass));
         $fillables = collect($this->getTableDetailsArray())->map(function ($value) {

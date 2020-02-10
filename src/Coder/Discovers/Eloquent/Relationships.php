@@ -103,7 +103,8 @@ class Relationships
                 } catch(\Exception $e) {
                     dd($e);
                 } catch(\Throwable $e) {
-                    dd($e);
+                    // dd($this->model, $method, $e);
+                    // dd($e);
                     // @todo Tratar aqui
                 }
             }
