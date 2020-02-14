@@ -21,6 +21,11 @@ class ParseModelClass extends ParseClass
 
     }
 
+    public function getData($indice)
+    {
+        $array = $this->toArray();
+        return $array[$indice];
+    }
 
 
     public function toArray()
@@ -91,4 +96,15 @@ class ParseModelClass extends ParseClass
 
         return (self::returnInstanceForClass($class))->getTable();
     }
+
+
+    /**
+     * 
+     */
+    public function getNamespace()
+    {
+        $namespaceWithoutModels = explode("Models\\", $this->modelClass);
+        return join(array_slice(explode("\\", $namespaceWithoutModels[1]), 0, -1), "\\");
+    }
+
 }

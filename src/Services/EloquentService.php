@@ -80,7 +80,7 @@ class EloquentService
 
     public function getTableName()
     {
-        return $this->tableName;
+        return $this->hardParserModelClass;
     }
 
 
@@ -165,8 +165,8 @@ class EloquentService
     }
     private function renderModel()
     {
-        $this->tableName = ParseModelClass::getTableName($this->modelClass);
         $this->hardParserModelClass = new ParseModelClass($this->modelClass);
+        $this->tableName = $this->hardParserModelClass->getData('table');
     }
     private function renderDatabase()
     {
@@ -236,7 +236,7 @@ class EloquentService
     }
     public function getColumns()
     {
-    //     dd($this->getTableDetailsArray());
+
         // Ou Assim
         // // dd(\Schema::getColumnListing($this->modelClass));
         $fillables = collect($this->getTableDetailsArray())->map(function ($value) {
@@ -340,6 +340,9 @@ class EloquentService
     }
     public function getIndexes()
     {
+        if (!$this->schemaManagerTable) {
+            dd($this->modelClass);
+        }
         return $this->schemaManagerTable->getIndexes();
     }
 
@@ -382,16 +385,5 @@ class EloquentService
         }
         return $where;
     }
-
-
-    /**
-     * 
-     */
-    public function getNamespace()
-    {
-        $namespaceWithoutModels = explode("Models\\", $this->modelClass);
-        return join(array_slice(explode("\\", $namespaceWithoutModels[1]), 0, -1), "\\");
-    }
-
 
 }
