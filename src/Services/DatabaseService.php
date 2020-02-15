@@ -24,17 +24,24 @@ use Support\Coder\Parser\ComposerParser;
 class DatabaseService
 {
 
-    protected $databaseMount = false;
+    protected $composerParser = false;
+    protected $configModelsAlias = [];
 
     public function __construct($configModelsAlias, ComposerParser $composerParser)
     {
-        $this->databaseMount = new \Support\Mounters\SchemaMount($configModelsAlias, $composerParser);
+        $this->configModelsAlias = $configModelsAlias;
+        $this->composerParser = $composerParser;
     }
 
     public function getAllModels()
     {
-        return $this->databaseMount->getAllModels();
+        $models = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
+
+        return $models->reject(function($filePath, $class) {
+            return !(new \Support\Coder\Discovers\Identificadores\ClasseType($class))->typeIs('model');
+        });
     }
+
 
 
 }

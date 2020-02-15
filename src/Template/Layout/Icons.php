@@ -13,13 +13,16 @@ use Support\Helpers\Words\ReturnSimilars;
  */
 class Icons
 {
-        public static function getRandon()
+        public static function getRandon($html = true)
         {
             $icon = array_rand(self::icons(), 1);
+            if (!$html) {
+                return self::icons()[$icon]['class'];
+            }
             return '<i class="'.self::icons()[$icon]['class'].'"></i>';
         }
 
-        public static function getForNameAndCache($name)
+        public static function getForNameAndCache($name, $html = true)
         {
             $name = ReturnSimilars::getSimilarsFor($name);
             $icons = collect(self::icons())->reject(function ($icon) use ($name) {
@@ -48,18 +51,22 @@ class Icons
                 }
 
                 return $reject;
-            });
+            })->toArray();
             
             if (empty($icons)) {
-                return $this->getRandon();
+                return self::getRandon($html);
             }
-            
-            if (empty($icons)) {
-                return $this->getRandon();
-            }
+            $icon = array_rand($icons, 1);
 
-            $icon = array_rand(self::icons(), 1);
-            return '<i class="'.self::icons()[$icon]['class'].'"></i>';
+            if (!isset($icons[$icon]['class'])) {
+                dd('Erro aqui nos icones', $icon, $icons[$icon]);
+            }
+            
+
+            if (!$html) {
+                return $icons[$icon]['class'];
+            }
+            return '<i class="'.$icons[$icon]['class'].'"></i>';
         }
 
 

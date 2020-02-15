@@ -210,8 +210,9 @@ class EloquentService
         $reflection = new ReflectionClass($this->modelClass);
         $name = $reflection->getShortName();
 
+        // @todo Fazer plural
         if ($plural) {
-            $name .= '\'s';
+            $name .= 's';
         }
 
         return $name;
@@ -236,11 +237,10 @@ class EloquentService
     }
     public function getColumns()
     {
-
         // Ou Assim
         // // dd(\Schema::getColumnListing($this->modelClass));
         $fillables = collect($this->getTableDetailsArray())->map(function ($value) {
-            return new EloquentColumn($value['name'], new Varchar, true);
+            return EloquentColumn::returnFromArray($value, $this);
         });
 
         // dd($fillables);
