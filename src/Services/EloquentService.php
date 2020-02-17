@@ -50,6 +50,12 @@ class EloquentService
     protected $hardParserModelClass;
 
     /**
+     * Error
+     */
+    protected $error = [];
+    protected $isError = false;
+
+    /**
      * Construct
      */
     public function __construct($modelClass = false)
@@ -81,6 +87,17 @@ class EloquentService
     public function getTableName()
     {
         return $this->hardParserModelClass;
+    }
+
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function setError($error)
+    {
+        $this->error[] = $error;
+        $this->isError = true;
     }
 
 
@@ -130,6 +147,9 @@ class EloquentService
      */
     public function managerToArray()
     {
+        if ($this->isError) {
+            return false;
+        }
         $manager = [];
         $manager['modelManager'] = $this->hardParserModelClass->toArray();
         $manager['tableManager'] = $this->schemaManagerTable->toArray();
@@ -152,13 +172,18 @@ class EloquentService
         } catch(SchemaException|DBALException $e) {
             // @todo Tratar, Tabela Nao existe
             Log::error($e->getMessage());
+            $this->setError($e->getMessage());
+            
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
+            $this->setError($e->getMessage());
             // @todo Armazenar Erro em tabela
             dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
+            $this->setError($e->getMessage());
             dd($e);
         } catch(\Throwable $e) {
+            $this->setError($e->getMessage());
             dd($e);
             // @todo Tratar aqui
         }
