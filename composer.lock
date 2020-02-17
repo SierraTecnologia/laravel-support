@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8ee1a650566f8f6736f9160ae7a483a",
+    "content-hash": "eddfc6f5f7f76abad326aff04216a5fe",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -4670,6 +4670,64 @@
             "time": "2020-01-31T12:45:06+00:00"
         },
         {
+            "name": "symfony/inflector",
+            "version": "v5.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/inflector.git",
+                "reference": "e375603b6bd12e8e3aec3fc1b640ac18a4ef4cb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/inflector/zipball/e375603b6bd12e8e3aec3fc1b640ac18a4ef4cb2",
+                "reference": "e375603b6bd12e8e3aec3fc1b640ac18a4ef4cb2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Inflector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Inflector Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "inflection",
+                "pluralize",
+                "singularize",
+                "string",
+                "symfony",
+                "words"
+            ],
+            "time": "2020-01-04T14:08:26+00:00"
+        },
+        {
             "name": "symfony/mime",
             "version": "v5.0.4",
             "source": {
@@ -7396,8 +7454,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "ricardosierra/translation": 20,
-        "ricardosierra/minify": 20
+        "ricardosierra/minify": 20,
+        "ricardosierra/translation": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

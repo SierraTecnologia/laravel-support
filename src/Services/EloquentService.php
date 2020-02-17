@@ -21,6 +21,7 @@ use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Coder\Discovers\Eloquent\EloquentColumn;
 use Support\Coder\Parser\ParseModelClass;
+use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
@@ -42,6 +43,8 @@ class EloquentService
     protected $indexes;
     protected $primaryKey;
     protected $attributes;
+
+    protected $relations = false;
 
     /**
      * NOt Cached
@@ -237,7 +240,7 @@ class EloquentService
 
         // @todo Fazer plural
         if ($plural) {
-            $name .= 's';
+            $name = Inflector::pluralize($name);
         }
 
         return $name;
@@ -249,8 +252,15 @@ class EloquentService
      */
     public function getRelations($key = false)
     {
+        if ($key) {
+            return (new Relationships($this->modelClass))($key);
+        }
+
+        if (!$this->relations) {
+            $this->relations = (new Relationships($this->modelClass))($key);
+        }
         // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
-        return (new Relationships($this->modelClass))($key);
+        return $this->relations;
     }
 
     /**

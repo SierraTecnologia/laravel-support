@@ -10,11 +10,15 @@ use Support\Elements\Entities\DataType;
 use Illuminate\Database\Eloquent\Model;
 
 use Support\Elements\Entities\DataTypes\Varchar;
-
+use Symfony\Component\Inflector\Inflector;
 use Support\Services\EloquentService;
 
 class EloquentColumn
 {
+    public $displayName = false;
+    public $displayColumn;
+    public $displayType;
+
     public $column;
     public $type;
     public $fillable;
@@ -58,59 +62,19 @@ class EloquentColumn
      */
     public function getColumnType()
     {
-        return $this->getData('type');
+        $type = $this->getData('type');
+        return $type;
     }
-
-    // 'details'      => [
-    //     'slugify' => [
-    //         'origin' => 'title',
-    //     ],
-    //     'validation' => [
-    //         'rule'  => 'unique:pages,slug',
-    //     ],
-    // ],
-    // [
-    //     'default' => '',
-    //     'null'    => '',
-    //     'options' => [
-    //         '' => '-- None --',
-    //     ],
-    //     'relationship' => [
-    //         'key'   => 'id',
-    //         'label' => 'name',
-    //     ],
-    // ]
-
-    // Image
-    // 
-    // 'details'      => [
-    //     'resize' => [
-    //         'width'  => '1000',
-    //         'height' => 'null',
-    //     ],
-    //     'quality'    => '70%',
-    //     'upsize'     => true,
-    //     'thumbnails' => [
-    //         [
-    //             'name'  => 'medium',
-    //             'scale' => '50%',
-    //         ],
-    //         [
-    //             'name'  => 'small',
-    //             'scale' => '25%',
-    //         ],
-    //         [
-    //             'name' => 'cropped',
-    //             'crop' => [
-    //                 'width'  => '300',
-    //                 'height' => '250',
-    //             ],
-    //         ],
-    //     ],
-    // ],
-    public function getDetails()
+    public function getColumnDisplayType()
     {
-        return null;
+        $type = $this->getColumnType();
+
+        if ($this->isBelongTo()) {
+            $this->displayType = 'relationship';
+        }else if ($type == 'int' || $type == 'integer') {
+            $this->displayType = 'number';
+        }
+        return $this->displayType;
     }
 
 
@@ -120,7 +84,21 @@ class EloquentColumn
      */
     public function getName()
     {
-        return ucfirst($this->column);
+        if (!$this->displayName) {
+                
+            $explode = explode('_', $this->getColumnName());
+            $name = '';
+            foreach ($explode as $value) {
+                if (!empty($name)) {
+                    $name .= ' ';
+                }
+                $name .= ucfirst($value);
+            }
+            $this->displayName = $name;
+        }
+
+
+        return $this->displayName;
     }
 
     public function displayFromModel(Model $resultModel)
@@ -200,6 +178,57 @@ class EloquentColumn
 
 
 
+    // 'details'      => [
+    //     'slugify' => [
+    //         'origin' => 'title',
+    //     ],
+    //     'validation' => [
+    //         'rule'  => 'unique:pages,slug',
+    //     ],
+    // ],
+    // [
+    //     'default' => '',
+    //     'null'    => '',
+    //     'options' => [
+    //         '' => '-- None --',
+    //     ],
+    //     'relationship' => [
+    //         'key'   => 'id',
+    //         'label' => 'name',
+    //     ],
+    // ]
+
+    // Image
+    // 
+    // 'details'      => [
+    //     'resize' => [
+    //         'width'  => '1000',
+    //         'height' => 'null',
+    //     ],
+    //     'quality'    => '70%',isBelongTo
+    //                 'width'  => '300',
+    //                 'height' => '250',
+    //             ],
+    //         ],
+    //     ],
+    // ],
+    public function getDetails()
+    {
+        $haveDetails = false;
+        $array = [];
+        if ($relation = $this->isBelongTo()) {
+            $haveDetails = true;
+            $array['key'] = $relation['key'];
+            $array['key'] = $relation['key'];
+        }
+
+        if (!$haveDetails) {
+            return null;
+        }
+
+        return $array;
+    }
+
 
 
 
@@ -263,10 +292,74 @@ class EloquentColumn
         $instanceClass = new static($data['name'], new Varchar, true);
         $instanceClass->setData($data);
         $instanceClass->readEloquentService($eloquentService);
+
         return $instanceClass;
     }
+
+
+    /**
+     * 
+                'details'      => [
+                    'model'       => 'Facilitador\\Models\\Role',
+                    'table'       => 'roles',
+                    'type'        => 'belongsTo',
+                    'column'      => 'role_id',
+                    'key'         => 'id',
+                    'label'       => 'display_name',
+                    'pivot_table' => 'roles',
+                    'pivot'       => 0,
+                ],
+
+     * User hasMany Phones (One to Many)
+     * Phone belongsTo User (Many to One) (Inverso do de cima)
+     * 
+     * belongsToMany (Many to Many) (Inverso é igual)
+     * 
+     * morphMany
+     * morphTo
+     * 
+     * morphedByMany (O modelo possui a tabela taggables)
+     * morphToMany   (nao possui a tabela taggables)
+     */
     protected function readEloquentService(EloquentService $eloquentService)
     {
-        
+        $relations = $eloquentService->getRelations();
+        if (!empty($relations)) {
+            foreach ($relations as $relation) {
+
+            }
+        }
+
+    }
+
+    protected function isBelongTo()
+    {
+        $keys = $this->getListTables();
+        if (isset($keys[$this->getColumnName()])) {
+            return $keys[$this->getColumnName()];
+        }
+
+        return false;
+    }
+
+    protected function getListTables()
+    {
+        $keys = [];
+        $listTables = \Support\Coder\Discovers\Database\Schema\SchemaManager::listTables();
+        foreach ($listTables as $listTable){
+            if (!empty($indexes = $listTable->exportIndexesToArray())) {
+                foreach ($indexes as $index) {
+                    if ($index['type'] == 'PRIMARY') {
+                        $keys[$listTable->getName().'_'.$index['columns'][0]] = [
+                            'name' => $listTable->getName(),
+                            'key' => $index['columns'][0],
+                            'label' => 'name'
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $keys;
     }
 }
