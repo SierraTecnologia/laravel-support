@@ -8,7 +8,7 @@ class MultipleImagesHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('voyager::formfields.multiple_images', [
+        return view('facilitador::formfields.multiple_images', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

@@ -6,12 +6,12 @@ class EditAction extends AbstractAction
 {
     public function getTitle()
     {
-        return __('voyager::generic.edit');
+        return __('facilitador::generic.edit');
     }
 
     public function getIcon()
     {
-        return 'voyager-edit';
+        return 'facilitador-edit';
     }
 
     public function getPolicy()
@@ -28,6 +28,7 @@ class EditAction extends AbstractAction
 
     public function getDefaultRoute()
     {
-        return route('voyager.'.$this->dataType->slug.'.edit', $this->data->{$this->data->getKeyName()});
+        return \Facilitador\Routing\UrlGenerator::managerRoute($this->dataType->slug, 'edit', $this->data->{$this->data->getKeyName()});
+        // return route('facilitador.'.$this->dataType->slug.'.edit', $this->data->{$this->data->getKeyName()});
     }
 }

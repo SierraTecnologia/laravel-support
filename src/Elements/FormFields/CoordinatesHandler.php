@@ -13,7 +13,7 @@ class CoordinatesHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('voyager::formfields.coordinates', [
+        return view('facilitador::formfields.coordinates', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

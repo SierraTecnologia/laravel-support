@@ -8,7 +8,7 @@ class FileHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('voyager::formfields.file', [
+        return view('facilitador::formfields.file', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

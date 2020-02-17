@@ -6,12 +6,12 @@ class ViewAction extends AbstractAction
 {
     public function getTitle()
     {
-        return __('voyager::generic.view');
+        return __('facilitador::generic.view');
     }
 
     public function getIcon()
     {
-        return 'voyager-eye';
+        return 'facilitador-eye';
     }
 
     public function getPolicy()
@@ -28,6 +28,7 @@ class ViewAction extends AbstractAction
 
     public function getDefaultRoute()
     {
-        return route('voyager.'.$this->dataType->slug.'.show', $this->data->{$this->data->getKeyName()});
+        return \Facilitador\Routing\UrlGenerator::managerRoute($this->dataType->slug, 'show', $this->data->{$this->data->getKeyName()});
+        // return route('facilitador.'.$this->dataType->slug.'.show', $this->data->{$this->data->getKeyName()});
     }
 }
