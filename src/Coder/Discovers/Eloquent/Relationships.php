@@ -9,7 +9,7 @@ use OutOfBoundsException;
 use RuntimeException;
 use TypeError;
 use Watson\Validating\ValidationException;
-
+use Support\ClassesHelpers\Development\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -18,6 +18,8 @@ use Log;
 
 class Relationships
 {
+    use HasErrors;
+
     private $model;
     private $relationships;
 
@@ -92,17 +94,21 @@ class Relationships
                     }
                 } catch(LogicException|ErrorException|RuntimeException $e) {
                     // @todo Tratar aqui
+                    $this->setError($e->getMessage());
                 } catch (OutOfBoundsException|TypeError $e) {
                     //@todo fazer aqui
+                    $this->setError($e->getMessage());
                     // dd($e);
                 } catch(ValidationException $e) {
+                    $this->setError($e->getMessage());
                     // @todo Tratar aqui
                 } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-                    dd($e);
+                    $this->setError($e->getMessage());
                     //@todo fazer aqui
                 } catch(\Exception $e) {
-                    dd($e);
+                    $this->setError($e->getMessage());
                 } catch(\Throwable $e) {
+                    $this->setError($e->getMessage());
                     // dd($this->model, $method, $e);
                     // dd($e);
                     // @todo Tratar aqui
