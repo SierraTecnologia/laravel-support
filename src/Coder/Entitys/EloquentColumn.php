@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Coder\Discovers\Eloquent;
+namespace Support\Coder\Entitys;
 
 use Support\Coder\Discovers\Eloquent\Relationship;
 use Illuminate\Support\Collection;

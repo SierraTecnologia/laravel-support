@@ -23,23 +23,44 @@ use Support\Coder\Parser\ComposerParser;
 
 class DatabaseService
 {
+    protected $allModels = false;
 
     protected $composerParser = false;
     protected $configModelsAlias = [];
+
+
+    protected $renderDatabase = false;
 
     public function __construct($configModelsAlias, ComposerParser $composerParser)
     {
         $this->configModelsAlias = $configModelsAlias;
         $this->composerParser = $composerParser;
+        $this->getRenderDatabase();
     }
 
     public function getAllModels()
     {
-        $models = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
+        if (!$this->allModels) {
+            $models = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
+            $this->allModels = $models->reject(function($filePath, $class) {
+                return !(new \Support\Coder\Discovers\Identificadores\ClasseType($class))->typeIs('model');
+            });
+        }
+        return $this->allModels;
+    }
 
-        return $models->reject(function($filePath, $class) {
-            return !(new \Support\Coder\Discovers\Identificadores\ClasseType($class))->typeIs('model');
-        });
+    public function getRenderDatabase($class)
+    {
+        if (!$this->renderDatabase) {
+            $this->renderDatabase = new \Support\Coder\Render\Database(collect($this->getAllModels()));
+        }
+        return $this->renderDatabase;
+    }
+
+
+    public static function getEloquentService($class)
+    {
+        return $this->getRenderDatabase()->getEloquentService($class);
     }
 
     /**

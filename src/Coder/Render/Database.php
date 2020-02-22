@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Coder\Discovers\Eloquent;
+namespace Support\Coder\Render;
 
 use ErrorException;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -41,13 +41,12 @@ class Database
     public $tablesPrimaryKeys = false;
     public $tablesInfo = [];
 
-    public function __construct($config = false)
+    public function __construct($eloquentClasses)
     {
-        if (!$config) {
-            $config = config('sitec.discover.models_alias');
-        }
+        dd('oi');
+        $this->eloquentClasses = $eloquentClasses;
 
-        $this->render($config);
+        $this->render();
 
         $this->display();
     }
@@ -115,14 +114,14 @@ class Database
         );
     }
 
-    protected function render($config)
+    protected function render()
     {
         $selfInstance = $this;
         // Cache In Minutes
-        $value = Cache::remember('sitec_database', 30, function () use ($selfInstance, $config) {
-            
-            $selfInstance->eloquentClasses = collect((new \Support\Services\DatabaseService($config, new ComposerParser))->getAllModels())->map(function($file, $class) {
-                return $class;
+        $value = Cache::remember('sitec_database', 30, function () use ($selfInstance) {
+
+            $this->eloquentClasses->map(function($file, $class) {
+                return new Eloquent($class);
             })->values()->all();
             
             $selfInstance->getListTables();
@@ -273,8 +272,13 @@ class Database
         return $this->tablesPrimaryKeys;
     }
 
-    public function getKeys()
+
+
+    /**
+     * Mappers
+     */
+    public function getEloquentService($class)
     {
-        return $this->keys;
+        return $this->renderDatabase->getEloquentService($class);
     }
 }

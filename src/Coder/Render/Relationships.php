@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Coder\Discovers\Eloquent;
+namespace Support\Coder\Render;
 
 use Exception;
 use ErrorException;
@@ -15,6 +15,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Log;
+use Support\Coder\Entitys\Relationship;
 
 class Relationships
 {
@@ -24,7 +25,7 @@ class Relationships
     private $relationships;
 
     public function __construct($model) {
-        $this->model = new $model;
+        $this->model = resolve($model);
         $this->relationships = null;
     }
 
@@ -95,22 +96,26 @@ class Relationships
                 } catch(LogicException|ErrorException|RuntimeException $e) {
                     // @todo Tratar aqui
                     $this->setError($e->getMessage());
+                    dd($e);
                 } catch (OutOfBoundsException|TypeError $e) {
                     //@todo fazer aqui
                     $this->setError($e->getMessage());
-                    // dd($e);
+                    dd($e);
                 } catch(ValidationException $e) {
                     $this->setError($e->getMessage());
                     // @todo Tratar aqui
+                    dd($e);
                 } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
                     $this->setError($e->getMessage());
                     //@todo fazer aqui
+                    dd($e);
                 } catch(\Exception $e) {
                     $this->setError($e->getMessage());
+                    dd($e);
                 } catch(\Throwable $e) {
                     $this->setError($e->getMessage());
                     // dd($this->model, $method, $e);
-                    // dd($e);
+                    dd($e);
                     // @todo Tratar aqui
                 }
             }
