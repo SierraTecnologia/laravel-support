@@ -3,13 +3,31 @@
  * Serviço referente a linha no banco de dados
  */
 
-namespace Support\Mounters;
+namespace Support\Template\Mounters;
 
 /**
  * SystemMount helper to make table and object form mapping easy.
  */
 class SystemMount
 {
+
+    public function getProviders()
+    {
+        return [
+            \Audit\AuditProvider::class,
+            \Tracking\TrackingProvider::class,
+
+            \Finder\FinderProvider::class,
+
+            \Casa\CasaProvider::class,
+            \Trainner\TrainnerProvider::class,
+
+            \Gamer\GamerProvider::class,
+            
+            \Facilitador\FacilitadorProvider::class,
+            \Siravel\SiravelProvider::class,
+        ];
+    }
 
     public function loadMenuForAdminlte($event)
     {
@@ -25,20 +43,7 @@ class SystemMount
     {
         return MenuRepository::createFromMultiplosArray(
             collect(
-                [
-                    \Audit\AuditProvider::class,
-                    \Tracking\TrackingProvider::class,
-
-                    \Finder\FinderProvider::class,
-
-                    \Casa\CasaProvider::class,
-                    \Trainner\TrainnerProvider::class,
-
-                    \Gamer\GamerProvider::class,
-                    
-                    \Facilitador\FacilitadorProvider::class,
-                    \Siravel\SiravelProvider::class,
-                ]
+                $this->getProviders()
             )->map(
                 function($class) {
                     return $class::$menuItens;

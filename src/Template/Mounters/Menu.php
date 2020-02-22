@@ -3,7 +3,7 @@
  * Serviço referente a linha no banco de dados
  */
 
-namespace Support\Mounters;
+namespace Support\Template\Mounters;
 
 /**
  * Menu helper to make table and object form mapping easy.

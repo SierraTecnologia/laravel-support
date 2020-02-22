@@ -2,7 +2,7 @@
 /**
  */
 
-namespace Support\Mounters;
+namespace Support\Template\Mounters;
 
 /**
  * MenuRepository helper to make table and object form mapping easy.
