@@ -89,7 +89,7 @@ class EloquentService
 
     public function getTableName()
     {
-        return $this->hardParserModelClass;
+        return $this->tableName;
     }
 
     /**
@@ -101,6 +101,16 @@ class EloquentService
     {
         $this->error[] = $error;
         $this->isError = true;
+    }
+
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function getError()
+    {
+        return $this->error;
     }
 
 
@@ -132,8 +142,6 @@ class EloquentService
         $array = [];
         $array['tableName'] = $this->tableName;
 
-        $array['columnsForList'] = $this->columnsForList;
-        $array['columnsForEdit'] = $this->columnsForEdit;
         $array['columns'] = $this->columns;
         $array['indexes'] = $this->indexes;
         $array['primaryKey'] = $this->primaryKey;
@@ -211,8 +219,6 @@ class EloquentService
         /**
          * Cached
          */
-        $this->columnsForList = [];
-        $this->columnsForEdit = []; 
         $this->indexes = $this->getIndexes();
         $this->columns = $this->getColumns();
         $this->primaryKey = $this->getPrimaryKey();

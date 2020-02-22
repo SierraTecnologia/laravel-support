@@ -329,12 +329,11 @@ class EloquentColumn
 
             }
         }
-
     }
 
     protected function isBelongTo()
     {
-        $keys = $this->getListTables();
+        $keys = $database->getListTables();
         if (isset($keys[$this->getColumnName()])) {
             return $keys[$this->getColumnName()];
         }
