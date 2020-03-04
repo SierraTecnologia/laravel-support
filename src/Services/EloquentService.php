@@ -187,7 +187,7 @@ class EloquentService
         }
         $manager = [];
         $manager['modelManager'] = $this->hardParserModelClass->toArray();
-        $manager['tableManager'] = $this->schemaManagerTable->toArray();
+        $manager['tableManager'] = $this->getSchemaManagerTable()->toArray();
         return $manager;
     }
 
