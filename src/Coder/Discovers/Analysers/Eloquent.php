@@ -223,6 +223,9 @@ class Eloquent
         // @todo Fazer plural
         if ($plural) {
             $name = Inflector::pluralize($name);
+            if (is_array($name)) {
+                $name = $name[count($name) - 1];
+            }
         }
 
         return $name;

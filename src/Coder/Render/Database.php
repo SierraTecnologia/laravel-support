@@ -2,7 +2,12 @@
 
 namespace Support\Coder\Render;
 
+use Exception;
 use ErrorException;
+use LogicException;
+use OutOfBoundsException;
+use RuntimeException;
+use TypeError;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -12,6 +17,8 @@ use Support\Services\EloquentService;
 use Support\Coder\Parser\ComposerParser;
 use Illuminate\Support\Facades\Cache;
 use Support\ClassesHelpers\Development\HasErrors;
+use Support\Coder\Entitys\Relationship;
+use Support\Coder\Discovers\Database\Types\Type;
 
 class Database
 {
@@ -21,11 +28,17 @@ class Database
      * Eloquent CLasse
      **************************************/
     public $eloquentClasses;
-    public $renderEloquentService;
+
+
+
+    
+    public $displayClasses;
+    
     /**
      * From Data Table
      */
     public $mapperTableToClasses;
+    public $mapperPrimaryKeys = false;
 
     /**
      * Para Cada Tabela Pega as Classes Correspondentes
@@ -38,17 +51,13 @@ class Database
     /**
      * From Eloquent
      */
-    public $tablesPrimaryKeys = false;
-    public $tablesInfo = [];
+    public $displayTables = [];
 
     public function __construct($eloquentClasses)
     {
-        dd('oi');
         $this->eloquentClasses = $eloquentClasses;
 
         $this->render();
-
-        $this->display();
     }
 
     public function toArray()
@@ -59,8 +68,8 @@ class Database
             'mapperTableToClasses' => $this->mapperTableToClasses,
             
             // Dicionario
-            'tablesPrimaryKeys' => $this->tablesPrimaryKeys,
-            'tablesInfo' => $this->tablesInfo,
+            'mapperPrimaryKeys' => $this->mapperPrimaryKeys,
+            'displayTables' => $this->displayTables,
             
             // Informacao IMportante
     
@@ -69,7 +78,7 @@ class Database
 
 
             // Backup
-            'renderEloquentService' => $this->renderEloquentService,
+            'displayClasses' => $this->displayClasses,
         ];
     }
 
@@ -79,8 +88,8 @@ class Database
         // Mapa
         $this->mapperTableToClasses = $data['mapperTableToClasses'];
         // Dicionario
-        $this->tablesPrimaryKeys = $data['tablesPrimaryKeys'];
-        $this->tablesInfo = $data['tablesInfo'];
+        $this->mapperPrimaryKeys = $data['mapperPrimaryKeys'];
+        $this->displayTables = $data['displayTables'];
             
         // Informacao IMportante
 
@@ -88,29 +97,34 @@ class Database
         $this->totalRelations = $data['totalRelations'];
             
         // Backup
-        $this->renderEloquentService = $data['renderEloquentService'];
+        $this->displayClasses = $data['displayClasses'];
     }
 
     public function display()
     {
         dd(
+            'errors',
             $this->getError(),
             // Mapa
+            'mapperTableToClasses',
             $this->mapperTableToClasses,
             
             // Dicionario
-            $this->tablesPrimaryKeys,
-            $this->tablesInfo,
+            'mapperPrimaryKeys',
+            $this->mapperPrimaryKeys,
+            'displayTables',
+            $this->displayTables,
+            // Backup
+            'displayClasses',
+            $this->displayClasses,
             
             // Informacao IMportante
     
             // Dados GErados
-            $this->totalRelations,
+            'totalRelations',
+            $this->totalRelations
 
 
-            // Backup
-            $this->renderEloquentService
-            // $this->toArray()
         );
     }
 
@@ -119,13 +133,30 @@ class Database
         $selfInstance = $this;
         // Cache In Minutes
         $value = Cache::remember('sitec_database', 30, function () use ($selfInstance) {
-
-            $this->eloquentClasses->map(function($file, $class) {
-                return new Eloquent($class);
-            })->values()->all();
-            
-            $selfInstance->getListTables();
-            $selfInstance->renderClasses();
+            try {
+                $this->eloquentClasses = $this->eloquentClasses->map(function($file, $class) {
+                    return new Eloquent($class);
+                })->values()->all();
+                
+                $selfInstance->renderClasses();
+                $selfInstance->getListTables();
+            } catch(SchemaException|DBALException $e) {
+                // @todo Tratar, Tabela Nao existe
+                $this->setError($e->getMessage());
+                
+            } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
+                $this->setError($e->getMessage());
+                // @todo Armazenar Erro em tabela
+                // dd($e);
+                //@todo fazer aqui
+            } catch(\Exception $e) {
+                $this->setError($e->getMessage());
+                // dd($e);
+            } catch(\Throwable $e) {
+                $this->setError($e->getMessage());
+                // dd($e);
+                // @todo Tratar aqui
+            }
 
             return $selfInstance->toArray();
         });
@@ -197,7 +228,7 @@ class Database
             }
 
             // Guarda Dados Carregados do Eloquent
-            $this->renderEloquentService[$eloquentService->getModelClass()] = $eloquentService->toArray();
+            $this->displayClasses[$eloquentService->getModelClass()] = $eloquentService->toArray();
 
             // Guarda Errors
             $this->setError($eloquentService->getError());
@@ -209,8 +240,9 @@ class Database
 
     protected function getListTables()
     {
-        $this->tablesPrimaryKeys = [];
+        $this->mapperPrimaryKeys = [];
         $tables = [];
+        Type::registerCustomPlatformTypes();
 
         $listTables = \Support\Coder\Discovers\Database\Schema\SchemaManager::listTables();
 
@@ -237,7 +269,7 @@ class Database
                         if (is_array($singulariRelationName)) {
                             $singulariRelationName = $singulariRelationName[count($singulariRelationName)-1];
                         }
-                        $this->tablesPrimaryKeys[$singulariRelationName.'_'.$primary] = [
+                        $this->mapperPrimaryKeys[$singulariRelationName.'_'.$primary] = [
                             'name' => $listTable->getName(),
                             'key' => $primary,
                             'label' => 'name'
@@ -267,18 +299,10 @@ class Database
             }
         }
 
-        $this->tablesInfo = $tables;
+        $this->displayTables = $tables;
         
-        return $this->tablesPrimaryKeys;
+        return $this->mapperPrimaryKeys;
     }
 
 
-
-    /**
-     * Mappers
-     */
-    public function getEloquentService($class)
-    {
-        return $this->renderDatabase->getEloquentService($class);
-    }
 }

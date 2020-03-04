@@ -1,6 +1,9 @@
 <?php
 
-namespace Support\Coder\Entitys;
+declare(strict_types=1);
+
+
+namespace Support\Coder\Mount;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
@@ -27,7 +30,7 @@ use Symfony\Component\Inflector\Inflector;
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-class Eloquent
+class EloquentMount
 {
     use DevDebug;
     use HasErrors;
@@ -39,35 +42,30 @@ class Eloquent
     /**
      * Cached
      */
-    protected $tableName;
-    protected $colunasDaTabela;
-    protected $columns;
-    protected $indexes;
-    protected $primaryKey;
-    protected $attributes;
-
-    protected $relations = false;
-
-    /**
-     * NOt Cached
-     */
-    protected $schemaManagerTable;
-    protected $hardParserModelClass;
+    protected $render;
 
     /**
      * Construct
      */
     public function __construct($modelClass = false, $render = false)
     {
-        if (in_array($modelClass, $this->modelsForDebug)) {
-            $this->debug = true;
-        }
-
-        if ($this->modelClass = $modelClass && $render) {
-            $this->render();
-        }
-
         // dd($this->toArray());
+    }
+    public function getModelClass()
+    {
+
+        return $this->modelClass;
+    }
+
+    public function getName()
+    {
+
+        return getData('name');
+    }
+
+    public function getData($data)
+    {
+        return $this->render->displayClasses[$this->getModelClass][$data];
     }
 
 

@@ -15,12 +15,12 @@ use ReflectionMethod;
 use Illuminate\Support\Collection;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Http\Request;
-use Support\Coder\Discovers\Eloquent\Relationships;
+use Support\Coder\Render\Relationships;
 use App;
 use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Coder\Discovers\Eloquent\EloquentColumn;
+use Support\Coder\Entitys\EloquentColumn;
 use Support\Coder\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
@@ -93,6 +93,20 @@ class EloquentService
         return $this->tableName;
     }
 
+    public function getData($indice)
+    {
+        $array = $this->managerToArray();
+        if (isset($this->array[$indice])) {
+            return $this->array[$indice];
+        }
+        $array = $this->infoToArray();
+        if (isset($this->array[$indice])) {
+            return $this->array[$indice];
+        }
+
+        return false;
+    }
+
 
     /**
      * Update the table.
@@ -116,7 +130,7 @@ class EloquentService
         $this->indexes = $data['indexes'];
         $this->primaryKey = $data['primaryKey'];
         $this->attributes = $data['attributes'];
-        // $this->getRelations() = $data['relations'];
+        $this->relations = $data['relations'];
     }
 
     /**
@@ -127,8 +141,8 @@ class EloquentService
     public function managerFromArray($data)
     {
         // @todo 
-        // $manager['modelManager'] = $this->hardParserModelClass->toArray();
-        // $manager['tableManager'] = $this->schemaManagerTable->toArray();
+        $manager['modelManager'] = $this->hardParserModelClass->toArray();
+        $manager['tableManager'] = $this->schemaManagerTable->toArray();
     }
 
 
@@ -173,7 +187,7 @@ class EloquentService
         }
         $manager = [];
         $manager['modelManager'] = $this->hardParserModelClass->toArray();
-        // $manager['tableManager'] = $this->schemaManagerTable->toArray();
+        $manager['tableManager'] = $this->schemaManagerTable->toArray();
         return $manager;
     }
 
@@ -225,6 +239,9 @@ class EloquentService
         // @todo Fazer plural
         if ($plural) {
             $name = Inflector::pluralize($name);
+            if (is_array($name)) {
+                $name = $name[count($name) - 1];
+            }
         }
 
         return $name;

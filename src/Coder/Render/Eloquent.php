@@ -102,6 +102,9 @@ class Eloquent
         // @todo Fazer plural
         if ($plural) {
             $name = Inflector::pluralize($name);
+            if (is_array($name)) {
+                $name = $name[count($name) - 1];
+            }
         }
 
         return $name;
@@ -156,14 +159,14 @@ class Eloquent
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
             $this->setError($e->getMessage());
             // @todo Armazenar Erro em tabela
-            dd($e);
+            // dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
             $this->setError($e->getMessage());
-            dd($e);
+            // dd($e);
         } catch(\Throwable $e) {
             $this->setError($e->getMessage());
-            dd($e);
+            // dd($e);
             // @todo Tratar aqui
         }
     }

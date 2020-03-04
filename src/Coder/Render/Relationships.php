@@ -25,7 +25,8 @@ class Relationships
     private $relationships;
 
     public function __construct($model) {
-        $this->model = resolve($model);
+        // $this->model = resolve($model);
+        $this->model = $model;
         $this->relationships = null;
     }
 
@@ -48,7 +49,7 @@ class Relationships
 
         foreach((new ReflectionClass($this->model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
         {
-            if ($method->class == get_class($this->model)
+            if ($method->class == $this->model
                 && empty($method->getParameters())
                 && $method->getName() !== __FUNCTION__
                 /* && $method->isFinal() */) // Retirado o lance do method ser final
@@ -96,26 +97,26 @@ class Relationships
                 } catch(LogicException|ErrorException|RuntimeException $e) {
                     // @todo Tratar aqui
                     $this->setError($e->getMessage());
-                    dd($e);
+                    // dd($e);
                 } catch (OutOfBoundsException|TypeError $e) {
                     //@todo fazer aqui
                     $this->setError($e->getMessage());
-                    dd($e);
+                    // dd($e);
                 } catch(ValidationException $e) {
                     $this->setError($e->getMessage());
                     // @todo Tratar aqui
-                    dd($e);
+                    // dd($e);
                 } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
                     $this->setError($e->getMessage());
                     //@todo fazer aqui
-                    dd($e);
+                    // dd($e);
                 } catch(\Exception $e) {
                     $this->setError($e->getMessage());
-                    dd($e);
+                    // dd($e);
                 } catch(\Throwable $e) {
                     $this->setError($e->getMessage());
                     // dd($this->model, $method, $e);
-                    dd($e);
+                    // dd($e);
                     // @todo Tratar aqui
                 }
             }

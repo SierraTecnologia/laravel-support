@@ -33,9 +33,12 @@ class DatabaseService
 
     public function __construct($configModelsAlias, ComposerParser $composerParser)
     {
+        $configModelsAlias = [
+            'App\Models',
+        ];
         $this->configModelsAlias = $configModelsAlias;
         $this->composerParser = $composerParser;
-        $this->getRenderDatabase();
+        // $this->getRenderDatabase(); // @todo Fazer isso aqui
     }
 
     public function getAllModels()
@@ -49,16 +52,17 @@ class DatabaseService
         return $this->allModels;
     }
 
-    public function getRenderDatabase($class)
+    public function getRenderDatabase()
     {
         if (!$this->renderDatabase) {
-            $this->renderDatabase = new \Support\Coder\Render\Database(collect($this->getAllModels()));
+            $this->renderDatabase = (new \Support\Coder\Mount\DatabaseMount(collect($this->getAllModels())));
+
         }
         return $this->renderDatabase;
     }
 
 
-    public static function getEloquentService($class)
+    public function getEloquentService($class)
     {
         return $this->getRenderDatabase()->getEloquentService($class);
     }

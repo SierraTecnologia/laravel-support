@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Coder\Entitys;
+namespace Support\Coder\Render;
 
 use Support\Coder\Discovers\Eloquent\Relationship;
 use Illuminate\Support\Collection;
@@ -13,7 +13,7 @@ use Support\Elements\Entities\DataTypes\Varchar;
 use Symfony\Component\Inflector\Inflector;
 use Support\Services\EloquentService;
 
-class EloquentColumn
+class Columns
 {
     public $displayName = false;
     public $displayColumn;
@@ -24,7 +24,7 @@ class EloquentColumn
     public $fillable;
     protected $data;
 
-    public function __construct(string $column, DataType $type, bool $filliable = false)
+    public function __construct($database, $eloquent)
     {
         $this->column = $column;
         $this->type = $type;
@@ -218,13 +218,8 @@ class EloquentColumn
         $array = [];
         if ($relation = $this->isBelongTo()) {
             $haveDetails = true;
-            $array['options'] = [
-                    '' => '-- None --',
-            ];
-            $array['relationship'] = [
-                'key'   => $relation['key'],
-                'label' => 'name',
-            ];
+            $array['key'] = $relation['key'];
+            $array['key'] = $relation['key'];
         }
 
         if (!$haveDetails) {
@@ -338,12 +333,32 @@ class EloquentColumn
 
     protected function isBelongTo()
     {
-        // @todo
-        // $keys = $database->getListTables();
-        // if (isset($keys[$this->getColumnName()])) {
-        //     return $keys[$this->getColumnName()];
-        // }
+        $keys = $database->getListTables();
+        if (isset($keys[$this->getColumnName()])) {
+            return $keys[$this->getColumnName()];
+        }
 
         return false;
+    }
+
+    protected function getListTables()
+    {
+        $keys = [];
+        $listTables = \Support\Coder\Discovers\Database\Schema\SchemaManager::listTables();
+        foreach ($listTables as $listTable){
+            if (!empty($indexes = $listTable->exportIndexesToArray())) {
+                foreach ($indexes as $index) {
+                    if ($index['type'] == 'PRIMARY') {
+                        $keys[$listTable->getName().'_'.$index['columns'][0]] = [
+                            'name' => $listTable->getName(),
+                            'key' => $index['columns'][0],
+                            'label' => 'name'
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $keys;
     }
 }
