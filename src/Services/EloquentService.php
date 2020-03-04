@@ -200,8 +200,8 @@ class EloquentService
     {
         try {
             $this->renderModel();
-            $this->renderDatabase();
-            $this->analisando();
+            // $this->renderDatabase(); @todo Removido
+            // $this->analisando();
 
             $this->sendToDebug($this->toArray());
         } catch(SchemaException|DBALException $e) {
@@ -375,13 +375,18 @@ class EloquentService
 
         return $fillables;
     }
-    // public function getIndexes()
-    // {
-    //     if (!$this->schemaManagerTable) {
-    //         dd($this->modelClass);
-    //     }
-    //     return $this->schemaManagerTable->getIndexes();
-    // }
+    public function getIndexes()
+    {
+        return $this->getSchemaManagerTable()->getIndexes();
+    }
+
+    private function getSchemaManagerTable()
+    {
+        if (!$this->schemaManagerTable) {
+            $this->schemaManagerTable = SchemaManager::listTableDetails($this->getTableName());
+        }
+        return $this->schemaManagerTable;
+    }
 
 
 
@@ -389,17 +394,34 @@ class EloquentService
 
 
 
-    // /**
-    //  * Helpers Generates
-    //  */ 
-    // public function hasColumn($columns)
-    // {
-    //     return $this->schemaManagerTable->hasColumn($columns);
-    // }
-    // public function columnIsType($columnName, $typeClass)
-    // {
-    //     return $this->schemaManagerTable->columnIsType($columnName, $typeClass);
-    // }
+    /**
+     * Helpers Generates
+     */ 
+    public function hasColumn($column)
+    {
+        // $columns = SchemaManager::listTableColumnNames($this->getTableName());
+        // return in_array($column, $columns);
+
+        return $this->getSchemaManagerTable()->getColumn($column);
+    }
+    public function columnIsType($columnName, $typeClass)
+    {
+        $column = SchemaManager::getDoctrineColumn($this->getTableName(), $columnName);
+        
+        if ($column->getType() instanceof $typeClass) {
+            return true;
+        }
+        return false;
+
+        // $columnArray = [
+        //     'name' => '',
+        //     'type' => ''
+        // ];
+        // $columnArray['name'] = $columnName;
+        // $column = \Support\Coder\Discovers\Database\Schema\Column::make($columnArray, $this->getTableName());
+        // dd($column);
+        // return $column->columnIsType($columnName, $typeClass);
+    }
 
 
 
