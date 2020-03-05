@@ -402,7 +402,7 @@ class EloquentService
         // $columns = SchemaManager::listTableColumnNames($this->getTableName());
         // return in_array($column, $columns);
 
-        return $this->getSchemaManagerTable()->getColumn($column);
+        return $this->getSchemaManagerTable()->hasColumn($column);
     }
     public function columnIsType($columnName, $typeClass)
     {
