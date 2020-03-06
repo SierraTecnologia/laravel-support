@@ -53,6 +53,21 @@ class Database
      */
     public $displayTables = [];
 
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Organizacao
+     */
+    // Mappers para Localizacao
+
     public function __construct($eloquentClasses)
     {
         $this->eloquentClasses = $eloquentClasses;
@@ -170,6 +185,7 @@ class Database
     {
         $this->mapperTableToClasses = [];
         $this->totalRelations = [];
+        
         foreach ($this->eloquentClasses as $eloquentService) {
             // Guarda Classe por Table
             if (isset($this->mapperTableToClasses[$eloquentService->getTableName()])) {
