@@ -57,7 +57,7 @@
         "nicolaslopezj/searchable": "^1.10",
         "ramsey/uuid": "^3.8",
         "ricardosierra/changelog": "~1.4",
-        "ricardosierra/minify": "dev-master",
+        "ricardosierra/minify": "1.0.*",
         "ricardosierra/translation": "dev-master",
         "ricardosierra/validate": "^0.2",
         "spatie/eloquent-sortable": "^3.7",
