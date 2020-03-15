@@ -33,12 +33,9 @@ class DatabaseService
 
     public function __construct($configModelsAlias, ComposerParser $composerParser)
     {
-        $configModelsAlias = [
-            'App\Models',
-        ];
         $this->configModelsAlias = $configModelsAlias;
         $this->composerParser = $composerParser;
-        // $this->getRenderDatabase(); // @todo Fazer isso aqui
+        $this->getRenderDatabase(); // @todo Fazer isso aqui
     }
 
     public function getAllModels()

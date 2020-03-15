@@ -73,27 +73,53 @@ class Database
         $this->eloquentClasses = $eloquentClasses;
 
         $this->render();
+
+        $this->processe();
+
+        $this->display();
     }
 
     public function toArray()
     {
         return [
-            'errors' => $this->getError(),
-            // Mapa
-            'mapperTableToClasses' => $this->mapperTableToClasses,
+            'Mapper' => [
+                /**
+                 * Mapper
+                 */
+                'mapperTableToClasses' => $this->mapperTableToClasses,
+                'mapperPrimaryKeys' => $this->mapperPrimaryKeys,
+            ],
             
-            // Dicionario
-            'mapperPrimaryKeys' => $this->mapperPrimaryKeys,
-            'displayTables' => $this->displayTables,
-            
-            // Informacao IMportante
+            'Leitoras' => [
+                // Leitoras
+                'displayTables' => $this->displayTables,
+                'displayClasses' => $this->displayClasses,
+            ],
     
-            // Dados GErados
-            'totalRelations' => $this->totalRelations,
+            
+            'Dicionario' => [
+                // Dados GErados
+                'totalRelations' => $this->totalRelations,
+            ],
 
+            /**
+             * Sistema
+             */
+            // Ok
+            
+            'Aplication' => [
+                // Nao ok
+                'tables' => [],
+                'classes' => [],
 
-            // Backup
-            'displayClasses' => $this->displayClasses,
+            ],
+            'Erros' => [
+
+                /**
+                 * Erros 
+                 **/
+                'errors' => $this->getError()
+            ],
         ];
     }
 
@@ -117,6 +143,18 @@ class Database
 
     public function display()
     {
+        $display = [];
+        $array = $this->toArray();
+        foreach ($array as $category => $infos) {
+            $display[] = $category;
+            foreach ($infos as $title => $value) {
+                $display[] = $title;
+                $display[] = $value;
+            }
+        }
+        dd(
+            ...$display
+        );
         dd(
             'errors',
             $this->getError(),
@@ -179,6 +217,11 @@ class Database
     }
 
 
+
+    protected function processe()
+    {
+
+    }
 
 
     protected function renderClasses()
