@@ -76,7 +76,7 @@ class Database
 
         $this->processe();
 
-        $this->display();
+        // $this->display();
     }
 
     public function toArray()
@@ -123,22 +123,32 @@ class Database
         ];
     }
 
-    public function setArray($data)
+    public function setArray($datas)
     {
-        $this->setError($data['errors']);
-        // Mapa
-        $this->mapperTableToClasses = $data['mapperTableToClasses'];
-        // Dicionario
-        $this->mapperPrimaryKeys = $data['mapperPrimaryKeys'];
-        $this->displayTables = $data['displayTables'];
-            
-        // Informacao IMportante
+        foreach ($datas as $indice=>$data) {
+            if ($indice==='Errors') {
+                if (isset($data['errors'])) {
+                    $this->setError($data['errors']);
+                }
+            }
+            if ($indice==='Aplication') {
 
-        // Dados GErados
-        $this->totalRelations = $data['totalRelations'];
-            
-        // Backup
-        $this->displayClasses = $data['displayClasses'];
+
+            }
+            if ($indice==='Dicionario') {
+                $this->totalRelations = $data['totalRelations'];
+            }
+            if ($indice==='Leitoras') {
+                $this->displayTables = $data['displayTables'];
+                $this->displayClasses = $data['displayClasses'];
+            }
+            if ($indice==='Mapper') {
+                // Mapa
+                $this->mapperTableToClasses = $data['mapperTableToClasses'];
+                // Dicionario
+                $this->mapperPrimaryKeys = $data['mapperPrimaryKeys'];
+            }
+        }
     }
 
     public function display()
