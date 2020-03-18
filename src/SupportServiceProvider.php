@@ -1,14 +1,14 @@
 <?php
 
 namespace Support;
-// namespace Support\Coder\Generate\Coders;
+// namespace Support\Generate\Coders;
 
-use Support\Coder\Generate\Support\Classify;
-use Support\Coder\Generate\Coders\Model\Config;
+use Support\Generate\Support\Classify;
+use Support\Generate\Coders\Model\Config;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Support\Console\Commands\CodeModelsCommand;
-use Support\Coder\Generate\Coders\Model\Factory as ModelFactory;
+use Support\Generate\Coders\Model\Factory as ModelFactory;
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider

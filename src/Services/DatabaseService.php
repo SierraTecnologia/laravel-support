@@ -11,15 +11,15 @@ use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Support\Coder\Discovers\Database\DatabaseUpdater;
-use Support\Coder\Discovers\Database\Schema\Column;
-use Support\Coder\Discovers\Database\Schema\Identifier;
-use Support\Coder\Discovers\Database\Schema\SchemaManager;
-use Support\Coder\Discovers\Database\Schema\Table;
-use Support\Coder\Discovers\Database\Types\Type;
-use Support\Coder\Parser\ParseModelClass;
+use Support\Discovers\Database\DatabaseUpdater;
+use Support\Discovers\Database\Schema\Column;
+use Support\Discovers\Database\Schema\Identifier;
+use Support\Discovers\Database\Schema\SchemaManager;
+use Support\Discovers\Database\Schema\Table;
+use Support\Discovers\Database\Types\Type;
+use Support\Parser\ParseModelClass;
 
-use Support\Coder\Parser\ComposerParser;
+use Support\Parser\ComposerParser;
 
 class DatabaseService
 {
@@ -43,7 +43,7 @@ class DatabaseService
         if (!$this->allModels) {
             $models = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
             $this->allModels = $models->reject(function($filePath, $class) {
-                return !(new \Support\Coder\Discovers\Identificadores\ClasseType($class))->typeIs('model');
+                return !(new \Support\Discovers\Identificadores\ClasseType($class))->typeIs('model');
             });
         }
         return $this->allModels;
@@ -52,7 +52,7 @@ class DatabaseService
     public function getRenderDatabase()
     {
         if (!$this->renderDatabase) {
-            $this->renderDatabase = (new \Support\Coder\Mount\DatabaseMount(collect($this->getAllModels())));
+            $this->renderDatabase = (new \Support\Mount\DatabaseMount(collect($this->getAllModels())));
 
         }
         return $this->renderDatabase;

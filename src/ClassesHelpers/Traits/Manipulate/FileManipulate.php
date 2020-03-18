@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Support\ClassesHelpers\Traits\Manipulate;
 
-use Support\Coder\Parser\ParseClass;
+use Support\Parser\ParseClass;
 
 trait FileManipulate
 {

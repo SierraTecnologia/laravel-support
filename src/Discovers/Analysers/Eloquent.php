@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Services;
+namespace Support\Discovers\Analysers;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
@@ -15,19 +15,19 @@ use ReflectionMethod;
 use Illuminate\Support\Collection;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Http\Request;
-use Support\Render\Relationships;
+use Support\Discovers\Eloquent\Relationships;
 use App;
 use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Entitys\EloquentColumn;
+use Support\Discovers\Eloquent\EloquentColumn;
 use Support\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-class EloquentService
+class Eloquent
 {
     use DevDebug;
     use HasErrors;
@@ -57,13 +57,13 @@ class EloquentService
     /**
      * Construct
      */
-    public function __construct($modelClass = false)
+    public function __construct($modelClass = false, $render = false)
     {
         if (in_array($modelClass, $this->modelsForDebug)) {
             $this->debug = true;
         }
 
-        if ($this->modelClass = $modelClass) {
+        if ($this->modelClass = $modelClass && $render) {
             $this->render();
         }
 
@@ -93,20 +93,6 @@ class EloquentService
         return $this->tableName;
     }
 
-    public function getData($indice)
-    {
-        $array = $this->managerToArray();
-        if (isset($this->array[$indice])) {
-            return $this->array[$indice];
-        }
-        $array = $this->infoToArray();
-        if (isset($this->array[$indice])) {
-            return $this->array[$indice];
-        }
-
-        return false;
-    }
-
 
     /**
      * Update the table.
@@ -130,7 +116,7 @@ class EloquentService
         $this->indexes = $data['indexes'];
         $this->primaryKey = $data['primaryKey'];
         $this->attributes = $data['attributes'];
-        $this->relations = $data['relations'];
+        // $this->getRelations() = $data['relations'];
     }
 
     /**
@@ -141,8 +127,8 @@ class EloquentService
     public function managerFromArray($data)
     {
         // @todo 
-        $manager['modelManager'] = $this->hardParserModelClass->toArray();
-        $manager['tableManager'] = $this->schemaManagerTable->toArray();
+        // $manager['modelManager'] = $this->hardParserModelClass->toArray();
+        // $manager['tableManager'] = $this->schemaManagerTable->toArray();
     }
 
 
@@ -187,7 +173,7 @@ class EloquentService
         }
         $manager = [];
         $manager['modelManager'] = $this->hardParserModelClass->toArray();
-        $manager['tableManager'] = $this->getSchemaManagerTable()->toArray();
+        $manager['tableManager'] = $this->schemaManagerTable->toArray();
         return $manager;
     }
 
@@ -199,9 +185,13 @@ class EloquentService
     public function render()
     {
         try {
-            $this->renderModel();
-            // $this->renderDatabase(); @todo Removido
-            // $this->analisando();
+            $this->hardParserModelClass = new ParseModelClass($this->modelClass);
+            $this->tableName = $this->hardParserModelClass->getData('table');
+            $this->name = $this->getName();
+            $this->indexes = $this->getIndexes();
+            $this->columns = $this->getColumns();
+            $this->primaryKey = $this->getPrimaryKey();
+            $this->relations = $this->getRelations();
 
             $this->sendToDebug($this->toArray());
         } catch(SchemaException|DBALException $e) {
@@ -222,12 +212,6 @@ class EloquentService
             // @todo Tratar aqui
         }
     }
-    private function renderModel()
-    {
-        $this->hardParserModelClass = new ParseModelClass($this->modelClass);
-        $this->tableName = $this->hardParserModelClass->getData('table');
-    }
-
     /**
      * Trabalhos Leves
      */
@@ -272,98 +256,6 @@ class EloquentService
     {
         return ParseModelClass::getPrimaryKey($this->modelClass);
     }
-    public function getColumns()
-    {
-        // Ou Assim
-        // // dd(\Schema::getColumnListing($this->modelClass));
-        $fillables = collect($this->getTableDetailsArray())->map(function ($value) {
-            return EloquentColumn::returnFromArray($value, $this);
-        });
-
-        // dd($fillables);
-
-        return $fillables;
-    }
-    public function getColumnsForList()
-    {
-        $fillables = $this->getColumns();
-
-        $fillables = $fillables->reject(function($column) {
-            if ($column->getColumnName === 'deleted_at') {
-                return false;
-            }
-            
-            return false;
-        });
-
-        dd($fillables);
-
-        return $fillables;
-    }
-    // public function getColumnsArray()
-    // {
-    //     return $this->schemaManagerTable->getColumns();
-    // }
-    public function getTableDetailsArray()
-    {
-        /**
-         * ^ Illuminate\Support\Collection {#799 ▼
-         *   #items: array:6 [▼
-         * id" => array:19 [▶]
-         * name" => array:21 [▼
-           * name" => "name"
-           * type" => "varchar"
-           * default" => null
-           * notnull" => false
-           * length" => 255
-           * precision" => 10
-           * scale" => 0
-           * fixed" => false
-           * unsigned" => false
-           * autoincrement" => false
-           * columnDefinition" => null
-           * comment" => null
-           * charset" => "utf8mb4"
-           * collation" => "utf8mb4_unicode_ci"
-           * oldName" => "name"
-           * null" => "YES"
-           * extra" => ""
-           * composite" => false
-           * field" => "name"
-           * indexes" => []
-           * key" => null
-          *    ]
-         * description" => array:21 [▶]
-         * created_at" => array:19 [▼
-           * name" => "created_at"
-           * type" => "timestamp"
-           * default" => null
-           * notnull" => false
-           * length" => 0
-           * precision" => 10
-           * scale" => 0
-           * fixed" => false
-           * unsigned" => false
-           * autoincrement" => false
-           * columnDefinition" => null
-           * comment" => null
-           * oldName" => "created_at"
-           * null" => "YES"
-           * extra" => ""
-           * composite" => false
-           * field" => "created_at"
-           * indexes" => []
-           * key" => null
-          *    ]
-         * updated_at" => array:19 [▶]
-         * deleted_at" => array:19 [▶]
-          *  ]
-         * }
-         */
-        return SchemaManager::describeTable(
-            $this->tableName
-        );
-    }
     public function getColumnsFillables()
     {
 
@@ -377,72 +269,14 @@ class EloquentService
     }
     public function getIndexes()
     {
-        return $this->getSchemaManagerTable()->getIndexes();
-    }
-
-    private function getSchemaManagerTable()
-    {
         if (!$this->schemaManagerTable) {
-            $this->schemaManagerTable = SchemaManager::listTableDetails($this->getTableName());
+            dd($this->modelClass);
         }
-        return $this->schemaManagerTable;
+        return $this->schemaManagerTable->getIndexes();
     }
 
 
 
 
-
-
-
-    /**
-     * Helpers Generates
-     */ 
-    public function hasColumn($column)
-    {
-        // $columns = SchemaManager::listTableColumnNames($this->getTableName());
-        // return in_array($column, $columns);
-
-        return $this->getSchemaManagerTable()->hasColumn($column);
-    }
-    public function columnIsType($columnName, $typeClass)
-    {
-        $column = SchemaManager::getDoctrineColumn($this->getTableName(), $columnName);
-        
-        if ($column->getType() instanceof $typeClass) {
-            return true;
-        }
-        return false;
-
-        // $columnArray = [
-        //     'name' => '',
-        //     'type' => ''
-        // ];
-        // $columnArray['name'] = $columnName;
-        // $column = \Support\Discovers\Database\Schema\Column::make($columnArray, $this->getTableName());
-        // dd($column);
-        // return $column->columnIsType($columnName, $typeClass);
-    }
-
-
-
-
-
-
-
-    /**
-     * Helpers Generates
-     */ 
-    public function generateWhere($columns, $data)
-    {
-        $where = [];
-        foreach ($columns as $column) {
-            if (isset($data[$column]) && !empty($data[$column])) {
-                $where[$column] = $data[$column];
-                // @todo resolver
-                // $where[$column] = static::cleanCodeSlug($data[$column]);
-            }
-        }
-        return $where;
-    }
 
 }
