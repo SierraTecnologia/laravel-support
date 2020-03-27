@@ -34,20 +34,7 @@ class ParseModelClass extends ParseClass
         // dd(
         //     $this->instanceClass->getTable(), // Ex: persons
         //     $this->instanceClass->getMutatedAttributes(), // Ex: 
-        //     $this->instanceClass->getFillable(), // Ex: 
-        //     $this->instanceClass->getDates(), // Ex: 
-        //     $this->instanceClass->getCreatedAtColumn(), // Ex: created_at
-        //     $this->instanceClass->getUpdatedAtColumn(), // Ex: updated_at
-        //     $this->instanceClass->getVisible(), // Ex: []
-        //     $this->instanceClass->getGuarded(), // Ex: 
-        //     $this->instanceClass->getKeyName(), // Ex: code
-        //     $this->instanceClass->getKeyType(), // ^ "string"
-        //     $this->instanceClass->getIncrementing(), // false or true
-        //     $this->instanceClass->getForeignKey(), // Ex: person_code
-
-
-        //     /**
-        //      * Para Registro
+        //     $this->instanceClass->getFillable(), // $this->modelClass = $modelClassx: getTableName
         //      */
 
         //     $this->instanceClass->getKey() // Ex: null
@@ -55,7 +42,7 @@ class ParseModelClass extends ParseClass
 
             return [
 
-                'table' => $this->instanceClass->getTable(), // Ex: persons
+                'table' => $this->getTableName(), // Ex: persons
                 'getMutatedAttributes' => $this->instanceClass->getMutatedAttributes(), // Ex: 
                 'fillable' => $this->instanceClass->getFillable(), // Ex: 
                 'dates' => $this->instanceClass->getDates(), // Ex: 
@@ -63,38 +50,37 @@ class ParseModelClass extends ParseClass
                 'getUpdatedAtColumn' => $this->instanceClass->getUpdatedAtColumn(), // Ex: updated_at
                 'getVisible' => $this->instanceClass->getVisible(), // Ex: []
                 'getGuarded' => $this->instanceClass->getGuarded(), // Ex: 
-                'getKeyName' => $this->instanceClass->getKeyName(), // Ex: code
+                'getKeyName' => $this->getPrimaryKey(), // Ex: code
                 'getKeyType' => $this->instanceClass->getKeyType(), // ^ "string"
                 'getIncrementing' => $this->instanceClass->getIncrementing(), // false or true
                 'getForeignKey' => $this->instanceClass->getForeignKey(), // Ex: person_code
 
             ];
+            if (!$this->isModelClass($class)) {
+                return false;
+            }
     }
 
 
 
 
-    public static function getPrimaryKey($class)
+    public function getPrimaryKey()
     {
-        return (static::returnInstanceForClass($class))->getKeyName();
+        return $this->instanceClass->getKeyName();
     }
 
-    public static function isModelClass($class)
+    public function isModelClass()
     {
-        return ClasseType::fastExecute($class, 'typeIs', 'model');
+        return $this->typeIs('model');
     }
 
     
     /**
      * Helpers
      */
-    public static function getTableName($class)
+    public function getTableName()
     {
-        if (!self::isModelClass($class)) {
-            return false;
-        }
-
-        return (self::returnInstanceForClass($class))->getTable();
+        return $this->instanceClass->getTable();
     }
 
 

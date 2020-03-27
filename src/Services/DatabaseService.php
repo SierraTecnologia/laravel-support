@@ -41,10 +41,7 @@ class DatabaseService
     public function getAllModels()
     {
         if (!$this->allModels) {
-            $models = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
-            $this->allModels = $models->reject(function($filePath, $class) {
-                return !(new \Support\Discovers\Identificadores\ClasseType($class))->typeIs('model');
-            });
+            $this->allModels = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
         }
         return $this->allModels;
     }

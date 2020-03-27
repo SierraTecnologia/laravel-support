@@ -199,10 +199,15 @@ class Database
         // Cache In Minutes
         $value = Cache::remember('sitec_database', 30, function () use ($selfInstance) {
             try {
-                $this->eloquentClasses = $this->eloquentClasses->map(function($file, $class) {
+                $this->eloquentClasses = $this->eloquentClasses->map(function($filePath, $class) {
                     return new Eloquent($class);
-                })->values()->all();
-                
+                })
+                ->reject(function($class) {
+                    dd($class);
+                    return !$class->getModelClass();
+                })
+                ->values()->all();
+                dd($this->eloquentClasses);
                 $selfInstance->renderClasses();
                 $selfInstance->getListTables();
             } catch(SchemaException|DBALException $e) {

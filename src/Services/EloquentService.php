@@ -270,7 +270,7 @@ class EloquentService
      */
     public function getPrimaryKey()
     {
-        return ParseModelClass::getPrimaryKey($this->modelClass);
+        return $this->hardParserModelClass->getPrimaryKey($this->modelClass);
     }
     public function getColumns()
     {

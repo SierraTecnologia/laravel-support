@@ -61,12 +61,18 @@ class Eloquent
         if (in_array($modelClass, $this->modelsForDebug)) {
             $this->debug = true;
         }
+        $this->modelClass = $modelClass;
 
-        if ($this->modelClass = $modelClass) {
-            $this->render();
+        if (!empty($this->modelClass) && $this->render()) {
+            return true;
         }
 
-        // dd($this->toArray());
+        return $this->reportError();
+    }
+
+    protected function reportError()
+    {
+        return $this->modelClass = false;
     }
 
     /**
@@ -148,6 +154,11 @@ class Eloquent
     {
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
+            if (!$parserModelClass->typeIs('model')) {
+                // dd($parserModelClass);
+                return false;
+            }
+
             $this->tableName = $parserModelClass->getData('table');
             $this->tableData = $parserModelClass->toArray();
             $this->name = $this->getName();
@@ -159,16 +170,17 @@ class Eloquent
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
             $this->setError($e->getMessage());
             // @todo Armazenar Erro em tabela
-            // dd($e);
+            dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
             $this->setError($e->getMessage());
-            // dd($e);
+            dd($e);
         } catch(\Throwable $e) {
             $this->setError($e->getMessage());
-            // dd($e);
+            dd($e);
             // @todo Tratar aqui
         }
+        return true;
     }
 
     /**

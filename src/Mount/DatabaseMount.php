@@ -26,6 +26,7 @@ use Support\Parser\ComposerParser;
 
 use Support\Entitys\DatabaseEntity;
 use Support\Entitys\EloquentEntity;
+use Illuminate\Support\Facades\Cache;
 
 class DatabaseMount
 {
@@ -56,12 +57,12 @@ class DatabaseMount
     {
         $selfInstance = $this;
         // Cache In Minutes
-        $value = Cache::remember('sitec_support_', 30, function () use ($selfInstance) {
+        $value = Cache::remember('sitec_support_'.md5(implode('|', $selfInstance->eloquentClasses->values()->all())), 30, function () use ($selfInstance) {
 
-            $renderDatabase = (new \Support\Render\Database($this->eloquentClasses));
+            $renderDatabase = (new \Support\Render\Database($selfInstance->eloquentClasses));
 
-
-            $this->eloquentClasses = $renderDatabase->getEloquentClasses->map(function($file, $class) {
+dd( $renderDatabase->getEloquentClasses());
+            $this->eloquentClasses = $renderDatabase->getEloquentClasses()->map(function($file, $class) {
                 return new \EloquentMount($class);
             })->values()->all();
 
