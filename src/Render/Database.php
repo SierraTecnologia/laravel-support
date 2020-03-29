@@ -203,11 +203,9 @@ class Database
                     return new Eloquent($class);
                 })
                 ->reject(function($class) {
-                    dd($class);
                     return !$class->getModelClass();
                 })
                 ->values()->all();
-                dd($this->eloquentClasses);
                 $selfInstance->renderClasses();
                 $selfInstance->getListTables();
             } catch(SchemaException|DBALException $e) {

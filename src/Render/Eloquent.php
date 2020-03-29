@@ -38,6 +38,8 @@ class Eloquent
     /**
      * Cached
      */
+    protected $name;
+    protected $tableData;
     protected $tableName;
     protected $colunasDaTabela;
     protected $columns;
@@ -52,6 +54,9 @@ class Eloquent
      */
     protected $schemaManagerTable;
     protected $hardParserModelClass;
+
+
+
 
     /**
      * Construct
@@ -170,14 +175,14 @@ class Eloquent
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
             $this->setError($e->getMessage());
             // @todo Armazenar Erro em tabela
-            dd($e);
+            // dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
             $this->setError($e->getMessage());
-            dd($e);
+            // dd($e);
         } catch(\Throwable $e) {
             $this->setError($e->getMessage());
-            dd($e);
+            // dd($e);
             // @todo Tratar aqui
         }
         return true;

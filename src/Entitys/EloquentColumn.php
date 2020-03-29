@@ -15,40 +15,54 @@ use Support\Services\EloquentService;
 
 class EloquentColumn
 {
+
+    public $name;
+    public $columnName;
+    public $columnType;
+
     public $displayName = false;
     public $displayColumn;
     public $displayType;
-
-    public $column;
-    public $type;
     public $fillable;
     protected $data;
 
-    public function __construct(string $column, DataType $type, bool $filliable = false)
+    public function __construct()
     {
-        $this->column = $column;
-        $this->type = $type;
-        $this->filliable = $filliable;
+        
+    }
+    
+    public function getName()
+    {
+        return $this->name;
     }
 
-    protected function setData($data)
+    public function setName($name)
     {
-        $this->data = $data;
+        return $this->name = $name;
     }
-
-    public function getData($indice = false)
-    {
-        if (!$indice) {
-            return $this->data;
-        }
-
-        return $this->data[$indice];
-    }
-
+    
     public function getColumnName()
     {
-        return $this->column;
+        return $this->columnName;
     }
+
+    public function setColumnName($columnName)
+    {
+        return $this->columnName = $columnName;
+    }
+
+    public function getColumnType()
+    {
+        return $this->columnType;
+    }
+
+    public function setColumnType($columnType)
+    {
+        return $this->columnType = $columnType;
+    }
+    
+
+
 
     /**
      * number
@@ -60,11 +74,6 @@ class EloquentColumn
      * 
      * timestamp
      */
-    public function getColumnType()
-    {
-        $type = $this->getData('type');
-        return $type;
-    }
     public function getColumnDisplayType()
     {
         $type = $this->getColumnType();
@@ -79,27 +88,6 @@ class EloquentColumn
 
 
 
-    /**
-     * 
-     */
-    public function getName()
-    {
-        if (!$this->displayName) {
-                
-            $explode = explode('_', $this->getColumnName());
-            $name = '';
-            foreach ($explode as $value) {
-                if (!empty($name)) {
-                    $name .= ' ';
-                }
-                $name .= ucfirst($value);
-            }
-            $this->displayName = $name;
-        }
-
-
-        return $this->displayName;
-    }
 
     public function displayFromModel(Model $resultModel)
     {

@@ -61,7 +61,7 @@ class DatabaseMount
 
             $renderDatabase = (new \Support\Render\Database($selfInstance->eloquentClasses));
 
-dd( $renderDatabase->getEloquentClasses());
+// dd( $renderDatabase->getEloquentClasses());
             $this->eloquentClasses = $renderDatabase->getEloquentClasses()->map(function($file, $class) {
                 return new \EloquentMount($class);
             })->values()->all();
