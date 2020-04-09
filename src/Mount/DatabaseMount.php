@@ -43,32 +43,40 @@ class DatabaseMount
         $this->render();
     }
 
-    protected function getRenderDatabase()
+    protected function toArray()
     {
-        if (!$this->renderDatabase) {
-            $this->renderDatabase = (new \Support\Render\Database($this->eloquentClasses));
+        $data = [];
+
+        $data['eloquentClasses'] = $this->eloquentClasses;
+        return $data;
+    }
+
+
+    protected function setArray($data)
+    {
+        if (isset($data['renderDatabase'])) {
+            $this->eloquentClasses = $data['eloquentClasses'];
 
         }
-        return $this->renderDatabase;
+        return $data;
     }
 
 
     protected function render()
     {
-        $selfInstance = $this;
+        $eloquentClasses = $this->eloquentClasses;
         // Cache In Minutes
-        $value = Cache::remember('sitec_support_'.md5(implode('|', $selfInstance->eloquentClasses->values()->all())), 30, function () use ($selfInstance) {
+        $renderDatabase = Cache::remember('sitec_support_render_database_'.md5(implode('|', $eloquentClasses->values()->all())), 30, function () use ($eloquentClasses) {
 
-            $renderDatabase = (new \Support\Render\Database($selfInstance->eloquentClasses));
+            $renderDatabase = (new \Support\Render\Database($eloquentClasses));
 
-// dd( $renderDatabase->getEloquentClasses());
-            $this->eloquentClasses = $renderDatabase->getEloquentClasses()->map(function($file, $class) {
-                return new \EloquentMount($class);
-            })->values()->all();
-
-            return $selfInstance->toArray();
+            return $renderDatabase->toArray();
         });
-        $this->setArray($value);
+        $eloquentClasses = $this->eloquentClasses = collect($renderDatabase["Leitoras"]["displayClasses"]);
+        $this->renderDatabase = $renderDatabase;
+        $this->entitys = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabase) {
+            return (new EloquentMount($className, $renderDatabase))->getEntity();
+        });
         
         // $databaseEntity = new DatabaseEntity();
         
@@ -79,8 +87,14 @@ class DatabaseMount
 
 
 
-    public function getEloquentService($class)
+    public function getEloquentEntity($class)
     {
+        dd(
+            'getentity',
+            $this->entitys,
+            $class
+        );
+        // ->values()->all()/
         $databaseEntity = new EloquentEntity($class, $this->getRenderDatabase());
         return $databaseEntity;
     }

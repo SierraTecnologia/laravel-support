@@ -30,6 +30,8 @@ use Symfony\Component\Inflector\Inflector;
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
+use Support\Entitys\EloquentEntity;
+
 class EloquentMount
 {
     use DevDebug;
@@ -37,44 +39,70 @@ class EloquentMount
     /**
      * Identify
      */
-    protected $modelClass;
-
-    /**
-     * Cached
-     */
-    protected $render;
+    protected $className;
+    protected $renderDatabaseData;
 
     /**
      * Construct
      */
-    public function __construct($modelClass = false, $render = false)
+    public function __construct($className, $renderDatabase)
     {
-        // dd($this->toArray());
+        $this->className = $className;
+        $this->renderDatabaseData = $renderDatabase;
     }
 
-    protected function render()
+    public function getEntity()
     {
-        $selfInstance = $this;
-        // Cache In Minutes
-        $value = Cache::remember('sitec_support_', 30, function () use ($selfInstance) {
+        $databaseEntity = new EloquentEntity();
 
-            $renderDatabase = (new \Support\Render\Database($this->eloquentClasses));
-
-
-            $this->eloquentClasses = $renderDatabase->getEloquentClasses->map(function($file, $class) {
-                return new \Support\Entitys\EloquentEntity($class);
-            })->values()->all();
-
-            return $selfInstance->toArray();
-        });
-        $this->setArray($value);
+        $tableName = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableName"];
+        $primaryKey = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableData"]["getKeyName"];
         
-        // $databaseEntity = new DatabaseEntity();
-        
-        // $databaseEntity = new DatabaseEntity();
-        // $databaseEntity
 
+
+        // $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className];
+        // $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName];
+
+        $databaseEntity->setName($tableName);
+        $databaseEntity->setPrimaryKey($primaryKey);
+        
+        foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns'] as $column) {
+            $databaseEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
+        }
+
+        return $databaseEntity;
     }
+
+    public function toArray()
+    {
+        $array = [];
+
+        return $array;
+    }
+
+    // protected function render()
+    // {
+    //     $selfInstance = $this;
+    //     // Cache In Minutes
+    //     $value = Cache::remember('sitec_support_', 30, function () use ($selfInstance) {
+
+    //         $renderDatabase = (new \Support\Render\Database($this->eloquentClasses));
+
+
+    //         $this->eloquentClasses = $renderDatabase->getEloquentClasses->map(function($file, $class) {
+    //             return new \Support\Entitys\EloquentEntity($class);
+    //         })->values()->all();
+
+    //         return $selfInstance->toArray();
+    //     });
+    //     $this->setArray($value);
+        
+    //     // $databaseEntity = new DatabaseEntity();
+        
+    //     // $databaseEntity = new DatabaseEntity();
+    //     // $databaseEntity
+
+    // }
 
 
 

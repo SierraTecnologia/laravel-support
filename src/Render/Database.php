@@ -58,7 +58,7 @@ class Database
 
     public function getEloquentClasses()
     {
-        return $this->eloquentClasses;
+        return collect($this->eloquentClasses);
     }
 
 
@@ -79,7 +79,7 @@ class Database
 
         $this->processe();
 
-        $this->display();
+        // $this->display();
     }
 
     public function toArray()
@@ -203,7 +203,7 @@ class Database
                     return new Eloquent($class);
                 })
                 ->reject(function($class) {
-                    return !$class->getModelClass();
+                    return !$class->getTableName();
                 })
                 ->values()->all();
                 $selfInstance->renderClasses();

@@ -58,7 +58,7 @@ class DatabaseService
 
     public function getEloquentService($class)
     {
-        return $this->getRenderDatabase()->getEloquentService($class);
+        return $this->getRenderDatabase()->getEloquentEntity($class);
     }
 
     /**
