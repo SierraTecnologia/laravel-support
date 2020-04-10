@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Entitys;
+namespace Support\Elements\Entities;
 
 use ErrorException;
 use Illuminate\Database\Eloquent\Relations\Relation;

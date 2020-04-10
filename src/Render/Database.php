@@ -17,7 +17,7 @@ use Support\Services\EloquentService;
 use Support\Parser\ComposerParser;
 use Illuminate\Support\Facades\Cache;
 use Support\ClassesHelpers\Development\HasErrors;
-use Support\Entitys\Relationship;
+use Support\Elements\Entities\Relationship;
 use Support\Discovers\Database\Types\Type;
 
 class Database

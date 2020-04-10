@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Entitys;
+namespace Support\Elements\Entities;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
@@ -20,7 +20,7 @@ use App;
 use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Discovers\Eloquent\EloquentColumn;
+use Support\Elements\Entities\EloquentColumn;
 use Support\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 

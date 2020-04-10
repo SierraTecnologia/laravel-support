@@ -24,7 +24,7 @@ use Support\Parser\ParseModelClass;
 
 use Support\Parser\ComposerParser;
 
-use Support\Entitys\EloquentColumn;
+use Support\Elements\Entities\EloquentColumn;
 
 class ColunMount
 {
@@ -44,9 +44,9 @@ class ColunMount
         $this->column = $column;
         $this->renderDatabaseData = $renderDatabase;
 
-        dd(
-            $className, $column, $renderDatabase
-        );
+        // dd(
+        //     $className, $column, $renderDatabase
+        // );
     }
 
     public function getEntity()

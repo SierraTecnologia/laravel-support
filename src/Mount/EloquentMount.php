@@ -30,7 +30,7 @@ use Symfony\Component\Inflector\Inflector;
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-use Support\Entitys\EloquentEntity;
+use Support\Elements\Entities\EloquentEntity;
 
 class EloquentMount
 {
@@ -65,6 +65,11 @@ class EloquentMount
 
         $databaseEntity->setName($tableName);
         $databaseEntity->setPrimaryKey($primaryKey);
+
+        if (!isset($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName])) {
+            // @todo criar erro
+            return false;
+        }
         
         foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns'] as $column) {
             $databaseEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
@@ -90,7 +95,7 @@ class EloquentMount
 
 
     //         $this->eloquentClasses = $renderDatabase->getEloquentClasses->map(function($file, $class) {
-    //             return new \Support\Entitys\EloquentEntity($class);
+    //             return new \Support\Elements\Entities\EloquentEntity($class);
     //         })->values()->all();
 
     //         return $selfInstance->toArray();

@@ -24,8 +24,8 @@ use Support\Parser\ParseModelClass;
 
 use Support\Parser\ComposerParser;
 
-use Support\Entitys\DatabaseEntity;
-use Support\Entitys\EloquentEntity;
+use Support\Elements\Entities\DatabaseEntity;
+use Support\Elements\Entities\EloquentEntity;
 use Illuminate\Support\Facades\Cache;
 
 class DatabaseMount

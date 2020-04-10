@@ -20,7 +20,7 @@ use App;
 use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Entitys\EloquentColumn;
+use Support\Elements\Entities\EloquentColumn;
 use Support\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 

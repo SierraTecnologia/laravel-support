@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Entitys;
+namespace Support\Elements\Entities;
 
 use Support\Discovers\Eloquent\Relationship;
 use Illuminate\Support\Collection;

@@ -15,7 +15,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Log;
-use Support\Entitys\Relationship;
+use Support\Elements\Entities\Relationship;
 
 class Relationships
 {
