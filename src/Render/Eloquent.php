@@ -25,6 +25,8 @@ use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 
 class Eloquent
 {
@@ -194,16 +196,24 @@ class Eloquent
      */
     public function getRelations($key = false)
     {
-        if ($key) {
-            return (new Relationships($this->modelClass))($key);
-        }
+        try {
+            if ($key) {
+                return (new Relationships($this->modelClass))($key);
+            }
 
-        if (!$this->relations) {
-            $this->relations = (new Relationships($this->modelClass))($key);
-            // $this->setError($this->relations->getError()); @todo PEgar erro do relationsscripts
+            if (!$this->relations) {
+                $this->relations = (new Relationships($this->modelClass))($key);
+                // $this->setError($this->relations->getError()); @todo PEgar erro do relationsscripts
+            }
+            // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
+            return $this->relations;
+
+        } catch(FatalErrorException $e) {
+            $this->setError($e->getMessage());
+            // dd($this->model, $method, $e);
+            dd($e);
+            // @todo Tratar aqui
         }
-        // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
-        return $this->relations;
     }
 
 }

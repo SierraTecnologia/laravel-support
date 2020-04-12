@@ -16,6 +16,10 @@ use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Log;
 use Support\Elements\Entities\Relationship;
+use Support\Parser\ParseClass;
+
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 
 class Relationships
 {
@@ -27,6 +31,7 @@ class Relationships
     public function __construct($model) {
         // $this->model = resolve($model);
         $this->model = $model;
+
         $this->relationships = null;
     }
 
@@ -43,9 +48,22 @@ class Relationships
         return $this->relationships;
     }
 
-    public function all() {
+    public function getInstanceModel()
+    {
+        // @todo consertar repegar as relacoes
+        // if (is_string($this->model)) {
+        //     // $this->model = new $this->model;
+        //     $this->model = ParseClass::returnInstanceForClass($this->model, true);
+        // }
+        return $this->model;
+    }
+
+    public function all()
+    {
 
         $this->relationships = new Collection;
+
+        // $modelClassInstance
 
         foreach((new ReflectionClass($this->model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
         {
@@ -55,7 +73,9 @@ class Relationships
                 /* && $method->isFinal() */) // Retirado o lance do method ser final
             {
                 try {
-                    $return = $method->invoke($this->model);
+                    $return = $method->invoke($this->getInstanceModel());
+                    // dd($return);
+
 
                     if ($return instanceof Relation)
                     {
@@ -106,7 +126,7 @@ class Relationships
                     $this->setError($e->getMessage());
                     // @todo Tratar aqui
                     // dd($e);
-                } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
+                } catch(FatalThrowableError|FatalErrorException $e) {
                     $this->setError($e->getMessage());
                     //@todo fazer aqui
                     // dd($e);

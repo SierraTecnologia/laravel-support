@@ -8,7 +8,10 @@ namespace Support\BigData\RegisterTypes;
 
 class RegisterEventEntity extends AbstractRegisterType
 {
-
+    public static $examples = [
+        'event',
+        'post'
+    ];
 
 
 }
