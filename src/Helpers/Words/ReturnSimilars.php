@@ -36,8 +36,11 @@ class ReturnSimilars
 
     public static function getSimilarsFor($word)
     {
-        $classInstance = new self($word);
+        if (empty($word)) {
+            return [];
+        }
 
+        $classInstance = new self($word);
         return $classInstance->returnSimilars();
     }
 }

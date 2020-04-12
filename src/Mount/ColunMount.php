@@ -71,8 +71,19 @@ class ColunMount
          *   "composite" => false
          */
         $columnEntity->setColumnName($this->getColumnName());
-        $columnEntity->setColumnType($this->column['type']);
+
+        $columnEntity->setColumnType($this->column['type']['name']);
+        if (!isset($this->column['type']['default']) || !isset($this->column['type']['default']['type'])) {
+            // @todo Add Relacionamento Caso Exista
+            $columnEntity->setColumnType($this->getColumnDisplayType($this->column['type']['name']));
+        } else {
+            // @todo Add Relacionamento Caso Exista
+            $columnEntity->setColumnType($this->getColumnDisplayType($this->column['type']['default']['type']));
+        }
+
         $columnEntity->setName($this->getName());
+        $columnEntity->setData($this->column);
+        $columnEntity->setDetails($this->mountDetails());
 
         return $columnEntity;
     }
@@ -97,5 +108,216 @@ class ColunMount
         return $name;
     }
 
+    protected function isBelongTo($type = false)
+    {
+        // @todo
 
+    if (isset($this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()])) {
+        return $this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()];
+    }
+
+        // $keys = $database->getListTables();
+        // if (isset($keys[$this->getColumnName()])) {
+        //     return $keys[$this->getColumnName()];
+        // }
+
+        return false;
+    }
+
+    /**
+     * number
+     * text
+     * text_area
+     * rich_text_box
+     * 
+     * select_dropdown
+     * 
+     * timestamp
+     */
+    protected function isRelationship($type)
+    {
+        if ($this->isBelongTo($type)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * number
+     * text
+     * text_area
+     * rich_text_box
+     * 
+     * select_dropdown
+     * 
+     * timestamp
+     */
+    public function getColumnDisplayType($type)
+    {
+        if ($this->isRelationship($type)) {
+            return 'relationship';
+        }
+
+        if ($type == 'varchar') {
+            return 'text';
+        }
+        
+        return $type;
+    }
+
+
+
+    // 'details'      => [
+    //     'slugify' => [
+    //         'origin' => 'title',
+    //     ],
+    //     'validation' => [
+    //         'rule'  => 'unique:pages,slug',
+    //     ],
+    // ],
+    // [
+    //     'default' => '',
+    //     'null'    => '',
+    //     'options' => [
+    //         '' => '-- None --',
+    //     ],
+    //     'relationship' => [
+    //         'key'   => 'id',
+    //         'label' => 'name',
+    //     ],
+    // ]
+
+    // Image
+    // 
+    // 'details'      => [
+    //     'resize' => [
+    //         'width'  => '1000',
+    //         'height' => 'null',
+    //     ],
+    //     'quality'    => '70%',isBelongTo
+    //                 'width'  => '300',
+    //                 'height' => '250',
+    //             ],
+    //         ],
+    //     ],
+    // ],
+
+    public function mountDetails()
+    {
+        $haveDetails = false;
+        $array = [];
+        if ($relation = $this->isBelongTo()) {
+            // name, key, label
+            $haveDetails = true;
+            $array['options'] = [
+                    '' => '-- None --',
+            ];
+            $array['relationship'] = [
+                'key'   => $relation['key'],
+                'label' => $relation['label'],
+            ];
+        }
+
+        if (!$haveDetails) {
+            return null;
+        }
+
+        return $array;
+    }
+
+
+
+
+
+
+        /**
+         * ^ Illuminate\Support\Collection {#799 ▼
+         *   #items: array:6 [▼
+         * id" => array:19 [▶]
+         * name" => array:21 [▼
+           * name" => "name"
+           * type" => "varchar"
+           * default" => null
+           * notnull" => false
+           * length" => 255
+           * precision" => 10
+           * scale" => 0
+           * fixed" => false
+           * unsigned" => false
+           * autoincrement" => false
+           * columnDefinition" => null
+           * comment" => null
+           * charset" => "utf8mb4"
+           * collation" => "utf8mb4_unicode_ci"
+           * oldName" => "name"
+           * null" => "YES"
+           * extra" => ""
+           * composite" => false
+           * field" => "name"
+           * indexes" => []
+           * key" => null
+          *    ]
+         * description" => array:21 [▶]
+         * created_at" => array:19 [▼
+           * name" => "created_at"
+           * type" => "timestamp"
+           * default" => null
+           * notnull" => false
+           * length" => 0
+           * precision" => 10
+           * scale" => 0
+           * fixed" => false
+           * unsigned" => false
+           * autoincrement" => false
+           * columnDefinition" => null
+           * comment" => null
+           * oldName" => "created_at"
+           * null" => "YES"
+           * extra" => ""
+           * composite" => false
+           * field" => "created_at"
+           * indexes" => []
+           * key" => null
+          *    ]
+         * updated_at" => array:19 [▶]
+         * deleted_at" => array:19 [▶]
+          *  ]
+         * }
+         */
+
+
+    /**
+     * 
+                'details'      => [
+                    'model'       => 'Facilitador\\Models\\Role',
+                    'table'       => 'roles',
+                    'type'        => 'belongsTo',
+                    'column'      => 'role_id',
+                    'key'         => 'id',
+                    'label'       => 'display_name',
+                    'pivot_table' => 'roles',
+                    'pivot'       => 0,
+                ],
+
+     * User hasMany Phones (One to Many)
+     * Phone belongsTo User (Many to One) (Inverso do de cima)
+     * 
+     * belongsToMany (Many to Many) (Inverso é igual)
+     * 
+     * morphMany
+     * morphTo
+     * 
+     * morphedByMany (O modelo possui a tabela taggables)
+     * morphToMany   (nao possui a tabela taggables)
+     */
+    protected function readEloquentService(EloquentService $eloquentService)
+    {
+        $relations = $eloquentService->getRelations();
+        if (!empty($relations)) {
+            foreach ($relations as $relation) {
+
+            }
+        }
+    }
 }

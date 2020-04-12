@@ -69,6 +69,8 @@ class Eloquent
         $this->modelClass = $modelClass;
 
         if (!empty($this->modelClass) && $this->render()) {
+            // if ($modelClass!='App\Models\Access\SocialAuthService')
+            // dd($this, $modelClass);
             return true;
         }
 
@@ -159,13 +161,12 @@ class Eloquent
     {
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
-            if (!$parserModelClass->typeIs('model')) {
+            if (!$parserModelClass->typeIs('model') || !$this->tableData = $parserModelClass->toArray()) {
                 // dd($parserModelClass);
                 return false;
             }
 
             $this->tableName = $parserModelClass->getData('table');
-            $this->tableData = $parserModelClass->toArray();
             $this->name = $this->getName();
             $this->relations = $this->getRelations();
         } catch(SchemaException|DBALException $e) {

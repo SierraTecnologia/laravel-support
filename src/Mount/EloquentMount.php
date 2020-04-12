@@ -53,18 +53,20 @@ class EloquentMount
 
     public function getEntity()
     {
-        $databaseEntity = new EloquentEntity();
 
         $tableName = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableName"];
-        $primaryKey = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableData"]["getKeyName"];
+        $tableClassArray = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableData"];
+        $primaryKey = $tableClassArray["getKeyName"];
         
 
-
-        // $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className];
-        // $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName];
-
-        $databaseEntity->setName($tableName);
-        $databaseEntity->setPrimaryKey($primaryKey);
+// dd(
+//         $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className],
+//         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
+// );
+        $eloquentEntity = new EloquentEntity($this->className);
+        $eloquentEntity->setName($tableName);
+        $eloquentEntity->setPrimaryKey($primaryKey);
+        $eloquentEntity->setData($tableClassArray);
 
         if (!isset($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName])) {
             // @todo criar erro
@@ -72,10 +74,10 @@ class EloquentMount
         }
         
         foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns'] as $column) {
-            $databaseEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
+            $eloquentEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
         }
 
-        return $databaseEntity;
+        return $eloquentEntity;
     }
 
     public function toArray()

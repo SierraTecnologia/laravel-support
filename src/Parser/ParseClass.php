@@ -18,6 +18,14 @@ class ParseClass
         'model' => 'Illuminate\Database\Eloquent\Model',
     ];
 
+    // Tudo em minusculo
+    public static $typesIgnoreName = [
+        'model' => [
+            'model',
+            'base'
+        ],
+    ];
+
     public function __construct($classOrReflectionClass)
     {
         $this->className = $classOrReflectionClass;
@@ -104,7 +112,10 @@ class ParseClass
         foreach (static::$types as $type => $subClassName) {
             // Detected
             if (is_subclass_of($this->className, $subClassName)) {
-                return $type;
+                if (!isset(static::$typesIgnoreName[$type]) || !in_array(static::getClassName($this->className), static::$typesIgnoreName[$type])) {
+                    // dd(static::$typesIgnoreName, static::getClassName($this->className), $this->className);
+                    return $type;
+                }
             }
         }
 

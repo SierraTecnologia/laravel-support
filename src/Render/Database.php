@@ -245,6 +245,7 @@ class Database
         $this->totalRelations = [];
         
         foreach ($this->eloquentClasses as $eloquentService) {
+
             // Guarda Classe por Table
             if (isset($this->mapperTableToClasses[$eloquentService->getTableName()])) {
                 if (is_array($this->mapperTableToClasses[$eloquentService->getTableName()])) {

@@ -73,6 +73,19 @@ class EloquentEntity
     }
 
 
+    public function getData($indexe = false)
+    {
+        if (empty($indexe) || !isset($this->data[$indexe])) {
+            return $this->data;
+        }
+        return $this->data[$indexe];
+    }
+    public function setData($data)
+    {
+        return $this->data = $data;
+    }
+
+
     /**
      */
     public function addColumn(EloquentColumn $column)

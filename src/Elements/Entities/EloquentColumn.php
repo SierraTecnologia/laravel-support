@@ -19,18 +19,22 @@ class EloquentColumn
     public $name;
     public $columnName;
     public $columnType;
+    public $displayType;
 
     public $displayName = false;
     public $displayColumn;
-    public $displayType;
     public $fillable;
     protected $data;
+    protected $details;
 
     public function __construct()
     {
         
     }
     
+    /**
+     * Nome para Exibição
+     */
     public function getName()
     {
         return $this->name;
@@ -41,6 +45,9 @@ class EloquentColumn
         return $this->name = $name;
     }
     
+    /**
+     * Nome da Coluna no Banco
+     */
     public function getColumnName()
     {
         return $this->columnName;
@@ -51,6 +58,9 @@ class EloquentColumn
         return $this->columnName = $columnName;
     }
 
+    /**
+     * Tipo de Coluna no banco
+     */
     public function getColumnType()
     {
         return $this->columnType;
@@ -60,31 +70,49 @@ class EloquentColumn
     {
         return $this->columnType = $columnType;
     }
-    
-
-
 
     /**
-     * number
-     * text
-     * text_area
-     * rich_text_box
-     * 
-     * select_dropdown
-     * 
-     * timestamp
+     * Tipo de Coluna na aplicacao
      */
-    public function getColumnDisplayType()
+    public function getDisplayType()
     {
-        $type = $this->getColumnType();
-
-        if ($this->isBelongTo()) {
-            $this->displayType = 'relationship';
-        }else if ($type == 'int' || $type == 'integer') {
-            $this->displayType = 'number';
-        }
-        return $this->displayType;
+        return $this->details;
     }
+
+    public function setDisplayType($displayType)
+    {
+        return $this->displayType = $displayType;
+    }
+
+    /**
+     * Detalhes
+     */
+    public function getDetails()
+    {
+        return $this->details;
+    }
+
+    public function setDetails($details)
+    {
+        return $this->details = $details;
+    }
+    
+
+    /**
+     * @todo esse codigo é reptid remover depois
+     */
+    public function getData($indexe = false)
+    {
+        if (empty($indexe) || !isset($this->data[$indexe])) {
+            return $this->data;
+        }
+        return $this->data[$indexe];
+    }
+    public function setData($data)
+    {
+        return $this->data = $data;
+    }
+
 
 
 
@@ -162,176 +190,5 @@ class EloquentColumn
             return false;
         }
         return true;
-    }
-
-
-
-    // 'details'      => [
-    //     'slugify' => [
-    //         'origin' => 'title',
-    //     ],
-    //     'validation' => [
-    //         'rule'  => 'unique:pages,slug',
-    //     ],
-    // ],
-    // [
-    //     'default' => '',
-    //     'null'    => '',
-    //     'options' => [
-    //         '' => '-- None --',
-    //     ],
-    //     'relationship' => [
-    //         'key'   => 'id',
-    //         'label' => 'name',
-    //     ],
-    // ]
-
-    // Image
-    // 
-    // 'details'      => [
-    //     'resize' => [
-    //         'width'  => '1000',
-    //         'height' => 'null',
-    //     ],
-    //     'quality'    => '70%',isBelongTo
-    //                 'width'  => '300',
-    //                 'height' => '250',
-    //             ],
-    //         ],
-    //     ],
-    // ],
-    public function getDetails()
-    {
-        $haveDetails = false;
-        $array = [];
-        if ($relation = $this->isBelongTo()) {
-            $haveDetails = true;
-            $array['options'] = [
-                    '' => '-- None --',
-            ];
-            $array['relationship'] = [
-                'key'   => $relation['key'],
-                'label' => 'name',
-            ];
-        }
-
-        if (!$haveDetails) {
-            return null;
-        }
-
-        return $array;
-    }
-
-
-
-
-
-        /**
-         * ^ Illuminate\Support\Collection {#799 ▼
-         *   #items: array:6 [▼
-         * id" => array:19 [▶]
-         * name" => array:21 [▼
-           * name" => "name"
-           * type" => "varchar"
-           * default" => null
-           * notnull" => false
-           * length" => 255
-           * precision" => 10
-           * scale" => 0
-           * fixed" => false
-           * unsigned" => false
-           * autoincrement" => false
-           * columnDefinition" => null
-           * comment" => null
-           * charset" => "utf8mb4"
-           * collation" => "utf8mb4_unicode_ci"
-           * oldName" => "name"
-           * null" => "YES"
-           * extra" => ""
-           * composite" => false
-           * field" => "name"
-           * indexes" => []
-           * key" => null
-          *    ]
-         * description" => array:21 [▶]
-         * created_at" => array:19 [▼
-           * name" => "created_at"
-           * type" => "timestamp"
-           * default" => null
-           * notnull" => false
-           * length" => 0
-           * precision" => 10
-           * scale" => 0
-           * fixed" => false
-           * unsigned" => false
-           * autoincrement" => false
-           * columnDefinition" => null
-           * comment" => null
-           * oldName" => "created_at"
-           * null" => "YES"
-           * extra" => ""
-           * composite" => false
-           * field" => "created_at"
-           * indexes" => []
-           * key" => null
-          *    ]
-         * updated_at" => array:19 [▶]
-         * deleted_at" => array:19 [▶]
-          *  ]
-         * }
-         */
-    public static function returnFromArray($data, EloquentService $eloquentService)
-    {
-        $instanceClass = new static($data['name'], new Varchar, true);
-        $instanceClass->setData($data);
-        $instanceClass->readEloquentService($eloquentService);
-
-        return $instanceClass;
-    }
-
-
-    /**
-     * 
-                'details'      => [
-                    'model'       => 'Facilitador\\Models\\Role',
-                    'table'       => 'roles',
-                    'type'        => 'belongsTo',
-                    'column'      => 'role_id',
-                    'key'         => 'id',
-                    'label'       => 'display_name',
-                    'pivot_table' => 'roles',
-                    'pivot'       => 0,
-                ],
-
-     * User hasMany Phones (One to Many)
-     * Phone belongsTo User (Many to One) (Inverso do de cima)
-     * 
-     * belongsToMany (Many to Many) (Inverso é igual)
-     * 
-     * morphMany
-     * morphTo
-     * 
-     * morphedByMany (O modelo possui a tabela taggables)
-     * morphToMany   (nao possui a tabela taggables)
-     */
-    protected function readEloquentService(EloquentService $eloquentService)
-    {
-        $relations = $eloquentService->getRelations();
-        if (!empty($relations)) {
-            foreach ($relations as $relation) {
-
-            }
-        }
-    }
-
-    protected function isBelongTo()
-    {
-        // @todo
-        // $keys = $database->getListTables();
-        // if (isset($keys[$this->getColumnName()])) {
-        //     return $keys[$this->getColumnName()];
-        // }
-
-        return false;
     }
 }

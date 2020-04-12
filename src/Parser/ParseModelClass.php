@@ -39,26 +39,26 @@ class ParseModelClass extends ParseClass
 
         //     $this->instanceClass->getKey() // Ex: null
         // );
+        if (!$this->isModelClass()) {
+            return false;
+        }
 
-            return [
+        return [
 
-                'table' => $this->getTableName(), // Ex: persons
-                'getMutatedAttributes' => $this->instanceClass->getMutatedAttributes(), // Ex: 
-                'fillable' => $this->instanceClass->getFillable(), // Ex: 
-                'dates' => $this->instanceClass->getDates(), // Ex: 
-                'createdAtColumn' => $this->instanceClass->getCreatedAtColumn(), // Ex: created_at
-                'getUpdatedAtColumn' => $this->instanceClass->getUpdatedAtColumn(), // Ex: updated_at
-                'getVisible' => $this->instanceClass->getVisible(), // Ex: []
-                'getGuarded' => $this->instanceClass->getGuarded(), // Ex: 
-                'getKeyName' => $this->getPrimaryKey(), // Ex: code
-                'getKeyType' => $this->instanceClass->getKeyType(), // ^ "string"
-                'getIncrementing' => $this->instanceClass->getIncrementing(), // false or true
-                'getForeignKey' => $this->instanceClass->getForeignKey(), // Ex: person_code
+            'table' => $this->getTableName(), // Ex: persons
+            'getMutatedAttributes' => $this->instanceClass->getMutatedAttributes(), // Ex: 
+            'fillable' => $this->instanceClass->getFillable(), // Ex: 
+            'dates' => $this->instanceClass->getDates(), // Ex: 
+            'createdAtColumn' => $this->instanceClass->getCreatedAtColumn(), // Ex: created_at
+            'getUpdatedAtColumn' => $this->instanceClass->getUpdatedAtColumn(), // Ex: updated_at
+            'getVisible' => $this->instanceClass->getVisible(), // Ex: []
+            'getGuarded' => $this->instanceClass->getGuarded(), // Ex: 
+            'getKeyName' => $this->getPrimaryKey(), // Ex: code
+            'getKeyType' => $this->instanceClass->getKeyType(), // ^ "string"
+            'getIncrementing' => $this->instanceClass->getIncrementing(), // false or true
+            'getForeignKey' => $this->instanceClass->getForeignKey(), // Ex: person_code
 
-            ];
-            if (!$this->isModelClass($class)) {
-                return false;
-            }
+        ];
     }
 
 

@@ -89,14 +89,11 @@ class DatabaseMount
 
     public function getEloquentEntity($class)
     {
-        dd(
-            'getentity',
-            $this->entitys,
-            $class
-        );
-        // ->values()->all()/
-        $databaseEntity = new EloquentEntity($class, $this->getRenderDatabase());
-        return $databaseEntity;
+        if (!empty($class) && isset($this->entitys->toArray()[$class])) {
+            return $this->entitys->toArray()[$class];
+        }
+
+        return false;
     }
 
 }

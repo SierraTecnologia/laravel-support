@@ -24,34 +24,41 @@ class Icons
 
         public static function getForNameAndCache($name, $html = true)
         {
+            // if (is_array($name)) {
+            //     dd($name);
+            // }
             $name = ReturnSimilars::getSimilarsFor($name);
-            $icons = collect(self::icons())->reject(function ($icon) use ($name) {
-                $reject = true;
-                if (is_string($name)) {
-                    $name = [$name];
-                }
-                foreach ($name as $searchName) {
+            $icons = [];
 
-                    // Procura na class
-                    if (isset($icon['class']) && strpos($icon['class'], $searchName) !== false) {
-                        $reject = false;
+            if (!empty($name)) {
+                $icons = collect(self::icons())->reject(function ($icon) use ($name) {
+                    $reject = true;
+                    if (is_string($name)) {
+                        $name = [$name];
                     }
-                    // Procura no nome
-                    if (isset($icon['name']) && strpos($icon['name'], $searchName) !== false) {
-                        $reject = false;
+                    foreach ($name as $searchName) {
+
+                        // Procura na class
+                        if (isset($icon['class']) && strpos($icon['class'], $searchName) !== false) {
+                            $reject = false;
+                        }
+                        // Procura no nome
+                        if (isset($icon['name']) && strpos($icon['name'], $searchName) !== false) {
+                            $reject = false;
+                        }
+
+                        // Procura no uses
+                        if (!isset($icon['uses']) || !is_array($icon['uses']) || empty($icon['uses'])) {
+                            continue;
+                        }
+                        if (in_array($searchName, $icon['uses'])) {
+                            $reject = false;
+                        }
                     }
 
-                    // Procura no uses
-                    if (!isset($icon['uses']) || !is_array($icon['uses']) || empty($icon['uses'])) {
-                        continue;
-                    }
-                    if (in_array($searchName, $icon['uses'])) {
-                        $reject = false;
-                    }
-                }
-
-                return $reject;
-            })->toArray();
+                    return $reject;
+                })->toArray();
+            }
             
             if (empty($icons)) {
                 return self::getRandon($html);
