@@ -110,16 +110,9 @@ class ColunMount
 
     protected function isBelongTo($type = false)
     {
-        // @todo
-
-    if (isset($this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()])) {
-        return $this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()];
-    }
-
-        // $keys = $database->getListTables();
-        // if (isset($keys[$this->getColumnName()])) {
-        //     return $keys[$this->getColumnName()];
-        // }
+        if (isset($this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()])) {
+            return $this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()];
+        }
 
         return false;
     }
@@ -207,17 +200,45 @@ class ColunMount
     {
         $haveDetails = false;
         $array = [];
+        // $array['options'] = [
+        //         '' => '-- None --',
+        // ];
+
         if ($relation = $this->isBelongTo()) {
+            if (!isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+                return null; //@todo tratar erro de tabela que nao existe
+            }
             // name, key, label
             $haveDetails = true;
-            $array['options'] = [
-                    '' => '-- None --',
-            ];
-            $array['relationship'] = [
-                'key'   => $relation['key'],
-                'label' => $relation['label'],
-            ];
+
+            if (is_array($className = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+                $className = $className[0];
+            }
+
+            $array['model'] = $className;
+            $array['table'] = $relation['name'];
+            $array['type'] = 'belongsTo';
+            $array['column'] = $this->getColumnName();
+            $array['key'] = $relation['key'];
+            $array['label'] = $relation['label'];
+            $array['pivot_table'] = $relation['name'];
+            $array['pivot'] = 0;
         }
+
+        // Belongs to many
+        // if ($relation = $this->isBelongTo()) {
+        //     // name, key, label
+        //     $haveDetails = true;
+        //     $array['model'] = $className;
+        //     $array['table'] = $relation['roles'];
+        //     $array['type'] = 'belongsToMany';
+        //     $array['column'] = $relation['id'];
+        //     $array['key'] = $relation['key'];
+        //     $array['label'] = $relation['label'];
+        //     $array['pivot_table'] = $relation['user_roles'];
+        //     $array['pivot'] = 1; // @todo
+        //     $array['taggable'] = 0; // @todo
+        // }
 
         if (!$haveDetails) {
             return null;

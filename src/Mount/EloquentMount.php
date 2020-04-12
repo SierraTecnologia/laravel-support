@@ -77,6 +77,14 @@ class EloquentMount
             $eloquentEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
         }
 
+        // Debug
+        // if ($tableName=='persons') {
+        //     dd(
+        //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName],
+        //         $eloquentEntity
+        //     );
+        // }
+
         return $eloquentEntity;
     }
 
