@@ -79,7 +79,7 @@ class Database
 
         $this->processe();
 
-        // $this->display();
+        $this->display();
     }
 
     public function toArray()
@@ -265,6 +265,8 @@ class Database
             if (!empty($relations = $eloquentService->getRelations())) {
                 foreach ($relations as $relation) {
                     try {
+                        $tableTarget = $relation->getName();
+                        $tableOrigin = $eloquentService->getTableName();
                         $singulariRelationName = Inflector::singularize($relation->name);
                         if (is_array($singulariRelationName)) {
                             $singulariRelationName = $singulariRelationName[count($singulariRelationName)-1];
@@ -274,16 +276,24 @@ class Database
                             $tableNameSingulari = $tableNameSingulari[count($tableNameSingulari)-1];
                         }
                         if (Relationship::isInvertedRelation($relation->type)) {
+                            $temp = $tableOrigin;
+                            $tableOrigin = $tableTarget;
+                            $tableTarget = $temp;
                             $novoIndice = $tableNameSingulari.'_'.Relationship::getInvertedRelation($relation->type).'_'.$singulariRelationName;
                         } else {
                             $novoIndice = $singulariRelationName.'_'.$relation->type.'_'.$tableNameSingulari;
                         }
                         if (!isset($this->totalRelations[$novoIndice])) {
-                            $this->totalRelations[$novoIndice] = [];
+                            $this->totalRelations[$novoIndice] = [
+                                'name' => $novoIndice,
+                                'table_origin' => $tableOrigin,
+                                'table_target' => $tableTarget,
+                                'pivot' => 0,
+                                'type' => $relation->getType(),
+                                'relations' => []
+                            ];
                         }
-                        $this->totalRelations[$novoIndice][] = [
-                          $relation->toArray() 
-                        ];
+                        $this->totalRelations[$novoIndice]['relations'][] = $relation->toArray();
                     } catch (\Exception $e) {
                         dd(
                             'LaravelSupport>Database>> Não era pra Cair Erro aqui',

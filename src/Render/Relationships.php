@@ -48,16 +48,6 @@ class Relationships
         return $this->relationships;
     }
 
-    public function getInstanceModel()
-    {
-        // @todo consertar repegar as relacoes
-        // if (is_string($this->model)) {
-        //     // $this->model = new $this->model;
-        //     $this->model = ParseClass::returnInstanceForClass($this->model, true);
-        // }
-        return $this->model;
-    }
-
     public function all()
     {
 
@@ -73,7 +63,7 @@ class Relationships
                 /* && $method->isFinal() */) // Retirado o lance do method ser final
             {
                 try {
-                    $return = $method->invoke($this->getInstanceModel());
+                    $return = $method->invoke(new $this->model);
                     // dd($return);
 
 

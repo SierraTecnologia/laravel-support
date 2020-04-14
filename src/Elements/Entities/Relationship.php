@@ -31,8 +31,8 @@ class Relationship
     public function toArray()
     {
         $relationship = [];
-        $relationship['name'] = $this->name;
-        $relationship['type'] = $this->type;
+        $relationship['name'] = $this->getName();
+        $relationship['type'] = $this->getType();
         $relationship['model'] = $this->model;
         $relationship['foreignKey'] = $this->foreignKey;
         $relationship['ownerKey'] = $this->ownerKey;
