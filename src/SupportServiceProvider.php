@@ -34,6 +34,8 @@ class SupportServiceProvider extends ServiceProvider
                 CodeModelsCommand::class,
             ]);
         }
+
+        $this->publishMigrations();
     }
 
     /**
@@ -69,5 +71,12 @@ class SupportServiceProvider extends ServiceProvider
     public function provides()
     {
         return [ModelFactory::class];
+    }
+       
+    protected function loadMigrations()
+    {
+        // Register Migrations
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+       
     }
 }
