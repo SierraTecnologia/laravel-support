@@ -79,7 +79,7 @@ class Database
 
         $this->processe();
 
-        $this->display();
+        // $this->display();
     }
 
     public function toArray()

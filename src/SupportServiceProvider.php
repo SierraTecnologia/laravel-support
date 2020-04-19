@@ -34,8 +34,6 @@ class SupportServiceProvider extends ServiceProvider
                 CodeModelsCommand::class,
             ]);
         }
-
-        $this->publishMigrations();
     }
 
     /**
@@ -46,6 +44,8 @@ class SupportServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerModelFactory();
+
+        $this->loadMigrations();
     }
 
     /**
