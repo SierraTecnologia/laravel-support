@@ -43,6 +43,18 @@ class ParseClass
         // );
         // var_dump($this->reflectionClass->getFileName());
     }
+
+    public function toArray()
+    {
+
+        return [
+
+            // 'class' => get_class($this->className),
+            // 'parentClass' => get_parent_class($this->className),
+
+        ];
+
+    }
     
     public static function getFileName($classOrReflectionClass = false)
     {
@@ -104,6 +116,10 @@ class ParseClass
 
     protected function detectType()
     {
+        // Verify if is Interface
+        if ($this->reflectionClass->isInterface()) {
+            return 'interface';
+        }
         // Verify if is Abstract
         if ($this->reflectionClass->isAbstract()) {
             return 'abstract';

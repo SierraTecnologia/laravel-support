@@ -43,7 +43,9 @@ class ParseModelClass extends ParseClass
             return false;
         }
 
-        return [
+        $arrayParent = parent::toArray();
+
+        $array = [
 
             'table' => $this->getTableName(), // Ex: persons
             'getMutatedAttributes' => $this->instanceClass->getMutatedAttributes(), // Ex: 
@@ -59,6 +61,11 @@ class ParseModelClass extends ParseClass
             'getForeignKey' => $this->instanceClass->getForeignKey(), // Ex: person_code
 
         ];
+
+        return array_merge(
+            $arrayParent,
+            $array
+        );
     }
 
 

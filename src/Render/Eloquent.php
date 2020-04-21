@@ -27,6 +27,7 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Debug\Exception\FatalErrorException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class Eloquent
 {
@@ -71,7 +72,7 @@ class Eloquent
         $this->modelClass = $modelClass;
 
         if (!empty($this->modelClass) && $this->render()) {
-            // if ($modelClass!='App\Models\Access\SocialAuthService')
+            // if ($modelClass!='Siravel\Models\Access\SocialAuthService')
             // dd($this, $modelClass);
             return true;
         }
@@ -171,6 +172,10 @@ class Eloquent
             $this->tableName = $parserModelClass->getData('table');
             $this->name = $this->getName();
             $this->relations = $this->getRelations();
+        } catch(BindingResolutionException $e) {
+            // Erro Leve
+            $this->setError($e->getMessage());
+            
         } catch(SchemaException|DBALException $e) {
             // @todo Tratar, Tabela Nao existe
             $this->setError($e->getMessage());
@@ -178,14 +183,14 @@ class Eloquent
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
             $this->setError($e->getMessage());
             // @todo Armazenar Erro em tabela
-            // dd($e);
+            dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
             $this->setError($e->getMessage());
-            // dd($e);
+            dd($e);
         } catch(\Throwable $e) {
             $this->setError($e->getMessage());
-            // dd($e);
+            dd($e);
             // @todo Tratar aqui
         }
         return true;
