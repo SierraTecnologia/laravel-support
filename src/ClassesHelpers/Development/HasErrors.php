@@ -28,6 +28,12 @@ trait HasErrors
             if (is_array($error) && count($error) == 1) {
                 $error = $error[0];
             }
+            if (is_object($error)) {
+                $e = $error;
+                $error = $error->getMessage();
+                // dd($e);
+            }
+            
 
 
             Log::error($error);

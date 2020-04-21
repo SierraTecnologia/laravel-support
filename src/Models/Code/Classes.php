@@ -15,6 +15,8 @@ class Classes extends Model
         'class_name',
         'filename',
         'parent_class',
+        'type',
+        'data',
     ];
 
     protected $modelService = false;
@@ -25,5 +27,15 @@ class Classes extends Model
             $className = $result->class_name;
         }
         return $className;
+    }
+
+    public function setDataAttribute($value)
+    {
+        $this->attributes['data'] = json_encode($value);
+    }
+
+    public function getDataAttribute($value)
+    {
+        return json_decode(!empty($value) ? $value : '{}');
     }
 }

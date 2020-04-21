@@ -17,11 +17,35 @@ class DataRelationship extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'table_name',
-        'table_name_inverse',
-        'relation_type',
-        'relation_type_inverse',
-        'data',
+        'origin_table_name',
+        'origin_table_class',
+        'origin_foreignKey',
+    
+        'related_table_name',
+        'related_table_class',
+        'related_foreignKey',
+    
+        // Morph
+        'morph_id',
+        'morph_type',
+        'is_inverse',
+    
+        // Others Values
+        'pivot',
+    
+        'name',
+        'type',
+        'model',
+        'foreignKey',
+        'ownerKey',
+
+        // Old
+
+        // 'table_name',
+        // 'table_name_inverse',
+        // 'relation_type',
+        // 'relation_type_inverse',
+        // 'data',
     ];
 
 

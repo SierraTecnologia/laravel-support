@@ -169,7 +169,7 @@ class Eloquent
     {
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
-            if (!$parserModelClass->typeIs('model') || !$this->tableData = $parserModelClass->toArray()) {
+            if ($parserModelClass->hasError || !$parserModelClass->typeIs('model') || !$this->tableData = $parserModelClass->toArray()) {
                 // dd($parserModelClass);
                 return false;
             }
@@ -216,6 +216,7 @@ class Eloquent
                 $this->relations = (new Relationships($this->modelClass))($key);
                 // $this->setError($this->relations->getError()); @todo PEgar erro do relationsscripts
             }
+            
             // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
             return $this->relations;
 

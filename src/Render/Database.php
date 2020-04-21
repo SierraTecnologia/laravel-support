@@ -99,7 +99,7 @@ class Database
 
         // dd($this->tempNotFinalClasses);
         // dd($this->displayClasses['Population\Models\Market\Abouts\Info']);
-        $this->display();
+        // $this->display();
     }
 
     public function toArray()
@@ -250,7 +250,6 @@ class Database
                 // dd($e);
                 // @todo Tratar aqui
             }
-
             return $selfInstance->toArray();
         });
         $this->setArray($value);

@@ -61,32 +61,6 @@ class Relationship
         'ownerKey',
     ];
 
-
-    /**
-     * 
-                            'origin_table_name' => $this->model,
-                            'origin_table_class' => $this->model,
-                            'origin_foreignKey' => $tmpForeignKey,
-
-                            'related_table_name' => (new ReflectionClass($return->getRelated()))->getName(),
-                            'related_table_class' => $return->getRelationName(),
-                            'related_foreignKey' => $return->getRelatedKeyName(),
-
-                            // Morph
-                            'morph_id' => $return->getMorphType(),
-                            'morph_type' => $return->getMorphType(),
-                            'is_inverse' => $return->getInverse(),
-
-                            // Others Values
-                            'pivot' => false,
-
-                            // Old
-                            'name' => $method->getName(),
-                            'type' => $tmpReturnReflectionClass->getShortName(),
-                            'model' => (new ReflectionClass($return->getRelated()))->getName(),
-                            'ownerKey' => $ownerKey,
-                            'foreignKey' => $tmpForeignKey,
-     */
     public function __construct($relationship = [])
     {
         if ($relationship)

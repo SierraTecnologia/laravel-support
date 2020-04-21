@@ -6,6 +6,8 @@ declare(strict_types=1);
 namespace Support\Parser;
 
 use App;
+use Log;
+use Exception;
 use Support\Models\Code\Classes;
 
 class ParseClass
@@ -14,6 +16,8 @@ class ParseClass
 
     public $reflectionClass = false;
     public $className = false;
+    public $parentClass = false;
+    public $fileName = false;
     public $type = false;
 
     public static $types = [
@@ -31,7 +35,6 @@ class ParseClass
     public function __construct($classOrReflectionClass)
     {
         $this->className = $classOrReflectionClass;
-        $this->reflectionClass = static::getReflectionClass($classOrReflectionClass);
         $this->type = $this->detectType();
         if (!$this->supportModelCodeClass = Classes::find($this->className)) {
             $this->supportModelCodeClass = new Classes;
@@ -39,7 +42,10 @@ class ParseClass
             $this->supportModelCodeClass->filename = $this->getClassFilename();
             $this->supportModelCodeClass->parent_class = $this->getParentClassName();
             $this->supportModelCodeClass->type = $this->getType();
+            $this->supportModelCodeClass->data = $this->toArray();
             $this->supportModelCodeClass->save();
+        } else {
+            $this->fromArray($this->supportModelCodeClass->data);
         }
         // @debug
         // dd($this->reflectionClass->getProperties());
@@ -52,6 +58,14 @@ class ParseClass
         //     $this->reflectionClass->getProperty('table')
         // );
         // var_dump($this->reflectionClass->getFileName());
+    }
+    
+    public function getReflectionClassForUse()
+    {
+        if (!$this->reflectionClass) {
+            $this->reflectionClass = static::getReflectionClass($this->className);
+        }
+        return $this->reflectionClass;
     }
 
     public function toArray()
@@ -68,29 +82,71 @@ class ParseClass
 
     }
 
+    public function fromArray($array)
+    {
+        if (isset($array['class'])) {
+            $this->setClasseName($array['class']);
+        }
+        if (isset($array['filename'])) {
+            $this->setClassFilename($array['filename']);
+        }
+        if (isset($array['parentClass'])) {
+            $this->setParentClassName($array['parentClass']);
+        }
+        // if (isset($array['interfaces'])) {
+        //     $this->setInterfaceNames($array['interfaces']);
+        // }
+        if (isset($array['type'])) {
+            $this->setType($array['type']);
+        }
+    }
+
     // @todo fazer getSetter para cada um desses
     public function getClasseName()
     {
-        return $this->reflectionClass->getName();
+        return $this->className;
+    }
+    public function setClasseName()
+    {
+        $this->className = $className;
     }
     public function getParentClassName()
     {
-        if (!$parentClass = $this->reflectionClass->getParentClass()){
-            return null;
+        if ($this->parentClass === false) {
+            if (!$parentClass = $this->getReflectionClassForUse()->getParentClass()){
+                $this->parentClass = null;
+            } else {
+                $this->parentClass = $parentClass->getName();
+            }
         }
-        return $parentClass->getName();
+        return $this->parentClass;
+    }
+    public function setParentClassName($parentClass)
+    {
+        $this->parentClass = $parentClass;
     }
     public function getClassFilename()
     {
-        return $this->reflectionClass->getFileName();
+        if ($this->fileName === false) {
+            $this->fileName = $this->getReflectionClassForUse()->getFileName();
+        }
+        return $this->fileName;
     }
-    public function getInterfaceNames()
+    public function setClassFilename($fileName)
     {
-        return $this->reflectionClass->getInterfaceNames();
+        $this->fileName = $fileName;
     }
     public function getType()
     {
         return $this->type;
+    }
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+    public function getInterfaceNames()
+    {
+        return $this->getReflectionClassForUse()->getInterfaceNames();
     }
 
 
@@ -105,11 +161,11 @@ class ParseClass
     protected function detectType()
     {
         // Verify if is Interface
-        if ($this->reflectionClass->isInterface()) {
+        if ($this->getReflectionClassForUse()->isInterface()) {
             return 'interface';
         }
         // Verify if is Abstract
-        if ($this->reflectionClass->isAbstract()) {
+        if ($this->getReflectionClassForUse()->isAbstract()) {
             return 'abstract';
         }
 
@@ -148,7 +204,7 @@ class ParseClass
         }
 
         if (!class_exists($class)) {
-            Log::warning('[Support] Code Parser -> Class não encontrada no ModelService' . $class);
+            Log::warning('[Support] Code Parser -> Class não encontrada no ModelService -> ' . $class);
             throw new Exception('Class não encontrada no ModelService' . $class);
         }
         

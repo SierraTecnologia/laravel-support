@@ -96,19 +96,12 @@ class Relationships
 
                         $dataRelationship = [
                             'origin_table_name' => $this->model,
-                            'origin_table_class' => $this->model,
                             'origin_foreignKey' => $tmpForeignKey,
 
                             'related_table_name' => (new ReflectionClass($return->getRelated()))->getName(),
-                            'related_table_class' => $return->getRelationName(),
-                            'related_foreignKey' => $return->getRelatedKeyName(),
-
-                            // Morph
-                            'morph_type' => $return->getMorphType(),
-                            'morph_type' => $return->getMorphType(),
-                            'is_inverse' => $return->getInverse(),
 
                             // Others Values
+                            'is_inverse' => false,
                             'pivot' => false,
 
                             // Old
@@ -119,9 +112,36 @@ class Relationships
                             'foreignKey' => $tmpForeignKey,
                         ];
 
+                        if ($tmpReturnReflectionClass->hasMethod('getTable')) {
+                            $dataRelationship['origin_table_class'] = $return->getTable();
+                        }
+                        if ($tmpReturnReflectionClass->hasMethod('getRelatedKeyName')) {
+                            $dataRelationship['related_foreignKey'] = $return->getRelatedKeyName();
+                        }
+                        if ($tmpReturnReflectionClass->hasMethod('getRelationName')) {
+                            $dataRelationship['related_table_class'] = $return->getRelationName();
+                        }
+
+                        if ($tmpReturnReflectionClass->hasMethod('getMorphType')) {
+                            $dataRelationship['morph_type'] = $return->getMorphType();
+                        }
+
+                        if ($tmpReturnReflectionClass->hasMethod('getMorphType')) {
+                            $dataRelationship['morph_type'] = $return->getMorphType();
+                        }
+
+                        /**
+                         * @todo Fazer pivo
+                         */
                         if ($tmpReturnReflectionClass->hasMethod('getPivotClass')) {
                             $dataRelationship['pivot'] = true;
+                            $dataRelationship['pivotClass'] = $return->getPivotClass();
+                        }
+                        if ($tmpReturnReflectionClass->hasMethod('getPivotColumns')) {
+                            $dataRelationship['pivot'] = true;
+                            $dataRelationship['pivotColumns'] = $return->getPivotColumns();
                             dd(
+                                $dataRelationship,
                                 $return->getPivotAccessor(),
                                 $return->getPivotColumns(),
                                 $return->getPivotClass()
@@ -152,30 +172,20 @@ class Relationships
 
                         $this->relationships[$rel->name] = $rel;
                     }
-                } catch(LogicException|ErrorException|RuntimeException $e) {
-                    // @todo Tratar aqui
-                    $this->setError($e->getMessage());
-                    // dd($e);
+                } catch(LogicException $e) {
+                    $this->setError($e);
+                } catch(ErrorException|RuntimeException $e) {
+                    $this->setError($e);
                 } catch (OutOfBoundsException|TypeError $e) {
-                    //@todo fazer aqui
-                    $this->setError($e->getMessage());
-                    // dd($e);
+                    $this->setError($e);
                 } catch(ValidationException $e) {
-                    $this->setError($e->getMessage());
-                    // @todo Tratar aqui
-                    // dd($e);
+                    $this->setError($e);
                 } catch(FatalThrowableError|FatalErrorException $e) {
-                    $this->setError($e->getMessage());
-                    //@todo fazer aqui
-                    // dd($e);
+                    $this->setError($e);
                 } catch(\Exception $e) {
-                    $this->setError($e->getMessage());
-                    // dd($e);
+                    $this->setError($e);
                 } catch(\Throwable $e) {
-                    $this->setError($e->getMessage());
-                    // dd($this->model, $method, $e);
-                    // dd($e);
-                    // @todo Tratar aqui
+                    $this->setError($e);
                 }
             }
         }

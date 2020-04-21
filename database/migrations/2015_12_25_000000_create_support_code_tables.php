@@ -31,6 +31,7 @@ class CreateSupportCodeTables extends Migration
             $table->string('filename')->unique();
             $table->string('parent_class')->nullable();
             $table->string('type')->nullable();
+            $table->text('data')->nullable();
         });
     }
 

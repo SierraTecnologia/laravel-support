@@ -315,6 +315,23 @@ class DataType extends Model
     }
 
 
+    public function dataRelactionships()
+    {
+        return $this->hasMany(
+            Facilitador::modelClass('DataRelationship'),
+            'origin_table_name',
+            'table_name'
+        );
+    }
+    public function allDataRelactionships()
+    {
+        return $this->dataRelactionships()->union($this->hasMany(
+            Facilitador::modelClass('DataRelationship'),
+            'related_table_name',
+            'table_name'
+        ));
+    }
+
     /**
      * Eu que criei. Nao tava no facilitador
      */
