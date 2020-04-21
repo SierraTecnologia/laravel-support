@@ -7,35 +7,146 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
+use Symfony\Component\Inflector\Inflector;
 
 class Relationship
 {
+
+
+    public $origin_table_name;
+    public $origin_table_class;
+    public $origin_foreignKey;
+
+    public $related_table_name;
+    public $related_table_class;
+    public $related_foreignKey;
+
+    // Morph
+    public $morph_id;
+    public $morph_type;
+    public $is_inverse;
+
+    // Others Values
+    public $pivot;
+
     public $name;
     public $type;
     public $model;
     public $foreignKey;
     public $ownerKey;
 
+
+    protected $filliables = [
+
+        'origin_table_name',
+        'origin_table_class',
+        'origin_foreignKey',
+    
+        'related_table_name',
+        'related_table_class',
+        'related_foreignKey',
+    
+        // Morph
+        'morph_id',
+        'morph_type',
+        'is_inverse',
+    
+        // Others Values
+        'pivot',
+    
+        'name',
+        'type',
+        'model',
+        'foreignKey',
+        'ownerKey',
+    ];
+
+
+    /**
+     * 
+                            'origin_table_name' => $this->model,
+                            'origin_table_class' => $this->model,
+                            'origin_foreignKey' => $tmpForeignKey,
+
+                            'related_table_name' => (new ReflectionClass($return->getRelated()))->getName(),
+                            'related_table_class' => $return->getRelationName(),
+                            'related_foreignKey' => $return->getRelatedKeyName(),
+
+                            // Morph
+                            'morph_id' => $return->getMorphType(),
+                            'morph_type' => $return->getMorphType(),
+                            'is_inverse' => $return->getInverse(),
+
+                            // Others Values
+                            'pivot' => false,
+
+                            // Old
+                            'name' => $method->getName(),
+                            'type' => $tmpReturnReflectionClass->getShortName(),
+                            'model' => (new ReflectionClass($return->getRelated()))->getName(),
+                            'ownerKey' => $ownerKey,
+                            'foreignKey' => $tmpForeignKey,
+     */
     public function __construct($relationship = [])
     {
         if ($relationship)
         {
-            $this->name = $relationship['name'];
-            $this->type = $relationship['type'];
-            $this->model = $relationship['model'];
-            $this->foreignKey = $relationship['foreignKey'];
-            $this->ownerKey = $relationship['ownerKey'];
+            foreach ($this->filliables as $filliable) {
+                if (isset($relationship[$filliable])) {
+                    $this->{$filliable} = $relationship[$filliable];
+                }
+            }
+            // $this->origin_table_name = $relationship['origin_table_name'];
+            // $this->origin_table_class = $relationship['origin_table_class'];
+            // $this->origin_foreignKey = $relationship['origin_foreignKey'];
+
+            // $this->related_table_name = $relationship['related_table_name'];
+            // $this->related_table_class = $relationship['related_table_class'];
+            // $this->related_foreignKey = $relationship['related_foreignKey'];
+
+            // // Morph
+            // $this->morph_type = $relationship['morph_type'];
+            // $this->morph_type = $relationship['morph_type'];
+            // $this->is_inverse = $relationship['is_inverse'];
+
+            // // Others Values
+            // $this->pivot = $relationship['pivot'];
+
+
+            // // Old
+            // $this->name = $relationship['name'];
+            // $this->type = $relationship['type'];
+            // $this->model = $relationship['model'];
+            // $this->foreignKey = $relationship['foreignKey'];
+            // $this->ownerKey = $relationship['ownerKey'];
         }
+    }
+
+    public function persist()
+    {
+        if (!$model = DataRelationship::find($this->getCodeName())) {
+            $model = new DataRelationship();
+            $model->code = $this->getCodeName();
+            foreach ($this->filliables as $filliable) {
+                $model->{$filliable} = $this->{$filliable};
+            }
+            $model->save();
+        }
+        return $model;
     }
 
     public function toArray()
     {
         $relationship = [];
-        $relationship['name'] = $this->getName();
-        $relationship['type'] = $this->getType();
-        $relationship['model'] = $this->model;
-        $relationship['foreignKey'] = $this->foreignKey;
-        $relationship['ownerKey'] = $this->ownerKey;
+
+        foreach ($this->filliables as $filliable) {
+            $relationship[$filliable] = $this->{$filliable};
+        }
+        // $relationship['name'] = $this->getName();
+        // $relationship['type'] = $this->getType();
+        // $relationship['model'] = $this->model;
+        // $relationship['foreignKey'] = $this->foreignKey;
+        // $relationship['ownerKey'] = $this->ownerKey;
         return $relationship;
     }
 
@@ -65,6 +176,13 @@ class Relationship
      * 
      * morphedByMany (O modelo possui a tabela taggables)
      * morphToMany   (nao possui a tabela taggables)
+     * 
+     * 
+     * 
+     * 
+     * // Outros @todo
+     * hasOne one to one
+     * hasMany one to Many
      */
     public static function isInvertedRelation($relation)
     {
@@ -93,5 +211,18 @@ class Relationship
         }
 
         return 'BelongsToMany';
+    }
+
+
+    protected function getCodeName()
+    {
+
+        $code = 
+            Inflector::singularize($this->origin_table_name).'_'.
+            $this->type.'_'.
+            Inflector::singularize($this->related_table_name);
+
+
+        return $code;
     }
 }

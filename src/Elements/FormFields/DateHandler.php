@@ -8,7 +8,7 @@ class DateHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::formfields.date', [
+        return view('facilitador::components.formfields.date', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

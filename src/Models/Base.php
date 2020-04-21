@@ -132,7 +132,7 @@ abstract class Base extends Eloquent
      */
     public function getIdentificador()                                                                                                                                                          
     {                                                                                                                    
-        return $this->code;
+        return $this->{$this->getKeyName()};
     }
 
     /**
@@ -182,20 +182,25 @@ abstract class Base extends Eloquent
 
     public function getApresentationName()
     {
-        if(isset($this->name)){
-            return $this->name;
+        return $this->{$this->getApresentationNameKey()};
+    }
+
+    public function getApresentationNameKey()
+    {
+        $atributesInOrderToDisplay = [
+            'name',
+            'slug',
+            'text',
+            'token',
+        ];
+        $attributes = $this->getFillable();
+        foreach ($atributesInOrderToDisplay as $display) {
+            if (in_array($display, $attributes)) {
+                return $display;
+            }
         }
-        if(isset($this->slug)){
-            return $this->slug;
-        }
-        if(isset($this->text)){
-            return $this->text;
-        }
-        if(isset($this->token)){
-            return $this->token;
-        }
-        $keyName = $this->getKeyName();
-        return $this->$keyName;
+
+        return $this->getKeyName();
     }
 
     //---------------------------------------------------------------------------

@@ -8,7 +8,7 @@ class NumberHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::formfields.number', [
+        return view('facilitador::components.formfields.number', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

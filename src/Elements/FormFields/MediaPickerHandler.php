@@ -48,7 +48,7 @@ class MediaPickerHandler extends AbstractHandler
             }
         }
 
-        return view('facilitador::formfields.media_picker', [
+        return view('facilitador::components.formfields.media_picker', [
             'row'      => $row,
             'options'  => $options,
             'dataType' => $dataType,

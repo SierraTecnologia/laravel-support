@@ -9,7 +9,7 @@ class RadioBtnHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::formfields.radio_btn', [
+        return view('facilitador::components.formfields.radio_btn', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

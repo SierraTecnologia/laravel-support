@@ -43,7 +43,7 @@ class Sidebar
     /**
      * Add an item to the sidebar
      *
-     * @param mixed Generally an Facilitador\Fields\Listing object or stringable
+     * @param mixed Generally an Support\Elements\Fields\Listing object or stringable
      * @return $this
      */
     public function add($item)
@@ -57,7 +57,7 @@ class Sidebar
      * Add an item to the END of the sidebar, regardless of when it was added
      * in the logic flow
      *
-     * @param mixed Generally an Facilitador\Fields\Listing object or stringable
+     * @param mixed Generally an Support\Elements\Fields\Listing object or stringable
      * @return $this
      */
     public function addToEnd($item)
@@ -88,7 +88,7 @@ class Sidebar
         $items = array_map(function ($item) {
 
             // If a listing instance, apply defaults common to all sidebar instances
-            if (is_a($item, 'Facilitador\Fields\Listing')) {
+            if (is_a($item, 'Support\Elements\Fields\Listing')) {
                 return $item->layout('sidebar')->parent($this->parent)->__toString();
             }
 

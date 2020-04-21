@@ -64,11 +64,11 @@ class Relationships
             {
                 try {
                     $return = $method->invoke(new $this->model);
-                    // dd($return);
 
 
                     if ($return instanceof Relation)
                     {
+                        // dd($return);
                         $ownerKey = null;
                         if ((new ReflectionClass($return))->hasMethod('getOwnerKey'))
                             $ownerKey = $return->getOwnerKey();
@@ -94,13 +94,61 @@ class Relationships
                         );
                         }
 
-                        $rel = new Relationship([
+                        $dataRelationship = [
+                            'origin_table_name' => $this->model,
+                            'origin_table_class' => $this->model,
+                            'origin_foreignKey' => $tmpForeignKey,
+
+                            'related_table_name' => (new ReflectionClass($return->getRelated()))->getName(),
+                            'related_table_class' => $return->getRelationName(),
+                            'related_foreignKey' => $return->getRelatedKeyName(),
+
+                            // Morph
+                            'morph_type' => $return->getMorphType(),
+                            'morph_type' => $return->getMorphType(),
+                            'is_inverse' => $return->getInverse(),
+
+                            // Others Values
+                            'pivot' => false,
+
+                            // Old
                             'name' => $method->getName(),
                             'type' => $tmpReturnReflectionClass->getShortName(),
                             'model' => (new ReflectionClass($return->getRelated()))->getName(),
-                            'foreignKey' => $tmpForeignKey,
                             'ownerKey' => $ownerKey,
-                        ]);
+                            'foreignKey' => $tmpForeignKey,
+                        ];
+
+                        if ($tmpReturnReflectionClass->hasMethod('getPivotClass')) {
+                            $dataRelationship['pivot'] = true;
+                            dd(
+                                $return->getPivotAccessor(),
+                                $return->getPivotColumns(),
+                                $return->getPivotClass()
+                                
+                            );
+                        }
+
+
+
+                        // if (!in_array($tmpReturnReflectionClass->getShortName(), [
+                        //     'HasMany', 'BelongsTo',
+                        //     // 'MorphTo',
+                        //     ]))
+                        // dd(
+                        //     $dataRelationship,
+                            
+                        //     // $return->getParentKeyName(),
+                        //     // $return->getQualifiedParentKeyName()
+                        //     // $return->getTable(),
+                        //     // $return->getRelationName(),
+                        //     $return->getPivotAccessor(),
+                        //     $return->getPivotColumns(),
+                        //     $return->getPivotClass()
+                            
+                        // );
+
+                        $rel = new Relationship($dataRelationship);
 
                         $this->relationships[$rel->name] = $rel;
                     }

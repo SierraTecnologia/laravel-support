@@ -59,6 +59,11 @@ class Eloquent
     protected $hardParserModelClass;
 
 
+    /**
+     * Other Datas
+     */
+    public $parentClass;
+
 
 
     /**
@@ -172,6 +177,7 @@ class Eloquent
             $this->tableName = $parserModelClass->getData('table');
             $this->name = $this->getName();
             $this->relations = $this->getRelations();
+            $this->parentClass = $parserModelClass->getData('parentClass');
         } catch(BindingResolutionException $e) {
             // Erro Leve
             $this->setError($e->getMessage());

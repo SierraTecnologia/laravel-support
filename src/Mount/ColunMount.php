@@ -117,6 +117,12 @@ class ColunMount
         return false;
     }
 
+    protected function isMorphTo($type = false)
+    {
+        
+        return false;
+    }
+
     /**
      * number
      * text
@@ -211,13 +217,34 @@ class ColunMount
             // name, key, label
             $haveDetails = true;
 
-            if (is_array($className = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
-                $className = $className[0];
+            if (is_array($relationClassName = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+                $relationClassName = $relationClassName[0];
             }
 
-            $array['model'] = $className;
+            $array['model'] = $relationClassName;
             $array['table'] = $relation['name'];
             $array['type'] = 'belongsTo';
+            $array['column'] = $this->getColumnName();
+            $array['key'] = $relation['key'];
+            $array['label'] = $relation['label'];
+            $array['pivot_table'] = $relation['name'];
+            $array['pivot'] = 0;
+        }
+
+        if ($relation = $this->isMorphTo()) {
+            if (!isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+                return null; //@todo tratar erro de tabela que nao existe
+            }
+            // name, key, label
+            $haveDetails = true;
+
+            if (is_array($relationClassName = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+                $relationClassName = $relationClassName[0];
+            }
+
+            $array['model'] = $relationClassName;
+            $array['table'] = $relation['name'];
+            $array['type'] = 'morphTo';
             $array['column'] = $this->getColumnName();
             $array['key'] = $relation['key'];
             $array['label'] = $relation['label'];
@@ -229,7 +256,7 @@ class ColunMount
         // if ($relation = $this->isBelongTo()) {
         //     // name, key, label
         //     $haveDetails = true;
-        //     $array['model'] = $className;
+        //     $array['model'] = $relationClassName;
         //     $array['table'] = $relation['roles'];
         //     $array['type'] = 'belongsToMany';
         //     $array['column'] = $relation['id'];

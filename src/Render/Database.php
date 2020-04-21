@@ -56,9 +56,29 @@ class Database
 
 
 
+
+    protected $tempNotFinalClasses = [];
+
+
+
     public function getEloquentClasses()
     {
         return collect($this->eloquentClasses);
+    }
+
+    protected function addTempNotFinalClasses($class)
+    {
+        if (is_null($class) || empty($class) || in_array($class, $this->tempNotFinalClasses)) {
+            return false;
+        }
+        $this->tempNotFinalClasses[] = $class;
+    }
+    protected function isNotFinalClasses($class)
+    {
+        if (is_null($class) || empty($class) || in_array($class, $this->tempNotFinalClasses)) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -77,8 +97,8 @@ class Database
 
         $this->render();
 
-        $this->processe();
-
+        // dd($this->tempNotFinalClasses);
+        // dd($this->displayClasses['Population\Models\Market\Abouts\Info']);
         $this->display();
     }
 
@@ -199,15 +219,20 @@ class Database
         // Cache In Minutes
         $value = Cache::remember('sitec_database', 30, function () use ($selfInstance) {
             try {
-                $this->eloquentClasses = $this->eloquentClasses->map(function($filePath, $class) {
-                    return new Eloquent($class);
+                $this->eloquentClasses = $this->eloquentClasses->map(function($filePath, $class) use ($selfInstance) {
+                    $eloquent = new Eloquent($class);
+                    $selfInstance->addTempNotFinalClasses($eloquent->parentClass);
+                    return $eloquent;
                 })
-                ->reject(function($class) {
-                    return !$class->getTableName();
+                ->reject(function($class) use ($selfInstance) {
+                    return !$class->getTableName() || $selfInstance->isNotFinalClasses($class->getModelClass());
                 })
                 ->values()->all();
                 $selfInstance->renderClasses();
                 $selfInstance->getListTables();
+
+                // Processa o Resultado
+                $selfInstance->processe();
             } catch(SchemaException|DBALException $e) {
                 // @todo Tratar, Tabela Nao existe
                 $this->setError($e->getMessage());
@@ -233,9 +258,11 @@ class Database
 
 
 
-    protected function processe()
+    public function processe()
     {
-
+        // Ordena Pelo Indice
+        ksort($this->mapperTableToClasses);
+        ksort($this->totalRelations);
     }
 
 
@@ -275,13 +302,15 @@ class Database
                         if (is_array($tableNameSingulari)) {
                             $tableNameSingulari = $tableNameSingulari[count($tableNameSingulari)-1];
                         }
+                        $type = $relation->type;
                         if (Relationship::isInvertedRelation($relation->type)) {
+                            $type = Relationship::getInvertedRelation($type);
+                            $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
+                        } else {
                             $temp = $tableOrigin;
                             $tableOrigin = $tableTarget;
                             $tableTarget = $temp;
-                            $novoIndice = $tableNameSingulari.'_'.Relationship::getInvertedRelation($relation->type).'_'.$singulariRelationName;
-                        } else {
-                            $novoIndice = $singulariRelationName.'_'.$relation->type.'_'.$tableNameSingulari;
+                            $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
                         }
                         if (!isset($this->totalRelations[$novoIndice])) {
                             $this->totalRelations[$novoIndice] = [
@@ -289,7 +318,7 @@ class Database
                                 'table_origin' => $tableOrigin,
                                 'table_target' => $tableTarget,
                                 'pivot' => 0,
-                                'type' => $relation->getType(),
+                                'type' => $type,
                                 'relations' => []
                             ];
                         }
