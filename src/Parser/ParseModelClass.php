@@ -101,6 +101,12 @@ class ParseModelClass extends ParseClass
 
     public function fromArray($array)
     {
+        if (!$array) {
+            return false;
+        }
+            if (!is_array($array)) {
+                dd($array);
+            }
         if (isset($array['table'])) {
             $this->setTableName($array['table']);
         }
@@ -159,7 +165,7 @@ class ParseModelClass extends ParseClass
         }
         return $this->table;
     }
-    public function setTablesName($table)
+    public function setTableName($table)
     {
         $this->table = $table;
     }
@@ -273,6 +279,10 @@ class ParseModelClass extends ParseClass
     public function getPrimaryKey()
     {
         return $this->getKeyName();
+    }
+    public function setPrimaryKey($getKeyName)
+    {
+        return $this->setKeyName($getKeyName);
     }
     public function getKeyName()
     {

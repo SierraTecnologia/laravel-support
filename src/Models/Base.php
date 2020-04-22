@@ -600,4 +600,17 @@ abstract class Base extends Eloquent
     {                                                                                                                    
         return array_key_exists($attr, $this->attributes);
     }
+
+    /**
+     * Fiz pq tava quebrando @todo vericar, acho que vem do magento ou synfone
+     * 
+     */
+    public function setModified($date)
+    {
+        return $date;
+    }
+    public function setCreated($date)
+    {
+        return $date;
+    }
 }

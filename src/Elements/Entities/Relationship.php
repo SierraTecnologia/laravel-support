@@ -8,6 +8,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Symfony\Component\Inflector\Inflector;
+use Support\Models\DataRelationship;
 
 class Relationship
 {
@@ -93,6 +94,8 @@ class Relationship
             // $this->model = $relationship['model'];
             // $this->foreignKey = $relationship['foreignKey'];
             // $this->ownerKey = $relationship['ownerKey'];
+
+            $this->persist();
         }
     }
 
@@ -105,7 +108,9 @@ class Relationship
                 $model->{$filliable} = $this->{$filliable};
             }
             $model->save();
+            return $model;
         }
+        
         return $model;
     }
 
@@ -190,11 +195,19 @@ class Relationship
 
     protected function getCodeName()
     {
+        $stringOne =  Inflector::singularize($this->origin_table_name);
+        if (is_array($stringOne)) {
+            $stringOne = $stringOne[0];
+        }
+        $stringTwo =  Inflector::singularize($this->related_table_name);
+        if (is_array($stringTwo)) {
+            $stringTwo = $stringTwo[0];
+        }
 
         $code = 
-            Inflector::singularize($this->origin_table_name).'_'.
+            $stringOne.'_'.
             $this->type.'_'.
-            Inflector::singularize($this->related_table_name);
+            $stringTwo;
 
 
         return $code;

@@ -56,7 +56,7 @@ class DataRelationship extends Model
 
     public function getDataAttribute($value)
     {
-        return json_decode(!empty($value) ? $value : '{}');
+        return json_decode(!empty($value) ? $value : '{}', true);
     }
 
 }

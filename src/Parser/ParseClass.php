@@ -45,6 +45,8 @@ class ParseClass
             $this->supportModelCodeClass->data = $this->toArray();
             $this->supportModelCodeClass->save();
         } else {
+            if (is_object($this->supportModelCodeClass->data))
+            dd($this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
             $this->fromArray($this->supportModelCodeClass->data);
         }
         // @debug
@@ -82,7 +84,7 @@ class ParseClass
 
     }
 
-    public function fromArray($array)
+    public function fromArray(Array $array)
     {
         if (isset($array['class'])) {
             $this->setClasseName($array['class']);
@@ -106,7 +108,7 @@ class ParseClass
     {
         return $this->className;
     }
-    public function setClasseName()
+    public function setClasseName($className)
     {
         $this->className = $className;
     }
