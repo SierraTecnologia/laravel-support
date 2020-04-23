@@ -173,19 +173,19 @@ class Relationships
                         $this->relationships[$rel->name] = $rel;
                     }
                 } catch(LogicException $e) {
-                    $this->setError($e);
+                    $this->setErrors($e);
                 } catch(ErrorException|RuntimeException $e) {
-                    $this->setError($e);
+                    $this->setErrors($e);
                 } catch (OutOfBoundsException|TypeError $e) {
-                    $this->setError($e);
+                    $this->setErrors($e);
                 } catch(ValidationException $e) {
-                    $this->setError($e);
+                    $this->setErrors($e);
                 } catch(FatalThrowableError|FatalErrorException $e) {
-                    $this->setError($e);
+                    $this->setErrors($e);
                 } catch(\Exception $e) {
-                    $this->setError($e);
+                    $this->setErrors($e);
                 } catch(\Throwable $e) {
-                    $this->setError($e);
+                    $this->setErrors($e);
                 }
             }
         }

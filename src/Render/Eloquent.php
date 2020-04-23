@@ -180,24 +180,19 @@ class Eloquent
             $this->parentClass = $parserModelClass->getData('parentClass');
         } catch(BindingResolutionException $e) {
             // Erro Leve
-            $this->setError($e->getMessage());
+            $this->setErrors($e);
             
         } catch(SchemaException|DBALException $e) {
             // @todo Tratar, Tabela Nao existe
-            $this->setError($e->getMessage());
+            $this->setErrors($e);
             
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-            $this->setError($e->getMessage());
+            $this->setErrors($e);
             // @todo Armazenar Erro em tabela
-            dd($e);
-            //@todo fazer aqui
         } catch(\Exception $e) {
-            $this->setError($e->getMessage());
-            dd($e);
+            $this->setErrors($e);
         } catch(\Throwable $e) {
-            $this->setError($e->getMessage());
-            dd($e);
-            // @todo Tratar aqui
+            $this->setErrors($e);
         }
         return true;
     }
@@ -214,14 +209,14 @@ class Eloquent
 
             if (!$this->relations) {
                 $this->relations = (new Relationships($this->modelClass))($key);
-                // $this->setError($this->relations->getError()); @todo PEgar erro do relationsscripts
+                // $this->setErrors($this->relations->getError()); @todo PEgar erro do relationsscripts
             }
             
             // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
             return $this->relations;
 
         } catch(FatalErrorException $e) {
-            $this->setError($e->getMessage());
+            $this->setErrors($e->getMessage());
             // dd($this->model, $method, $e);
             dd($e);
             // @todo Tratar aqui

@@ -151,7 +151,7 @@ class Database
         foreach ($datas as $indice=>$data) {
             if ($indice==='Errors') {
                 if (isset($data['errors'])) {
-                    $this->setError($data['errors']);
+                    $this->setErrors($data['errors']);
                 }
             }
             if ($indice==='Aplication') {
@@ -235,18 +235,18 @@ class Database
                 $selfInstance->processe();
             } catch(SchemaException|DBALException $e) {
                 // @todo Tratar, Tabela Nao existe
-                $this->setError($e->getMessage());
+                $this->setErrors($e->getMessage());
                 
             } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-                $this->setError($e->getMessage());
+                $this->setErrors($e->getMessage());
                 // @todo Armazenar Erro em tabela
                 // dd($e);
                 //@todo fazer aqui
             } catch(\Exception $e) {
-                $this->setError($e->getMessage());
+                $this->setErrors($e->getMessage());
                 // dd($e);
             } catch(\Throwable $e) {
-                $this->setError($e->getMessage());
+                $this->setErrors($e->getMessage());
                 // dd($e);
                 // @todo Tratar aqui
             }
@@ -282,7 +282,7 @@ class Database
                         $this->mapperTableToClasses[$eloquentService->getTableName()]
                     ];
                 }
-                $this->setError('Duas classes para a mesma tabela');
+                $this->setErrors('Duas classes para a mesma tabela');
             } else {
                 $this->mapperTableToClasses[$eloquentService->getTableName()] = $eloquentService->getModelClass();
             }
@@ -344,7 +344,7 @@ class Database
             $this->displayClasses[$eloquentService->getModelClass()] = $eloquentService->toArray();
 
             // Guarda Errors
-            $this->setError($eloquentService->getError());
+            $this->setErrors($eloquentService->getError());
         }
     }
 

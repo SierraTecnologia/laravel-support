@@ -26,7 +26,7 @@ use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
-
+// @todo verificar se é usado
 class Eloquent
 {
     use DevDebug;
@@ -196,18 +196,18 @@ class Eloquent
             $this->sendToDebug($this->toArray());
         } catch(SchemaException|DBALException $e) {
             // @todo Tratar, Tabela Nao existe
-            $this->setError($e->getMessage());
+            $this->setErrors($e->getMessage());
             
         } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-            $this->setError($e->getMessage());
+            $this->setErrors($e->getMessage());
             // @todo Armazenar Erro em tabela
             // dd($e);
             //@todo fazer aqui
         } catch(\Exception $e) {
-            $this->setError($e->getMessage());
+            $this->setErrors($e->getMessage());
             // dd($e);
         } catch(\Throwable $e) {
-            $this->setError($e->getMessage());
+            $this->setErrors($e->getMessage());
             // dd($e);
             // @todo Tratar aqui
         }
@@ -243,7 +243,7 @@ class Eloquent
 
         if (!$this->relations) {
             $this->relations = (new Relationships($this->modelClass))($key);
-            // $this->setError($this->relations->getError()); @todo PEgar erro do relationsscripts
+            // $this->setErrors($this->relations->getError()); @todo PEgar erro do relationsscripts
         }
         // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
         return $this->relations;

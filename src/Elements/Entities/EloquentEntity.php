@@ -43,6 +43,9 @@ class EloquentEntity
     protected $name;
     protected $primaryKey;
 
+    public $data;
+    public $columns;
+
     /**
      * Construct
      */
