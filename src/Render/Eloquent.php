@@ -155,6 +155,7 @@ class Eloquent
         $array['tableName'] = $this->tableName;
         $array['tableData'] = $this->tableData;
         $array['name'] = $this->name;
+        $array['icon'] = $this->icon;
         $array['relations'] = $this->relations;
         return $array;
     }
@@ -176,6 +177,7 @@ class Eloquent
 
             $this->tableName = $parserModelClass->getData('table');
             $this->name = $this->getName();
+            $this->icon = $this->getIcon();
             $this->relations = $this->getRelations();
             $this->parentClass = $parserModelClass->getData('parentClass');
         } catch(BindingResolutionException $e) {
@@ -195,6 +197,10 @@ class Eloquent
             $this->setErrors($e);
         }
         return true;
+    }
+    public function getIcon()
+    {
+        return \Support\Template\Layout\Icons::getForNameAndCache($this->name, false);
     }
 
     /**

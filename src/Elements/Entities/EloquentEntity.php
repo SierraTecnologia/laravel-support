@@ -41,6 +41,9 @@ class EloquentEntity
      * Dados
      */
     protected $name;
+    protected $icon;
+    protected $group = 'other';
+    protected $tablename;
     protected $primaryKey;
 
     public $data;
@@ -66,13 +69,42 @@ class EloquentEntity
         return $this->primaryKey = $primaryKey;
     }
 
-    public function getName()
+    public function getGroup()
+    {
+        return $this->group;
+    }
+    public function setGroup($group)
+    {
+        return $this->group = $group;
+    }
+
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+    public function setIcon($icon)
+    {
+        return $this->icon = $icon;
+    }
+
+    //@todo fazer plural
+    public function getName($plural = false)
     {
         return $this->name;
     }
     public function setName($name)
     {
         return $this->name = $name;
+    }
+
+
+    public function getTablename()
+    {
+        return $this->tablename;
+    }
+    public function setTablename($tablename)
+    {
+        return $this->tablename = $tablename;
     }
 
 

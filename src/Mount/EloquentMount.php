@@ -55,6 +55,8 @@ class EloquentMount
     {
 
         $tableName = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableName"];
+        $name = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["name"];
+        $icon = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["icon"];
         $tableClassArray = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableData"];
         $primaryKey = $tableClassArray["getKeyName"];
         
@@ -64,7 +66,9 @@ class EloquentMount
 //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
 // );
         $eloquentEntity = new EloquentEntity($this->className);
-        $eloquentEntity->setName($tableName);
+        $eloquentEntity->setTablename($tableName);
+        $eloquentEntity->setName($name);
+        $eloquentEntity->setIcon($icon);
         $eloquentEntity->setPrimaryKey($primaryKey);
         $eloquentEntity->setData($tableClassArray);
 

@@ -8,6 +8,10 @@ namespace Support\BigData\RegisterTypes;
 
 class RegisterTestimonialEntity extends AbstractRegisterType
 {
+    public static $examples = [
+        
+    ];
+
 
 
 

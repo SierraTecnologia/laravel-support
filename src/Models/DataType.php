@@ -43,6 +43,8 @@ class DataType extends Model
         'key_name',
         'key_type',
         'foreign_key',
+
+        'group'
     ];
 
     protected $modelService = false;
@@ -313,8 +315,7 @@ class DataType extends Model
     {
         $this->attributes['details'] = collect($this->details)->merge(['scope' => $value]);
     }
-
-
+    
     public function dataRelactionships()
     {
         return $this->hasMany(

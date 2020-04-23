@@ -8,6 +8,12 @@ namespace Support\BigData\HistoryType;
 
 class HistoryProgressTypeEntity extends AbstractHistoryType
 {
+    public $name = 'Progress';
+
+    public static $examples = [
+
+    ];
+
 
 
 

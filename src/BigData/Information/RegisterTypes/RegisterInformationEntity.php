@@ -9,6 +9,10 @@ namespace Support\BigData\RegisterTypes;
 class RegisterInformationEntity extends AbstractRegisterType
 {
 
+    public static $examples = [
+        
+    ];
+
 
 
 }

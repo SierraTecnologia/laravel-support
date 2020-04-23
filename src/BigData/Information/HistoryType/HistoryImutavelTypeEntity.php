@@ -8,6 +8,11 @@ namespace Support\BigData\HistoryType;
 
 class HistoryImutavelTypeEntity extends AbstractHistoryType
 {
+    public $name = 'Imutavel';
+
+    public static $examples = [
+
+    ];
 
 
 

@@ -95,10 +95,10 @@ class Relationships
                         }
 
                         $dataRelationship = [
-                            'origin_table_name' => $this->model,
+                            'origin_table_class' => $this->model,
                             'origin_foreignKey' => $tmpForeignKey,
 
-                            'related_table_name' => (new ReflectionClass($return->getRelated()))->getName(),
+                            'related_table_class' => (new ReflectionClass($return->getRelated()))->getName(),
 
                             // Others Values
                             'is_inverse' => false,
@@ -113,13 +113,13 @@ class Relationships
                         ];
 
                         if ($tmpReturnReflectionClass->hasMethod('getTable')) {
-                            $dataRelationship['origin_table_class'] = $return->getTable();
+                            $dataRelationship['origin_table_name'] = $return->getTable();
                         }
                         if ($tmpReturnReflectionClass->hasMethod('getRelatedKeyName')) {
                             $dataRelationship['related_foreignKey'] = $return->getRelatedKeyName();
                         }
                         if ($tmpReturnReflectionClass->hasMethod('getRelationName')) {
-                            $dataRelationship['related_table_class'] = $return->getRelationName();
+                            $dataRelationship['related_table_name'] = $return->getRelationName();
                         }
 
                         if ($tmpReturnReflectionClass->hasMethod('getMorphType')) {
@@ -149,6 +149,19 @@ class Relationships
                             );
                         }
 
+                        // Trata Valores que nao vieram
+                        if (!isset($tmpReturnReflectionClass['origin_table_name']) || empty($tmpReturnReflectionClass['origin_table_name'])) {
+                            $dataRelationship['origin_table_name'] = call_user_func(array($tmpReturnReflectionClass['origin_table_class'],'getTable'));
+                        }
+                        if (!isset($tmpReturnReflectionClass['related_table_name']) || empty($tmpReturnReflectionClass['related_table_name'])) {
+                            $dataRelationship['related_table_name'] = call_user_func(array($tmpReturnReflectionClass['related_table_class'],'getTable'));
+                        }
+                        if (!isset($tmpReturnReflectionClass['origin_foreignKey']) || empty($tmpReturnReflectionClass['origin_foreignKey'])) {
+                            $dataRelationship['origin_foreignKey'] = $tmpForeignKey;
+                        }
+                        if (!isset($tmpReturnReflectionClass['related_foreignKey']) || empty($tmpReturnReflectionClass['related_foreignKey'])) {
+                            $dataRelationship['related_foreignKey'] = $ownerKey;
+                        }
 
 
                         // if (!in_array($tmpReturnReflectionClass->getShortName(), [

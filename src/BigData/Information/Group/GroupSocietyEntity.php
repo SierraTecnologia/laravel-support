@@ -6,12 +6,14 @@
 namespace Support\BigData\HistoryType;
 
 
-class HistoryDinamicTypeEntity extends AbstractHistoryType
+class GroupSocietyEntity extends EloquentGroup
 {
-    public $name = 'Dinamic';
+    public $name = 'Society';
 
     public static $examples = [
-
+        'gender',
+        'genero',
+        'business'
     ];
 
 

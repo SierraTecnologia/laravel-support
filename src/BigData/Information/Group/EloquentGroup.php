@@ -5,9 +5,16 @@
 
 namespace Support\BigData\Informate\Group;
 
-
-class EloquentGroup
+abstract class EloquentGroup
 {
+    /**
+     * Identify
+     */
+    protected $typesByOrder = [
+        GroupFinanceEntity::class,
+        GroupSocietyEntity::class,
+    ];
+
 
     /**
      * Construct
@@ -18,23 +25,20 @@ class EloquentGroup
 
     }
 
+    // /**
+    //  * Agrupando
+    //  */ 
+    // public function groupByNamespace()
+    // {
+    //     $namespaces = [];
+    //     $namespaces = [
+    //         'name' => 'Calendar',
+    //         'localeNamespace' => 'App\Models',
+    //         'tables' => []
+    //     ];
 
-
-
-    /**
-     * Agrupando
-     */ 
-    public function groupByNamespace()
-    {
-        $namespaces = [];
-        $namespaces = [
-            'name' => 'Calendar',
-            'localeNamespace' => 'App\Models',
-            'tables' => []
-        ];
-
-        return $namespaces;
-    }
+    //     return $namespaces;
+    // }
 
 
 
