@@ -533,9 +533,7 @@ abstract class Base extends Eloquent
             $data[$keyName] = $dataOrPrimaryCode;
         }
 
-
-        $modelData = \Support\Services\EloquentService::make(static::class);
-
+        $modelData = \Support\Services\EloquentService::getForClass(static::class);
 
         if (
             (!isset($data['name']) || empty($data['name'])) && 
@@ -547,17 +545,17 @@ abstract class Base extends Eloquent
 
         $indices = $modelData->getIndexes();
         foreach ($indices as $index) {
-            if ($index->isPrimary() || $index->isUnique()) {
+            if ($index['type'] == 'PRIMARY' || $index['type'] == 'UNIQUE') {
                 // Caso não tenha nada a procurar, entao pula
                 if (empty($generateWhere = $modelData->generateWhere(
-                    $index->getColumns(),
+                    $index['columns'],
                     $data
                 ))) {
                     continue;
                 }
 
                 if ($modelFind = static::where($generateWhere)->first()) {
-                    Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($index->getColumns(), true).' e Data: '.print_r($data, true));
+                    Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($index, true).' e Data: '.print_r($data, true));
                     return static::mergeWithAttributes($modelFind, $data);
                 }
             }

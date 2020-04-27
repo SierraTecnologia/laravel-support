@@ -149,17 +149,10 @@ class Relationships
                             );
                         }
 
-                        // Trata Valores que nao vieram
-                        if (!isset($tmpReturnReflectionClass['origin_table_name']) || empty($tmpReturnReflectionClass['origin_table_name'])) {
-                            $dataRelationship['origin_table_name'] = call_user_func(array($tmpReturnReflectionClass['origin_table_class'],'getTable'));
-                        }
-                        if (!isset($tmpReturnReflectionClass['related_table_name']) || empty($tmpReturnReflectionClass['related_table_name'])) {
-                            $dataRelationship['related_table_name'] = call_user_func(array($tmpReturnReflectionClass['related_table_class'],'getTable'));
-                        }
-                        if (!isset($tmpReturnReflectionClass['origin_foreignKey']) || empty($tmpReturnReflectionClass['origin_foreignKey'])) {
+                        if (!isset($dataRelationship['origin_foreignKey']) || empty($dataRelationship['origin_foreignKey'])) {
                             $dataRelationship['origin_foreignKey'] = $tmpForeignKey;
                         }
-                        if (!isset($tmpReturnReflectionClass['related_foreignKey']) || empty($tmpReturnReflectionClass['related_foreignKey'])) {
+                        if (!isset($dataRelationship['related_foreignKey']) || empty($dataRelationship['related_foreignKey'])) {
                             $dataRelationship['related_foreignKey'] = $ownerKey;
                         }
 
@@ -181,9 +174,7 @@ class Relationships
                             
                         // );
 
-                        $rel = new Relationship($dataRelationship);
-
-                        $this->relationships[$rel->name] = $rel;
+                        $this->relationships[$dataRelationship['name']] = $dataRelationship;
                     }
                 } catch(LogicException $e) {
                     $this->setErrors($e);

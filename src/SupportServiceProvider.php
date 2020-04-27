@@ -46,6 +46,10 @@ class SupportServiceProvider extends ServiceProvider
         $this->registerModelFactory();
 
         $this->loadMigrations();
+
+        $this->app->singleton(\Support\Services\DatabaseService::class, function () {
+            return new \Support\Services\DatabaseService(config('sitec.discover.models_alias', []), new \Support\Parser\ComposerParser);
+        });
     }
 
     /**

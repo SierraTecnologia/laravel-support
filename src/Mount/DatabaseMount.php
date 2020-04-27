@@ -26,6 +26,7 @@ use Support\Parser\ComposerParser;
 
 use Support\Elements\Entities\DatabaseEntity;
 use Support\Elements\Entities\EloquentEntity;
+use Support\Elements\Entities\Relationship;
 use Illuminate\Support\Facades\Cache;
 
 class DatabaseMount
@@ -34,6 +35,7 @@ class DatabaseMount
 
 
     protected $renderDatabase = false;
+    protected $relationships = false;
 
 
     public function __construct($eloquentClasses)
@@ -74,6 +76,21 @@ class DatabaseMount
         });
         $eloquentClasses = $this->eloquentClasses = collect($renderDatabase["Leitoras"]["displayClasses"]);
         $this->renderDatabase = $renderDatabase;
+        
+        $this->relationships = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabase) {
+            foreach ($eloquentData['relations'] as $relation) {
+                if (!isset($relation['origin_table_name']) || empty($relation['origin_table_name'])) {
+                    $relation['origin_table_name'] = $renderDatabase["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
+                }
+                if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
+                    $relation['related_table_name'] = $renderDatabase["Leitoras"]["displayClasses"][$relation['related_table_class']]["tableName"];
+                }
+                return new Relationship($relation);
+            }
+        });
+        
+
+
         $this->entitys = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabase) {
             return (new EloquentMount($className, $renderDatabase))->getEntity();
         });

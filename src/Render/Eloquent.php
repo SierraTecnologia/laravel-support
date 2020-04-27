@@ -42,6 +42,7 @@ class Eloquent
      * Cached
      */
     protected $name;
+    protected $icon;
     protected $tableData;
     protected $tableName;
     protected $colunasDaTabela;

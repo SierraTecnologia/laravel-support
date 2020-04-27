@@ -291,9 +291,9 @@ class Database
             if (!empty($relations = $eloquentService->getRelations())) {
                 foreach ($relations as $relation) {
                     try {
-                        $tableTarget = $relation->getName();
+                        $tableTarget = $relation['name'];
                         $tableOrigin = $eloquentService->getTableName();
-                        $singulariRelationName = Inflector::singularize($relation->name);
+                        $singulariRelationName = Inflector::singularize($relation['name']);
                         if (is_array($singulariRelationName)) {
                             $singulariRelationName = $singulariRelationName[count($singulariRelationName)-1];
                         }
@@ -301,8 +301,8 @@ class Database
                         if (is_array($tableNameSingulari)) {
                             $tableNameSingulari = $tableNameSingulari[count($tableNameSingulari)-1];
                         }
-                        $type = $relation->type;
-                        if (Relationship::isInvertedRelation($relation->type)) {
+                        $type = $relation['type'];
+                        if (Relationship::isInvertedRelation($relation['type'])) {
                             $type = Relationship::getInvertedRelation($type);
                             $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
                         } else {
@@ -321,7 +321,7 @@ class Database
                                 'relations' => []
                             ];
                         }
-                        $this->totalRelations[$novoIndice]['relations'][] = $relation->toArray();
+                        $this->totalRelations[$novoIndice]['relations'][] = $relation;
                     } catch (\Exception $e) {
                         dd(
                             'LaravelSupport>Database>> Não era pra Cair Erro aqui',
@@ -360,6 +360,7 @@ class Database
         $listTables = \Support\Discovers\Database\Schema\SchemaManager::listTables();
 
 
+        // return $this->getSchemaManagerTable()->getIndexes();
 
 
         foreach ($listTables as $listTable){
@@ -367,14 +368,16 @@ class Database
             foreach ($listTable->exportColumnsToArray() as $column) {
                 $columns[$column['name']] = $column;
             }
+            $indexes = $listTable->exportIndexesToArray();
 
             $tables[$listTable->getName()] = [
                 'name' => $listTable->getName(),
                 'columns' => $columns,
+                'indexes' => $indexes
             ];
 
             // Salva Primaria
-            if (!empty($indexes = $listTable->exportIndexesToArray())) {
+            if (!empty($indexes)) {
                 foreach ($indexes as $index) {
                     if ($index['type'] == 'PRIMARY') {
                         $primary = $index['columns'][0];

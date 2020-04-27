@@ -42,6 +42,7 @@ class EloquentEntity
      */
     protected $name;
     protected $icon;
+    protected $indexes;
     protected $group = 'other';
     protected $tablename;
     protected $primaryKey;
@@ -105,6 +106,15 @@ class EloquentEntity
     public function setTablename($tablename)
     {
         return $this->tablename = $tablename;
+    }
+
+    public function getIndexes()
+    {
+        return $this->indexes;
+    }
+    public function setIndexes($indexes)
+    {
+        return $this->indexes = $indexes;
     }
 
 
@@ -258,10 +268,6 @@ class EloquentEntity
     //     });
 
     //     return $fillables;
-    // }
-    // public function getIndexes()
-    // {
-    //     return $this->getSchemaManagerTable()->getIndexes();
     // }
 
     // private function getSchemaManagerTable()

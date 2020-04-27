@@ -28,7 +28,9 @@ class ErrorHelper
     {
         if (is_object($error)) {
             $e = $error;
-            $error = $error->getMessage();
+            $error = $e->getMessage().' | File: '.
+            $e->getFile().' | Line: '.
+            $e->getLine();
         }
         // @todo Gravar no Banco para tratar depois
         // dd($e);

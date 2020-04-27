@@ -61,6 +61,14 @@ class EloquentMount
         $primaryKey = $tableClassArray["getKeyName"];
         
 
+        if (!isset($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName])) {
+            // @todo criar erro
+            return false;
+        }
+
+        $indexes = $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName][
+            'indexes'
+        ];
 // dd(
 //         $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className],
 //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
@@ -71,11 +79,7 @@ class EloquentMount
         $eloquentEntity->setIcon($icon);
         $eloquentEntity->setPrimaryKey($primaryKey);
         $eloquentEntity->setData($tableClassArray);
-
-        if (!isset($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName])) {
-            // @todo criar erro
-            return false;
-        }
+        $eloquentEntity->setIndexes($indexes);
         
         foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns'] as $column) {
             $eloquentEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
