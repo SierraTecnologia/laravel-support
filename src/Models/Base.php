@@ -24,6 +24,7 @@ use Log;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 use Illuminate\Support\Str;
 use Watson\Validating\ValidatingTrait;
+use Support\Services\EloquentService;
 
 abstract class Base extends Eloquent
 {
@@ -533,7 +534,7 @@ abstract class Base extends Eloquent
             $data[$keyName] = $dataOrPrimaryCode;
         }
 
-        $modelData = \Support\Services\EloquentService::getForClass(static::class);
+        $modelData = EloquentService::getForClass(static::class);
 
         if (
             (!isset($data['name']) || empty($data['name'])) && 

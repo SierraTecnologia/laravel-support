@@ -287,13 +287,18 @@ class EloquentEntity
     // /**
     //  * Helpers Generates
     //  */ 
-    // public function hasColumn($column)
-    // {
-    //     // $columns = SchemaManager::listTableColumnNames($this->getTableName());
-    //     // return in_array($column, $columns);
+    public function hasColumn($column)
+    {
+        dd(
 
-    //     return $this->getSchemaManagerTable()->hasColumn($column);
-    // }
+            $this,
+            $this->data
+        );
+        // $columns = SchemaManager::listTableColumnNames($this->getTableName());
+        // return in_array($column, $columns);
+
+        return $this->getSchemaManagerTable()->hasColumn($column);
+    }
     // public function columnIsType($columnName, $typeClass)
     // {
     //     $column = SchemaManager::getDoctrineColumn($this->getTableName(), $columnName);
