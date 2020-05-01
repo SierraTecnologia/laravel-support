@@ -50,11 +50,14 @@ class DatabaseService
     {
         if (!$this->renderDatabase) {
             $this->renderDatabase = (new \Support\Mount\DatabaseMount(collect($this->getAllModels())));
-
         }
         return $this->renderDatabase;
     }
 
+    public function getAllEloquentsEntitys()
+    {
+        return $this->getRenderDatabase()->getAllEloquentsEntitys();
+    }
 
     public function getEloquentService($class)
     {

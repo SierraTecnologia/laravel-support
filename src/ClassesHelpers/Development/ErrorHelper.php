@@ -28,13 +28,14 @@ class ErrorHelper
     {
         if (is_object($error)) {
             $e = $error;
-            $error = $e->getMessage().' | File: '.
-            $e->getFile().' | Line: '.
-            $e->getLine();
+            $error = $e->getMessage();
+            // $error = $e->getMessage().' | File: '.
+            // $e->getFile().' | Line: '.
+            // $e->getLine();
         }
         // @todo Gravar no Banco para tratar depois
         // dd($e);
-        Log::error($error);
+        // Log::channel('sitec')->error($error);
         return $error;
     }
 

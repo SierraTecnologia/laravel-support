@@ -12,77 +12,13 @@ class MenuRepository
 
     protected $menus = [];
 
-    public function __construct($menus = [])
-    {
-        $mergeByCode = [];
-        foreach ($menus as $menu) {
-            if (!isset($mergeByCode[$menu->getCode()])) {
-                $mergeByCode[$menu->getCode()] = $menu;
-            } else {
-                $mergeByCode[$menu->getCode()]->mergeWithMenu($menu);
-            }
-        }
-
-
-        $this->menus = array_values($mergeByCode);
-        // dd($this->menus);
-    }
-
-    public function getTreeInArray($parent = 'root')
-    {
-        $menuArrayList = [];
-
-        $byGroup = $this->groupBy('group');
-        
-        if (isset($byGroup[$parent])) {
-            foreach($byGroup[$parent] as $menu) {
-                $menuArray = $menu->toArray();
-                if (!empty($byGroup[$menu->getAddressSlugGroup()])) {
-                    if (is_string($menuArray)) {
-                        $menuArrayList[] = $menuArray;
-                        $menuArray = $this->getTreeInArray($menu->getAddressSlugGroup());
-                    } else {
-                        $menuArray['submenu'] = $this->getTreeInArray($menu->getAddressSlugGroup());
-                    }
-                }
-                if (Menu::isArrayMenu($menuArray)) {
-                    $menuArrayList[] = $menuArray;
-                } else {
-                    $menuArrayList = array_merge($menuArrayList, $menuArray);
-                }
-            }
-        }
-
-        return $this->getInOrder($menuArrayList);
-    }
-
-    public function getInOrder($arrayMenu)
-    {
-        // @todo Ordenar
-        return $arrayMenu;
-    }
-
-    public function groupBy($attribute)
-    {
-        $byGroup = [];
-        $getFunction = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
-        
-        foreach($this->menus as $menu) {
-            if (!isset($byGroup[$menu->{$getFunction}()])) {
-                $byGroup[$menu->{$getFunction}()] = [];
-            }
-            $byGroup[$menu->{$getFunction}()][] = $menu;
-        }
-
-// dd($byGroup, $this->menus);
-        return $byGroup;
-    }
-
     public static function createFromArray($array)
     {
         $arrayFromMenuEntitys = [];
         foreach ($array as $value) {
-            $arrayFromMenuEntitys[] = Menu::createFromArray($value);
+            if ($createMenuArray = Menu::createFromArray($value)){
+                $arrayFromMenuEntitys[] = $createMenuArray;
+            }
         }
 
         return new self($arrayFromMenuEntitys);
@@ -99,6 +35,24 @@ class MenuRepository
         }
 
         return self::createFromArray($mergeArray);
+    }
+
+    public function __construct($menus = [])
+    {
+        $mergeByCode = [];
+        foreach ($menus as $menu) {
+            if ($menu) {
+                if (!isset($mergeByCode[$menu->getCode()])) {
+                    $mergeByCode[$menu->getCode()] = $menu;
+                } else {
+                    $mergeByCode[$menu->getCode()]->mergeWithMenu($menu);
+                }
+            }
+        }
+
+
+        $this->menus = array_values($mergeByCode);
+        // dd($this->menus);
     }
 
     protected static function mergeDinamicGroups($array, $groupParent = '')
@@ -153,6 +107,56 @@ class MenuRepository
         }
 
         return $mergeArray;
+    }
+
+    public function getTreeInArray($parent = 'root')
+    {
+        $menuArrayList = [];
+
+        $byGroup = $this->groupBy('group');
+        
+        if (isset($byGroup[$parent])) {
+            foreach($byGroup[$parent] as $menu) {
+                $menuArray = $menu->toArray();
+                if (!empty($byGroup[$menu->getAddressSlugGroup()])) {
+                    if (is_string($menuArray)) {
+                        $menuArrayList[] = $menuArray;
+                        $menuArray = $this->getTreeInArray($menu->getAddressSlugGroup());
+                    } else {
+                        $menuArray['submenu'] = $this->getTreeInArray($menu->getAddressSlugGroup());
+                    }
+                }
+                if (Menu::isArrayMenu($menuArray)) {
+                    $menuArrayList[] = $menuArray;
+                } else {
+                    $menuArrayList = array_merge($menuArrayList, $menuArray);
+                }
+            }
+        }
+
+        return $this->getInOrder($menuArrayList);
+    }
+
+    public function getInOrder($arrayMenu)
+    {
+        // @todo Ordenar
+        return $arrayMenu;
+    }
+
+    public function groupBy($attribute)
+    {
+        $byGroup = [];
+        $getFunction = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+        
+        foreach($this->menus as $menu) {
+            if (!isset($byGroup[$menu->{$getFunction}()])) {
+                $byGroup[$menu->{$getFunction}()] = [];
+            }
+            $byGroup[$menu->{$getFunction}()][] = $menu;
+        }
+
+// dd($byGroup, $this->menus);
+        return $byGroup;
     }
     public static function isArraysFromMenus($arrayMenu)
     {

@@ -5,6 +5,9 @@
 
 namespace Support\Template\Mounters;
 
+use Route;
+use Log;
+
 /**
  * Menu helper to make table and object form mapping easy.
  */
@@ -35,6 +38,7 @@ class Menu
      */
     protected $isDivisory = false;
     
+    protected $error = null;
 
     
     /**
@@ -58,8 +62,8 @@ class Menu
                 $array[$attribute] = $instance->{$methodName}($valor);
             }
         }
-
-        return $instance;
+        
+        return $instance->validateAndReturn();
     }
 
     public static function isArrayMenu($arrayMenu, $indice=false)
@@ -221,5 +225,43 @@ class Menu
     }
     public function setGroup($value) {
         $this->group = $value;
+    }
+    public function getError() {
+        return $this->error;
+    }
+    public function setError($value) {
+        $this->error = $value;
+    }
+
+
+    /**
+     * Caso nao seja pra exibir, cria log e retorna false.
+     * 
+     * Se nao retorna a propria instancia
+     */
+    public function validateAndReturn()
+    {
+        if (!$this->isToDisplay()) {
+            Log::info('Menu desabilitado: '.$this->getError());
+            return false;
+        }
+        return $this;
+    }
+
+
+    /**
+     * Protected
+     */
+    protected function isToDisplay()
+    {
+        // Verify Route Exist
+        if (!empty($this->getRoute()) && !Route::has($this->getRoute())) {
+            $this->setError(
+                'Rota '.$this->getRoute().' não existe!'
+            );
+            return false;
+        }
+
+        return true;
     }
 }

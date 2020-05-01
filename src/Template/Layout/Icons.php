@@ -16,6 +16,15 @@ class Icons
         public static function getRandon($html = true)
         {
             $icon = array_rand(self::icons(), 1);
+
+            if (!isset(self::icons()[$icon]['class'])) {
+                dd(
+                    'IconsDeuPau',
+                    self::icons()[$icon],
+                    $icon
+                );
+            }
+
             if (!$html) {
                 return self::icons()[$icon]['class'];
             }

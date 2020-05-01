@@ -235,18 +235,18 @@ class Database
                 $selfInstance->processe();
             } catch(SchemaException|DBALException $e) {
                 // @todo Tratar, Tabela Nao existe
-                $this->setErrors($e->getMessage());
+                $this->setErrors($e);
                 
             } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-                $this->setErrors($e->getMessage());
+                $this->setErrors($e);
                 // @todo Armazenar Erro em tabela
                 // dd($e);
                 //@todo fazer aqui
             } catch(\Exception $e) {
-                $this->setErrors($e->getMessage());
+                $this->setErrors($e);
                 // dd($e);
             } catch(\Throwable $e) {
-                $this->setErrors($e->getMessage());
+                $this->setErrors($e);
                 // dd($e);
                 // @todo Tratar aqui
             }

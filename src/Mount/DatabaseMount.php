@@ -102,7 +102,10 @@ class DatabaseMount
 
     }
 
-
+    public function getAllEloquentsEntitys()
+    {
+        return $this->entitys->toArray();
+    }
 
     public function getEloquentEntity($class)
     {

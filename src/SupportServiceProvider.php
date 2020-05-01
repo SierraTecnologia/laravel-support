@@ -4,11 +4,12 @@ namespace Support;
 // namespace Support\Generate\Coders;
 
 use Support\Generate\Support\Classify;
-use Support\Generate\Coders\Model\Config;
+use Support\Generate\Coders\Model\Config as GenerateConfig;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Support\Console\Commands\CodeModelsCommand;
 use Support\Generate\Coders\Model\Factory as ModelFactory;
+use Config;
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -34,6 +35,8 @@ class SupportServiceProvider extends ServiceProvider
                 CodeModelsCommand::class,
             ]);
         }
+
+        $this->loadLogger();
     }
 
     /**
@@ -52,6 +55,14 @@ class SupportServiceProvider extends ServiceProvider
         });
     }
 
+
+
+
+
+
+
+    
+
     /**
      * Register Model Factory.
      *
@@ -64,7 +75,7 @@ class SupportServiceProvider extends ServiceProvider
                 $app->make('db'),
                 $app->make(Filesystem::class),
                 new Classify(),
-                new Config($app->make('config')->get('models'))
+                new GenerateConfig($app->make('config')->get('models'))
             );
         });
     }
@@ -82,5 +93,20 @@ class SupportServiceProvider extends ServiceProvider
         // Register Migrations
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
        
+    }
+
+
+
+
+    /**
+     * 
+     */
+    private function loadLogger()
+    {
+        Config::set('logging.channels.sitec', [
+            'driver' => 'single',
+            'path' => storage_path('logs/sitec.log'),
+            'level' => env('APP_LOG_LEVEL', 'debug'),
+        ]);
     }
 }
