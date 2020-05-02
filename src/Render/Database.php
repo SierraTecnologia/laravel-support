@@ -8,6 +8,7 @@ use LogicException;
 use OutOfBoundsException;
 use RuntimeException;
 use TypeError;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -19,6 +20,9 @@ use Illuminate\Support\Facades\Cache;
 use Support\ClassesHelpers\Development\HasErrors;
 use Support\Elements\Entities\Relationship;
 use Support\Discovers\Database\Types\Type;
+use Log;
+use Support\ClassesHelpers\Development\ArrayHelper;
+use Support\ClassesHelpers\Development\ReturnNames;
 
 class Database
 {
@@ -66,14 +70,14 @@ class Database
         return collect($this->eloquentClasses);
     }
 
-    protected function addTempNotFinalClasses($class)
+    public function addTempNotFinalClasses($class)
     {
         if (is_null($class) || empty($class) || in_array($class, $this->tempNotFinalClasses)) {
             return false;
         }
         $this->tempNotFinalClasses[] = $class;
     }
-    protected function isNotFinalClasses($class)
+    public function isNotFinalClasses($class)
     {
         if (is_null($class) || empty($class) || in_array($class, $this->tempNotFinalClasses)) {
             return true;
@@ -93,13 +97,16 @@ class Database
 
     public function __construct($eloquentClasses)
     {
+        Log::debug(
+            'Render Database -> Iniciando'
+        );
         $this->eloquentClasses = $eloquentClasses;
 
         $this->render();
 
         // dd($this->tempNotFinalClasses);
         // dd($this->displayClasses['Population\Models\Market\Abouts\Info']);
-        // $this->display();
+        $this->display();
     }
 
     public function toArray()
@@ -218,37 +225,69 @@ class Database
         $selfInstance = $this;
         // Cache In Minutes
         $value = Cache::remember('sitec_database', 30, function () use ($selfInstance) {
+            Log::debug(
+                'Render Database -> Renderizando'
+            );
             try {
-                $this->eloquentClasses = $this->eloquentClasses->map(function($filePath, $class) use ($selfInstance) {
+                $classUniversal = false; // for reference in debug
+                $this->eloquentClasses = $this->eloquentClasses->map(function($filePath, $class) use ($selfInstance, &$classUniversal) {
                     $eloquent = new Eloquent($class);
+                    $classUniversal = $class; // for reference in debug
                     $selfInstance->addTempNotFinalClasses($eloquent->parentClass);
                     return $eloquent;
-                })
-                ->reject(function($class) use ($selfInstance) {
+                });
+
+                // Cria mapeamento de classes antes de remover as invalidas
+
+                // Remove Classes Invalidas
+                $this->eloquentClasses = $this->eloquentClasses->reject(function($class) use ($selfInstance) {
+                    $classUniversal = $class; // for reference in debug
+                    // For Debug
+                    if ( !$class->getTableName() || $selfInstance->isNotFinalClasses($class->getModelClass())) {
+                        Log::channel('sitec-support')->error(
+                            'Database Render: '.
+                            $class->getModelClass().' - '.
+                            print_r($selfInstance->isNotFinalClasses($class->getModelClass()), true)
+                        );
+                    }
                     return !$class->getTableName() || $selfInstance->isNotFinalClasses($class->getModelClass());
                 })
                 ->values()->all();
+                $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
                 $selfInstance->renderClasses();
                 $selfInstance->getListTables();
 
                 // Processa o Resultado
-                $selfInstance->processe();
+                $selfInstance->sortArrays();
             } catch(SchemaException|DBALException $e) {
+                $reference = false;
+                if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                    $reference = [
+                        'model' => $classUniversal
+                    ];
+                } 
+                // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
+                //     $reference = [
+                //         'model' => $classUniversal
+                //     ];
+                // }
                 // @todo Tratar, Tabela Nao existe
-                $this->setErrors($e);
-                
-            } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-                $this->setErrors($e);
-                // @todo Armazenar Erro em tabela
-                // dd($e);
-                //@todo fazer aqui
-            } catch(\Exception $e) {
-                $this->setErrors($e);
-                // dd($e);
-            } catch(\Throwable $e) {
-                $this->setErrors($e);
-                // dd($e);
-                // @todo Tratar aqui
+                $this->setErrors(
+                    $e,
+                    $reference
+                );
+
+            } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                $reference = false;
+                if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                    $reference = [
+                        'model' => $classUniversal
+                    ];
+                } 
+                $this->setErrors(
+                    $e,
+                    $reference
+                );
             }
             return $selfInstance->toArray();
         });
@@ -257,7 +296,7 @@ class Database
 
 
 
-    public function processe()
+    public function sortArrays()
     {
         // Ordena Pelo Indice
         ksort($this->mapperTableToClasses);
@@ -265,80 +304,18 @@ class Database
     }
 
 
-    protected function renderClasses()
+    public function renderClasses()
     {
         $this->mapperTableToClasses = [];
         $this->totalRelations = [];
         
         foreach ($this->eloquentClasses as $eloquentService) {
 
-            // Guarda Classe por Table
-            if (isset($this->mapperTableToClasses[$eloquentService->getTableName()])) {
-                if (is_array($this->mapperTableToClasses[$eloquentService->getTableName()])) {
-                    $this->mapperTableToClasses[$eloquentService->getTableName()][] = $eloquentService->getModelClass();
-                } else {
-                    $this->mapperTableToClasses[$eloquentService->getTableName()] = [
-                        $eloquentService->getModelClass(),
-                        $this->mapperTableToClasses[$eloquentService->getTableName()]
-                    ];
-                }
-                $this->setErrors('Duas classes para a mesma tabela');
-            } else {
-                $this->mapperTableToClasses[$eloquentService->getTableName()] = $eloquentService->getModelClass();
-            }
 
-            // Pega Relacoes
-            if (!empty($relations = $eloquentService->getRelations())) {
-                foreach ($relations as $relation) {
-                    try {
-                        $tableTarget = $relation['name'];
-                        $tableOrigin = $eloquentService->getTableName();
-                        $singulariRelationName = Inflector::singularize($relation['name']);
-                        if (is_array($singulariRelationName)) {
-                            $singulariRelationName = $singulariRelationName[count($singulariRelationName)-1];
-                        }
-                        $tableNameSingulari = Inflector::singularize($eloquentService->getTableName());
-                        if (is_array($tableNameSingulari)) {
-                            $tableNameSingulari = $tableNameSingulari[count($tableNameSingulari)-1];
-                        }
-                        $type = $relation['type'];
-                        if (Relationship::isInvertedRelation($relation['type'])) {
-                            $type = Relationship::getInvertedRelation($type);
-                            $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
-                        } else {
-                            $temp = $tableOrigin;
-                            $tableOrigin = $tableTarget;
-                            $tableTarget = $temp;
-                            $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
-                        }
-                        if (!isset($this->totalRelations[$novoIndice])) {
-                            $this->totalRelations[$novoIndice] = [
-                                'name' => $novoIndice,
-                                'table_origin' => $tableOrigin,
-                                'table_target' => $tableTarget,
-                                'pivot' => 0,
-                                'type' => $type,
-                                'relations' => []
-                            ];
-                        }
-                        $this->totalRelations[$novoIndice]['relations'][] = $relation;
-                    } catch (\Exception $e) {
-                        dd(
-                            'LaravelSupport>Database>> Não era pra Cair Erro aqui',
-                            $e,
-                            $relation,
-                            $relation->name,
-                            $relation->type,
-                            $eloquentService->getTableName(),
-                            $tableNameSingulari,
-                            $singulariRelationName
-                            // Inflector::singularize($relation->name).'_'.$relation->type.'_'.Inflector::singularize($eloquentService->getTableName()),
-                            // Inflector::singularize($relation->name)
-                            // $novoIndice
-                        );
-                    }
-                }
-            }
+            $this->loadMapperTableToClasses($eloquentService->getTableName(), $eloquentService->getModelClass());
+            $this->loadMapperBdRelations($eloquentService->getTableName(), $eloquentService->getRelations());
+
+
 
             // Guarda Dados Carregados do Eloquent
             $this->displayClasses[$eloquentService->getModelClass()] = $eloquentService->toArray();
@@ -350,17 +327,17 @@ class Database
 
 
 
-
-    protected function getListTables()
+    /**
+     * Nivel 2
+     */
+    public function getListTables()
     {
         $this->mapperPrimaryKeys = [];
         $tables = [];
         Type::registerCustomPlatformTypes();
 
         $listTables = \Support\Discovers\Database\Schema\SchemaManager::listTables();
-
-
-        // return $this->getSchemaManagerTable()->getIndexes();
+        // return $this->getSchemaManagerTable()->getIndexes(); //@todo indexe
 
 
         foreach ($listTables as $listTable){
@@ -381,10 +358,7 @@ class Database
                 foreach ($indexes as $index) {
                     if ($index['type'] == 'PRIMARY') {
                         $primary = $index['columns'][0];
-                        $singulariRelationName = Inflector::singularize($listTable->getName());
-                        if (is_array($singulariRelationName)) {
-                            $singulariRelationName = $singulariRelationName[count($singulariRelationName)-1];
-                        }
+                        $singulariRelationName = ReturnNames::singularize($listTable->getName());
                         $this->mapperPrimaryKeys[$singulariRelationName.'_'.$primary] = [
                             'name' => $listTable->getName(),
                             'key' => $primary,
@@ -420,5 +394,86 @@ class Database
         return $this->mapperPrimaryKeys;
     }
 
+
+    /**
+     * Nivel 3
+     */
+    private function loadMapperTableToClasses(string $tableName, string $tableClass)
+    {
+        // Guarda Classe por Table
+        if (isset($this->mapperTableToClasses[$tableName])) {
+            $this->mapperTableToClasses = ArrayHelper::setAndPreservingOldDataConvertingToArray(
+                $this->mapperTableToClasses,
+                $tableName,
+                $tableClass
+            );
+            return $this->setErrors(
+                'Duas classes para a mesma tabela',
+                [
+                    'models' => $this->mapperTableToClasses[$tableName]
+                ]
+            );
+        }
+        $this->mapperTableToClasses[$tableName] = $tableClass;
+    }
+
+
+    /**
+     * Nivel 3
+     */
+    private function loadMapperBdRelations(string $tableName, string $relations)
+    {
+            // Pega Relacoes
+            if (!empty($relations)) {
+                return ;
+            }
+        
+            foreach ($relations as $relation) {
+                try {
+                    $tableTarget = $relation['name'];
+                    $tableOrigin = $tableName;
+
+                    $singulariRelationName = ReturnNames::singularize($relation['name']);
+                    $tableNameSingulari = ReturnNames::singularize($tableName);
+
+                    $type = $relation['type'];
+                    if (Relationship::isInvertedRelation($relation['type'])) {
+                        $type = Relationship::getInvertedRelation($type);
+                        $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
+                    } else {
+                        $temp = $tableOrigin;
+                        $tableOrigin = $tableTarget;
+                        $tableTarget = $temp;
+                        $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
+                    }
+                    if (!isset($this->totalRelations[$novoIndice])) {
+                        $this->totalRelations[$novoIndice] = [
+                            'name' => $novoIndice,
+                            'table_origin' => $tableOrigin,
+                            'table_target' => $tableTarget,
+                            'pivot' => 0,
+                            'type' => $type,
+                            'relations' => []
+                        ];
+                    }
+                    $this->totalRelations[$novoIndice]['relations'][] = $relation;
+                } catch (\Exception $e) {
+                    dd(
+                        'LaravelSupport>Database>> Não era pra Cair Erro aqui',
+                        $e,
+                        $relation,
+                        $relation->name,
+                        $relation->type,
+                        $eloquentService->getTableName(),
+                        $tableNameSingulari,
+                        $singulariRelationName
+                        // ReturnNames::singularize($relation->name).'_'.$relation->type.'_'.ReturnNames::singularize($eloquentService->getTableName()),
+                        // ReturnNames::singularize($relation->name)
+                        // $novoIndice
+                    );
+                }
+            }
+        }
+    }
 
 }

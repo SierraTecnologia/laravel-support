@@ -61,7 +61,11 @@ class DatabaseService
 
     public function getEloquentService($class)
     {
-        return $this->getRenderDatabase()->getEloquentEntity($class);
+        if ($eloquentEntity = $this->getRenderDatabase()->getEloquentEntity($class)) {
+            return $eloquentEntity;
+        }
+        Log::channel('sitec-support')->error('DatabaseService. Nao encontrado pra classe: '.$class);
+        return false;
     }
 
     /**

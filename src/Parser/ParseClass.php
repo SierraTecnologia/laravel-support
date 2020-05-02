@@ -46,7 +46,7 @@ class ParseClass
             $this->supportModelCodeClass->save();
         } else {
             if (is_object($this->supportModelCodeClass->data))
-            dd($this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
+            dd('Debug ParseClass', $this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
             $this->fromArray($this->supportModelCodeClass->data);
         }
         // @debug
@@ -80,6 +80,7 @@ class ParseClass
             'interfaces' => $this->getInterfaceNames(),
             'type' => $this->getType(),
 
+            'group_package' => $this->getPackageNamespace(),
         ];
 
     }
@@ -235,6 +236,21 @@ class ParseClass
     public static function fastExecute($class, $method, ...$args)
     {
         return (new static($class))->$method(...$args);
+    }
+
+
+    /**
+     * 
+     */
+    public function getNamespace()
+    {
+        // $namespaceWithoutModels = explode("Models\\", $this->className);
+        // return join(array_slice(explode("\\", $namespaceWithoutModels[1]), 0, -1), "\\");
+        return explode("\\", $this->className);
+    }
+    public function getPackageNamespace()
+    {
+        return $this->getNamespace()[0];
     }
 
 }

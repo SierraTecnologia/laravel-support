@@ -103,9 +103,15 @@ class SupportServiceProvider extends ServiceProvider
      */
     private function loadLogger()
     {
-        Config::set('logging.channels.sitec', [
+        Config::set('logging.channels.sitec-support', [
             'driver' => 'single',
-            'path' => storage_path('logs/sitec.log'),
+            'path' => storage_path('logs/sitec-support.log'),
+            'level' => env('APP_LOG_LEVEL', 'debug'),
+        ]);
+
+        Config::set('logging.channels.sitec-providers', [
+            'driver' => 'single',
+            'path' => storage_path('logs/sitec-providers.log'),
             'level' => env('APP_LOG_LEVEL', 'debug'),
         ]);
     }

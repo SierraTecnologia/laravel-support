@@ -195,21 +195,13 @@ class Relationship
 
     protected function getCodeName()
     {
-        $stringOne =  Inflector::singularize($this->origin_table_name);
-        if (is_array($stringOne)) {
-            $stringOne = $stringOne[0];
-        }
-        $stringTwo =  Inflector::singularize($this->related_table_name);
-        if (is_array($stringTwo)) {
-            $stringTwo = $stringTwo[0];
-        }
-
-        $code = 
-            $stringOne.'_'.
-            $this->type.'_'.
-            $stringTwo;
-
-
-        return $code;
+        return implode(
+            '_',
+            [
+                ReturnNames::singularize($this->origin_table_name),
+                $this->type.'_',
+                ReturnNames::singularize($this->related_table_name)
+            ]
+        );
     }
 }

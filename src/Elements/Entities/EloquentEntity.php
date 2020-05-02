@@ -48,7 +48,8 @@ class EloquentEntity
     protected $primaryKey;
 
     public $data;
-    public $columns;
+    public $dataForColumns; // Array
+    public $columns; // Em instancias
 
     /**
      * Construct
@@ -70,23 +71,6 @@ class EloquentEntity
         return $this->primaryKey = $primaryKey;
     }
 
-    public function getGroup()
-    {
-        return $this->group;
-    }
-    public function setGroup($group)
-    {
-        return $this->group = $group;
-    }
-
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-    public function setIcon($icon)
-    {
-        return $this->icon = $icon;
-    }
 
     //@todo fazer plural
     public function getName($plural = false)
@@ -120,8 +104,11 @@ class EloquentEntity
 
     public function getData($indexe = false)
     {
-        if (empty($indexe) || !isset($this->data[$indexe])) {
+        if (!$indexe || empty($indexe)) {
             return $this->data;
+        }
+        if (!isset($this->data[$indexe])) {
+            return false;
         }
         return $this->data[$indexe];
     }
@@ -130,6 +117,20 @@ class EloquentEntity
         return $this->data = $data;
     }
 
+    public function getDataForColumns($indexe = false)
+    {
+        if (!$indexe || empty($indexe)) {
+            return $this->dataForColumns;
+        }
+        if (!isset($this->dataForColumns[$indexe])) {
+            return false;
+        }
+        return $this->dataForColumns[$indexe];
+    }
+    public function setDataForColumns($dataForColumns)
+    {
+        return $this->dataForColumns = $dataForColumns;
+    }
 
     /**
      */
@@ -289,36 +290,54 @@ class EloquentEntity
     //  */ 
     public function hasColumn($column)
     {
-        dd(
-
-            $this,
-            $this->data
-        );
-        // $columns = SchemaManager::listTableColumnNames($this->getTableName());
-        // return in_array($column, $columns);
-
-        return $this->getSchemaManagerTable()->hasColumn($column);
+        return isset($this->dataForColumns[$column]);
     }
-    // public function columnIsType($columnName, $typeClass)
-    // {
-    //     $column = SchemaManager::getDoctrineColumn($this->getTableName(), $columnName);
+    public function columnIsType($columnName, $typeClass)
+    {
+        if (!isset($this->dataForColumns[$columnName])) {
+            return false;
+        }
+
+        dd(
+            $this->dataForColumns[$columnName],
+            $typeClass
+        );
+
+        // $column = SchemaManager::getDoctrineColumn($this->getTableName(), $columnName);
         
-    //     if ($column->getType() instanceof $typeClass) {
-    //         return true;
-    //     }
-    //     return false;
+        // if ($column->getType() instanceof $typeClass) {
+        //     return true;
+        // }
+        // return false;
 
-    //     // $columnArray = [
-    //     //     'name' => '',
-    //     //     'type' => ''
-    //     // ];
-    //     // $columnArray['name'] = $columnName;
-    //     // $column = \Support\Discovers\Database\Schema\Column::make($columnArray, $this->getTableName());
-    //     // dd($column);
-    //     // return $column->columnIsType($columnName, $typeClass);
-    // }
+        // // $columnArray = [
+        // //     'name' => '',
+        // //     'type' => ''
+        // // ];
+        // // $columnArray['name'] = $columnName;
+        // // $column = \Support\Discovers\Database\Schema\Column::make($columnArray, $this->getTableName());
+        // // dd($column);
+        // // return $column->columnIsType($columnName, $typeClass);
+    }
 
 
 
+
+    public function getGroup()
+    {
+        return $this->group;
+    }
+    public function setGroup($group)
+    {
+        return $this->group = $group;
+    }
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+    public function setIcon($icon)
+    {
+        return $this->icon = $icon;
+    }
 
 }

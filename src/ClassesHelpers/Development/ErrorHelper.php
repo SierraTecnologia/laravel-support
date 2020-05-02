@@ -9,6 +9,7 @@ use ArgumentCountError;
 
 class ErrorHelper
 {
+    protected static $showTrace = true;
 
 
     public static $ignoreErrosWithStrings = [
@@ -20,22 +21,42 @@ class ErrorHelper
     public static $ignoreExceptionsErrors = [
         ArgumentCountError::class,
     ];
+
+    /**
+     * Debugs
+     */
+    public static $debugModels = [
+        \Population\Models\Identity\Actors\Person::class,
+    ];
+
+
     /**
      *
      * @return void
      */
-    public static function registerAndReturnMessage($error)
+    public static function registerAndReturnMessage($error, $reference = false)
+    {
+        $error = self::tratarMensagem($error, $reference);
+        Log::channel('sitec-support')->error($error);
+        return $error;
+    }
+    public static function tratarMensagem($error, $reference = false)
     {
         if (is_object($error)) {
             $e = $error;
-            $error = $e->getMessage();
-            // $error = $e->getMessage().' | File: '.
-            // $e->getFile().' | Line: '.
-            // $e->getLine();
+            // $error = $e->getMessage();
+            $error = $e->getMessage().' | File: '.
+            $e->getFile().' | Line: '.
+            $e->getLine();
+
+            if (self::$showTrace) {
+                $error .= '| Trace: '.$e->getTraceAsString();
+            }
+
+            if ($reference) {
+                $error .= '| Reference: '.print_r($reference, true);
+            }
         }
-        // @todo Gravar no Banco para tratar depois
-        // dd($e);
-        // Log::channel('sitec')->error($error);
         return $error;
     }
 
@@ -67,6 +88,26 @@ class ErrorHelper
                 }
             }
         }
+        return false;
+    }
+    /**
+     *
+     * @return void
+     */
+    public static function isToDebug($reference = false)
+    {
+        if (!$reference || empty($reference)) {
+            return false;
+        }
+
+       if (isset($reference['model'])) {
+           foreach (self::$debugModels as $debugModel) {
+               if ($reference['model'] == $debugModel) {
+                   return true;
+               }
+           }
+       }
+        
         return false;
     }
 }

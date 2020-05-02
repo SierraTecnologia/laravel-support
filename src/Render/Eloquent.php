@@ -25,8 +25,18 @@ use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
+
+
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Debug\Exception\FatalErrorException;
+use Exception;
+use ErrorException;
+use LogicException;
+use OutOfBoundsException;
+use RuntimeException;
+use TypeError;
+use Throwable;
+use Watson\Validating\ValidationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
 class Eloquent
@@ -183,20 +193,24 @@ class Eloquent
             $this->parentClass = $parserModelClass->getData('parentClass');
         } catch(BindingResolutionException $e) {
             // Erro Leve
-            $this->setErrors($e);
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->modelClass
+                ]
+            );
             
         } catch(SchemaException|DBALException $e) {
             // @todo Tratar, Tabela Nao existe
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->modelClass
+                ]
+            );
+        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
             $this->setErrors($e);
-            
-        } catch(\Symfony\Component\Debug\Exception\FatalThrowableError $e) {
-            $this->setErrors($e);
-            // @todo Armazenar Erro em tabela
-        } catch(\Exception $e) {
-            $this->setErrors($e);
-        } catch(\Throwable $e) {
-            $this->setErrors($e);
-        }
+        } 
         return true;
     }
     public function getIcon()
@@ -223,7 +237,7 @@ class Eloquent
             return $this->relations;
 
         } catch(FatalErrorException $e) {
-            $this->setErrors($e->getMessage());
+            $this->setErrors($e);
             // dd($this->model, $method, $e);
             dd($e);
             // @todo Tratar aqui

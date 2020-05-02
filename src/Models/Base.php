@@ -513,7 +513,7 @@ abstract class Base extends Eloquent
         $model = static::createIfNotExistAndReturn($dataOrPrimaryCode);
 
         //@todo Código Repetido
-        $method = Str::plural(Str::lower(class_basename($model)));
+        $method = Str::plural(Str::lower(\class_basename($model)));
         if (method_exists($associateTo, $method)) {
             return call_user_func_array([$associateTo, $method], [])->save($model);
         }
@@ -534,7 +534,14 @@ abstract class Base extends Eloquent
             $data[$keyName] = $dataOrPrimaryCode;
         }
 
-        $modelData = EloquentService::getForClass(static::class);
+        if (!$modelData = EloquentService::getForClass(static::class)) {
+            dd(
+                'Nao deveria estar aqu Base',
+                static::class
+            );
+        }
+
+        
 
         if (
             (!isset($data['name']) || empty($data['name'])) && 

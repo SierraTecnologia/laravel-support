@@ -104,9 +104,9 @@ class ParseModelClass extends ParseClass
         if (!$array) {
             return false;
         }
-            if (!is_array($array)) {
-                dd($array);
-            }
+        if (!is_array($array)) {
+            dd('Debug ParseModelClass', $array);
+        }
         if (isset($array['table'])) {
             $this->setTableName($array['table']);
         }
@@ -335,15 +335,5 @@ class ParseModelClass extends ParseClass
         $this->getForeignKey = $getForeignKey;
     }
 
-
-
-    /**
-     * 
-     */
-    public function getNamespace()
-    {
-        $namespaceWithoutModels = explode("Models\\", $this->modelClass);
-        return join(array_slice(explode("\\", $namespaceWithoutModels[1]), 0, -1), "\\");
-    }
 
 }

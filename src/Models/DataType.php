@@ -363,4 +363,17 @@ class DataType extends Model
         }
         return $this->modelService;
     }
+
+    /**
+     * Get and Setters
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
 }

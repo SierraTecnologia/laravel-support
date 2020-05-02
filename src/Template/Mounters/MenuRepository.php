@@ -1,4 +1,5 @@
 <?php
+
 /**
  */
 
@@ -16,7 +17,7 @@ class MenuRepository
     {
         $arrayFromMenuEntitys = [];
         foreach ($array as $value) {
-            if ($createMenuArray = Menu::createFromArray($value)){
+            if ($createMenuArray = Menu::createFromArray($value)) {
                 $arrayFromMenuEntitys[] = $createMenuArray;
             }
         }
@@ -63,7 +64,7 @@ class MenuRepository
             return $array;
         }
 
-        foreach ($array as $indice=>$values) {
+        foreach ($array as $indice => $values) {
             $group = $groupParent;
             if (is_string($indice)) {
                 if (!empty($group)) {
@@ -85,7 +86,7 @@ class MenuRepository
                     if (!isset($values['group'])) {
                         $values['group'] = $group;
                     } else {
-                        $values['group'] = $group.'.'.$values[$indice]['group'];
+                        $values['group'] = $group . '.' . $values[$indice]['group'];
                     }
                 }
                 $values = [$values];
@@ -95,7 +96,7 @@ class MenuRepository
                         if (!isset($value['group'])) {
                             $values[$indice]['group'] = $group;
                         } else {
-                            $values[$indice]['group'] = $group.'.'.$values[$indice]['group'];
+                            $values[$indice]['group'] = $group . '.' . $values[$indice]['group'];
                         }
                     }
                 }
@@ -114,9 +115,9 @@ class MenuRepository
         $menuArrayList = [];
 
         $byGroup = $this->groupBy('group');
-        
+
         if (isset($byGroup[$parent])) {
-            foreach($byGroup[$parent] as $menu) {
+            foreach ($byGroup[$parent] as $menu) {
                 $menuArray = $menu->toArray();
                 if (!empty($byGroup[$menu->getAddressSlugGroup()])) {
                     if (is_string($menuArray)) {
@@ -146,16 +147,16 @@ class MenuRepository
     public function groupBy($attribute)
     {
         $byGroup = [];
-        $getFunction = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
-        
-        foreach($this->menus as $menu) {
+        $getFunction = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+
+        foreach ($this->menus as $menu) {
             if (!isset($byGroup[$menu->{$getFunction}()])) {
                 $byGroup[$menu->{$getFunction}()] = [];
             }
             $byGroup[$menu->{$getFunction}()][] = $menu;
         }
 
-// dd($byGroup, $this->menus);
+        // dd($byGroup, $this->menus);
         return $byGroup;
     }
     public static function isArraysFromMenus($arrayMenu)
@@ -168,7 +169,7 @@ class MenuRepository
             return false;
         }
 
-        foreach ($arrayMenu as $indice=>$values) {
+        foreach ($arrayMenu as $indice => $values) {
             // dd($arrayMenu);
             if (!Menu::isArrayMenu($values, $indice)) {
                 return false;

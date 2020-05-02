@@ -78,8 +78,12 @@ class EloquentMount
         $eloquentEntity->setName($name);
         $eloquentEntity->setIcon($icon);
         $eloquentEntity->setPrimaryKey($primaryKey);
-        $eloquentEntity->setData($tableClassArray);
         $eloquentEntity->setIndexes($indexes);
+
+        $eloquentEntity->setData($tableClassArray);
+        $eloquentEntity->setDataForColumns($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns']);
+
+        $eloquentEntity->setGroup($tableClassArray['group_package']);
         
         foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns'] as $column) {
             $eloquentEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());

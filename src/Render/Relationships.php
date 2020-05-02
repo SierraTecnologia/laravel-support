@@ -2,13 +2,6 @@
 
 namespace Support\Render;
 
-use Exception;
-use ErrorException;
-use LogicException;
-use OutOfBoundsException;
-use RuntimeException;
-use TypeError;
-use Watson\Validating\ValidationException;
 use Support\ClassesHelpers\Development\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
@@ -20,6 +13,14 @@ use Support\Parser\ParseClass;
 
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Debug\Exception\FatalErrorException;
+use Exception;
+use ErrorException;
+use LogicException;
+use OutOfBoundsException;
+use RuntimeException;
+use TypeError;
+use Throwable;
+use Watson\Validating\ValidationException;
 
 class Relationships
 {
@@ -62,6 +63,9 @@ class Relationships
                 && $method->getName() !== __FUNCTION__
                 /* && $method->isFinal() */) // Retirado o lance do method ser final
             {
+                $reference = [
+                    'type' => 'Relationship Render'
+                ];
                 try {
                     $return = $method->invoke(new $this->model);
 
@@ -176,21 +180,25 @@ class Relationships
 
                         $this->relationships[$dataRelationship['name']] = $dataRelationship;
                     }
-                } catch(LogicException $e) {
+                } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
                     $this->setErrors($e);
-                } catch(ErrorException|RuntimeException $e) {
-                    $this->setErrors($e);
-                } catch (OutOfBoundsException|TypeError $e) {
-                    $this->setErrors($e);
-                } catch(ValidationException $e) {
-                    $this->setErrors($e);
-                } catch(FatalThrowableError|FatalErrorException $e) {
-                    $this->setErrors($e);
-                } catch(\Exception $e) {
-                    $this->setErrors($e);
-                } catch(\Throwable $e) {
-                    $this->setErrors($e);
-                }
+                } 
+                // Verificar se tem algo importante e depois deletar e tratar no hasError @todo
+                // catch(LogicException $e) {
+                //     $this->setErrors($e);
+                // } catch(ErrorException|RuntimeException $e) {
+                //     $this->setErrors($e);
+                // } catch (OutOfBoundsException|TypeError $e) {
+                //     $this->setErrors($e);
+                // } catch(ValidationException $e) {
+                //     $this->setErrors($e);
+                // } catch(FatalThrowableError|FatalErrorException $e) {
+                //     $this->setErrors($e);
+                // } catch(\Exception $e) {
+                //     $this->setErrors($e);
+                // } catch(\Throwable $e) {
+                //     $this->setErrors($e);
+                // }
             }
         }
 
