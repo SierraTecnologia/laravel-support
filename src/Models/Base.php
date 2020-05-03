@@ -19,7 +19,6 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Cocur\Slugify\Slugify;
 use Log;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 use Illuminate\Support\Str;
@@ -554,8 +553,8 @@ abstract class Base extends Eloquent
             $eloquentEntityForModel->getIndexes()
         )->map(
             function ($query) use ($data) {
-                if ($modelFind = static::where($generateWhere)->first()) {
-                    Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($index, true).' e Data: '.print_r($data, true));
+                if ($modelFind = static::where($query)->first()) {
+                    Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($query, true).' e Data: '.print_r($data, true));
                     return DbalMergeator::mergeWithAttributes($modelFind, $data);
                 }
                 return false;

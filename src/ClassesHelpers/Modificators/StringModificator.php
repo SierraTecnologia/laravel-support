@@ -8,6 +8,7 @@ use Log;
 use ArgumentCountError;
 use Symfony\Component\Inflector\Inflector;
 use Illuminate\Support\Str;
+use Cocur\Slugify\Slugify;
 
 class StringModificator
 {
