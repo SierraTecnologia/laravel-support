@@ -14,11 +14,6 @@ class ParseModelClass extends ParseClass
 {
     public $instanceClass = false;
 
-
-    public $hasError = false;
-
-
-
     public $table = false;
     public $getMutatedAttributes = false;
     public $fillable = false;
@@ -39,14 +34,19 @@ class ParseModelClass extends ParseClass
     {
         parent::__construct($classOrReflectionClass);
     }
-    // @todo fazer getSetter para cada um desses
+    
     public function getInstanceClassForUse()
     {
         if (!$this->instanceClass) {
             try {
                 $this->instanceClass = static::returnInstanceForClass($this->className);
-            } catch (Exception $e) {
-                $this->hasError = true;
+            } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                $this->setErrors(
+                    $e,
+                    [
+                        'model' => $this->className
+                    ]
+                );
             }
         }
         return $this->instanceClass;

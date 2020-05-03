@@ -9,9 +9,11 @@ use App;
 use Log;
 use Exception;
 use Support\Models\Code\Classes;
+use Support\ClassesHelpers\Development\HasErrors;
 
 class ParseClass
 {
+    use HasErrors;
     public $supportModelCodeClass = false;
 
     public $reflectionClass = false;

@@ -9,7 +9,8 @@ use ArgumentCountError;
 
 class ErrorHelper
 {
-    protected static $showTrace = true;
+    // @todo Add na configuracao
+    protected static $showTrace = false;
 
 
     public static $ignoreErrosWithStrings = [
@@ -34,11 +35,22 @@ class ErrorHelper
      *
      * @return void
      */
-    public static function registerAndReturnMessage($error, $reference = false)
+    public static function registerError($error, $type = 'error')
     {
-        $error = self::tratarMensagem($error, $reference);
-        Log::channel('sitec-support')->error($error);
+        if ($type === 'error'){
+            Log::channel('sitec-support')->error($error);
+        } else if ($type === 'warning'){
+            Log::channel('sitec-support')->warning($error);
+        } else if ($type === 'info'){
+            Log::channel('sitec-support')->info($error);
+        } else {
+            Log::channel('sitec-support')->debug($error);
+        }
         return $error;
+    }
+    public static function registerAndReturnMessage($error, $reference = false, $type = 'error')
+    {
+        return self::registerError(self::tratarMensagem($error, $reference), $type);
     }
     public static function tratarMensagem($error, $reference = false)
     {
@@ -52,10 +64,10 @@ class ErrorHelper
             if (self::$showTrace) {
                 $error .= '| Trace: '.$e->getTraceAsString();
             }
+        }
 
-            if ($reference) {
-                $error .= '| Reference: '.print_r($reference, true);
-            }
+        if ($reference) {
+            $error .= '| Reference: '.print_r($reference, true);
         }
         return $error;
     }

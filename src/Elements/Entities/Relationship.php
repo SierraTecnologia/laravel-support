@@ -198,9 +198,9 @@ class Relationship
         return implode(
             '_',
             [
-                ReturnNames::singularize($this->origin_table_name),
+                StringExtractor::singularize($this->origin_table_name),
                 $this->type.'_',
-                ReturnNames::singularize($this->related_table_name)
+                StringExtractor::singularize($this->related_table_name)
             ]
         );
     }

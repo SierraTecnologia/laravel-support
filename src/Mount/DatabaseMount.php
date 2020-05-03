@@ -21,7 +21,8 @@ use Support\Discovers\Database\Schema\SchemaManager;
 use Support\Discovers\Database\Schema\Table;
 use Support\Discovers\Database\Types\Type;
 use Support\Parser\ParseModelClass;
-use Support\ClassesHelpers\Development\ReturnNames;
+use Support\ClassesHelpers\Extratores\StringExtractor;
+use Support\ClassesHelpers\Extratores\ArrayExtractor;
 use Support\Parser\ComposerParser;
 
 use Support\Elements\Entities\DatabaseEntity;
@@ -98,7 +99,7 @@ class DatabaseMount
                     $relation['origin_table_name'] = $renderDatabase["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
                 }
                 if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
-                    $relation['related_table_name'] = ReturnNames::returnNameIfNotExistInArray(
+                    $relation['related_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
                         $relation['related_table_class'],
                         $renderDatabase,
                         '["Leitoras"]["displayClasses"][{{index}}]["tableName"]'

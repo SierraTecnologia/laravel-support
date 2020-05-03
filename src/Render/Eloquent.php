@@ -98,7 +98,8 @@ class Eloquent
 
     protected function reportError()
     {
-        return $this->modelClass = false;
+        $this->markWithError();
+        return false;
     }
 
     /**
@@ -181,8 +182,12 @@ class Eloquent
     {
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
-            if ($parserModelClass->hasError || !$parserModelClass->typeIs('model') || !$this->tableData = $parserModelClass->toArray()) {
-                // dd($parserModelClass);
+            if ($parserModelClass->hasError() || !$parserModelClass->typeIs('model') || !$this->tableData = $parserModelClass->toArray()) {
+                Log::channel('sitec-support')->warning(
+                    'Eloquent Render (Rejeitando classe nao finais): '.
+                    $this->modelClass
+                );
+                $this->setErrors($parserModelClass->getErrors());
                 return false;
             }
 
@@ -209,7 +214,12 @@ class Eloquent
                 ]
             );
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-            $this->setErrors($e);
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->modelClass
+                ]
+            );
         } 
         return true;
     }
@@ -236,7 +246,7 @@ class Eloquent
             // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
             return $this->relations;
 
-        } catch(FatalErrorException $e) {
+        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
             $this->setErrors($e);
             // dd($this->model, $method, $e);
             dd($e);

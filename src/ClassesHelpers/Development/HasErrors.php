@@ -12,6 +12,42 @@ trait HasErrors
      */
     protected $error = [];
     protected $isError = false;
+    protected $warning = [];
+    protected $isWarning = false;
+
+    public function markWithError()
+    {  
+        return $this->isError = true;
+    }
+
+    public function hasError()
+    { 
+        return $this->isError;
+    }
+
+    /**
+     *
+     * @return void
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+    public function getErrors()
+    {
+        return $this->getError();
+    }
+
+    public function getWarning()
+    {
+        return $this->warning;
+    }
+    public function getWarnings()
+    {
+        return $this->getWarning();
+    }
+
+
 
 
     /**
@@ -19,7 +55,7 @@ trait HasErrors
      *
      * @return void
      */
-    public function setErrors($errors, $reference = false)
+    public function setErrors($errors, $reference = [], $debugData = [])
     {  
         if (is_array($errors)) {
             // if (is_array($error) && count($error) == 1) {
@@ -36,33 +72,71 @@ trait HasErrors
      *
      * @return void
      */
-    public function setError($error, $reference = false)
-    {  
+    public function setError($error, $reference = [], $debugData = [])
+    { 
         if (ErrorHelper::isToIgnore($error)) {
             return false;
         }
+        $reference['locateClassFromError'] = get_class($this);
 
-        $this->error[] = ErrorHelper::registerAndReturnMessage($error, $reference);
+        $this->error[] = ErrorHelper::registerAndReturnMessage($error, $reference, 'error');
         $this->isError = true;
 
         if (ErrorHelper::isToDebug($reference)) {
             dd(
                 'IsToDebug',
                 $error,
-                $reference
+                $reference,
+                $debugData
             );
         }
         
         return true;
     }
 
+
+
     /**
+     * Update the table.
      *
      * @return void
      */
-    public function getError()
-    {
-        return $this->error;
+    public function setWarnings($warnings, $reference = [], $debugData = [])
+    {  
+        if (is_array($warnings)) {
+            // if (is_array($warning) && count($warning) == 1) {
+            foreach ($warnings as $warning) {
+                $this->setWarning($warning, $reference);
+            }
+            return true;
+        }
+        return $this->setWarning($warnings, $reference);
     }
 
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function setWarning($warning, $reference = [], $debugData = [])
+    { 
+        if (ErrorHelper::isToIgnore($warning)) {
+            return false;
+        }
+        $reference['locateClassFromWarning'] = get_class($this);
+
+        $this->warning[] = ErrorHelper::registerAndReturnMessage($warning, $reference, 'warning');
+        $this->isWarning = true;
+
+        if (ErrorHelper::isToDebug($reference)) {
+            dd(
+                'IsToDebug Warning',
+                $warning,
+                $reference,
+                $debugData
+            );
+        }
+        
+        return true;
+    }
 }

@@ -17,12 +17,12 @@ use Illuminate\Support\Collection;
 use Support\Services\EloquentService;
 use Support\Parser\ComposerParser;
 use Illuminate\Support\Facades\Cache;
-use Support\ClassesHelpers\Development\HasErrors;
 use Support\Elements\Entities\Relationship;
 use Support\Discovers\Database\Types\Type;
 use Log;
-use Support\ClassesHelpers\Development\ArrayHelper;
-use Support\ClassesHelpers\Development\ReturnNames;
+use Support\ClassesHelpers\Transformadores\ArrayHelper;
+use Support\ClassesHelpers\Extratores\StringExtractor;
+use Support\ClassesHelpers\Development\HasErrors;
 
 class Database
 {
@@ -32,11 +32,6 @@ class Database
      * Eloquent CLasse
      **************************************/
     public $eloquentClasses;
-
-
-
-    
-    public $displayClasses;
     
     /**
      * From Data Table
@@ -52,16 +47,24 @@ class Database
     /****************************************
      * From Datatavle
      **************************************/
+    public $displayTables = [];
     /**
      * From Eloquent
      */
-    public $displayTables = [];
+    public $displayClasses;
 
 
 
+    /**
+     * Errors
+     */
+    public $logErrorsTablesNotHasPrimary = [];
 
-
+    /**
+     * Para guardar daos temporarios
+     */
     protected $tempNotFinalClasses = [];
+    protected $tempNotFinalClassesMapper = [];
 
 
 
@@ -70,16 +73,20 @@ class Database
         return collect($this->eloquentClasses);
     }
 
-    public function addTempNotFinalClasses($class)
+    public function addTempNotFinalClasses($classParent, $child)
     {
-        if (is_null($class) || empty($class) || in_array($class, $this->tempNotFinalClasses)) {
+        if (is_null($classParent) || empty($classParent) || in_array($classParent, $this->tempNotFinalClasses)) {
             return false;
         }
-        $this->tempNotFinalClasses[] = $class;
+
+        // @debito @todo melhorar isso aqui
+        $this->tempNotFinalClasses[] = $classParent;
+        $this->tempNotFinalClassesMapper[$classParent] = $child;
+
     }
-    public function isNotFinalClasses($class)
+    public function isNotFinalClasses($classParent)
     {
-        if (is_null($class) || empty($class) || in_array($class, $this->tempNotFinalClasses)) {
+        if (is_null($classParent) || empty($classParent) || in_array($classParent, $this->tempNotFinalClasses)) {
             return true;
         }
         return false;
@@ -137,13 +144,18 @@ class Database
              */
             // Ok
             
-            'Aplication' => [
-                // Nao ok
-                'tables' => [],
-                'classes' => [],
+            // 'Aplication' => [
+            //     // Nao ok
+            //     'tables' => [],
+            //     'classes' => [],
 
-            ],
+            // ],
             'Erros' => [
+
+                /**
+                 * Log Erros 
+                 **/
+                'errors' => $this->logErrorsTablesNotHasPrimary,
 
                 /**
                  * Erros 
@@ -224,42 +236,44 @@ class Database
     {
         $selfInstance = $this;
         // Cache In Minutes
-        $value = Cache::remember('sitec_database', 30, function () use ($selfInstance) {
+        $value = Cache::remember('sitec_database', 30, function () {
             Log::debug(
                 'Render Database -> Renderizando'
             );
             try {
                 $classUniversal = false; // for reference in debug
-                $this->eloquentClasses = $this->eloquentClasses->map(function($filePath, $class) use ($selfInstance, &$classUniversal) {
-                    $eloquent = new Eloquent($class);
-                    $classUniversal = $class; // for reference in debug
-                    $selfInstance->addTempNotFinalClasses($eloquent->parentClass);
-                    return $eloquent;
-                });
+                $this->eloquentClasses = $this->returnEloquents($this->eloquentClasses);
 
                 // Cria mapeamento de classes antes de remover as invalidas
+                $this->renderClasses();
+                $this->renderTables();
 
-                // Remove Classes Invalidas
-                $this->eloquentClasses = $this->eloquentClasses->reject(function($class) use ($selfInstance) {
-                    $classUniversal = $class; // for reference in debug
+                // Remove as Classes que não sao Finais
+                $this->eloquentClasses = $this->eloquentClasses->reject(function($class) {
+                    $classUniversal = $class->getModelClass(); // for reference in debug
                     // For Debug
-                    if ( !$class->getTableName() || $selfInstance->isNotFinalClasses($class->getModelClass())) {
+                    if ( $this->isNotFinalClasses($class->getModelClass())) {
                         Log::channel('sitec-support')->error(
-                            'Database Render: '.
-                            $class->getModelClass().' - '.
-                            print_r($selfInstance->isNotFinalClasses($class->getModelClass()), true)
+                            'Database Render (Rejeitando classe nao finais): ParentCLass: '.
+                            $class->getModelClass().' ChildrenClass: '.
+                            $this->tempNotFinalClassesMapper[$class->getModelClass()]
                         );
+                        return true;
                     }
-                    return !$class->getTableName() || $selfInstance->isNotFinalClasses($class->getModelClass());
+                    return false;
                 })
                 ->values()->all();
-                $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
-                $selfInstance->renderClasses();
-                $selfInstance->getListTables();
 
-                // Processa o Resultado
-                $selfInstance->sortArrays();
+                // Debug Temp
+                $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
+
+                // Reordena
+                $this->sortArrays();
             } catch(SchemaException|DBALException $e) {
+                dd(
+                    'Aqui nao era pra cair pois tem outro',
+                    $e
+                );
                 $reference = false;
                 if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
                     $reference = [
@@ -278,6 +292,10 @@ class Database
                 );
 
             } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                dd(
+                    'Aqui nao era pra cair pois tem outro',
+                    $e
+                );
                 $reference = false;
                 if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
                     $reference = [
@@ -289,14 +307,14 @@ class Database
                     $reference
                 );
             }
-            return $selfInstance->toArray();
+            return $this->toArray();
         });
         $this->setArray($value);
     }
 
 
 
-    public function sortArrays()
+    protected function sortArrays()
     {
         // Ordena Pelo Indice
         ksort($this->mapperTableToClasses);
@@ -304,17 +322,15 @@ class Database
     }
 
 
-    public function renderClasses()
+    protected function renderClasses()
     {
         $this->mapperTableToClasses = [];
         $this->totalRelations = [];
-        
         foreach ($this->eloquentClasses as $eloquentService) {
 
 
             $this->loadMapperTableToClasses($eloquentService->getTableName(), $eloquentService->getModelClass());
             $this->loadMapperBdRelations($eloquentService->getTableName(), $eloquentService->getRelations());
-
 
 
             // Guarda Dados Carregados do Eloquent
@@ -330,7 +346,7 @@ class Database
     /**
      * Nivel 2
      */
-    public function getListTables()
+    protected function renderTables()
     {
         $this->mapperPrimaryKeys = [];
         $tables = [];
@@ -341,57 +357,80 @@ class Database
 
 
         foreach ($listTables as $listTable){
-            $columns = [];
-            foreach ($listTable->exportColumnsToArray() as $column) {
-                $columns[$column['name']] = $column;
-            }
+            $columns = ArrayHelper::includeKeyFromAtribute($listTable->exportColumnsToArray(), 'name');
             $indexes = $listTable->exportIndexesToArray();
 
-            $tables[$listTable->getName()] = [
-                'name' => $listTable->getName(),
-                'columns' => $columns,
-                'indexes' => $indexes
-            ];
-
             // Salva Primaria
-            if (!empty($indexes)) {
-                foreach ($indexes as $index) {
-                    if ($index['type'] == 'PRIMARY') {
-                        $primary = $index['columns'][0];
-                        $singulariRelationName = ReturnNames::singularize($listTable->getName());
-                        $this->mapperPrimaryKeys[$singulariRelationName.'_'.$primary] = [
-                            'name' => $listTable->getName(),
-                            'key' => $primary,
-                            'label' => 'name'
-                        ];
-                    }
-                }
-            }
+           
+            if (!$primary = $this->loadMapperPrimaryKeysAndReturnPrimary($listTable->getName(), $indexes)) {
+                $this->setWarnings(
+                    'Tabela sem primary key: '.$listTable->getName(),
+                    [
+                        'table' => $listTable->getName(),
+                    ],
+                    [
+                        'indexes' => $indexes
+                    ]
+                );
 
+                $this->logErrorsTablesNotHasPrimary[$listTable->getName()] = [
+                    'name' => $listTable->getName(),
+                    'columns' => $columns,
+                    'indexes' => $indexes
+                ];
 
-            // Qual coluna ira mostrar em uma Relacao ?
-            if ($listTable->hasColumn('name')) {
-                $tables[$listTable->getName()]['displayName'] = 'name';
-            } else if ($listTable->hasColumn('displayName')) {
-                $tables[$listTable->getName()]['displayName'] = 'displayName';
             } else {
-                $achou = false;
-                foreach ($tables[$listTable->getName()]['columns'] as $column) {
-                    if ($column['type']['name'] == 'varchar') {
-                        $tables[$listTable->getName()]['displayName'] = $column['name'];
-                        $achou = true;
-                        break;
+                $tables[$listTable->getName()] = [
+                    'name' => $listTable->getName(),
+                    'columns' => $columns,
+                    'indexes' => $indexes
+                ];
+
+                // Qual coluna ira mostrar em uma Relacao ?
+                if ($listTable->hasColumn('name')) {
+                    $tables[$listTable->getName()]['displayName'] = 'name';
+                } else if ($listTable->hasColumn('displayName')) {
+                    $tables[$listTable->getName()]['displayName'] = 'displayName';
+                } else {
+                    $achou = false;
+                    foreach ($tables[$listTable->getName()]['columns'] as $column) {
+                        if ($column['type']['name'] == 'varchar') {
+                            $tables[$listTable->getName()]['displayName'] = $column['name'];
+                            $achou = true;
+                            break;
+                        }
                     }
-                }
-                if (!$achou) {
-                    $tables[$listTable->getName()]['displayName'] = $primary;
+                    if (!$achou) {
+                        $tables[$listTable->getName()]['displayName'] = $primary;
+                    }
                 }
             }
         }
 
         $this->displayTables = $tables;
-        
-        return $this->mapperPrimaryKeys;
+    }
+
+    /**
+     * Nivel 3
+     */
+    private function loadMapperPrimaryKeysAndReturnPrimary($tableName, $indexes)
+    {
+        $primary = false;
+        if (!empty($indexes)) {
+            foreach ($indexes as $index) {
+                if ($index['type'] == 'PRIMARY') {
+                    $primary = $index['columns'][0];
+                    $singulariRelationName = StringExtractor::singularize($tableName);
+                    $this->mapperPrimaryKeys[$singulariRelationName.'_'.$primary] = [
+                        'name' => $tableName,
+                        'key' => $primary,
+                        'label' => 'name'
+                    ];
+                }
+            }
+        }
+
+        return $primary;
     }
 
 
@@ -407,8 +446,8 @@ class Database
                 $tableName,
                 $tableClass
             );
-            return $this->setErrors(
-                'Duas classes para a mesma tabela',
+            return $this->setWarnings(
+                'Duas classes para a mesma tabela: '.$tableName,
                 [
                     'models' => $this->mapperTableToClasses[$tableName]
                 ]
@@ -423,57 +462,126 @@ class Database
      */
     private function loadMapperBdRelations(string $tableName, string $relations)
     {
-            // Pega Relacoes
-            if (!empty($relations)) {
-                return ;
-            }
-        
-            foreach ($relations as $relation) {
-                try {
-                    $tableTarget = $relation['name'];
-                    $tableOrigin = $tableName;
+        // Pega Relacoes
+        if (!empty($relations)) {
+            return ;
+        }
+    
+        foreach ($relations as $relation) {
+            try {
+                $tableTarget = $relation['name'];
+                $tableOrigin = $tableName;
 
-                    $singulariRelationName = ReturnNames::singularize($relation['name']);
-                    $tableNameSingulari = ReturnNames::singularize($tableName);
+                $singulariRelationName = StringExtractor::singularize($relation['name']);
+                $tableNameSingulari = StringExtractor::singularize($tableName);
 
-                    $type = $relation['type'];
-                    if (Relationship::isInvertedRelation($relation['type'])) {
-                        $type = Relationship::getInvertedRelation($type);
-                        $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
-                    } else {
-                        $temp = $tableOrigin;
-                        $tableOrigin = $tableTarget;
-                        $tableTarget = $temp;
-                        $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
-                    }
-                    if (!isset($this->totalRelations[$novoIndice])) {
-                        $this->totalRelations[$novoIndice] = [
-                            'name' => $novoIndice,
-                            'table_origin' => $tableOrigin,
-                            'table_target' => $tableTarget,
-                            'pivot' => 0,
-                            'type' => $type,
-                            'relations' => []
-                        ];
-                    }
-                    $this->totalRelations[$novoIndice]['relations'][] = $relation;
-                } catch (\Exception $e) {
-                    dd(
-                        'LaravelSupport>Database>> Não era pra Cair Erro aqui',
-                        $e,
-                        $relation,
-                        $relation->name,
-                        $relation->type,
-                        $eloquentService->getTableName(),
-                        $tableNameSingulari,
-                        $singulariRelationName
-                        // ReturnNames::singularize($relation->name).'_'.$relation->type.'_'.ReturnNames::singularize($eloquentService->getTableName()),
-                        // ReturnNames::singularize($relation->name)
-                        // $novoIndice
-                    );
+                $type = $relation['type'];
+                if (Relationship::isInvertedRelation($relation['type'])) {
+                    $type = Relationship::getInvertedRelation($type);
+                    $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
+                } else {
+                    $temp = $tableOrigin;
+                    $tableOrigin = $tableTarget;
+                    $tableTarget = $temp;
+                    $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
                 }
+                if (!isset($this->totalRelations[$novoIndice])) {
+                    $this->totalRelations[$novoIndice] = [
+                        'name' => $novoIndice,
+                        'table_origin' => $tableOrigin,
+                        'table_target' => $tableTarget,
+                        'pivot' => 0,
+                        'type' => $type,
+                        'relations' => []
+                    ];
+                }
+                $this->totalRelations[$novoIndice]['relations'][] = $relation;
+            } catch (\Exception $e) {
+                dd(
+                    'LaravelSupport>Database>> Não era pra Cair Erro aqui',
+                    $e,
+                    $relation,
+                    $relation->name,
+                    $relation->type,
+                    $eloquentService->getTableName(),
+                    $tableNameSingulari,
+                    $singulariRelationName
+                    // StringExtractor::singularize($relation->name).'_'.$relation->type.'_'.StringExtractor::singularize($eloquentService->getTableName()),
+                    // StringExtractor::singularize($relation->name)
+                    // $novoIndice
+                );
             }
         }
+    }
+
+
+    /**
+     * Nivel 3
+     */
+    private function returnEloquentForClasss($className)
+    {
+        $classUniversal = false; // for reference in debug
+
+        try {
+            $eloquent = new Eloquent($className);
+            $classUniversal = $className; // for reference in debug
+            $this->addTempNotFinalClasses($eloquent->parentClass, $className);
+            return $eloquent;
+        } catch(SchemaException|DBALException $e) {
+            $reference = false;
+            if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                $reference = [
+                    'model' => $classUniversal
+                ];
+            } 
+            // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
+            //     $reference = [
+            //         'model' => $classUniversal
+            //     ];
+            // }
+            // @todo Tratar, Tabela Nao existe
+            $this->setErrors(
+                $e,
+                $reference
+            );
+
+        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+            $reference = false;
+            if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                $reference = [
+                    'model' => $classUniversal
+                ];
+            } 
+            $this->setErrors(
+                $e,
+                $reference
+            );
+        }
+        return false;
+    }
+
+
+    /**
+     * Nivel 3
+     */
+    private function returnEloquents($eloquentClasses)
+    {
+        return $eloquentClasses->map(function($filePath, $class) {
+            return $this->returnEloquentForClasss($class);
+        })->reject(function($class) {
+            if ( !$class->getTableName()) {
+                return true;
+            }
+            if ( $class->hasError()) {
+                dd(
+                    'Render Eloqunet: Error',
+                    $class,
+                    $class->getErrors()
+                );
+                return true;
+            }
+            return false;
+        });
     }
 
 }
