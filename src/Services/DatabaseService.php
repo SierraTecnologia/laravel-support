@@ -2,8 +2,7 @@
 
 namespace Support\Services;
 
-
-use Exception;
+use Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Support\Result\RelationshipResult;
@@ -18,6 +17,8 @@ use Support\Discovers\Database\Schema\SchemaManager;
 use Support\Discovers\Database\Schema\Table;
 use Support\Discovers\Database\Types\Type;
 use Support\Parser\ParseModelClass;
+
+use Exception;
 
 use Support\Parser\ComposerParser;
 

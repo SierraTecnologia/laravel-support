@@ -26,6 +26,11 @@ use Illuminate\Support\Str;
 use Watson\Validating\ValidatingTrait;
 use Support\Services\EloquentService;
 
+use Support\ClassesHelpers\Modificators\ArrayModificator;
+use Support\ClassesHelpers\Extratores\DbalExtractor;
+use Support\ClassesHelpers\Mergeators\DbalMergeator;
+use Support\ClassesHelpers\Inclusores\DbalInclusor;
+
 abstract class Base extends Eloquent
 {
     /**
@@ -510,12 +515,17 @@ abstract class Base extends Eloquent
      */
     public static function createAndAssociate($dataOrPrimaryCode, $associateTo)
     {
-        $model = static::createIfNotExistAndReturn($dataOrPrimaryCode);
+        return static::associate(static::createIfNotExistAndReturn($dataOrPrimaryCode), $associateTo);
+    }
 
-        //@todo Código Repetido
-        $method = Str::plural(Str::lower(\class_basename($model)));
+    /**
+     * Associa ao Um Modelo ao Outro
+     */
+    public static function associate($associateFrom, $associateTo)
+    {
+        $method = Str::plural(Str::lower(\class_basename($associateFrom)));
         if (method_exists($associateTo, $method)) {
-            return call_user_func_array([$associateTo, $method], [])->save($model);
+            return call_user_func_array([$associateTo, $method], [])->save($associateFrom);
         }
         return false;
     }
@@ -525,76 +535,43 @@ abstract class Base extends Eloquent
      */
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
-        $data = [];
         $modelFind = false;
         $keyName = (new static)->getKeyName();
-        if (is_array($dataOrPrimaryCode)) {
-            $data = $dataOrPrimaryCode;
-        } else {
-            $data[$keyName] = $dataOrPrimaryCode;
-        }
-
-        if (!$modelData = EloquentService::getForClass(static::class)) {
-            dd(
-                'Nao deveria estar aqu Base',
-                static::class
-            );
-        }
-
+        $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
         
 
-        if (
-            (!isset($data['name']) || empty($data['name'])) && 
-            (isset($data[$keyName]) && $modelData->hasColumn('name') && $modelData->columnIsType($keyName, DoctrineStringType::class))
-        ) {
-            $data['name'] = static::convertSlugToName($data[$keyName]);
+        if (!$eloquentEntityForModel = EloquentService::getForClass(static::class)) {
+            return static::firstOrCreate($data);
         }
 
+        $data = DbalInclusor::includeDataFromEloquentEntity($eloquentEntityForModel, $data, $keyName);
 
-        $indices = $modelData->getIndexes();
-        foreach ($indices as $index) {
-            if ($index['type'] == 'PRIMARY' || $index['type'] == 'UNIQUE') {
-                // Caso não tenha nada a procurar, entao pula
-                if (empty($generateWhere = $modelData->generateWhere(
-                    $index['columns'],
-                    $data
-                ))) {
-                    continue;
-                }
-
+        /**
+         * Search from Indexes
+         */
+        $results = DbalExtractor::generateWhereFromData(
+            $data,
+            $eloquentEntityForModel->getIndexes()
+        )->map(
+            function ($query) use ($data) {
                 if ($modelFind = static::where($generateWhere)->first()) {
                     Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($index, true).' e Data: '.print_r($data, true));
-                    return static::mergeWithAttributes($modelFind, $data);
+                    return DbalMergeator::mergeWithAttributes($modelFind, $data);
                 }
+                return false;
             }
+        )->reject(function($result) {
+                return !$result;
+        });
+        if ($results->isNotEmpty()) {
+            return $results->first();
         }
 
-        // @debug Resolver essa gambiarra
-        $modelData->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $modelData]);
+        // Cado nada de certo retorna o primeiro ou cria
+        // @debug Resolver essa gambiarra @todo
+        $eloquentEntityForModel->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $eloquentEntityForModel]);
+        return static::firstOrCreate($data);
 
-        return static::create($data);
-
-    }
-
-    public static function mergeWithAttributes(Base $modelFind, array $data)
-    {
-        // @todo Fazer Atualizar Data
-        return $modelFind;
-    }
-    
-    public static function cleanCodeSlug($slug)
-    {
-        $slugify = new Slugify();
-        
-        $slug = $slugify->slugify($slug, '.'); // hello-world
-        
-        return $slug;
-    }
-    public static function convertSlugToName($slug)
-    {
-        return collect(explode('.', static::cleanCodeSlug($slug)))->map(function($namePart) {
-            return ucfirst($namePart);
-        })->implode(' ');
     }
 
 

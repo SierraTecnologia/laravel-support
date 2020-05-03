@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Cache;
 use Support\Elements\Entities\Relationship;
 use Support\Discovers\Database\Types\Type;
 use Log;
-use Support\ClassesHelpers\Transformadores\ArrayHelper;
-use Support\ClassesHelpers\Extratores\StringExtractor;
+
+use Support\ClassesHelpers\Modificators\ArrayModificator;
+use Support\ClassesHelpers\Inclusores\ArrayInclusor;
+use Support\ClassesHelpers\Modificators\StringModificator;
 use Support\ClassesHelpers\Development\HasErrors;
 
 class Database
@@ -29,73 +31,66 @@ class Database
     use HasErrors;
 
     /****************************************
-     * Eloquent CLasse
+     * Eloquent CLasse (Work and Register in Databse)
      **************************************/
     public $eloquentClasses;
+
     
     /**
      * From Data Table
      */
-    public $mapperTableToClasses;
-    public $mapperPrimaryKeys = false;
+    public $mapperTableToClasses = [];
+    public $mapperParentClasses = [];
 
     /**
      * Para Cada Tabela Pega as Classes Correspondentes
      */
-    public $totalRelations;
+    public $dicionarioPrimaryKeys;
+    public $dicionarioTablesRelations = [];
 
-    /****************************************
-     * From Datatavle
-     **************************************/
-    public $displayTables = [];
+
     /**
-     * From Eloquent
+     * Loaders.. Independete, carrega todos
      */
+    // From  Datatavle
+    public $displayTables = [];
+    // From  Eloquent
     public $displayClasses;
 
 
+    /**
+     * Aplication Log or Errors
+     */
+    public $tempIgnoreClasses = [];
+    public $tempAppTablesWithNotPrimaryKey = [];
+
 
     /**
-     * Errors
+     * Attributes to Array Mapper
      */
-    public $logErrorsTablesNotHasPrimary = [];
+    public static $mapper = [
+        'Dicionario' => [
+            'dicionarioTablesRelations',
+            'dicionarioPrimaryKeys',
+        ],
+        'Mapper' => [
+            'mapperTableToClasses',
+            'mapperParentClasses',
+        ],
+        'Leitoras' => [
+            'displayTables',
+            'displayClasses',
+        ],
+        'AplicationTemp' => [
+            'tempAppTablesWithNotPrimaryKey',
+            'tempIgnoreClasses'
+        ],
 
-    /**
-     * Para guardar daos temporarios
-     */
-    protected $tempNotFinalClasses = [];
-    protected $tempNotFinalClassesMapper = [];
-
-
-
-    public function getEloquentClasses()
-    {
-        return collect($this->eloquentClasses);
-    }
-
-    public function addTempNotFinalClasses($classParent, $child)
-    {
-        if (is_null($classParent) || empty($classParent) || in_array($classParent, $this->tempNotFinalClasses)) {
-            return false;
-        }
-
-        // @debito @todo melhorar isso aqui
-        $this->tempNotFinalClasses[] = $classParent;
-        $this->tempNotFinalClassesMapper[$classParent] = $child;
-
-    }
-    public function isNotFinalClasses($classParent)
-    {
-        if (is_null($classParent) || empty($classParent) || in_array($classParent, $this->tempNotFinalClasses)) {
-            return true;
-        }
-        return false;
-    }
-
-
-
-
-
+        // Esse eh manual pq pera da funcao
+        // 'Errors' => [
+        //     'errors',
+        // ]
+    ];
 
     /**
      * Organizacao
@@ -108,89 +103,208 @@ class Database
             'Render Database -> Iniciando'
         );
         $this->eloquentClasses = $eloquentClasses;
-
+            
         $this->render();
-
-        // dd($this->tempNotFinalClasses);
-        // dd($this->displayClasses['Population\Models\Market\Abouts\Info']);
-        $this->display();
+        // $this->display();
     }
+
+    public function getEloquentClasses()
+    {
+        return collect($this->eloquentClasses);
+    }
+
+    public function registerMapperClassParents($className, $classParent)
+    {
+        if (is_null($className) || empty($className) || is_null($classParent) || empty($classParent) || isset($this->mapperParentClasses[$className])) {
+            return false;
+        }
+
+        $this->mapperParentClasses[$className] = $classParent;
+    }
+    
+    public function haveParent($classChild)
+    {
+        if (is_null($classChild) || empty($classChild) || !isset($this->mapperParentClasses[$classChild])) {
+            return false;
+        }
+
+        return $this->mapperParentClasses[$classChild];
+    }
+    public function haveChildren($className)
+    {
+        if (is_null($className) || empty($className) || !in_array($className, $this->mapperParentClasses)) {
+            return false;
+        }
+
+        return \Support\ClassesHelpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperParentClasses);
+    }
+    public function haveTableInDatabase($className)
+    {
+        if (is_null($className) || empty($className)) {
+            return false;
+        }
+
+        if (\Support\ClassesHelpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
+            return false;
+        }
+
+        Log::channel('sitec-support')->warning(
+            'Database Render (Tabela nao possui banco de dados): ClassName: '.
+            $className
+        );
+        dd(
+            'procurar aqui',
+            $className,
+            \Support\ClassesHelpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)
+        );
+        return \Support\ClassesHelpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses);
+    }
+    public function isForIgnoreClass($className)
+    {
+        if (is_null($className) || empty($className)) {
+            return true;
+        }
+
+        if ($childrens = $this->haveChildren($className)) {
+            foreach ($childrens as $children) {
+                if (\Support\Parser\ParseClass::getClassName($className) === \Support\Parser\ParseClass::getClassName($children)) {
+                    // @todo Verificar outras classes que nao possue nome igual mas é filha
+                    /**^ "Chieldren"
+                    ^ "Finder\Models\Digital\Infra\Ci\Build"
+                    ^ "build"
+                    ^ "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
+                    ^ "gitbuild"
+                    ^ array:4 [▼
+                    0 => "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
+                    1 => "Finder\Models\Digital\Infra\Ci\Build\HgBuild"
+                    2 => "Finder\Models\Digital\Infra\Ci\Build\LocalBuild"
+                    3 => "Finder\Models\Digital\Infra\Ci\Build\SvnBuild"
+                    ] */
+
+
+                    // @todo mensagem
+                    $this->tempIgnoreClasses[] = $className;
+                    Log::channel('sitec-support')->debug(
+                        'Database Render (Rejeitando classe nao finais): Class: '.
+                        $className
+                    );
+                    return true;
+                }
+            }
+        }
+
+        return $this->haveTableInDatabase($className);
+    }
+
+
+
 
     public function toArray()
     {
-        return [
-            'Mapper' => [
-                /**
-                 * Mapper
-                 */
-                'mapperTableToClasses' => $this->mapperTableToClasses,
-                'mapperPrimaryKeys' => $this->mapperPrimaryKeys,
-            ],
+        $dataToReturn = [];
+        $mapper = self::$mapper;
+        foreach ($mapper as $indice=>$dataArray) {
+            $dataToReturn[$indice] = [];
+            foreach ($dataArray as $atributeNameVariable) {
+                $dataToReturn[$indice][$atributeNameVariable] = $this->$atributeNameVariable;
+            }
+        }
+
+        $dataToReturn['Errors'] = [];
+        $dataToReturn['Errors']['errors'] = $this->getErrors();
+
+        return $dataToReturn;
+
+        // return [
             
-            'Leitoras' => [
-                // Leitoras
-                'displayTables' => $this->displayTables,
-                'displayClasses' => $this->displayClasses,
-            ],
+        //     'Dicionario' => [
+        //         // Dados GErados
+        //         'dicionarioTablesRelations' => $this->dicionarioTablesRelations,
+        //         'dicionarioPrimaryKeys' => $this->dicionarioPrimaryKeys,
+        //     ],
+
+        //     'Mapper' => [
+        //         /**
+        //          * Mapper
+        //          */
+        //         'mapperTableToClasses' => $this->mapperTableToClasses,
+        //         'mapperParentClasses' => $this->mapperParentClasses,
+        //     ],
+            
+        //     'Leitoras' => [
+        //         // Leitoras
+        //         'displayTables' => $this->displayTables,
+        //         'displayClasses' => $this->displayClasses,
+        //     ],
     
+
+        //     /**
+        //      * Sistema
+        //      */
+        //     // Ok
             
-            'Dicionario' => [
-                // Dados GErados
-                'totalRelations' => $this->totalRelations,
-            ],
+        //     'AplicationTemp' => [
+        //         // Nao ok
+        //         'tempAppTablesWithNotPrimaryKey' => $this->tempAppTablesWithNotPrimaryKey,
+        //         // 'classes' => [],
 
-            /**
-             * Sistema
-             */
-            // Ok
-            
-            // 'Aplication' => [
-            //     // Nao ok
-            //     'tables' => [],
-            //     'classes' => [],
+        //     ],
+        //     'Errors' => [
+        //         /**
+        //          * Errors 
+        //          **/
+        //         'errors' => $this->getError(),
 
-            // ],
-            'Erros' => [
-
-                /**
-                 * Log Erros 
-                 **/
-                'errors' => $this->logErrorsTablesNotHasPrimary,
-
-                /**
-                 * Erros 
-                 **/
-                'errors' => $this->getError()
-            ],
-        ];
+        //     ],
+        // ];
     }
 
     public function setArray($datas)
     {
-        foreach ($datas as $indice=>$data) {
-            if ($indice==='Errors') {
-                if (isset($data['errors'])) {
-                    $this->setErrors($data['errors']);
+        $mapper = self::$mapper;
+        foreach ($mapper as $indice=>$mapperValue) {
+            if (isset($datas[$indice])) {
+                foreach ($mapperValue as $atributeNameVariable) {
+                    $this->$atributeNameVariable = $datas[$indice][$atributeNameVariable];
                 }
             }
-            if ($indice==='Aplication') {
+        }
 
-
-            }
-            if ($indice==='Dicionario') {
-                $this->totalRelations = $data['totalRelations'];
-            }
-            if ($indice==='Leitoras') {
-                $this->displayTables = $data['displayTables'];
-                $this->displayClasses = $data['displayClasses'];
-            }
-            if ($indice==='Mapper') {
-                // Mapa
-                $this->mapperTableToClasses = $data['mapperTableToClasses'];
-                // Dicionario
-                $this->mapperPrimaryKeys = $data['mapperPrimaryKeys'];
+        if (isset($datas['Errors'])) {
+            if (isset($datas['Errors']['errors'])) {
+                $this->setErrors($datas['Errors']['errors']);
             }
         }
+        // foreach ($datas as $indice=>$data) {
+        //     if ($indice==='Dicionario') {
+        //         $this->dicionarioTablesRelations = $data['dicionarioTablesRelations'];
+        //         // Dicionario
+        //         $this->dicionarioPrimaryKeys = $data['dicionarioPrimaryKeys'];
+        //     }
+        //     if ($indice==='Mapper') {
+        //         // Mapa
+        //         $this->mapperTableToClasses = $data['mapperTableToClasses'];
+        //         $this->mapperParentClasses = $data['mapperParentClasses'];
+        //     }
+
+
+        //     if ($indice==='Leitoras') {
+        //         $this->displayTables = $data['displayTables'];
+        //         $this->displayClasses = $data['displayClasses'];
+        //     }
+
+
+        //     if ($indice==='AplicationTemp') {
+        //         $this->tempAppTablesWithNotPrimaryKey = $data['tempAppTablesWithNotPrimaryKey'];
+        //     }
+        //     if ($indice==='Errors') {
+        //         if (isset($data['errors'])) {
+        //             $this->setErrors($data['errors']);
+        //         }
+        //     }
+
+
+        // }
     }
 
     public function display()
@@ -205,30 +319,6 @@ class Database
         }
         dd(
             ...$display
-        );
-        dd(
-            'errors',
-            $this->getError(),
-            // Mapa
-            'mapperTableToClasses',
-            $this->mapperTableToClasses,
-            
-            // Dicionario
-            'mapperPrimaryKeys',
-            $this->mapperPrimaryKeys,
-            'displayTables',
-            $this->displayTables,
-            // Backup
-            'displayClasses',
-            $this->displayClasses,
-            
-            // Informacao IMportante
-    
-            // Dados GErados
-            'totalRelations',
-            $this->totalRelations
-
-
         );
     }
 
@@ -245,24 +335,21 @@ class Database
                 $this->eloquentClasses = $this->returnEloquents($this->eloquentClasses);
 
                 // Cria mapeamento de classes antes de remover as invalidas
-                $this->renderClasses();
+                $this->renderMappersClasses();
                 $this->renderTables();
 
                 // Remove as Classes que não sao Finais
                 $this->eloquentClasses = $this->eloquentClasses->reject(function($class) {
                     $classUniversal = $class->getModelClass(); // for reference in debug
                     // For Debug
-                    if ( $this->isNotFinalClasses($class->getModelClass())) {
-                        Log::channel('sitec-support')->error(
-                            'Database Render (Rejeitando classe nao finais): ParentCLass: '.
-                            $class->getModelClass().' ChildrenClass: '.
-                            $this->tempNotFinalClassesMapper[$class->getModelClass()]
-                        );
+                    if ( $this->isForIgnoreClass($class->getModelClass())) {
                         return true;
                     }
                     return false;
                 })
                 ->values()->all();
+                
+                $this->renderClasses();
 
                 // Debug Temp
                 $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
@@ -307,6 +394,7 @@ class Database
                     $reference
                 );
             }
+
             return $this->toArray();
         });
         $this->setArray($value);
@@ -318,18 +406,20 @@ class Database
     {
         // Ordena Pelo Indice
         ksort($this->mapperTableToClasses);
-        ksort($this->totalRelations);
+        ksort($this->dicionarioTablesRelations);
     }
 
 
+    protected function renderMappersClasses()
+    {
+        foreach ($this->eloquentClasses as $eloquentService) {
+            $this->loadMapperTableToClasses($eloquentService->getTableName(), $eloquentService->getModelClass());
+        }
+    }
+
     protected function renderClasses()
     {
-        $this->mapperTableToClasses = [];
-        $this->totalRelations = [];
         foreach ($this->eloquentClasses as $eloquentService) {
-
-
-            $this->loadMapperTableToClasses($eloquentService->getTableName(), $eloquentService->getModelClass());
             $this->loadMapperBdRelations($eloquentService->getTableName(), $eloquentService->getRelations());
 
 
@@ -337,7 +427,7 @@ class Database
             $this->displayClasses[$eloquentService->getModelClass()] = $eloquentService->toArray();
 
             // Guarda Errors
-            $this->setErrors($eloquentService->getError());
+            $this->setErrors($eloquentService->getErrors());
         }
     }
 
@@ -348,7 +438,7 @@ class Database
      */
     protected function renderTables()
     {
-        $this->mapperPrimaryKeys = [];
+        $this->dicionarioPrimaryKeys = [];
         $tables = [];
         Type::registerCustomPlatformTypes();
 
@@ -357,23 +447,24 @@ class Database
 
 
         foreach ($listTables as $listTable){
-            $columns = ArrayHelper::includeKeyFromAtribute($listTable->exportColumnsToArray(), 'name');
+            $columns = ArrayModificator::includeKeyFromAtribute($listTable->exportColumnsToArray(), 'name');
             $indexes = $listTable->exportIndexesToArray();
 
             // Salva Primaria
            
             if (!$primary = $this->loadMapperPrimaryKeysAndReturnPrimary($listTable->getName(), $indexes)) {
-                $this->setWarnings(
-                    'Tabela sem primary key: '.$listTable->getName(),
-                    [
-                        'table' => $listTable->getName(),
-                    ],
-                    [
-                        'indexes' => $indexes
-                    ]
-                );
+                // @todo VEridica aqui
+                // $this->setWarnings(
+                //     'Tabela sem primary key: '.$listTable->getName(),
+                //     [
+                //         'table' => $listTable->getName(),
+                //     ],
+                //     [
+                //         'indexes' => $indexes
+                //     ]
+                // );
 
-                $this->logErrorsTablesNotHasPrimary[$listTable->getName()] = [
+                $this->tempAppTablesWithNotPrimaryKey[$listTable->getName()] = [
                     'name' => $listTable->getName(),
                     'columns' => $columns,
                     'indexes' => $indexes
@@ -410,6 +501,26 @@ class Database
         $this->displayTables = $tables;
     }
 
+    private function loadDisplayClasses($tableName, $indexes)
+    {
+        $primary = false;
+        if (!empty($indexes)) {
+            foreach ($indexes as $index) {
+                if ($index['type'] == 'PRIMARY') {
+                    $primary = $index['columns'][0];
+                    $singulariRelationName = StringModificator::singularizeAndLower($tableName);
+                    $this->dicionarioPrimaryKeys[$singulariRelationName.'_'.$primary] = [
+                        'name' => $tableName,
+                        'key' => $primary,
+                        'label' => 'name'
+                    ];
+                }
+            }
+        }
+
+        return $primary;
+    }
+
     /**
      * Nivel 3
      */
@@ -420,8 +531,8 @@ class Database
             foreach ($indexes as $index) {
                 if ($index['type'] == 'PRIMARY') {
                     $primary = $index['columns'][0];
-                    $singulariRelationName = StringExtractor::singularize($tableName);
-                    $this->mapperPrimaryKeys[$singulariRelationName.'_'.$primary] = [
+                    $singulariRelationName = StringModificator::singularizeAndLower($tableName);
+                    $this->dicionarioPrimaryKeys[$singulariRelationName.'_'.$primary] = [
                         'name' => $tableName,
                         'key' => $primary,
                         'label' => 'name'
@@ -441,7 +552,7 @@ class Database
     {
         // Guarda Classe por Table
         if (isset($this->mapperTableToClasses[$tableName])) {
-            $this->mapperTableToClasses = ArrayHelper::setAndPreservingOldDataConvertingToArray(
+            $this->mapperTableToClasses = ArrayInclusor::setAndPreservingOldDataConvertingToArray(
                 $this->mapperTableToClasses,
                 $tableName,
                 $tableClass
@@ -460,20 +571,21 @@ class Database
     /**
      * Nivel 3
      */
-    private function loadMapperBdRelations(string $tableName, string $relations)
+    private function loadMapperBdRelations(string $tableName, $relations)
     {
         // Pega Relacoes
-        if (!empty($relations)) {
+        if (empty($relations)) {
             return ;
         }
+
     
         foreach ($relations as $relation) {
             try {
                 $tableTarget = $relation['name'];
                 $tableOrigin = $tableName;
 
-                $singulariRelationName = StringExtractor::singularize($relation['name']);
-                $tableNameSingulari = StringExtractor::singularize($tableName);
+                $singulariRelationName = StringModificator::singularizeAndLower($relation['name']);
+                $tableNameSingulari = StringModificator::singularizeAndLower($tableName);
 
                 $type = $relation['type'];
                 if (Relationship::isInvertedRelation($relation['type'])) {
@@ -485,8 +597,8 @@ class Database
                     $tableTarget = $temp;
                     $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
                 }
-                if (!isset($this->totalRelations[$novoIndice])) {
-                    $this->totalRelations[$novoIndice] = [
+                if (!isset($this->dicionarioTablesRelations[$novoIndice])) {
+                    $this->dicionarioTablesRelations[$novoIndice] = [
                         'name' => $novoIndice,
                         'table_origin' => $tableOrigin,
                         'table_target' => $tableTarget,
@@ -495,8 +607,19 @@ class Database
                         'relations' => []
                     ];
                 }
-                $this->totalRelations[$novoIndice]['relations'][] = $relation;
-            } catch (\Exception $e) {
+                $this->dicionarioTablesRelations[$novoIndice]['relations'][] = $relation;
+            } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                $reference = false;
+                if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                    $reference = [
+                        'model' => $classUniversal
+                    ];
+                } 
+                $this->setErrors(
+                    $e,
+                    $reference
+                );
+            // } catch (\Exception $e) {
                 dd(
                     'LaravelSupport>Database>> Não era pra Cair Erro aqui',
                     $e,
@@ -506,8 +629,8 @@ class Database
                     $eloquentService->getTableName(),
                     $tableNameSingulari,
                     $singulariRelationName
-                    // StringExtractor::singularize($relation->name).'_'.$relation->type.'_'.StringExtractor::singularize($eloquentService->getTableName()),
-                    // StringExtractor::singularize($relation->name)
+                    // StringModificator::singularizeAndLower($relation->name).'_'.$relation->type.'_'.StringModificator::singularizeAndLower($eloquentService->getTableName()),
+                    // StringModificator::singularizeAndLower($relation->name)
                     // $novoIndice
                 );
             }
@@ -525,7 +648,7 @@ class Database
         try {
             $eloquent = new Eloquent($className);
             $classUniversal = $className; // for reference in debug
-            $this->addTempNotFinalClasses($eloquent->parentClass, $className);
+            $this->registerMapperClassParents($className, $eloquent->parentClass);
             return $eloquent;
         } catch(SchemaException|DBALException $e) {
             $reference = false;

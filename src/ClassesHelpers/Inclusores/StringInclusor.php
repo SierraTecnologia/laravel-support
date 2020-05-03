@@ -2,19 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Support\ClassesHelpers\Extratores;
+namespace Support\ClassesHelpers\Inclusores;
 
 use Log;
 use ArgumentCountError;
 use Symfony\Component\Inflector\Inflector;
 use Illuminate\Support\Str;
 
-class StringExtractor
+class StringInclusor
 {
-
-
-    public static function ideaFromWord($word)
-    {
-        
-    }
+    
 }

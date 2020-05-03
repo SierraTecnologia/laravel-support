@@ -60,11 +60,11 @@ trait HasErrors
         if (is_array($errors)) {
             // if (is_array($error) && count($error) == 1) {
             foreach ($errors as $error) {
-                $this->setError($error, $reference);
+                $this->setError($error, $reference, $debugData);
             }
             return true;
         }
-        return $this->setError($errors, $reference);
+        return $this->setError($errors, $reference, $debugData);
     }
 
     /**

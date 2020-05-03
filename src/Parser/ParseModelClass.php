@@ -7,8 +7,23 @@ namespace Support\Parser;
 
 use Log;
 use App;
-use Exception;
 use Support\Discovers\Identificadores\ClasseType;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
+
+use Doctrine\DBAL\Schema\SchemaException;
+use Doctrine\DBAL\DBALException;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\Debug\Exception\FatalErrorException;
+use Exception;
+use ErrorException;
+use LogicException;
+use OutOfBoundsException;
+use RuntimeException;
+use TypeError;
+use Throwable;
+use Watson\Validating\ValidationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class ParseModelClass extends ParseClass
 {

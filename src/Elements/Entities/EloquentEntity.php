@@ -2,6 +2,9 @@
 
 namespace Support\Elements\Entities;
 
+
+use Support\ClassesHelpers\Compare\StringCompare;
+
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
 use Support\Discovers\Database\Schema\SchemaManager;
@@ -154,30 +157,7 @@ class EloquentEntity
 
         return $this->modelClass;
     }
-
-
-
-
-
-    /**
-     * Helpers Generates
-     */ 
-    public function generateWhere($columns, $data)
-    {
-        $where = [];
-        foreach ($columns as $column) {
-            if (isset($data[$column]) && !empty($data[$column])) {
-                $where[$column] = $data[$column];
-                // @todo resolver
-                // $where[$column] = static::cleanCodeSlug($data[$column]);
-            }
-        }
-        return $where;
-    }
-
     
-
-
 
     public function getColumnsForList()
     {
@@ -298,9 +278,37 @@ class EloquentEntity
             return false;
         }
 
+        if (empty($typeClass)) {
+            return true;
+        }
+
+        if (\is_array($typeClass)) {
+            foreach ($typeClass as $type) {
+                if ($this->columnIsType($columnName, $type)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        if (\is_string($typeClass)) {
+            if (class_exists($typeClass)) {
+                // @todo verificar isso aqui. string da class: DoctrineStringType::class
+                if ($column->getType() instanceof $typeClass) {
+                    return true;
+                }
+                return false;
+            }
+
+            return StringCompare::isSimilar($typeClass, $this->dataForColumns[$columnName]['type']);
+        }
+
         dd(
+            'EloquenntEntity: Nao deveria estar aqui',
             $this->dataForColumns[$columnName],
-            $typeClass
+            $typeClass,
+            $typeClass->getName()
         );
 
         // $column = SchemaManager::getDoctrineColumn($this->getTableName(), $columnName);
@@ -310,14 +318,14 @@ class EloquentEntity
         // }
         // return false;
 
-        // // $columnArray = [
-        // //     'name' => '',
-        // //     'type' => ''
-        // // ];
-        // // $columnArray['name'] = $columnName;
-        // // $column = \Support\Discovers\Database\Schema\Column::make($columnArray, $this->getTableName());
-        // // dd($column);
-        // // return $column->columnIsType($columnName, $typeClass);
+        // $columnArray = [
+        //     'name' => '',
+        //     'type' => ''
+        // ];
+        // $columnArray['name'] = $columnName;
+        // $column = \Support\Discovers\Database\Schema\Column::make($columnArray, $this->getTableName());
+        // dd($column);
+        // return $column->columnIsType($columnName, $typeClass);
     }
 
 

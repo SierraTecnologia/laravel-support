@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Support\ClassesHelpers\Extratores;
+namespace Support\ClassesHelpers\Searchers;
 
 use Log;
 use ArgumentCountError;
 use Symfony\Component\Inflector\Inflector;
 use Illuminate\Support\Str;
 
-class StringExtractor
+class StringSearcher
 {
 
 
-    public static function ideaFromWord($word)
+    public static function assuntoFromText($text)
     {
         
     }

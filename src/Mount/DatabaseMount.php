@@ -21,7 +21,7 @@ use Support\Discovers\Database\Schema\SchemaManager;
 use Support\Discovers\Database\Schema\Table;
 use Support\Discovers\Database\Types\Type;
 use Support\Parser\ParseModelClass;
-use Support\ClassesHelpers\Extratores\StringExtractor;
+use Support\ClassesHelpers\Modificators\StringModificator;
 use Support\ClassesHelpers\Extratores\ArrayExtractor;
 use Support\Parser\ComposerParser;
 
@@ -39,7 +39,7 @@ class DatabaseMount
 
     protected $renderDatabase = false;
     protected $relationships = false;
-    protected $errorsInModels = [];
+    protected $ignoretedClasses = [];
 
 
     public function __construct($eloquentClasses)
@@ -57,7 +57,7 @@ class DatabaseMount
         $data = [];
         $data['eloquentClasses'] = $this->eloquentClasses;
         $data['renderDatabase'] = $this->renderDatabase;
-        $data['errorsInModels'] = $this->errorsInModels;
+        $data['ignoretedClasses'] = $this->ignoretedClasses;
         return $data;
     }
 
@@ -78,30 +78,35 @@ class DatabaseMount
     {
         $eloquentClasses = $this->eloquentClasses;
         // Cache In Minutes
-        $renderDatabase = Cache::remember('sitec_support_render_database_'.md5(implode('|', $eloquentClasses->values()->all())), 30, function () use ($eloquentClasses) {
+        $renderDatabaseArray = Cache::remember('sitec_support_render_database_'.md5(implode('|', $eloquentClasses->values()->all())), 30, function () use ($eloquentClasses) {
             Log::debug(
                 'Mount Database -> Renderizando'
             );
             $renderDatabase = (new \Support\Render\Database($eloquentClasses));
-
             return $renderDatabase->toArray();
         });
         
         // Persist Models With Errors
-        $this->errorsInModels = $this->eloquentClasses->diffKeys($renderDatabase["Leitoras"]["displayClasses"]);
+        $this->ignoretedClasses = $this->eloquentClasses->diffKeys($renderDatabaseArray["Leitoras"]["displayClasses"]);
+        $eloquentClasses = $this->eloquentClasses = collect($renderDatabaseArray["Leitoras"]["displayClasses"]);
+        // dd(
+        //     'Olaaaa Database Mount',
+        //     $eloquentClasses,
+        //     $this->ignoretedClasses 
+        // );
 
-        $eloquentClasses = $this->eloquentClasses = collect($renderDatabase["Leitoras"]["displayClasses"]);
-        $this->renderDatabase = $renderDatabase;
+        $this->renderDatabase = $renderDatabaseArray;
         
-        $this->relationships = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabase) {
+        $this->relationships = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabaseArray) {
+
             foreach ($eloquentData['relations'] as $relation) {
                 if (!isset($relation['origin_table_name']) || empty($relation['origin_table_name'])) {
-                    $relation['origin_table_name'] = $renderDatabase["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
+                    $relation['origin_table_name'] = $renderDatabaseArray["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
                 }
                 if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
                     $relation['related_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
                         $relation['related_table_class'],
-                        $renderDatabase,
+                        $renderDatabaseArray,
                         '["Leitoras"]["displayClasses"][{{index}}]["tableName"]'
                     );
                 }
@@ -111,8 +116,8 @@ class DatabaseMount
         
 
 
-        $this->entitys = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabase) {
-            return (new EloquentMount($className, $renderDatabase))->getEntity();
+        $this->entitys = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabaseArray) {
+            return (new EloquentMount($className, $renderDatabaseArray))->getEntity();
         });
         
         // $databaseEntity = new DatabaseEntity();
@@ -133,9 +138,11 @@ class DatabaseMount
             return $this->entitys->toArray()[$class];
         }
 
-        dd(
-            'Aqui Agora'
-        );
+        // dd(
+        //     'Aqui Agora',
+        //     $class,
+        //     debug_backtrace()
+        // );
         return false;
     }
 

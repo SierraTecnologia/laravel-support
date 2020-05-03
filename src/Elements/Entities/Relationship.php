@@ -2,6 +2,8 @@
 
 namespace Support\Elements\Entities;
 
+use Support\ClassesHelpers\Modificators\StringModificator;
+
 use ErrorException;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
@@ -198,9 +200,9 @@ class Relationship
         return implode(
             '_',
             [
-                StringExtractor::singularize($this->origin_table_name),
+                StringModificator::singularizeAndLower($this->origin_table_name),
                 $this->type.'_',
-                StringExtractor::singularize($this->related_table_name)
+                StringModificator::singularizeAndLower($this->related_table_name)
             ]
         );
     }

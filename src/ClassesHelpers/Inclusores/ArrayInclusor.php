@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Support\ClassesHelpers\Transformadores;
+namespace Support\ClassesHelpers\Inclusores;
 
 use Log;
 use ArgumentCountError;
 use Symfony\Component\Inflector\Inflector;
 
 
-class ArrayHelper
+class ArrayInclusor
 {
     /**
      * Retorna Nome no Singular caso nao exista, e minusculo
@@ -26,14 +26,5 @@ class ArrayHelper
             $array[$tableName]
         ];
         return $array;
-    }
-
-    public static function includeKeyFromAtribute($oldArray, $attributeFromArray)
-    {
-        $newArray = [];
-        foreach ($oldArray as $column) {
-            $newArray[$column[$attributeFromArray]] = $column;
-        }
-        return $newArray;
     }
 }

@@ -25,8 +25,6 @@ use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
-
-
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 use Exception;
@@ -183,8 +181,8 @@ class Eloquent
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
             if ($parserModelClass->hasError() || !$parserModelClass->typeIs('model') || !$this->tableData = $parserModelClass->toArray()) {
-                Log::channel('sitec-support')->warning(
-                    'Eloquent Render (Rejeitando classe nao finais): '.
+                Log::channel('sitec-support')->info(
+                    'Eloquent Render (HavaError ou eh do tipo model ou del merda no parser): '.
                     $this->modelClass
                 );
                 $this->setErrors($parserModelClass->getErrors());

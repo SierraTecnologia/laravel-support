@@ -40,7 +40,8 @@ class ErrorHelper
         if ($type === 'error'){
             Log::channel('sitec-support')->error($error);
         } else if ($type === 'warning'){
-            Log::channel('sitec-support')->warning($error);
+            // @todo
+            // Log::channel('sitec-support')->warning($error);
         } else if ($type === 'info'){
             Log::channel('sitec-support')->info($error);
         } else {
