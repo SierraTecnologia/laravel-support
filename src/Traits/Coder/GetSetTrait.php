@@ -2,11 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Support\Helpers\Traits\Coder;
-
-<?php
-
-namespace Rakshazi;
+namespace Support\Traits\Coder;
 
 /**
  * Dynamic getter/setter library for PHP 5.4+.

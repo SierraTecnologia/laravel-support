@@ -3,7 +3,7 @@
 namespace Support\Elements\FormFields;
 
 use Illuminate\Support\Str;
-use Support\Helpers\Traits\Models\Renderable;
+use Support\Traits\Models\Renderable;
 
 abstract class AbstractHandler implements HandlerInterface
 {

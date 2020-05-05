@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Helpers\Traits\Models;
+namespace Support\Traits\Models;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

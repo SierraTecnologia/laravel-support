@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Support\Helpers\Traits\Models;
+namespace Support\Traits\Models;
 
 use Watson\Validating\ValidatingTrait as BaseValidatingTrait;
 

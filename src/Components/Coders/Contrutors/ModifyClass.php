@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-namespace Support\Modify;
+namespace Support\Components\Coders\Contructors;
 
 use PhpParser\Error;
 use PhpParser\ParserFactory;
