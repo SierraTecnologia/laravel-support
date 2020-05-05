@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Support\Traits\Models;
+namespace Support\Traits\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Collection;
+use Support\Helpers\Extratores\FileExtractor;
+use Support\Components\Coders\Parser\ParseClass;
 
 trait ConsoleTools
 {
@@ -205,7 +207,7 @@ trait ConsoleTools
 
     private function getPackageFolder()
     {
-        return $this->getFolderPathFromFile($this->getFileFromClass($this));
+        return FileExtractor::getFolderPathFromFile(ParseClass::getFileFromClass($this));
     }
 
 

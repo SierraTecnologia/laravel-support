@@ -255,10 +255,10 @@ class ParseClass
         return $this->getNamespace()[0];
     }
     
-    // protected function getFileFromClass($class)
-    // {
-    //     return ParseClass::getFileName(get_class($class));
-    // }
+    public static function getFileFromClass($class)
+    {
+        return self::getFileName(get_class($class));
+    }
 
     // /**
     //  * Gets the class name.
@@ -266,6 +266,6 @@ class ParseClass
     //  */
     // public static function getClassName()
     // {
-    //     return ParseClass::getClassName(static::class);
+    //     return self::getClassName(static::class);
     // }
 }

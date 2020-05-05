@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Support\Helpers\Extratores;
 
-use Log;
-
 class FileExtractor
 {
     
