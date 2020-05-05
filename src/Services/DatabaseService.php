@@ -10,17 +10,17 @@ use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Support\Discovers\Database\DatabaseUpdater;
-use Support\Discovers\Database\Schema\Column;
-use Support\Discovers\Database\Schema\Identifier;
-use Support\Discovers\Database\Schema\SchemaManager;
-use Support\Discovers\Database\Schema\Table;
-use Support\Discovers\Database\Types\Type;
-use Support\Parser\ParseModelClass;
+use Support\Components\Database\DatabaseUpdater;
+use Support\Components\Database\Schema\Column;
+use Support\Components\Database\Schema\Identifier;
+use Support\Components\Database\Schema\SchemaManager;
+use Support\Components\Database\Schema\Table;
+use Support\Components\Database\Types\Type;
+use Support\Components\Coders\Parser\ParseModelClass;
 
 use Exception;
 
-use Support\Parser\ComposerParser;
+use Support\Components\Coders\Parser\ComposerParser;
 
 class DatabaseService
 {
@@ -50,7 +50,7 @@ class DatabaseService
     public function getRenderDatabase()
     {
         if (!$this->renderDatabase) {
-            $this->renderDatabase = (new \Support\Mount\DatabaseMount(collect($this->getAllModels())));
+            $this->renderDatabase = (new \Support\Components\Database\Mount\DatabaseMount(collect($this->getAllModels())));
         }
         return $this->renderDatabase;
     }

@@ -1,14 +1,14 @@
 <?php
 
 namespace Support;
-// namespace Support\Generate\Coders;
+// namespace Support\Components\Coders;
 
-use Support\Generate\Support\Classify;
-use Support\Generate\Coders\Model\Config as GenerateConfig;
+use Support\Utils\Debugger\Classify;
+use Support\Components\Coders\Model\Config as GenerateConfig;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Support\Console\Commands\CodeModelsCommand;
-use Support\Generate\Coders\Model\Factory as ModelFactory;
+use Support\Components\Coders\Model\Factory as ModelFactory;
 use Config;
 
 // class CodersServiceProvider extends ServiceProvider
@@ -51,7 +51,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadMigrations();
 
         $this->app->singleton(\Support\Services\DatabaseService::class, function () {
-            return new \Support\Services\DatabaseService(config('sitec.discover.models_alias', []), new \Support\Parser\ComposerParser);
+            return new \Support\Services\DatabaseService(config('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
         });
     }
 

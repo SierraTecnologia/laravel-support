@@ -5,7 +5,7 @@ namespace Support\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Support\Discovers\Database\Schema\SchemaManager;
+use Support\Components\Database\Schema\SchemaManager;
 use Facilitador\Facades\Facilitador;
 use Facilitador\Traits\Translatable;
 use Facilitador\Services\ModelService;

@@ -3,28 +3,28 @@
 namespace Support\Elements\Entities;
 
 
-use Support\ClassesHelpers\Compare\StringCompare;
+use Support\Helpers\Compare\StringCompare;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
-use Support\Discovers\Database\Schema\SchemaManager;
-use Support\Discovers\Database\Schema\Table;
-use Support\Discovers\Database\Types\Type;
-use Support\ClassesHelpers\Development\DevDebug;
-use Support\ClassesHelpers\Development\HasErrors;
+use Support\Components\Database\Schema\SchemaManager;
+use Support\Components\Database\Schema\Table;
+use Support\Components\Database\Types\Type;
+use Support\Helpers\Development\DevDebug;
+use Support\Helpers\Development\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Http\Request;
-use Support\Discovers\Eloquent\Relationships;
+use Support\Elements\Entities\Relationships;
 use App;
 use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Elements\Entities\EloquentColumn;
-use Support\Parser\ParseModelClass;
+use Support\Components\Coders\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;

@@ -2,7 +2,7 @@
 
 namespace Support\Elements\Entities;
 
-use Support\ClassesHelpers\Modificators\StringModificator;
+use Support\Helpers\Modificators\StringModificator;
 
 use ErrorException;
 use Illuminate\Database\Eloquent\Relations\Relation;

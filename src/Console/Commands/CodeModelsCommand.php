@@ -3,7 +3,7 @@
 namespace Support\Console\Commands;
 
 use Illuminate\Console\Command;
-use Support\Generate\Coders\Model\Factory;
+use Support\Components\Coders\Model\Factory;
 use Illuminate\Contracts\Config\Repository;
 
 class CodeModelsCommand extends Command
@@ -26,7 +26,7 @@ class CodeModelsCommand extends Command
     protected $description = 'Parse connection schema into models';
 
     /**
-     * @var \Support\Generate\Coders\Model\Factory
+     * @var \Support\Components\Coders\Model\Factory
      */
     protected $models;
 
@@ -38,7 +38,7 @@ class CodeModelsCommand extends Command
     /**
      * Create a new command instance.
      *
-     * @param \Support\Generate\Coders\Model\Factory $models
+     * @param \Support\Components\Coders\Model\Factory $models
      * @param \Illuminate\Contracts\Config\Repository $config
      */
     public function __construct(Factory $models, Repository $config)
