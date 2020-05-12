@@ -143,6 +143,7 @@ class DatabaseMount
 
     public function getEloquentEntity($className)
     {
+        $className = $this->returnProcuracaoClasse($className);
         if ($this->eloquentHasError($className)) {
             return false;
         }
@@ -165,5 +166,13 @@ class DatabaseMount
     public function eloquentHasError($className)
     {
         return isset($this->renderDatabase['AplicationTemp']['tempErrorClasses'][$className]);
+    }
+
+    public function returnProcuracaoClasse($className)
+    {
+        if (isset($this->renderDatabase['Mapper']['mapperClasserProcuracao'][$className])) {
+            return $this->renderDatabase['Mapper']['mapperClasserProcuracao'][$className];
+        }
+        return $className;
     }
 }

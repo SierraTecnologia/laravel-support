@@ -30,7 +30,9 @@ class ParseClass
     public static $typesIgnoreName = [
         'model' => [
             'model',
-            'base'
+            'base',
+            'entity',
+            'eloquent'
         ],
     ];
 

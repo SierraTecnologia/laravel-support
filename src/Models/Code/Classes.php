@@ -21,11 +21,26 @@ class Classes extends Model
 
     protected $modelService = false;
 
+    /**
+     * Retorna a ultima classe que chama
+     */
     public static function getFinalClass($className)
     {
         while ($result = self::where('parent_class', $className)->first()) {
             $className = $result->class_name;
         }
+        return $className;
+    }
+
+    /**
+     * Retorna a Classe Correspondente a Procuração @todo refazer essa e a anteror
+     */
+    public static function getClassWithProcuracao($className)
+    {
+        // resolve(DatabaseService::class)->getEloquentService($className);
+        // while ($result = self::where('parent_class', $className)->first()) {
+        //     $className = $result->class_name;
+        // }
         return $className;
     }
 

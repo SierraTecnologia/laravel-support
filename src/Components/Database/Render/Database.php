@@ -29,6 +29,8 @@ use Support\Helpers\Inclusores\ArrayInclusor;
 use Support\Helpers\Modificators\StringModificator;
 use Support\Helpers\Development\HasErrors;
 
+use Support\Components\Coders\Parser\ParseClass;
+
 class Database
 {
     use HasErrors;
@@ -112,12 +114,20 @@ class Database
         $this->eloquentClasses = $eloquentClasses;
             
         $this->render();
-        $this->display();
+        // $this->display();
     }
 
     public function registerMapperClassParents($className, $classParent)
     {
         if (is_null($className) || empty($className) || is_null($classParent) || empty($classParent) || isset($this->mapperParentClasses[$className])) {
+            return false;
+        }
+
+        // Ignora Oq nao serve
+        if (in_array(
+            ParseClass::getClassName($classParent),
+            ParseClass::$typesIgnoreName['model']
+        )) {
             return false;
         }
 
@@ -694,7 +704,12 @@ class Database
      */
     public function loadMapperClasserProcuracao($eloquentEntity, $classForReplaced)
     {
+        Log::channel('sitec-support')->debug(
+            'Database Render (Rejeitando classe nao finais): Class: '.
+            $classForReplaced
+        );
         $this->mapperClasserProcuracao[$classForReplaced] = $eloquentEntity;
+        $this->tempIgnoreClasses[] = $classForReplaced;
     }
     public function isForIgnoreClass($className)
     {
@@ -704,7 +719,7 @@ class Database
 
         if ($childrens = $this->haveChildren($className)) {
             foreach ($childrens as $children) {
-                if (\Support\Components\Coders\Parser\ParseClass::getClassName($className) === \Support\Components\Coders\Parser\ParseClass::getClassName($children)) {
+                if (ParseClass::getClassName($className) === ParseClass::getClassName($children)) {
                     // @todo Verificar outras classes que nao possue nome igual mas é filha
                     /**^ "Chieldren"
                     ^ "Finder\Models\Digital\Infra\Ci\Build"
@@ -719,18 +734,38 @@ class Database
                     ] */
 
 
-                    // @todo mensagem
-                    $this->tempIgnoreClasses[] = $className;
-                    Log::channel('sitec-support')->debug(
-                        'Database Render (Rejeitando classe nao finais): Class: '.
-                        $className
-                    );
                     $this->loadMapperClasserProcuracao(
                         $children,
                         $className
                     );
                     return true;
-                }
+                } 
+                // else if(
+                //     !in_array(
+                //         ParseClass::getClassName($children),
+                //         ParseClass::$typesIgnoreName['model']
+                //     )
+                // ) {
+
+                // }
+            }
+        }
+
+        /**
+         * Caso tenha um pai com nome diferente tbm ignora
+         */
+        if ($parent = $this->haveParent($className)) {
+            if(
+                !in_array(
+                    ParseClass::getClassName($parent),
+                    ParseClass::$typesIgnoreName['model']
+                ) && ParseClass::getClassName($className) !== ParseClass::getClassName($parent)
+            ) {
+                $this->loadMapperClasserProcuracao(
+                    $parent,
+                    $className
+                );
+                return true;
             }
         }
 
