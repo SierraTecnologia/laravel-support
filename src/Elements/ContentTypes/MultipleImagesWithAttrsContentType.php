@@ -2,8 +2,8 @@
 
 namespace Support\Elements\ContentTypes;
 
-use Support\Http\Controllers\ContentTypes\BaseType;
-use Support\Http\Controllers\ContentTypes\MultipleImage;
+use Support\Elements\ContentTypes\BaseType;
+use Support\Elements\ContentTypes\MultipleImage;
 
 class MultipleImagesWithAttrsContentType extends BaseType
 {
