@@ -34,7 +34,7 @@ class ArrayExtractor
     {
         try {
             $cod = '$toReturn = $array'.\str_replace('{{index}}', '\''.$indexString.'\'', $local).';';
-            \Log::info('ArrayExtractor: Executando: '.$cod);
+            \Log::debug('ArrayExtractor: Executando: '.$cod);
             // dd(
             //     $cod
             // );
@@ -48,7 +48,7 @@ class ArrayExtractor
             try {
                 // @todo
                 $stringQuebrada = explode('\\', $indexString);
-                \Log::info('ArrayExtractor: Retornando nome pois a classe não existe: '.strtolower(StringModificator::plurarize($stringQuebrada[count($stringQuebrada)-1])));
+                \Log::debug('ArrayExtractor: Retornando nome pois a classe não existe: '.strtolower(StringModificator::plurarize($stringQuebrada[count($stringQuebrada)-1])));
                 return strtolower(StringModificator::plurarize($stringQuebrada[count($stringQuebrada)-1]));
             } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
                 dd(
