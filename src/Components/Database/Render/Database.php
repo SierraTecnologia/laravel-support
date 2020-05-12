@@ -112,7 +112,7 @@ class Database
         $this->eloquentClasses = $eloquentClasses;
             
         $this->render();
-        // $this->display();
+        $this->display();
     }
 
     public function registerMapperClassParents($className, $classParent)
@@ -688,6 +688,10 @@ class Database
         
         return false;
     }
+
+    /**
+     * Add uma classe rejeitada para ser trocada
+     */
     public function loadMapperClasserProcuracao($eloquentEntity, $classForReplaced)
     {
         $this->mapperClasserProcuracao[$classForReplaced] = $eloquentEntity;

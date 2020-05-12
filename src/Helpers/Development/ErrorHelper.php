@@ -118,13 +118,19 @@ class ErrorHelper
             return false;
         }
 
-       if (isset($reference['model'])) {
-           foreach (self::$debugModels as $debugModel) {
-               if ($reference['model'] == $debugModel) {
-                   return true;
-               }
-           }
-       }
+        $referencesIndexToSearch = [
+            'model',
+            'locateClassFromError'
+        ];
+        foreach ($referencesIndexToSearch as $indexToSearch) {
+            if (isset($reference[$indexToSearch])) {
+                foreach (self::$debugModels as $debugModel) {
+                    if ($reference[$indexToSearch] == $debugModel) {
+                        return true;
+                    }
+                }
+            }
+        }
         
         return false;
     }

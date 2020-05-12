@@ -180,7 +180,10 @@ class Eloquent
     {
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
-            if ($parserModelClass->hasError() || !$parserModelClass->typeIs('model') || !$this->tableData = $parserModelClass->toArray()) {
+            if (!$parserModelClass->typeIs('model')) {
+                return false;
+            }
+            if ($parserModelClass->hasError() || !$this->tableData = $parserModelClass->toArray()) {
                 Log::channel('sitec-support')->info(
                     'Eloquent Render (HavaError ou eh do tipo model ou del merda no parser): '.
                     $this->modelClass
