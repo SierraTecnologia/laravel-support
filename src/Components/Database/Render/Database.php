@@ -2,13 +2,16 @@
 
 namespace Support\Components\Database\Render;
 
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 use Exception;
 use ErrorException;
 use LogicException;
 use OutOfBoundsException;
 use RuntimeException;
 use TypeError;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Throwable;
+use Watson\Validating\ValidationException;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -41,6 +44,7 @@ class Database
      */
     public $mapperTableToClasses = [];
     public $mapperParentClasses = [];
+    public $mapperClasserProcuracao = [];
 
     /**
      * Para Cada Tabela Pega as Classes Correspondentes
@@ -77,6 +81,7 @@ class Database
         'Mapper' => [
             'mapperTableToClasses',
             'mapperParentClasses',
+            'mapperClasserProcuracao',
         ],
         'Leitoras' => [
             'displayTables',
@@ -476,6 +481,7 @@ class Database
                 $tableName,
                 $tableClass
             );
+            // @todo Ignorar classes que uma extend a outra
             return $this->setWarnings(
                 'Duas classes para a mesma tabela: '.$tableName,
                 [
@@ -682,6 +688,10 @@ class Database
         
         return false;
     }
+    public function loadMapperClasserProcuracao($eloquentEntity, $classForReplaced)
+    {
+        $this->mapperClasserProcuracao[$classForReplaced] = $eloquentEntity;
+    }
     public function isForIgnoreClass($className)
     {
         if (is_null($className) || empty($className)) {
@@ -709,6 +719,10 @@ class Database
                     $this->tempIgnoreClasses[] = $className;
                     Log::channel('sitec-support')->debug(
                         'Database Render (Rejeitando classe nao finais): Class: '.
+                        $className
+                    );
+                    $this->loadMapperClasserProcuracao(
+                        $children,
                         $className
                     );
                     return true;

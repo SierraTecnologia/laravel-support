@@ -116,9 +116,15 @@ class DatabaseMount
         
 
 
-        $this->entitys = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabaseArray) {
+        $this->entitys = $eloquentClasses->reject(function($eloquentData, $className) {
+            return $this->eloquentHasError($className);
+        })->map(function($eloquentData, $className) use ($renderDatabaseArray) {
             return (new EloquentMount($className, $renderDatabaseArray))->getEntity();
         });
+        //     dd(
+        //         $this->entitys,
+        //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
+        // );
         
         // $databaseEntity = new DatabaseEntity();
         
@@ -129,6 +135,9 @@ class DatabaseMount
 
     public function getAllEloquentsEntitys()
     {
+    //     dd($this->entitys,
+    //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
+    // );
         return $this->entitys->toArray();
     }
 
