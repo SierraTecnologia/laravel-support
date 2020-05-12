@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Cache;
 use Support\Elements\Entities\Relationship;
 use Support\Components\Database\Types\Type;
 use Log;
-
+use Support\Components\Database\Schema\SchemaManager;
 use Support\Helpers\Modificators\ArrayModificator;
 use Support\Helpers\Inclusores\ArrayInclusor;
 use Support\Helpers\Modificators\StringModificator;
@@ -441,8 +441,7 @@ class Database
         $this->dicionarioPrimaryKeys = [];
         $tables = [];
         Type::registerCustomPlatformTypes();
-
-        $listTables = \Support\Discovers\Database\Schema\SchemaManager::listTables();
+        $listTables = SchemaManager::listTables();
         // return $this->getSchemaManagerTable()->getIndexes(); //@todo indexe
 
 

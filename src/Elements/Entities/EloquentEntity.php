@@ -323,7 +323,7 @@ class EloquentEntity
         //     'type' => ''
         // ];
         // $columnArray['name'] = $columnName;
-        // $column = \Support\Discovers\Database\Schema\Column::make($columnArray, $this->getTableName());
+        // $column = \Support\Components\Database\Schema\Column::make($columnArray, $this->getTableName());
         // dd($column);
         // return $column->columnIsType($columnName, $typeClass);
     }

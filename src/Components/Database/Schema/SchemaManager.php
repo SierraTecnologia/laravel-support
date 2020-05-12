@@ -49,7 +49,7 @@ abstract class SchemaManager
     /**
      * @param string $tableName
      *
-     * @return \Support\Discovers\Database\Schema\Table
+     * @return \Support\Components\Database\Schema\Table
      */
     public static function listTableDetails($tableName)
     {

@@ -344,7 +344,7 @@ class Columns
     protected function getListTables()
     {
         $keys = [];
-        $listTables = \Support\Discovers\Database\Schema\SchemaManager::listTables();
+        $listTables = \Support\Components\Database\Schema\SchemaManager::listTables();
         foreach ($listTables as $listTable){
             if (!empty($indexes = $listTable->exportIndexesToArray())) {
                 foreach ($indexes as $index) {
