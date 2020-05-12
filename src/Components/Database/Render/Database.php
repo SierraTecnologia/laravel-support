@@ -61,8 +61,9 @@ class Database
     /**
      * Aplication Log or Errors
      */
-    public $tempIgnoreClasses = [];
     public $tempAppTablesWithNotPrimaryKey = [];
+    public $tempErrorClasses = [];
+    public $tempIgnoreClasses = [];
 
 
     /**
@@ -83,6 +84,7 @@ class Database
         ],
         'AplicationTemp' => [
             'tempAppTablesWithNotPrimaryKey',
+            'tempErrorClasses',
             'tempIgnoreClasses'
         ],
 
@@ -108,11 +110,6 @@ class Database
         // $this->display();
     }
 
-    public function getEloquentClasses()
-    {
-        return collect($this->eloquentClasses);
-    }
-
     public function registerMapperClassParents($className, $classParent)
     {
         if (is_null($className) || empty($className) || is_null($classParent) || empty($classParent) || isset($this->mapperParentClasses[$className])) {
@@ -121,83 +118,6 @@ class Database
 
         $this->mapperParentClasses[$className] = $classParent;
     }
-    
-    public function haveParent($classChild)
-    {
-        if (is_null($classChild) || empty($classChild) || !isset($this->mapperParentClasses[$classChild])) {
-            return false;
-        }
-
-        return $this->mapperParentClasses[$classChild];
-    }
-    public function haveChildren($className)
-    {
-        if (is_null($className) || empty($className) || !in_array($className, $this->mapperParentClasses)) {
-            return false;
-        }
-
-        return \Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperParentClasses);
-    }
-    public function haveTableInDatabase($className)
-    {
-        if (is_null($className) || empty($className)) {
-            return false;
-        }
-
-        if (\Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
-            return false;
-        }
-
-        Log::channel('sitec-support')->warning(
-            'Database Render (Tabela nao possui banco de dados): ClassName: '.
-            $className
-        );
-        dd(
-            'procurar aqui',
-            $className,
-            \Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)
-        );
-        return \Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses);
-    }
-    public function isForIgnoreClass($className)
-    {
-        if (is_null($className) || empty($className)) {
-            return true;
-        }
-
-        if ($childrens = $this->haveChildren($className)) {
-            foreach ($childrens as $children) {
-                if (\Support\Components\Coders\Parser\ParseClass::getClassName($className) === \Support\Components\Coders\Parser\ParseClass::getClassName($children)) {
-                    // @todo Verificar outras classes que nao possue nome igual mas é filha
-                    /**^ "Chieldren"
-                    ^ "Finder\Models\Digital\Infra\Ci\Build"
-                    ^ "build"
-                    ^ "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
-                    ^ "gitbuild"
-                    ^ array:4 [▼
-                    0 => "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
-                    1 => "Finder\Models\Digital\Infra\Ci\Build\HgBuild"
-                    2 => "Finder\Models\Digital\Infra\Ci\Build\LocalBuild"
-                    3 => "Finder\Models\Digital\Infra\Ci\Build\SvnBuild"
-                    ] */
-
-
-                    // @todo mensagem
-                    $this->tempIgnoreClasses[] = $className;
-                    Log::channel('sitec-support')->debug(
-                        'Database Render (Rejeitando classe nao finais): Class: '.
-                        $className
-                    );
-                    return true;
-                }
-            }
-        }
-
-        return $this->haveTableInDatabase($className);
-    }
-
-
-
 
     public function toArray()
     {
@@ -272,7 +192,7 @@ class Database
 
         if (isset($datas['Errors'])) {
             if (isset($datas['Errors']['errors'])) {
-                $this->setErrors($datas['Errors']['errors']);
+                $this->mergeErrors($datas['Errors']['errors']);
             }
         }
         // foreach ($datas as $indice=>$data) {
@@ -299,7 +219,7 @@ class Database
         //     }
         //     if ($indice==='Errors') {
         //         if (isset($data['errors'])) {
-        //             $this->setErrors($data['errors']);
+        //             $this->mergeErrors($data['errors']);
         //         }
         //     }
 
@@ -427,7 +347,7 @@ class Database
             $this->displayClasses[$eloquentService->getModelClass()] = $eloquentService->toArray();
 
             // Guarda Errors
-            $this->setErrors($eloquentService->getErrors());
+            $this->mergeErrors($eloquentService->getErrors());
         }
     }
 
@@ -704,6 +624,117 @@ class Database
             }
             return false;
         });
+    }
+
+
+    /**
+     * Verificadores
+     */
+
+
+    public function getEloquentClasses()
+    {
+        return collect($this->eloquentClasses);
+    }
+    
+    public function haveParent($classChild)
+    {
+        if (is_null($classChild) || empty($classChild) || !isset($this->mapperParentClasses[$classChild])) {
+            return false;
+        }
+
+        return $this->mapperParentClasses[$classChild];
+    }
+    public function haveChildren($className)
+    {
+        if (is_null($className) || empty($className) || !in_array($className, $this->mapperParentClasses)) {
+            return false;
+        }
+
+        return \Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperParentClasses);
+    }
+    public function haveTableInDatabase($className)
+    {
+        if (is_null($className) || empty($className)) {
+            return false;
+        }
+        
+        // // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
+        // if (\Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
+        //     return true;
+        // }
+        $tableName = $this->returnTableForClass($className);
+
+        if (isset($this->displayTables[$tableName])) {
+            return true;
+        }
+
+        $error = \Support\Components\Errors\TableNotExistError::make(
+            $tableName,
+            [
+                'file' => $className
+            ]
+        );
+        $this->setError(
+            $error
+        );
+        $this->tempErrorClasses[$className] = $error->getDescription();
+        
+        return false;
+    }
+    public function isForIgnoreClass($className)
+    {
+        if (is_null($className) || empty($className)) {
+            return true;
+        }
+
+        if ($childrens = $this->haveChildren($className)) {
+            foreach ($childrens as $children) {
+                if (\Support\Components\Coders\Parser\ParseClass::getClassName($className) === \Support\Components\Coders\Parser\ParseClass::getClassName($children)) {
+                    // @todo Verificar outras classes que nao possue nome igual mas é filha
+                    /**^ "Chieldren"
+                    ^ "Finder\Models\Digital\Infra\Ci\Build"
+                    ^ "build"
+                    ^ "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
+                    ^ "gitbuild"
+                    ^ array:4 [▼
+                    0 => "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
+                    1 => "Finder\Models\Digital\Infra\Ci\Build\HgBuild"
+                    2 => "Finder\Models\Digital\Infra\Ci\Build\LocalBuild"
+                    3 => "Finder\Models\Digital\Infra\Ci\Build\SvnBuild"
+                    ] */
+
+
+                    // @todo mensagem
+                    $this->tempIgnoreClasses[] = $className;
+                    Log::channel('sitec-support')->debug(
+                        'Database Render (Rejeitando classe nao finais): Class: '.
+                        $className
+                    );
+                    return true;
+                }
+            }
+        }
+
+        return !$this->haveTableInDatabase($className);
+    }
+
+
+
+    public function returnTableForClass($className)
+    {
+        if (is_null($className) || empty($className)) {
+            return false;
+        }
+        // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
+        if (!$find = \Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
+            return false;
+        }
+
+        if (is_array($find)) {
+            return $find[0];
+        }
+        return $find;
     }
 
 }

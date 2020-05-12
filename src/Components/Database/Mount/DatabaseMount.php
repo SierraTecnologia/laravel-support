@@ -86,8 +86,8 @@ class DatabaseMount
             return $renderDatabase->toArray();
         });
         
-        // Persist Models With Errors
-        $this->ignoretedClasses = $this->eloquentClasses->diffKeys($renderDatabaseArray["Leitoras"]["displayClasses"]);
+        // // Persist Models With Errors @todo retirar ignoretedClasses
+        // $this->ignoretedClasses = $this->eloquentClasses->diffKeys($renderDatabaseArray["Leitoras"]["displayClasses"]);
         $eloquentClasses = $this->eloquentClasses = collect($renderDatabaseArray["Leitoras"]["displayClasses"]);
         // dd(
         //     'Olaaaa Database Mount',
@@ -132,12 +132,19 @@ class DatabaseMount
         return $this->entitys->toArray();
     }
 
-    public function getEloquentEntity($class)
+    public function getEloquentEntity($className)
     {
-        if (!empty($class) && isset($this->entitys->toArray()[$class])) {
-            return $this->entitys->toArray()[$class];
+        if ($this->eloquentHasError($className)) {
+            return false;
         }
 
+        if (!empty($className) && isset($this->entitys->toArray()[$className])) {
+            return $this->entitys->toArray()[$className];
+        }
+
+        Log::channel('sitec-support')->error(
+            'DatabaseMount. Nao encontrado pra classe: '.$className
+        );
         // dd(
         //     'Aqui Agora',
         //     $class,
@@ -146,4 +153,8 @@ class DatabaseMount
         return false;
     }
 
+    public function eloquentHasError($className)
+    {
+        return isset($this->renderDatabase['AplicationTemp']['tempErrorClasses'][$className]);
+    }
 }

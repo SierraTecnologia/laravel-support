@@ -6,6 +6,7 @@ namespace Support\Helpers\Development;
 
 use Log;
 use ArgumentCountError;
+use Support\Components\Errors\CodeError;
 
 class ErrorHelper
 {
@@ -55,6 +56,10 @@ class ErrorHelper
     }
     public static function tratarMensagem($error, $reference = false)
     {
+        if (is_object($error) && is_a($error, CodeError::class)) {
+            return $error->getMessage();
+        }
+        
         if (is_object($error)) {
             $e = $error;
             // $error = $e->getMessage();

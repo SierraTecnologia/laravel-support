@@ -47,7 +47,14 @@ trait HasErrors
         return $this->getWarning();
     }
 
-
+    /**
+     * @todo Dependendo Criar Gerenciador de Error
+        $this->setError(
+            \Support\Components\Errors\TableNotExistError::make(
+                $className
+            )
+        );
+     */
 
 
     /**
@@ -138,5 +145,17 @@ trait HasErrors
         }
         
         return true;
+    }
+
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function mergeErrors($errors)
+    {  
+        $this->error = \array_merge(
+            $this->error, $errors
+        );
     }
 }

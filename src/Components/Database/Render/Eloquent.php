@@ -185,7 +185,7 @@ class Eloquent
                     'Eloquent Render (HavaError ou eh do tipo model ou del merda no parser): '.
                     $this->modelClass
                 );
-                $this->setErrors($parserModelClass->getErrors());
+                $this->mergeErrors($parserModelClass->getErrors());
                 return false;
             }
 
