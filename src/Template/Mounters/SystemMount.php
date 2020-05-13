@@ -43,7 +43,7 @@ class SystemMount
     {
         // dd($this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-        return collect($this->getAllMenus()->getTreeInArray())->map(function ($valor) use ($event) {
+        return collect($this->getAllMenus()->getTreeInArray())->map(function ($valor) {
                 return $valor;
             })->values()->all();
         // });
