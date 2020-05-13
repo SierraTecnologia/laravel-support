@@ -19,7 +19,7 @@ class ConfigService
     }
     public function get($config, $default = false)
     {
-        return config($config, $default);
+        return \Illuminate\Support\Facades\Config::get($config, $default);
     }
 
     public static function getInstance()

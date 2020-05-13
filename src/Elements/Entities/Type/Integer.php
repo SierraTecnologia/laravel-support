@@ -49,10 +49,10 @@ class Integer extends Value
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('sitec.attributes.tables.attribute_integer_values'));
+        $this->setTable(\Illuminate\Support\Facades\Config::get('sitec.attributes.tables.attribute_integer_values'));
         $this->setRules([
             'content' => 'required|integer',
-            'attribute_id' => 'required|integer|exists:'.config('sitec.attributes.tables.attributes').',id',
+            'attribute_id' => 'required|integer|exists:'.\Illuminate\Support\Facades\Config::get('sitec.attributes.tables.attributes').',id',
             'entity_id' => 'required|integer',
             'entity_type' => 'required|string',
         ]);

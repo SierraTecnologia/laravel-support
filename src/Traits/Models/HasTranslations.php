@@ -22,7 +22,7 @@ trait HasTranslations
             return parent::getAttributeValue($key);
         }
 
-        return $this->getTranslation($key, config('app.locale')) ?: array_first($this->getTranslations($key));
+        return $this->getTranslation($key, \Illuminate\Support\Facades\Config::get('app.locale')) ?: array_first($this->getTranslations($key));
     }
 
     /**
@@ -63,7 +63,7 @@ trait HasTranslations
     public function attributesToArray()
     {
         $values = array_map(function ($attribute) {
-            return $this->getTranslation($attribute, config('app.locale')) ?: null;
+            return $this->getTranslation($attribute, \Illuminate\Support\Facades\Config::get('app.locale')) ?: null;
         }, $keys = $this->getTranslatableAttributes());
 
         return array_replace(parent::attributesToArray(), array_combine($keys, $values));

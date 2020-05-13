@@ -73,7 +73,7 @@ class LoadLaravel
     public function runAll()
     {
         // if (!function_exists('config')) {
-        //     function config($address, $defaultValue) {
+        //     function \Illuminate\Support\Facades\Config::get($address, $defaultValue) {
         //         return $defaultValue;
         //     }
         // }

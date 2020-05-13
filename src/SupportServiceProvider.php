@@ -51,7 +51,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadMigrations();
 
         $this->app->singleton(\Support\Services\DatabaseService::class, function () {
-            return new \Support\Services\DatabaseService(config('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
+            return new \Support\Services\DatabaseService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
         });
     }
 

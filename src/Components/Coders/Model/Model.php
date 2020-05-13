@@ -182,33 +182,33 @@ class Model
 
     protected function configure()
     {
-        $this->withNamespace($this->config('namespace'));
-        $this->withParentClass($this->config('parent'));
+        $this->withNamespace($this->\Illuminate\Support\Facades\Config::get('namespace'));
+        $this->withParentClass($this->\Illuminate\Support\Facades\Config::get('parent'));
 
         // Timestamps settings
-        $this->withTimestamps($this->config('timestamps.enabled', $this->config('timestamps', true)));
-        $this->withCreatedAtField($this->config('timestamps.fields.CREATED_AT', $this->getDefaultCreatedAtField()));
-        $this->withUpdatedAtField($this->config('timestamps.fields.UPDATED_AT', $this->getDefaultUpdatedAtField()));
+        $this->withTimestamps($this->\Illuminate\Support\Facades\Config::get('timestamps.enabled', $this->\Illuminate\Support\Facades\Config::get('timestamps', true)));
+        $this->withCreatedAtField($this->\Illuminate\Support\Facades\Config::get('timestamps.fields.CREATED_AT', $this->getDefaultCreatedAtField()));
+        $this->withUpdatedAtField($this->\Illuminate\Support\Facades\Config::get('timestamps.fields.UPDATED_AT', $this->getDefaultUpdatedAtField()));
 
         // Soft deletes settings
-        $this->withSoftDeletes($this->config('soft_deletes.enabled', $this->config('soft_deletes', false)));
-        $this->withDeletedAtField($this->config('soft_deletes.field', $this->getDefaultDeletedAtField()));
+        $this->withSoftDeletes($this->\Illuminate\Support\Facades\Config::get('soft_deletes.enabled', $this->\Illuminate\Support\Facades\Config::get('soft_deletes', false)));
+        $this->withDeletedAtField($this->\Illuminate\Support\Facades\Config::get('soft_deletes.field', $this->getDefaultDeletedAtField()));
 
         // Connection settings
-        $this->withConnection($this->config('connection', false));
+        $this->withConnection($this->\Illuminate\Support\Facades\Config::get('connection', false));
         $this->withConnectionName($this->blueprint->connection());
 
         // Pagination settings
-        $this->withPerPage($this->config('per_page', $this->getDefaultPerPage()));
+        $this->withPerPage($this->\Illuminate\Support\Facades\Config::get('per_page', $this->getDefaultPerPage()));
 
         // Dates settings
-        $this->withDateFormat($this->config('date_format', $this->getDefaultDateFormat()));
+        $this->withDateFormat($this->\Illuminate\Support\Facades\Config::get('date_format', $this->getDefaultDateFormat()));
 
         // Table Prefix settings
-        $this->withTablePrefix($this->config('table_prefix', $this->getDefaultTablePrefix()));
+        $this->withTablePrefix($this->\Illuminate\Support\Facades\Config::get('table_prefix', $this->getDefaultTablePrefix()));
 
         // Relation name settings
-        $this->withRelationNameStrategy($this->config('relation_name_strategy', $this->getDefaultRelationNameStrategy()));
+        $this->withRelationNameStrategy($this->\Illuminate\Support\Facades\Config::get('relation_name_strategy', $this->getDefaultRelationNameStrategy()));
 
         return $this;
     }
@@ -269,7 +269,7 @@ class Model
             $this->casts[$propertyName] = $cast;
         }
 
-        foreach ($this->config('casts', []) as $pattern => $casting) {
+        foreach ($this->\Illuminate\Support\Facades\Config::get('casts', []) as $pattern => $casting) {
             if (Str::is($pattern, $column->name)) {
                 $this->casts[$propertyName] = $cast = $casting;
                 break;
@@ -400,7 +400,7 @@ class Model
      */
     public function shouldQualifyTableName()
     {
-        return $this->config('qualified_tables', false);
+        return $this->\Illuminate\Support\Facades\Config::get('qualified_tables', false);
     }
 
     /**
@@ -408,9 +408,9 @@ class Model
      */
     public function shouldPluralizeTableName()
     {
-        $pluralize = (bool) $this->config('pluralize', true);
+        $pluralize = (bool) $this->\Illuminate\Support\Facades\Config::get('pluralize', true);
 
-        $overridePluralizeFor = $this->config('override_pluralize_for', []);
+        $overridePluralizeFor = $this->\Illuminate\Support\Facades\Config::get('override_pluralize_for', []);
         if (count($overridePluralizeFor) > 0) {
             foreach ($overridePluralizeFor as $except) {
                 if ($except == $this->getTable()) {
@@ -427,7 +427,7 @@ class Model
      */
     public function shouldLowerCaseTableName()
     {
-        return (bool) $this->config('lower_table_name_first', false);
+        return (bool) $this->\Illuminate\Support\Facades\Config::get('lower_table_name_first', false);
     }
 
     /**
@@ -687,7 +687,7 @@ class Model
      */
     public function getTraits()
     {
-        $traits = $this->config('use', []);
+        $traits = $this->\Illuminate\Support\Facades\Config::get('use', []);
 
         if (! is_array($traits)) {
             throw new \RuntimeException('Config use must be an array of valid traits to append to each model.');
@@ -983,7 +983,7 @@ class Model
      */
     public function usesSnakeAttributes()
     {
-        return (bool) $this->config('snake_attributes', true);
+        return (bool) $this->\Illuminate\Support\Facades\Config::get('snake_attributes', true);
     }
 
     /**
@@ -1059,7 +1059,7 @@ class Model
      */
     public function isHidden($column)
     {
-        $attributes = $this->config('hidden', []);
+        $attributes = $this->\Illuminate\Support\Facades\Config::get('hidden', []);
 
         if (! is_array($attributes)) {
             throw new \RuntimeException('Config field [hidden] must be an array of attributes to hide from array or json.');
@@ -1097,7 +1097,7 @@ class Model
      */
     public function isFillable($column)
     {
-        $guarded = $this->config('guarded', []);
+        $guarded = $this->\Illuminate\Support\Facades\Config::get('guarded', []);
 
         if (! is_array($guarded)) {
             throw new \RuntimeException('Config field [guarded] must be an array of attributes to protect from mass assignment.');
@@ -1177,7 +1177,7 @@ class Model
      */
     public function usesBaseFiles()
     {
-        return $this->config('base_files', false);
+        return $this->\Illuminate\Support\Facades\Config::get('base_files', false);
     }
 
     /**
@@ -1185,7 +1185,7 @@ class Model
      */
     public function usesPropertyConstants()
     {
-        return $this->config('with_property_constants', false);
+        return $this->\Illuminate\Support\Facades\Config::get('with_property_constants', false);
     }
 
     /**
@@ -1193,7 +1193,7 @@ class Model
      */
     public function indentWithSpace()
     {
-        return (int) $this->config('indent_with_space', 0);
+        return (int) $this->\Illuminate\Support\Facades\Config::get('indent_with_space', 0);
     }
 
     /**
@@ -1201,7 +1201,7 @@ class Model
      */
     public function usesHints()
     {
-        return $this->config('hints', false);
+        return $this->\Illuminate\Support\Facades\Config::get('hints', false);
     }
 
     /**
@@ -1218,8 +1218,8 @@ class Model
      *
      * @return mixed
      */
-    public function config($key = null, $default = null)
+    public function \Illuminate\Support\Facades\Config::get($key = null, $default = null)
     {
-        return $this->factory->config($this->getBlueprint(), $key, $default);
+        return $this->factory->\Illuminate\Support\Facades\Config::get($this->getBlueprint(), $key, $default);
     }
 }
