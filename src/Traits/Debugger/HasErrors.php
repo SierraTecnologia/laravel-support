@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Support\Traits\Debugger;
 
+use Support\Utils\Debugger\ErrorHelper;
+
 trait HasErrors
 {
 

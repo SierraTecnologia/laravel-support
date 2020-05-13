@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Support\Utils\Words;
+namespace Support\Utils\Semantics;
 
 class ReturnSimilars
 {

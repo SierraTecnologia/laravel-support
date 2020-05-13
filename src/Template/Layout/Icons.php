@@ -5,7 +5,7 @@ namespace Support\Template\Layout;
 use URL;
 use Request;
 use Facilitador\Routing\Wildcard;
-use Support\Utils\Words\ReturnSimilars;
+use Support\Utils\Semantics\ReturnSimilars;
 
 /**
  * Generate default breadcrumbs and provide a store where they can be
