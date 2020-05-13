@@ -1,14 +1,15 @@
 <?php
 
 namespace Support;
-// namespace Support\Coder\Generate\Coders;
+// namespace Support\Components\Coders;
 
-use Support\Coder\Generate\Support\Classify;
-use Support\Coder\Generate\Coders\Model\Config;
+use Support\Utils\Debugger\Classify;
+use Support\Components\Coders\Model\Config as GenerateConfig;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Support\Console\Commands\CodeModelsCommand;
-use Support\Coder\Generate\Coders\Model\Factory as ModelFactory;
+use Support\Components\Coders\Model\Factory as ModelFactory;
+use Config;
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -34,6 +35,8 @@ class SupportServiceProvider extends ServiceProvider
                 CodeModelsCommand::class,
             ]);
         }
+
+        $this->loadLogger();
     }
 
     /**
@@ -44,7 +47,21 @@ class SupportServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerModelFactory();
+
+        $this->loadMigrations();
+
+        $this->app->singleton(\Support\Services\DatabaseService::class, function () {
+            return new \Support\Services\DatabaseService(config('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
+        });
     }
+
+
+
+
+
+
+
+    
 
     /**
      * Register Model Factory.
@@ -58,7 +75,7 @@ class SupportServiceProvider extends ServiceProvider
                 $app->make('db'),
                 $app->make(Filesystem::class),
                 new Classify(),
-                new Config($app->make('config')->get('models'))
+                new GenerateConfig($app->make('config')->get('models'))
             );
         });
     }
@@ -69,5 +86,35 @@ class SupportServiceProvider extends ServiceProvider
     public function provides()
     {
         return [ModelFactory::class];
+    }
+       
+    protected function loadMigrations()
+    {
+        // Register Migrations
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+       
+    }
+
+
+
+
+    /**
+     * 
+     */
+    private function loadLogger()
+    {
+        $level = env('APP_LOG_LEVEL_FOR_SUPPORT', 'warning');
+        //@todo configurar adaptada dos leveis
+        Config::set('logging.channels.sitec-support', [
+            'driver' => 'single',
+            'path' => storage_path('logs/sitec-support.log'),
+            'level' => $level,
+        ]);
+
+        Config::set('logging.channels.sitec-providers', [
+            'driver' => 'single',
+            'path' => storage_path('logs/sitec-providers.log'),
+            'level' => $level,
+        ]);
     }
 }

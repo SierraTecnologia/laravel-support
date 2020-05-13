@@ -2,7 +2,7 @@
 
 namespace Support\Elements\FormFields\After;
 
-use Support\ClassesHelpers\Traits\Models\Renderable;
+use Support\Traits\Models\Renderable;
 
 abstract class AbstractHandler implements HandlerInterface
 {

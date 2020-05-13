@@ -18,7 +18,81 @@ class Nav
     public function generate()
     {
         // Get the navigation pages from the config
-        $pages = Config::get('sitec.site.nav', []);
+        $pages = (new \Support\Template\Mounters\SystemMount())->loadMenuForArray();
+        if (is_callable($pages)) {
+            $pages = call_user_func($pages);
+        }
+
+        // Loop through the list of pages and massage
+        $massaged = [];
+        foreach ($pages as $page) {
+            // dd($pages, $page);
+            $massaged[] = $this->recursiveGenerate($page);
+        }
+        // dd($massaged);
+        return $massaged;
+    }
+
+
+
+
+    /**
+     * Generate the nav config
+     *
+     * @return array
+     */
+    public function recursiveGenerate($menuItem)
+    {
+        // Ignora Caso Seja Um Divisor
+        if (is_string($menuItem)) {
+            return $menuItem;
+            // return ['divider' => true];
+        }
+
+        // Create a new page instance that represents the dropdown menu
+        $page = [
+            'label' => $menuItem['text'],
+            'active' => false,
+            'diviser' => false
+        ];
+        if (isset($menuItem['icon'])) {
+            $page['icon'] = $menuItem['icon'];
+        }
+        if (isset($menuItem['url'])) {
+            $page['url'] = $menuItem['url'];
+        } else if (isset($menuItem['route'])) {
+            // if (!empty($menuItem['route']) && !Route::has($menuItem['route'])) {
+            $page['url'] = route($menuItem['route']);
+        }
+
+        // If menuItem is an array, make a drop down menu
+        if (is_array($menuItem) && isset($menuItem['submenu']) && !empty($menuItem['submenu'])) {
+            $page['children'] = [];
+            // Loop through children (we only support one level deep) and
+            // add each as a child
+            foreach ($menuItem['submenu'] as $menuSubItem) {
+                $page['children'][] = $this->recursiveGenerate($menuSubItem);
+            }
+            // See if any of the children are active and set the pulldown to active
+            foreach ($page['children'] as $child) {
+                if (!empty($child->active)) {
+                    $page['active'] = true;
+                    break;
+                }
+            }
+        }
+
+        return (object) $page;
+    }
+    /**
+     * Nao usado mais faz da forma antiga
+     *
+     * @return array
+     */
+    public function oldGenerate()
+    {
+        // Get the navigation pages from the config
+        $pages = (new \Support\Template\Mounters\SystemMount())->loadMenuForArray();
         if (is_callable($pages)) {
             $pages = call_user_func($pages);
         }
@@ -26,7 +100,7 @@ class Nav
         // Loop through the list of pages and massage
         $massaged = [];
         foreach ($pages as $key => $val) {
-
+dd($pages, $key, $val);
             // If val is an array, make a drop down menu
             if (is_array($val)) {
 
@@ -61,7 +135,6 @@ class Nav
         // Pass along the navigation data
         return $massaged;
     }
-
     /**
      * Break the icon out of the label, returning an arary of label and icon
      */
@@ -74,7 +147,6 @@ class Nav
 
         return ['label' => $parts[0], 'icon' => 'default'];
     }
-
     /**
      * Make a page object
      *

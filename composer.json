@@ -40,7 +40,6 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "barryvdh/laravel-debugbar": "*",
         "cviebrock/eloquent-sluggable": "~4.0",
         "doctrine/orm": ">=2.5",
         "illuminate/auth": "^5.8|^6.0",
@@ -69,6 +68,8 @@
         "watson/validating": "^3.3.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "*",
+        "barryvdh/laravel-ide-helper": "^2.7",
         "codedungeon/phpunit-result-printer": "^0.26.0",
         "phpunit/phpunit": "^8.3.0"
     },

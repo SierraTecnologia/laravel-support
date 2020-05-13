@@ -1,7 +1,7 @@
 <?php
 
 namespace Support\Elements\ContentTypes;
-use Support\Http\Controllers\ContentTypes\BaseType;
+use Support\Elements\ContentTypes\BaseType;
 
 class KeyValueJsonContentType extends BaseType
 {

@@ -19,11 +19,16 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Cocur\Slugify\Slugify;
 use Log;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 use Illuminate\Support\Str;
 use Watson\Validating\ValidatingTrait;
+use Support\Services\EloquentService;
+
+use Support\Utils\Modificators\ArrayModificator;
+use Support\Utils\Extratores\DbalExtractor;
+use Support\Utils\Mergeators\DbalMergeator;
+use Support\Utils\Inclusores\DbalInclusor;
 
 abstract class Base extends Eloquent
 {
@@ -132,7 +137,7 @@ abstract class Base extends Eloquent
      */
     public function getIdentificador()                                                                                                                                                          
     {                                                                                                                    
-        return $this->code;
+        return $this->{$this->getKeyName()};
     }
 
     /**
@@ -182,20 +187,25 @@ abstract class Base extends Eloquent
 
     public function getApresentationName()
     {
-        if(isset($this->name)){
-            return $this->name;
+        return $this->{$this->getApresentationNameKey()};
+    }
+
+    public function getApresentationNameKey()
+    {
+        $atributesInOrderToDisplay = [
+            'name',
+            'slug',
+            'text',
+            'token',
+        ];
+        $attributes = $this->getFillable();
+        foreach ($atributesInOrderToDisplay as $display) {
+            if (in_array($display, $attributes)) {
+                return $display;
+            }
         }
-        if(isset($this->slug)){
-            return $this->slug;
-        }
-        if(isset($this->text)){
-            return $this->text;
-        }
-        if(isset($this->token)){
-            return $this->token;
-        }
-        $keyName = $this->getKeyName();
-        return $this->$keyName;
+
+        return $this->getKeyName();
     }
 
     //---------------------------------------------------------------------------
@@ -504,12 +514,17 @@ abstract class Base extends Eloquent
      */
     public static function createAndAssociate($dataOrPrimaryCode, $associateTo)
     {
-        $model = static::createIfNotExistAndReturn($dataOrPrimaryCode);
+        return static::associate(static::createIfNotExistAndReturn($dataOrPrimaryCode), $associateTo);
+    }
 
-        //@todo Código Repetido
-        $method = Str::plural(Str::lower(class_basename($model)));
+    /**
+     * Associa ao Um Modelo ao Outro
+     */
+    public static function associate($associateFrom, $associateTo)
+    {
+        $method = Str::plural(Str::lower(\class_basename($associateFrom)));
         if (method_exists($associateTo, $method)) {
-            return call_user_func_array([$associateTo, $method], [])->save($model);
+            return call_user_func_array([$associateTo, $method], [])->save($associateFrom);
         }
         return false;
     }
@@ -519,71 +534,43 @@ abstract class Base extends Eloquent
      */
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
-        $data = [];
         $modelFind = false;
         $keyName = (new static)->getKeyName();
-        if (is_array($dataOrPrimaryCode)) {
-            $data = $dataOrPrimaryCode;
-        } else {
-            $data[$keyName] = $dataOrPrimaryCode;
+        $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
+        
+
+        if (!$eloquentEntityForModel = EloquentService::getForClass(static::class)) {
+            return static::firstOrCreate($data);
         }
 
+        $data = DbalInclusor::includeDataFromEloquentEntity($eloquentEntityForModel, $data, $keyName);
 
-        $modelData = \Support\Services\EloquentService::make(static::class);
-
-
-        if (
-            (!isset($data['name']) || empty($data['name'])) && 
-            (isset($data[$keyName]) && $modelData->hasColumn('name') && $modelData->columnIsType($keyName, DoctrineStringType::class))
-        ) {
-            $data['name'] = static::convertSlugToName($data[$keyName]);
-        }
-
-
-        $indices = $modelData->getIndexes();
-        foreach ($indices as $index) {
-            if ($index->isPrimary() || $index->isUnique()) {
-                // Caso não tenha nada a procurar, entao pula
-                if (empty($generateWhere = $modelData->generateWhere(
-                    $index->getColumns(),
-                    $data
-                ))) {
-                    continue;
+        /**
+         * Search from Indexes
+         */
+        $results = DbalExtractor::generateWhereFromData(
+            $data,
+            $eloquentEntityForModel->getIndexes()
+        )->map(
+            function ($query) use ($data) {
+                if ($modelFind = static::where($query)->first()) {
+                    Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($query, true).' e Data: '.print_r($data, true));
+                    return DbalMergeator::mergeWithAttributes($modelFind, $data);
                 }
-
-                if ($modelFind = static::where($generateWhere)->first()) {
-                    Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($index->getColumns(), true).' e Data: '.print_r($data, true));
-                    return static::mergeWithAttributes($modelFind, $data);
-                }
+                return false;
             }
+        )->reject(function($result) {
+                return !$result;
+        });
+        if ($results->isNotEmpty()) {
+            return $results->first();
         }
 
-        // @debug Resolver essa gambiarra
-        $modelData->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $modelData]);
+        // Cado nada de certo retorna o primeiro ou cria
+        // @debug Resolver essa gambiarra @todo
+        $eloquentEntityForModel->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $eloquentEntityForModel]);
+        return static::firstOrCreate($data);
 
-        return static::create($data);
-
-    }
-
-    public static function mergeWithAttributes(Base $modelFind, array $data)
-    {
-        // @todo Fazer Atualizar Data
-        return $modelFind;
-    }
-    
-    public static function cleanCodeSlug($slug)
-    {
-        $slugify = new Slugify();
-        
-        $slug = $slugify->slugify($slug, '.'); // hello-world
-        
-        return $slug;
-    }
-    public static function convertSlugToName($slug)
-    {
-        return collect(explode('.', static::cleanCodeSlug($slug)))->map(function($namePart) {
-            return ucfirst($namePart);
-        })->implode(' ');
     }
 
 
@@ -594,5 +581,18 @@ abstract class Base extends Eloquent
     public function hasAttribute($attr)                                                                                                                                                          
     {                                                                                                                    
         return array_key_exists($attr, $this->attributes);
+    }
+
+    /**
+     * Fiz pq tava quebrando @todo vericar, acho que vem do magento ou synfone
+     * 
+     */
+    public function setModified($date)
+    {
+        return $date;
+    }
+    public function setCreated($date)
+    {
+        return $date;
     }
 }

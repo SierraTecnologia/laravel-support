@@ -2,8 +2,7 @@
 
 namespace Support\Services;
 
-
-use Exception;
+use Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Support\Result\RelationshipResult;
@@ -11,15 +10,17 @@ use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Support\Coder\Discovers\Database\DatabaseUpdater;
-use Support\Coder\Discovers\Database\Schema\Column;
-use Support\Coder\Discovers\Database\Schema\Identifier;
-use Support\Coder\Discovers\Database\Schema\SchemaManager;
-use Support\Coder\Discovers\Database\Schema\Table;
-use Support\Coder\Discovers\Database\Types\Type;
-use Support\Coder\Parser\ParseModelClass;
+use Support\Components\Database\DatabaseUpdater;
+use Support\Components\Database\Schema\Column;
+use Support\Components\Database\Schema\Identifier;
+use Support\Components\Database\Schema\SchemaManager;
+use Support\Components\Database\Schema\Table;
+use Support\Components\Database\Types\Type;
+use Support\Components\Coders\Parser\ParseModelClass;
 
-use Support\Coder\Parser\ComposerParser;
+use Exception;
+
+use Support\Components\Coders\Parser\ComposerParser;
 
 class DatabaseService
 {
@@ -41,10 +42,7 @@ class DatabaseService
     public function getAllModels()
     {
         if (!$this->allModels) {
-            $models = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
-            $this->allModels = $models->reject(function($filePath, $class) {
-                return !(new \Support\Coder\Discovers\Identificadores\ClasseType($class))->typeIs('model');
-            });
+            $this->allModels = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
         }
         return $this->allModels;
     }
@@ -52,16 +50,19 @@ class DatabaseService
     public function getRenderDatabase()
     {
         if (!$this->renderDatabase) {
-            $this->renderDatabase = (new \Support\Coder\Mount\DatabaseMount(collect($this->getAllModels())));
-
+            $this->renderDatabase = (new \Support\Components\Database\Mount\DatabaseMount(collect($this->getAllModels())));
         }
         return $this->renderDatabase;
     }
 
+    public function getAllEloquentsEntitys()
+    {
+        return $this->getRenderDatabase()->getAllEloquentsEntitys();
+    }
 
     public function getEloquentService($class)
     {
-        return $this->getRenderDatabase()->getEloquentService($class);
+        return $this->getRenderDatabase()->getEloquentEntity($class);
     }
 
     /**

@@ -8,7 +8,7 @@ class HiddenHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::formfields.hidden', [
+        return view('facilitador::components.formfields.hidden', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

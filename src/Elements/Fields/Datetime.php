@@ -17,14 +17,14 @@ class Datetime extends Field
     /**
      * Store the date field instance
      *
-     * @var Facilitador\Fields\Date
+     * @var Support\Elements\Fields\Date
      */
     private $date;
 
     /**
      * Store the time field instance
      *
-     * @var Facilitador\Fields\Time
+     * @var Support\Elements\Fields\Time
      */
     private $time;
 
