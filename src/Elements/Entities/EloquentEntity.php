@@ -3,15 +3,15 @@
 namespace Support\Elements\Entities;
 
 
-use Support\Helpers\Compare\StringCompare;
+use Support\Utils\Compare\StringCompare;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
-use Support\Helpers\Development\DevDebug;
-use Support\Helpers\Development\HasErrors;
+use Support\Traits\Debugger\DevDebug;
+use Support\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;

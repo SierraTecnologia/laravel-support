@@ -24,10 +24,10 @@ use Support\Elements\Entities\Relationship;
 use Support\Components\Database\Types\Type;
 use Log;
 use Support\Components\Database\Schema\SchemaManager;
-use Support\Helpers\Modificators\ArrayModificator;
-use Support\Helpers\Inclusores\ArrayInclusor;
-use Support\Helpers\Modificators\StringModificator;
-use Support\Helpers\Development\HasErrors;
+use Support\Utils\Modificators\ArrayModificator;
+use Support\Utils\Inclusores\ArrayInclusor;
+use Support\Utils\Modificators\StringModificator;
+use Support\Traits\Debugger\HasErrors;
 
 use Support\Components\Coders\Parser\ParseClass;
 
@@ -667,7 +667,7 @@ class Database
             return false;
         }
 
-        return \Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperParentClasses);
+        return \Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperParentClasses);
     }
     public function haveTableInDatabase($className)
     {
@@ -676,7 +676,7 @@ class Database
         }
         
         // // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
-        // if (\Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
+        // if (\Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
         //     return true;
         // }
         $tableName = $this->returnTableForClass($className);
@@ -780,7 +780,7 @@ class Database
             return false;
         }
         // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
-        if (!$find = \Support\Helpers\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
+        if (!$find = \Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
             return false;
         }
 

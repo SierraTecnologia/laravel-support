@@ -6,7 +6,7 @@ namespace Support\Traits\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Collection;
-use Support\Helpers\Extratores\FileExtractor;
+use Support\Utils\Extratores\FileExtractor;
 use Support\Components\Coders\Parser\ParseClass;
 
 trait ConsoleTools

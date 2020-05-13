@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Support\Traits\Coder;
 
 use Support\Components\Coders\Parser\ClassReader;
-use Support\Exceptions\Traits\SetterGetterException;
+use Support\Exceptions\SetterGetterException;
 
 /**
  * https://github.com/usmanhalalit/GetSetGo

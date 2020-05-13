@@ -9,7 +9,7 @@ use App;
 use Log;
 use Exception;
 use Support\Models\Code\Classes;
-use Support\Helpers\Development\HasErrors;
+use Support\Traits\Debugger\HasErrors;
 
 class ParseClass
 {

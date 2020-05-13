@@ -2,7 +2,7 @@
 
 namespace Support\Components\Database\Render;
 
-use Support\Helpers\Development\HasErrors;
+use Support\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;

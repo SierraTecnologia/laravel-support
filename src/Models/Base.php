@@ -25,10 +25,10 @@ use Illuminate\Support\Str;
 use Watson\Validating\ValidatingTrait;
 use Support\Services\EloquentService;
 
-use Support\Helpers\Modificators\ArrayModificator;
-use Support\Helpers\Extratores\DbalExtractor;
-use Support\Helpers\Mergeators\DbalMergeator;
-use Support\Helpers\Inclusores\DbalInclusor;
+use Support\Utils\Modificators\ArrayModificator;
+use Support\Utils\Extratores\DbalExtractor;
+use Support\Utils\Mergeators\DbalMergeator;
+use Support\Utils\Inclusores\DbalInclusor;
 
 abstract class Base extends Eloquent
 {
