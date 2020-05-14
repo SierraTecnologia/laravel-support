@@ -119,6 +119,11 @@ class ColunMount
 
     protected function isMorphTo($type = false)
     {
+        dd(
+            $this->className,
+            $this->column,
+            $this->renderDatabaseData
+        );
         
         return false;
     }
