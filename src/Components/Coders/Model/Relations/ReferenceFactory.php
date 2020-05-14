@@ -111,7 +111,7 @@ class ReferenceFactory
     }
 
     /**
-     * @return \ Support\Components\Database\Meta\Blueprint
+     * @return \Support\Components\Database\Meta\Blueprint
      */
     protected function getRelatedBlueprint()
     {

@@ -5,7 +5,7 @@
  * Date: 18/09/16 08:19 PM.
  */
 
-namespace  Support\Components\Database\Meta;
+namespace Support\Components\Database\Meta;
 
 use Illuminate\Support\Fluent;
 
@@ -241,7 +241,7 @@ class Blueprint
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $table
+     * @param \Support\Components\Database\Meta\Blueprint $table
      *
      * @return array
      */

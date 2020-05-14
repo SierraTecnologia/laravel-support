@@ -8,7 +8,7 @@
 namespace Support\Components\Coders\Model;
 
 use Illuminate\Support\Str;
-use  Support\Components\Database\Meta\Blueprint;
+use Support\Components\Database\Meta\Blueprint;
 use Illuminate\Support\Fluent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Support\Components\Coders\Model\Relations\BelongsTo;
@@ -18,7 +18,7 @@ use Support\Components\Coders\Model\Relations\ReferenceFactory;
 class Model
 {
     /**
-     * @var \ Support\Components\Database\Meta\Blueprint
+     * @var \Support\Components\Database\Meta\Blueprint
      */
     private $blueprint;
 
@@ -38,7 +38,7 @@ class Model
     protected $relations = [];
 
     /**
-     * @var \ Support\Components\Database\Meta\Blueprint[]
+     * @var \Support\Components\Database\Meta\Blueprint[]
      */
     protected $references = [];
 
@@ -165,7 +165,7 @@ class Model
     /**
      * ModelClass constructor.
      *
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      * @param \Support\Components\Coders\Model\Factory $factory
      * @param \Support\Components\Coders\Model\Mutator[] $mutators
      * @param bool $loadRelations
@@ -431,7 +431,7 @@ class Model
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint[] $references
+     * @param \Support\Components\Database\Meta\Blueprint[] $references
      */
     public function withReferences($references)
     {
@@ -1139,7 +1139,7 @@ class Model
     }
 
     /**
-     * @return \ Support\Components\Database\Meta\Blueprint
+     * @return \Support\Components\Database\Meta\Blueprint
      */
     public function getBlueprint()
     {

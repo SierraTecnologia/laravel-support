@@ -5,7 +5,7 @@
  * Date: 02/10/16 07:56 PM.
  */
 
-namespace  Support\Components\Database\Meta;
+namespace Support\Components\Database\Meta;
 
 /**
  * Created by Cristian.
@@ -24,7 +24,7 @@ interface Schema
     public function schema();
 
     /**
-     * @return \ Support\Components\Database\Meta\Blueprint[]
+     * @return \Support\Components\Database\Meta\Blueprint[]
      */
     public function tables();
 
@@ -38,12 +38,12 @@ interface Schema
     /**
      * @param string $table
      *
-     * @return \ Support\Components\Database\Meta\Blueprint
+     * @return \Support\Components\Database\Meta\Blueprint
      */
     public function table($table);
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $table
+     * @param \Support\Components\Database\Meta\Blueprint $table
      *
      * @return array
      */

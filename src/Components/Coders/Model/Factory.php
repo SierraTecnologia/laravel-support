@@ -8,9 +8,9 @@
 namespace Support\Components\Coders\Model;
 
 use Illuminate\Support\Str;
-use  Support\Components\Database\Meta\Blueprint;
+use Support\Components\Database\Meta\Blueprint;
 use Support\Utils\Debugger\Classify;
-use  Support\Components\Database\Meta\SchemaManager;
+use Support\Components\Database\Meta\SchemaManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\DatabaseManager;
 
@@ -22,7 +22,7 @@ class Factory
     private $db;
 
     /**
-     * @var \ Support\Components\Database\Meta\SchemaManager
+     * @var \Support\Components\Database\Meta\SchemaManager
      */
     protected $schemas = [];
 
@@ -120,7 +120,7 @@ class Factory
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      *
      * @return bool
      */
@@ -136,7 +136,7 @@ class Factory
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      *
      * @return bool
      */
@@ -193,7 +193,7 @@ class Factory
     /**
      * @param string $schema
      *
-     * @return \ Support\Components\Database\Meta\Schema
+     * @return \Support\Components\Database\Meta\Schema
      */
     public function makeSchema($schema)
     {
@@ -566,7 +566,7 @@ class Factory
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint|null $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint|null $blueprint
      * @param string $key
      * @param mixed $default
      *

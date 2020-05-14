@@ -5,7 +5,7 @@
  * Date: 02/10/16 07:37 PM.
  */
 
-namespace  Support\Components\Database\Meta;
+namespace Support\Components\Database\Meta;
 
 use ArrayIterator;
 use RuntimeException;
@@ -13,8 +13,8 @@ use IteratorAggregate;
 use Illuminate\Database\MySqlConnection;
 use Illuminate\Database\SQLiteConnection;
 use Illuminate\Database\ConnectionInterface;
-use  Support\Components\Database\Meta\MySql\Schema as MySqlSchema;
-use  Support\Components\Database\Meta\Sqlite\Schema as SqliteSchema;
+use Support\Components\Database\Meta\MySql\Schema as MySqlSchema;
+use Support\Components\Database\Meta\Sqlite\Schema as SqliteSchema;
 
 class SchemaManager implements IteratorAggregate
 {
@@ -33,7 +33,7 @@ class SchemaManager implements IteratorAggregate
     private $connection;
 
     /**
-     * @var \ Support\Components\Database\Meta\Schema[]
+     * @var \Support\Components\Database\Meta\Schema[]
      */
     protected $schemas = [];
 
@@ -67,7 +67,7 @@ class SchemaManager implements IteratorAggregate
     /**
      * @param string $schema
      *
-     * @return \ Support\Components\Database\Meta\Schema
+     * @return \Support\Components\Database\Meta\Schema
      */
     public function make($schema)
     {
@@ -81,7 +81,7 @@ class SchemaManager implements IteratorAggregate
     /**
      * @param string $schema
      *
-     * @return \ Support\Components\Database\Meta\Schema
+     * @return \Support\Components\Database\Meta\Schema
      */
     protected function makeMapper($schema)
     {

@@ -7,7 +7,7 @@
 
 namespace Support\Components\Coders\Model;
 
-use  Support\Components\Database\Meta\Blueprint;
+use Support\Components\Database\Meta\Blueprint;
 
 class Mutator
 {
@@ -40,7 +40,7 @@ class Mutator
 
     /**
      * @param string $column
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      *
      * @return mixed
      */

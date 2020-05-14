@@ -8,7 +8,7 @@
 namespace Support\Components\Coders\Model;
 
 use Illuminate\Support\Arr;
-use  Support\Components\Database\Meta\Blueprint;
+use Support\Components\Database\Meta\Blueprint;
 
 class Config
 {
@@ -28,7 +28,7 @@ class Config
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      * @param string $key
      * @param mixed $default
      *

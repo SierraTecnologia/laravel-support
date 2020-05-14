@@ -1,8 +1,8 @@
 <?php
 
-namespace  Support\Components\Database\Meta\Sqlite;
+namespace Support\Components\Database\Meta\Sqlite;
 
-use  Support\Components\Database\Meta\Blueprint;
+use Support\Components\Database\Meta\Blueprint;
 use Illuminate\Support\Fluent;
 use Illuminate\Database\Connection;
 
@@ -10,7 +10,7 @@ use Illuminate\Database\Connection;
  * Created by Cristian.
  * Date: 18/09/16 06:50 PM.
  */
-class Schema implements \ Support\Components\Database\Meta\Schema
+class Schema implements \Support\Components\Database\Meta\Schema
 {
     /**
      * @var string
@@ -28,7 +28,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     protected $loaded = false;
 
     /**
-     * @var \ Support\Components\Database\Meta\Blueprint[]
+     * @var \Support\Components\Database\Meta\Blueprint[]
      */
     protected $tables = [];
 
@@ -87,7 +87,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      */
     protected function fillColumns(Blueprint $blueprint)
     {
@@ -111,7 +111,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      */
     protected function fillConstraints(Blueprint $blueprint)
     {
@@ -134,7 +134,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      * @todo: Support named primary keys
      */
     protected function fillPrimaryKey(Blueprint $blueprint)
@@ -151,7 +151,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      * @internal param string $sql
      */
     protected function fillIndexes(Blueprint $blueprint)
@@ -170,7 +170,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $blueprint
+     * @param \Support\Components\Database\Meta\Blueprint $blueprint
      * @todo: Support named foreign keys
      */
     protected function fillRelations(Blueprint $blueprint)
@@ -221,7 +221,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @return \ Support\Components\Database\Meta\Blueprint[]
+     * @return \Support\Components\Database\Meta\Blueprint[]
      */
     public function tables()
     {
@@ -231,7 +231,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     /**
      * @param string $table
      *
-     * @return \ Support\Components\Database\Meta\Blueprint
+     * @return \Support\Components\Database\Meta\Blueprint
      */
     public function table($table)
     {
@@ -251,7 +251,7 @@ class Schema implements \ Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param \ Support\Components\Database\Meta\Blueprint $table
+     * @param \Support\Components\Database\Meta\Blueprint $table
      *
      * @return array
      */

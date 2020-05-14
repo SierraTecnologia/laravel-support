@@ -5,11 +5,11 @@
  * Date: 18/09/16 08:36 PM.
  */
 
-namespace  Support\Components\Database\Meta\Sqlite;
+namespace Support\Components\Database\Meta\Sqlite;
 
 use Illuminate\Support\Fluent;
 
-class Column implements \ Support\Components\Database\Meta\Column
+class Column implements \Support\Components\Database\Meta\Column
 {
     /**
      * @var \Doctrine\DBAL\Schema\Column
