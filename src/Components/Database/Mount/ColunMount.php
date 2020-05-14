@@ -119,6 +119,7 @@ class ColunMount
 
     protected function isMorphTo($type = false)
     {
+        if ($this->className==\Population\Models\Market\Abouts\Info::class)
         dd(
             $this->className,
             $this->column,
@@ -238,6 +239,7 @@ class ColunMount
 
         if ($relation = $this->isMorphTo()) {
             if (!isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+                dd('deu ruim aqui mountcolumn');
                 return null; //@todo tratar erro de tabela que nao existe
             }
             // name, key, label
