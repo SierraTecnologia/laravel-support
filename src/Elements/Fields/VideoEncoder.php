@@ -126,7 +126,7 @@ class VideoEncoder extends Upload
     protected function renderPresets()
     {
         // Create the dropdown menu options
-        $config = config('sitec.encode.presets');
+        $config = \Illuminate\Support\Facades\Config::get('sitec.encode.presets');
         $presets = array_keys($config);
         $dropdown = implode('', array_map(function ($config, $preset) {
             return '<li>
@@ -172,7 +172,7 @@ class VideoEncoder extends Upload
             return $this->preset;
         }
 
-        return array_keys(config('sitec.encode.presets'))[0];
+        return array_keys(\Illuminate\Support\Facades\Config::get('sitec.encode.presets'))[0];
     }
 
     /**

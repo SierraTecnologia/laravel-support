@@ -25,7 +25,7 @@ if (! function_exists('domain')) {
      */
     function domain()
     {
-        return parse_url(config('app.url'))['host'];
+        return parse_url(\Illuminate\Support\Facades\Config::get('app.url'))['host'];
     }
 }
 

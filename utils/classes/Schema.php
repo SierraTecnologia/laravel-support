@@ -9,6 +9,15 @@ class Schema
     {
         return Capsule::schema()->hasTable($name);
     }
+    public static function table($name)
+    {
+        DebugHelper::info("[Migrate] Modificando tabela: ".$name);
+        
+        if (Capsule::schema()->hasTable($name)) {
+            return true;
+        }
+        return Capsule::schema()->table($name, $function);
+    }
 
     public static function create($name, $function)
     {

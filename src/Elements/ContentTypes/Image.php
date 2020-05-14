@@ -52,11 +52,11 @@ class Image extends BaseType
             )->encode($file->getClientOriginalExtension(), $resize_quality);
 
             if ($this->is_animated_gif($file)) {
-                Storage::disk(config('sitec.facilitador.storage.disk'))->put($fullPath, file_get_contents($file), 'public');
+                Storage::disk(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))->put($fullPath, file_get_contents($file), 'public');
                 $fullPathStatic = $path.$filename.'-static.'.$file->getClientOriginalExtension();
-                Storage::disk(config('sitec.facilitador.storage.disk'))->put($fullPathStatic, (string) $image, 'public');
+                Storage::disk(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))->put($fullPathStatic, (string) $image, 'public');
             } else {
-                Storage::disk(config('sitec.facilitador.storage.disk'))->put($fullPath, (string) $image, 'public');
+                Storage::disk(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))->put($fullPath, (string) $image, 'public');
             }
 
             if (isset($this->options->thumbnails)) {
@@ -92,7 +92,7 @@ class Image extends BaseType
                             ->encode($file->getClientOriginalExtension(), $resize_quality);
                     }
 
-                    Storage::disk(config('sitec.facilitador.storage.disk'))->put(
+                    Storage::disk(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))->put(
                         $path.$filename.'-'.$thumbnails->name.'.'.$file->getClientOriginalExtension(),
                         (string) $image,
                         'public'
@@ -117,14 +117,14 @@ class Image extends BaseType
             $filename_counter = 1;
 
             // Make sure the filename does not exist, if it does make sure to add a number to the end 1, 2, 3, etc...
-            while (Storage::disk(config('sitec.facilitador.storage.disk'))->exists($path.$filename.'.'.$file->getClientOriginalExtension())) {
+            while (Storage::disk(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))->exists($path.$filename.'.'.$file->getClientOriginalExtension())) {
                 $filename = basename($file->getClientOriginalName(), '.'.$file->getClientOriginalExtension()).(string) ($filename_counter++);
             }
         } else {
             $filename = Str::random(20);
 
             // Make sure the filename does not exist, if it does, just regenerate
-            while (Storage::disk(config('sitec.facilitador.storage.disk'))->exists($path.$filename.'.'.$file->getClientOriginalExtension())) {
+            while (Storage::disk(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))->exists($path.$filename.'.'.$file->getClientOriginalExtension())) {
                 $filename = Str::random(20);
             }
         }

@@ -126,7 +126,7 @@ class Factory
      */
     protected function shouldNotExclude(Blueprint $blueprint)
     {
-        foreach ($this->config($blueprint, 'except', []) as $pattern) {
+        foreach ($this->\Illuminate\Support\Facades\Config::get($blueprint, 'except', []) as $pattern) {
             if (Str::is($pattern, $blueprint->table())) {
                 return false;
             }
@@ -142,7 +142,7 @@ class Factory
      */
     protected function shouldTakeOnly(Blueprint $blueprint)
     {
-        if ($patterns = $this->config($blueprint, 'only', [])) {
+        if ($patterns = $this->\Illuminate\Support\Facades\Config::get($blueprint, 'only', [])) {
             foreach ($patterns as $pattern) {
                 if (Str::is($pattern, $blueprint->table())) {
                     return true;
@@ -237,7 +237,7 @@ class Factory
     protected function prepareTemplate(Model $model, $name)
     {
         $defaultFile = $this->path([__DIR__, 'Templates', $name]);
-        $file = $this->config($model->getBlueprint(), "*.template.$name", $defaultFile);
+        $file = $this->\Illuminate\Support\Facades\Config::get($model->getBlueprint(), "*.template.$name", $defaultFile);
 
         return $this->files->get($file);
     }
@@ -476,7 +476,7 @@ class Factory
      */
     protected function modelPath(Model $model, $custom = [])
     {
-        $modelsDirectory = $this->path(array_merge([$this->config($model->getBlueprint(), 'path')], $custom));
+        $modelsDirectory = $this->path(array_merge([$this->\Illuminate\Support\Facades\Config::get($model->getBlueprint(), 'path')], $custom));
 
         if (! $this->files->isDirectory($modelsDirectory)) {
             $this->files->makeDirectory($modelsDirectory, 0755, true);
@@ -572,7 +572,7 @@ class Factory
      *
      * @return mixed|\Support\Components\Coders\Model\Config
      */
-    public function config(Blueprint $blueprint = null, $key = null, $default = null)
+    public function \Illuminate\Support\Facades\Config::get(Blueprint $blueprint = null, $key = null, $default = null)
     {
         if (is_null($blueprint)) {
             return $this->config;
