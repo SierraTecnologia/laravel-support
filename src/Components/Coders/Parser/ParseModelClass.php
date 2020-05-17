@@ -43,6 +43,12 @@ class ParseModelClass extends ParseClass
 
 
 
+    public function isModelClass()
+    {
+        return $this->typeIs('model');
+    }
+
+
 
     public function __construct($classOrReflectionClass)
     {
@@ -161,12 +167,6 @@ class ParseModelClass extends ParseClass
     }
 
 
-
-
-    public function isModelClass()
-    {
-        return $this->typeIs('model');
-    }
 
     
     /**
