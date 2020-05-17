@@ -55,6 +55,9 @@ abstract class CodeError
 
     public function __construct($target)
     {
+        // if (!is_string($target)) {
+        //     dd($target);
+        // }
         $this->setTarget($target);
         if (!$this->supportModelCodeClass = Error::where($this->whereFind())->first()) {
             $this->supportModelCodeClass = new Error;

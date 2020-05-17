@@ -27,6 +27,9 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 class ArraySearcher
 {
     public static function arrayIsearch($str, $array){
+        if (empty($str) || is_null($str) || $str===false) {
+            return false;
+        }
         $found = array();
         foreach ($array as $k => $v) {
             if (is_array($v)) {
@@ -41,7 +44,44 @@ class ArraySearcher
                     $found[] = $k;
                 }
             } else {
-                if (strtolower($v) == strtolower($str)) {
+                if (is_array($str)) {
+                    if (self::arrayIsearch($v, $str)) {
+                        $found[] = $k;
+                    }
+                } else {
+                    if (empty($v) || is_null($v) && strtolower($v) == strtolower($str)) {
+                        $found[] = $k;
+                    }
+                }
+            }
+        }
+
+        if (empty($found)) {
+            return false;
+        }
+
+        return $found;
+    }
+
+    public static function arraySearchByAttribute($str, $array, $attribute){
+        if (empty($str) || is_null($str) || $str===false) {
+            return false;
+        }
+
+        $found = array();
+        foreach ($array as $k => $v) {
+            if (isset($v[$attribute])) {
+                if (is_array($v[$attribute])) {
+                    // Caso o Attributo seja um array entao procura normalmente,
+                    // sem levar em conta o parametro
+                    if ($subFound = self::arrayIsearch($str, $v[$attribute])){
+                        $found[] = $k;
+                    }
+                } else if (strtolower($v[$attribute]) == strtolower($str)) {
+                    $found[] = $k;
+                }
+            } else if (is_array($v)) {
+                if ($subFound = self::arraySearchByAttribute($str, $v, $attribute)){
                     $found[] = $k;
                 }
             }
@@ -53,4 +93,5 @@ class ArraySearcher
 
         return $found;
     }
+    
 }

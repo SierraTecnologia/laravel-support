@@ -78,7 +78,7 @@ class EloquentEntity
     /**
      * indexes
      *
-     * @var string
+     * @var array
      * @getter true
      * @setter true
      */

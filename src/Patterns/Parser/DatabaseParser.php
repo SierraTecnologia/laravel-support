@@ -11,9 +11,14 @@ use Support\Components\Database\Schema\SchemaManager;
 class DatabaseParser
 {
 
+    public function __construct()
+    {
+        $this->parser();
+    }
+
     public function __invoke()
     {
-         return $this->tables;
+        return $this->tables;
     }
     /**
      * Nivel 2

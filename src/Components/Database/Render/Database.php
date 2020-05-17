@@ -56,7 +56,6 @@ class Database implements Arrayable
     /**
      * Para Cada Tabela Pega as Classes Correspondentes
      */
-    public $dicionarioPrimaryKeys;
     public $dicionarioTablesRelations = [];
 
 
@@ -83,7 +82,6 @@ class Database implements Arrayable
     public static $mapper = [
         'Dicionario' => [
             'dicionarioTablesRelations',
-            'dicionarioPrimaryKeys',
         ],
         'Mapper' => [
             'mapperTableToClasses',
@@ -156,9 +154,9 @@ class Database implements Arrayable
                 $this->renderTables();
 
                 // Remove as Classes que não sao Finais
+                $tmp = $this->eloquentClasses;
                 $this->eloquentClasses = $this->eloquentClasses->reject(function($class) {
                     $classUniversal = $class->getModelClass(); // for reference in debug
-                    // For Debug
                     if ( $this->isForIgnoreClass($class->getModelClass())) {
                         return true;
                     }
@@ -258,7 +256,7 @@ class Database implements Arrayable
 
     protected function renderTables()
     {
-        $listTables = new \Support\Patterns\Parser\DatabaseParser();
+        $listTables = (new \Support\Patterns\Parser\DatabaseParser())();
         $tableBuilder = new \Support\Patterns\Builder\TablesBuilder($listTables);
 
         $this->tempAppTablesWithNotPrimaryKey = $tableBuilder->getRelationTables();
@@ -460,23 +458,26 @@ class Database implements Arrayable
         // if (\Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
         //     return true;
         // }
-        $tableName = $this->returnTableForClass($className);
-
-        if (isset($this->displayTables[$tableName])) {
-            return true;
-        }
-
-        $error = \Support\Components\Errors\TableNotExistError::make(
-            $tableName,
-            [
-                'file' => $className
-            ]
-        );
-        $this->setError(
-            $error
-        );
-        $this->tempErrorClasses[$className] = $error->getDescription();
-        
+        if ($tableName = $this->returnTableForClass($className)) {
+            if (\Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+                $tableName,
+                $this->displayTables,
+                'name'
+            )) {
+                return true;
+            }
+            
+            $error = \Support\Components\Errors\TableNotExistError::make(
+                $tableName,
+                [
+                    'file' => $className
+                ]
+            );
+            $this->setError(
+                $error
+            );
+            $this->tempErrorClasses[$className] = $error->getDescription();
+        }    
         return false;
     }
 

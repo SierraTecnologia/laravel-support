@@ -61,12 +61,16 @@ class EloquentMount
         $primaryKey = $tableClassArray["getKeyName"];
         
 
-        if (!isset($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName])) {
+        if (!$foundEntity = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+            $tableName,
+            $this->renderDatabaseData["Leitoras"]["displayTables"],
+            'name'
+        )) {
             // @todo criar erro
             return false;
         }
 
-        $indexes = $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName][
+        $indexes = $this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]][
             'indexes'
         ];
 // dd(
@@ -81,21 +85,21 @@ class EloquentMount
         $eloquentEntity->setIndexes($indexes);
 
         $eloquentEntity->setData($tableClassArray);
-        $eloquentEntity->setDataForColumns($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns']);
+        $eloquentEntity->setDataForColumns($this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]]['columns']);
 
         $eloquentEntity->setGroupPackage($tableClassArray['groupPackage']);
         $eloquentEntity->setGroupType($tableClassArray['groupType']);
         $eloquentEntity->setHistoryType($tableClassArray['historyType']);
         $eloquentEntity->setRegisterType($tableClassArray['registerType']);
         
-        foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]['columns'] as $column) {
+        foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]]['columns'] as $column) {
             $eloquentEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
         }
 
         // Debug
         // if ($tableName=='persons') {
         //     dd(
-        //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName],
+        //         $this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]],
         //         $eloquentEntity
         //     );
         // }

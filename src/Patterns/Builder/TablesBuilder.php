@@ -8,7 +8,7 @@ namespace Support\Patterns\Builder;
 use Support\Utils\Modificators\ArrayModificator;
 use Support\Utils\Modificators\StringModificator;
 use Support\Traits\Coder\GetSetTrait;
-
+use Support\Components\Database\Schema\Table;
 use Log;
 
 class TablesBuilder
@@ -38,47 +38,47 @@ class TablesBuilder
     protected $relationTables = [];
 
 
-    public function __construct($tablesList)
+    public function __construct(Array $tablesList)
     {
         $this->builder($tablesList);
     }
 
-    protected function builder($tables)
+    protected function builder(Array $tables): void
     {
         foreach ($tables as $table){
             $this->builderTable($table);
         }
     }
 
-    protected function builderTable($table)
+    protected function builderTable(Table $table): Array
     {
         $columns = ArrayModificator::includeKeyFromAtribute($table->exportColumnsToArray(), 'name');
-        $indexes = $listTable->exportIndexesToArray();
+        $indexes = $table->exportIndexesToArray();
         $tableData = [
-            'name' => $listTable->getName(),
+            'name' => $table->getName(),
             'columns' => $columns,
             'indexes' => $indexes
         ];
 
-        if (!$primary = $this->returnPrimaryKeyFromIndexes($table->exportIndexesToArray())) {
-            return $this->relationTables[$tableName->getName()] = $tableData;
+        if (!$primary = $this->returnPrimaryKeyFromIndexes($indexes)) {
+            return $this->relationTables[$table->getName()] = $tableData;
         }
 
         $tableData['key'] = $primary;
-        $tableData['displayName'] = $this->getDisplayName($table);
+        $tableData['displayName'] = $this->getDisplayName($table, $columns);
         
-        return $this->tables[$this->returnRelationPrimaryKey($tableName->getName(), $primary)] = $tableData;
+        return $this->tables[$this->returnRelationPrimaryKey($table->getName(), $primary)] = $tableData;
     }
 
     /**
      * Nivel 3
      */
-    private function returnRelationPrimaryKey($tableName, $primary)
+    private function returnRelationPrimaryKey(String $tableName, String $primary)
     {
         return StringModificator::singularizeAndLower($tableName).'_'.$primary;
     }
 
-    private function returnPrimaryKeyFromIndexes($indexes)
+    private function returnPrimaryKeyFromIndexes(Array $indexes)
     {
         $primary = false;
         if (!empty($indexes)) {
@@ -92,7 +92,7 @@ class TablesBuilder
         return $primary;
     }
 
-    private function getDisplayName($listTable)
+    private function getDisplayName(Table $listTable, $columns = false)
     {
 
         // Qual coluna ira mostrar em uma Relacao ?
@@ -102,7 +102,11 @@ class TablesBuilder
         if ($listTable->hasColumn('displayName')) {
             return 'displayName';
         }
-        foreach ($tables[$listTable->getName()]['columns'] as $column) {
+
+        if (!$columns) {
+            return false;
+        }
+        foreach ($columns as $column) {
             if ($column['type']['name'] == 'varchar') {
                 return $column['name'];
             }

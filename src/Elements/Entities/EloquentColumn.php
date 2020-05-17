@@ -62,7 +62,7 @@ class EloquentColumn
     /**
      * details
      *
-     * @var string
+     * @var array
      * @getter true
      * @setter true
      */

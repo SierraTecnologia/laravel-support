@@ -66,48 +66,6 @@ trait ArrayableTrait
 
         return $dataToReturn;
 
-        // return [
-            
-        //     'Dicionario' => [
-        //         // Dados GErados
-        //         'dicionarioTablesRelations' => $this->dicionarioTablesRelations,
-        //         'dicionarioPrimaryKeys' => $this->dicionarioPrimaryKeys,
-        //     ],
-
-        //     'Mapper' => [
-        //         /**
-        //          * Mapper
-        //          */
-        //         'mapperTableToClasses' => $this->mapperTableToClasses,
-        //         'mapperParentClasses' => $this->mapperParentClasses,
-        //     ],
-            
-        //     'Leitoras' => [
-        //         // Leitoras
-        //         'displayTables' => $this->displayTables,
-        //         'displayClasses' => $this->displayClasses,
-        //     ],
-    
-
-        //     /**
-        //      * Sistema
-        //      */
-        //     // Ok
-            
-        //     'AplicationTemp' => [
-        //         // Nao ok
-        //         'tempAppTablesWithNotPrimaryKey' => $this->tempAppTablesWithNotPrimaryKey,
-        //         // 'classes' => [],
-
-        //     ],
-        //     'Errors' => [
-        //         /**
-        //          * Errors 
-        //          **/
-        //         'errors' => $this->getError(),
-
-        //     ],
-        // ];
     }
 
     public function fromArray($datas)

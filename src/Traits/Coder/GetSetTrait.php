@@ -71,7 +71,7 @@ trait GetSetTrait
             if (!$setter) {
                 throw new SetterGetterException('Can\'t set restricted property ' . $property, 1);
                 // All parameters are given
-            } elseif (count($params) < 1 || !isset($params[0])) {
+            } elseif (count($params) < 1 || (!is_null($params[0]) && !isset($params[0]))) {
                 throw new \InvalidArgumentException("Invalid parameter given, method <strong>$method</strong> requires 1 parameter,  but "
                 . count($params) . " given!", 2);
             }

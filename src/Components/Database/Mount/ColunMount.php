@@ -83,7 +83,9 @@ class ColunMount
 
         $columnEntity->setName($this->getName());
         $columnEntity->setData($this->column);
-        $columnEntity->setDetails($this->mountDetails());
+        if ($details = $this->mountDetails()) {
+            $columnEntity->setDetails($details);
+        }
 
         return $columnEntity;
     }
@@ -119,12 +121,23 @@ class ColunMount
 
     protected function isMorphTo($type = false)
     {
-        if ($this->className==\Population\Models\Market\Abouts\Info::class)
-        dd(
-            $this->className,
-            $this->column,
-            $this->renderDatabaseData
-        );
+        if ($this->className==\Population\Models\Market\Abouts\Info::class
+        && $this->column['name']!=='id'&& $this->column['name']!=='text'
+        ) {
+            // if ($searchForeachKey = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+            //     $this->column['name'],
+            //     $this->displayTables,
+            //     'foreignKey'
+            // )) {
+            //     dd($searchForeachKey);
+            //     return true;
+            // }
+            dd(
+                $this->className,
+                $this->column,
+                $this->renderDatabaseData
+            );
+        }
         
         return false;
     }
