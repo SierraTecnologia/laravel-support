@@ -7,7 +7,7 @@ namespace Support\Traits\Providers;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Collection;
 use Support\Utils\Extratores\FileExtractor;
-use Support\Components\Coders\Parser\ParseClass;
+use Support\Utils\Extratores\ClasserExtractor;
 
 trait ConsoleTools
 {
@@ -207,7 +207,7 @@ trait ConsoleTools
 
     private function getPackageFolder()
     {
-        return FileExtractor::getFolderPathFromFile(ParseClass::getFileFromClass($this));
+        return FileExtractor::getFolderPathFromFile(ClasserExtractor::getFileFromClass($this));
     }
 
 

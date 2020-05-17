@@ -25,68 +25,23 @@ class DatabaseMount implements StageInterface
 
     public function __invoke($renderDatabaseArray)
     {
+        $eloquentClasses =  collect($renderDatabaseArray["Leitoras"]["displayClasses"]);
 
-        // // Persist Models With Errors @todo retirar ignoretedClasses
-        // $this->ignoretedClasses = $this->eloquentClasses->diffKeys($renderDatabaseArray["Leitoras"]["displayClasses"]);
-        $eloquentClasses = $this->eloquentClasses = collect($renderDatabaseArray["Leitoras"]["displayClasses"]);
-        // dd(
-        //     'Olaaaa Database Mount',
-        //     $eloquentClasses,
-        //     $this->ignoretedClasses 
-        // );
-
-        $this->renderDatabase = $renderDatabaseArray;
-        
-        $this->relationships = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabaseArray) {
-
-            foreach ($eloquentData['relations'] as $relation) {
-                if (!isset($relation['origin_table_name']) || empty($relation['origin_table_name'])) {
-                    $relation['origin_table_name'] = $renderDatabaseArray["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
-                }
-                if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
-                    $relation['related_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
-                        $relation['related_table_class'],
-                        $renderDatabaseArray,
-                        '["Leitoras"]["displayClasses"][{{index}}]["tableName"]'
-                    );
-                }
-                return new Relationship($relation);
-            }
-        });
 
         $this->entitys = $eloquentClasses->reject(function($eloquentData, $className) {
             return $this->eloquentHasError($className);
         })->map(function($eloquentData, $className) use ($renderDatabaseArray) {
             return (new EloquentMount($className, $renderDatabaseArray))->getEntity();
         });
-        //     dd(
-        //         $this->entitys,
-        //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
-        // );
-        
-        // $databaseEntity = new DatabaseEntity();
-        
-        // $databaseEntity = new DatabaseEntity();
-        // $databaseEntity
-
-    }
-}
-
-class AddOneStage implements StageInterface
-{
-    public function __invoke($payload)
-    {
-        return $payload + 1;
     }
 }
 
 $pipeline = (new Pipeline)
     ->pipe(new DatabaseRender)
-    ->pipe(new DatabaseMount)
-    ->pipe(new AddOneStage);
+    ->pipe(new DatabaseMount);
 
 // Returns 21
-$pipeline->process(10);
+$entitys = $pipeline->process(10);
 
 
 

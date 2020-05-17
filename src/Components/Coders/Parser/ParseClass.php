@@ -11,16 +11,58 @@ use Exception;
 use Support\Models\Code\Classes;
 use Support\Traits\Debugger\HasErrors;
 
-class ParseClass
+use Support\Contracts\Support\Arrayable;
+use Support\Contracts\Support\ArrayableTrait;
+use Support\Traits\Coder\GetSetTrait;
+
+class ParseClass implements Arrayable
 {
-    use HasErrors;
+    use HasErrors; //, ArrayableTrait;
+
+    /**
+     * Atributos
+     */
+    use GetSetTrait;
+
+    /**
+     * Nome da Classe
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $className;
+
+    /**
+     * Tipo da Classe
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $type;
+
+    /**
+     * Attributes to Array Mapper @todo Nao usado ainda, era bom usar
+     */
+    public static $mapper = [
+        'class',
+        'filename',
+        'parentClass',
+        'interfaces',
+        'type',
+
+        'groupPackage',
+        'groupType',
+        'historyType',
+        'registerType'
+    ];
+
     public $supportModelCodeClass = false;
 
     public $reflectionClass = false;
-    public $className = false;
     public $parentClass = false;
     public $fileName = false;
-    public $type = false;
 
     public static $types = [
         'model' => 'Illuminate\Database\Eloquent\Model',
@@ -43,7 +85,7 @@ class ParseClass
         if (!$this->supportModelCodeClass = Classes::find($this->className)) {
             $this->supportModelCodeClass = new Classes;
             $this->supportModelCodeClass->class_name = $this->getClasseName();
-            $this->supportModelCodeClass->filename = $this->getClassFilename();
+            $this->supportModelCodeClass->filename = $this->getFilename();
             $this->supportModelCodeClass->parent_class = $this->getParentClassName();
             $this->supportModelCodeClass->type = $this->getType();
             $this->supportModelCodeClass->data = $this->toArray();
@@ -79,12 +121,15 @@ class ParseClass
         return [
 
             'class' => $this->getClasseName(),
-            'filename' => $this->getClassFilename(),
+            'filename' => $this->getFilename(),
             'parentClass' => $this->getParentClassName(),
             'interfaces' => $this->getInterfaceNames(),
             'type' => $this->getType(),
 
-            'group_package' => $this->getPackageNamespace(),
+            'groupPackage' => ClasserExtractor::getPackageNamespace($className),
+            'groupType' => ClasserExtractor::getPackageNamespace($className),
+            'historyType' => ClasserExtractor::getPackageNamespace($className),
+            'registerType' => ClasserExtractor::getPackageNamespace($className),
         ];
 
     }
@@ -108,15 +153,6 @@ class ParseClass
         }
     }
 
-    // @todo fazer getSetter para cada um desses
-    public function getClasseName()
-    {
-        return $this->className;
-    }
-    public function setClasseName($className)
-    {
-        $this->className = $className;
-    }
     public function getParentClassName()
     {
         if ($this->parentClass === false) {
@@ -132,7 +168,7 @@ class ParseClass
     {
         $this->parentClass = $parentClass;
     }
-    public function getClassFilename()
+    public function getFilename()
     {
         if ($this->fileName === false) {
             $this->fileName = $this->getReflectionClassForUse()->getFileName();
@@ -142,14 +178,6 @@ class ParseClass
     public function setClassFilename($fileName)
     {
         $this->fileName = $fileName;
-    }
-    public function getType()
-    {
-        return $this->type;
-    }
-    public function setType($type)
-    {
-        $this->type = $type;
     }
     public function getInterfaceNames()
     {
@@ -189,11 +217,18 @@ class ParseClass
         return 'other';
     }
     
+    /**
+     * @todo tirar daqui
+     */
     public static function getFileName($classOrReflectionClass = false)
     {
         return (static::getReflectionClass($classOrReflectionClass))->getFileName();
     }
 
+    
+    /**
+     * @todo tirar daqui
+     */
     /**
      * Gets the class name.
      * @return string
@@ -203,6 +238,10 @@ class ParseClass
         return strtolower(array_slice(explode('\\', $class), -1, 1)[0]);
     }
 
+    
+    /**
+     * @todo tirar daqui
+     */
     public static function returnInstanceForClass($class, $with = false)
     {
 
@@ -226,6 +265,10 @@ class ParseClass
 
 
 
+    
+    /**
+     * @todo tirar daqui
+     */
     protected static function getReflectionClass($classOrReflectionClass = false)
     {
         if (!$classOrReflectionClass || is_string($classOrReflectionClass)) {
@@ -237,30 +280,17 @@ class ParseClass
     /**
      * Veio da outra classe que eu tinha feito antes
      */
+    
+    /**
+     * @todo tirar daqui
+     */
     public static function fastExecute($class, $method, ...$args)
     {
         return (new static($class))->$method(...$args);
     }
 
 
-    /**
-     * 
-     */
-    public function getNamespace()
-    {
-        // $namespaceWithoutModels = explode("Models\\", $this->className);
-        // return join(array_slice(explode("\\", $namespaceWithoutModels[1]), 0, -1), "\\");
-        return explode("\\", $this->className);
-    }
-    public function getPackageNamespace()
-    {
-        return $this->getNamespace()[0];
-    }
     
-    public static function getFileFromClass($class)
-    {
-        return self::getFileName(get_class($class));
-    }
 
     // /**
     //  * Gets the class name.

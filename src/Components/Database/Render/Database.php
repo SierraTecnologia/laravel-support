@@ -27,13 +27,16 @@ use Support\Components\Database\Schema\SchemaManager;
 use Support\Utils\Modificators\ArrayModificator;
 use Support\Utils\Inclusores\ArrayInclusor;
 use Support\Utils\Modificators\StringModificator;
-use Support\Traits\Debugger\HasErrors;
 
 use Support\Components\Coders\Parser\ParseClass;
 
-class Database
+use Support\Contracts\Support\Arrayable;
+use Support\Contracts\Support\ArrayableTrait;
+use Support\Traits\Debugger\HasErrors;
+
+class Database implements Arrayable
 {
-    use HasErrors;
+    use HasErrors, ArrayableTrait;
 
     /****************************************
      * Eloquent CLasse (Work and Register in Databse)
@@ -132,129 +135,6 @@ class Database
         }
 
         $this->mapperParentClasses[$className] = $classParent;
-    }
-
-    public function toArray()
-    {
-        $dataToReturn = [];
-        $mapper = self::$mapper;
-        foreach ($mapper as $indice=>$dataArray) {
-            $dataToReturn[$indice] = [];
-            foreach ($dataArray as $atributeNameVariable) {
-                $dataToReturn[$indice][$atributeNameVariable] = $this->$atributeNameVariable;
-            }
-        }
-
-        $dataToReturn['Errors'] = [];
-        $dataToReturn['Errors']['errors'] = $this->getErrors();
-
-        return $dataToReturn;
-
-        // return [
-            
-        //     'Dicionario' => [
-        //         // Dados GErados
-        //         'dicionarioTablesRelations' => $this->dicionarioTablesRelations,
-        //         'dicionarioPrimaryKeys' => $this->dicionarioPrimaryKeys,
-        //     ],
-
-        //     'Mapper' => [
-        //         /**
-        //          * Mapper
-        //          */
-        //         'mapperTableToClasses' => $this->mapperTableToClasses,
-        //         'mapperParentClasses' => $this->mapperParentClasses,
-        //     ],
-            
-        //     'Leitoras' => [
-        //         // Leitoras
-        //         'displayTables' => $this->displayTables,
-        //         'displayClasses' => $this->displayClasses,
-        //     ],
-    
-
-        //     /**
-        //      * Sistema
-        //      */
-        //     // Ok
-            
-        //     'AplicationTemp' => [
-        //         // Nao ok
-        //         'tempAppTablesWithNotPrimaryKey' => $this->tempAppTablesWithNotPrimaryKey,
-        //         // 'classes' => [],
-
-        //     ],
-        //     'Errors' => [
-        //         /**
-        //          * Errors 
-        //          **/
-        //         'errors' => $this->getError(),
-
-        //     ],
-        // ];
-    }
-
-    public function setArray($datas)
-    {
-        $mapper = self::$mapper;
-        foreach ($mapper as $indice=>$mapperValue) {
-            if (isset($datas[$indice])) {
-                foreach ($mapperValue as $atributeNameVariable) {
-                    $this->$atributeNameVariable = $datas[$indice][$atributeNameVariable];
-                }
-            }
-        }
-
-        if (isset($datas['Errors'])) {
-            if (isset($datas['Errors']['errors'])) {
-                $this->mergeErrors($datas['Errors']['errors']);
-            }
-        }
-        // foreach ($datas as $indice=>$data) {
-        //     if ($indice==='Dicionario') {
-        //         $this->dicionarioTablesRelations = $data['dicionarioTablesRelations'];
-        //         // Dicionario
-        //         $this->dicionarioPrimaryKeys = $data['dicionarioPrimaryKeys'];
-        //     }
-        //     if ($indice==='Mapper') {
-        //         // Mapa
-        //         $this->mapperTableToClasses = $data['mapperTableToClasses'];
-        //         $this->mapperParentClasses = $data['mapperParentClasses'];
-        //     }
-
-
-        //     if ($indice==='Leitoras') {
-        //         $this->displayTables = $data['displayTables'];
-        //         $this->displayClasses = $data['displayClasses'];
-        //     }
-
-
-        //     if ($indice==='AplicationTemp') {
-        //         $this->tempAppTablesWithNotPrimaryKey = $data['tempAppTablesWithNotPrimaryKey'];
-        //     }
-        //     if ($indice==='Errors') {
-        //         if (isset($data['errors'])) {
-        //             $this->mergeErrors($data['errors']);
-        //         }
-        //     }
-
-
-        // }
-    }
-
-    public function display()
-    {
-        $display = [];
-        $array = $this->toArray();
-        foreach ($array as $category => $infos) {
-            foreach ($infos as $title => $value) {
-                $display[] = $category.' > '.$title;
-                $display[] = $value;
-            }
-        }
-        dd(
-            ...$display
-        );
     }
 
     protected function render()

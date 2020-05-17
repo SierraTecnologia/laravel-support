@@ -57,7 +57,7 @@ trait GetSetTrait
 
         // If we have to detect generic types, then make the $type lowercase,
         // so it remains case insensitive.
-        if (in_array(strtolower($type), ['string', 'number', 'array', 'object'])) {
+        if ($type && in_array(strtolower($type), ['string', 'number', 'array', 'object'])) {
             $type = strtolower($type);
         }
 

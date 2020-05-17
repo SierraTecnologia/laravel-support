@@ -31,15 +31,30 @@ use Support\Elements\Entities\Relationship;
 use Illuminate\Support\Facades\Cache;
 
 use Log;
+use Support\Contracts\Support\Arrayable;
+use Support\Contracts\Support\ArrayableTrait;
 
-class DatabaseMount
+class DatabaseMount implements Arrayable
 {
+    use ArrayableTrait;
+
+    /**
+     * Attributes to Array Mapper
+     */
+    public static $mapper = [
+        'eloquentClasses',
+        'renderDatabase',
+        'ignoretedClasses',
+    ];
+
+
     protected $eloquentClasses = false;
 
 
     protected $renderDatabase = false;
     protected $relationships = false;
     protected $ignoretedClasses = [];
+
 
 
     public function __construct($eloquentClasses)
@@ -50,27 +65,6 @@ class DatabaseMount
         $this->eloquentClasses = $eloquentClasses;
 
         $this->render();
-    }
-
-    protected function toArray()
-    {
-        $data = [];
-        $data['eloquentClasses'] = $this->eloquentClasses;
-        $data['renderDatabase'] = $this->renderDatabase;
-        $data['ignoretedClasses'] = $this->ignoretedClasses;
-        return $data;
-    }
-
-
-    protected function setArray($data)
-    {
-        if (isset($data['eloquentClasses'])) {
-            $this->eloquentClasses = $data['eloquentClasses'];
-        }
-        if (isset($data['renderDatabase'])) {
-            $this->renderDatabase = $data['renderDatabase'];
-        }
-        return $data;
     }
 
 

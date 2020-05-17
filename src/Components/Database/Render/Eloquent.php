@@ -8,7 +8,6 @@ use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
 use Support\Traits\Debugger\DevDebug;
-use Support\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -37,10 +36,14 @@ use Throwable;
 use Watson\Validating\ValidationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
-class Eloquent
+use Support\Contracts\Support\Arrayable;
+use Support\Contracts\Support\ArrayableTrait;
+use Support\Traits\Debugger\HasErrors;
+
+class Eloquent implements Arrayable
 {
+    use HasErrors, ArrayableTrait;
     use DevDebug;
-    use HasErrors;
     /**
      * Identify
      */
@@ -49,17 +52,12 @@ class Eloquent
     /**
      * Cached
      */
-    protected $name;
-    protected $icon;
-    protected $tableData;
-    protected $tableName;
     protected $colunasDaTabela;
     protected $columns;
     protected $indexes;
     protected $primaryKey;
     protected $attributes;
 
-    protected $relations = false;
 
     /**
      * NOt Cached
@@ -73,6 +71,69 @@ class Eloquent
      */
     public $parentClass;
 
+
+
+
+    /**
+     * Attributes to Array Mapper
+     */
+    public static $mapper = [
+        'tableData',
+        'tableName',
+        'relations',
+        'name',
+        'icon',
+    ];
+
+    /**
+     * Params
+     *
+     * @var string
+     * @getter false
+     * @setter false
+     * @serializable true
+     */
+    protected $tableData;
+
+    /**
+     * Params
+     *
+     * @var string
+     * @getter false
+     * @setter false
+     * @serializable true
+     */
+    protected $tableName;
+
+    /**
+     * Params
+     *
+     * @var string
+     * @getter false
+     * @setter false
+     * @serializable true
+     */
+    protected $relations = false;
+
+    /**
+     * Params
+     *
+     * @var string
+     * @getter false
+     * @setter false
+     * @serializable true
+     */
+    protected $name;
+
+    /**
+     * Params
+     *
+     * @var string
+     * @getter false
+     * @setter false
+     * @serializable true
+     */
+    protected $icon;
 
 
     /**
@@ -140,36 +201,6 @@ class Eloquent
 
         return $name;
     }
-
-
-    /**
-     * Update the table.
-     *
-     * @return void
-     */
-    public function fromArray($data)
-    {
-        // $manager['modelManager'] = $this->hardParserModelClass->toArray();
-        // $manager['tableManager'] = $this->schemaManagerTable->toArray();
-    }
-
-
-    /**
-     * Update the table.
-     *
-     * @return void
-     */
-    public function toArray()
-    {
-        $array = [];
-        $array['tableName'] = $this->tableName;
-        $array['tableData'] = $this->tableData;
-        $array['name'] = $this->name;
-        $array['icon'] = $this->icon;
-        $array['relations'] = $this->relations;
-        return $array;
-    }
-
 
     /**
      * Update the table.

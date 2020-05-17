@@ -100,37 +100,5 @@ class EloquentMount
         return $eloquentEntity;
     }
 
-    public function toArray()
-    {
-        $array = [];
-
-        return $array;
-    }
-
-    // protected function render()
-    // {
-    //     $selfInstance = $this;
-    //     // Cache In Minutes
-    //     $value = Cache::remember('sitec_support_', 30, function () use ($selfInstance) {
-
-    //         $renderDatabase = (new \Support\Components\Database\Render\Database($this->eloquentClasses));
-
-
-    //         $this->eloquentClasses = $renderDatabase->getEloquentClasses->map(function($file, $class) {
-    //             return new \Support\Elements\Entities\EloquentEntity($class);
-    //         })->values()->all();
-
-    //         return $selfInstance->toArray();
-    //     });
-    //     $this->setArray($value);
-        
-    //     // $databaseEntity = new DatabaseEntity();
-        
-    //     // $databaseEntity = new DatabaseEntity();
-    //     // $databaseEntity
-
-    // }
-
-
 
 }
