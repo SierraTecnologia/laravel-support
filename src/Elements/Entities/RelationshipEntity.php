@@ -13,7 +13,7 @@ use Symfony\Component\Inflector\Inflector;
 use Support\Models\DataRelationship;
 use Support\Traits\Coder\GetSetTrait;
 
-class Relationship
+class RelationshipEntity
 {
 
     /**

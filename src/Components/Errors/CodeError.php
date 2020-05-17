@@ -16,11 +16,21 @@ abstract class CodeError
     /**
      * Target do erro
      *
-     * @var    string
+     * @var string
      * @getter true
      * @setter true
      */
     protected $target = false;
+
+    /**
+     * Informação a mais personalizado.
+     * Extra Information
+     *
+     * @var array
+     * @getter true
+     * @setter true
+     */
+    protected $customData = [];
 
     const NAME = 'UNDEFINED_TYPE_NAME';
 
@@ -53,11 +63,14 @@ abstract class CodeError
         ];
     }
 
-    public function __construct($target)
+    /**
+     * @todo Armazenar CustomData
+     */
+    public function __construct($target, $customData = [])
     {
-        // if (!is_string($target)) {
-        //     dd($target);
-        // }
+        if (!is_string($target) || empty($target)) {
+            dd($target);
+        }
         $this->setTarget($target);
         if (!$this->supportModelCodeClass = Error::where($this->whereFind())->first()) {
             $this->supportModelCodeClass = new Error;
@@ -70,9 +83,9 @@ abstract class CodeError
     }
 
    
-    public static function make($target)
+    public static function make($target, $customData = [])
     {
-        return new static($target);
+        return new static($target, $customData = []);
     }
 
    

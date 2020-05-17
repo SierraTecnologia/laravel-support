@@ -57,8 +57,8 @@ trait GetSetTrait
 
         // If we have to detect generic types, then make the $type lowercase,
         // so it remains case insensitive.
-        if ($type && in_array(strtolower($type), ['string', 'number', 'array', 'object'])) {
-            $type = strtolower($type);
+        if ($type && in_array(trim(strtolower($type)), ['string', 'number', 'array', 'object'])) {
+            $type = trim(strtolower($type));
         }
 
         // @getter is marked as false on property annotation
@@ -89,7 +89,9 @@ trait GetSetTrait
 
             // Return $this, so chaining is possible on setters.
             return $this;
-        } elseif ($methodPrefix == 'get') {
+        }
+        
+        if ($methodPrefix == 'get') {
 
             // Check if user has set @getter to false, so we won't get the value
             if (!$getter) {
@@ -109,6 +111,7 @@ trait GetSetTrait
      */
     protected function verifyCorrectType($type, $value)
     {
+
         // Switch various types
         switch ($type) {
         case 'string':

@@ -28,7 +28,7 @@ class ParseClass implements Arrayable
     /**
      * Nome da Classe
      *
-     * @var    string
+     * @var string
      * @getter true
      * @setter true
      */
@@ -37,7 +37,7 @@ class ParseClass implements Arrayable
     /**
      * Tipo da Classe
      *
-     * @var    string
+     * @var string
      * @getter true
      * @setter true
      */

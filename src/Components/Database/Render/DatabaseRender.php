@@ -476,6 +476,13 @@ class DatabaseRender implements Arrayable
             ) {
                 return true;
             }
+
+            if (!is_string($tableName) || empty($tableName)) {
+                dd(
+                    'Nao era pra ta aqui Cararin',
+                    $tableName
+                );
+            }
             
             $error = \Support\Components\Errors\TableNotExistError::make(
                 $tableName,
