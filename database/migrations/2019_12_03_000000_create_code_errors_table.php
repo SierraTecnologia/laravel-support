@@ -17,16 +17,18 @@ class CreateCodeErrorsTable extends Migration
     public function up()
     {
         // Create table for storing roles
-        Schema::create('errors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->timestamps();
+        Schema::create(
+            'errors', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->nullable();
+                $table->timestamps();
 
-            $table->string('target')->nullable();
-            $table->string('class_type')->nullable();
-            $table->text('data')->nullable();
+                $table->string('target')->nullable();
+                $table->string('class_type')->nullable();
+                $table->text('data')->nullable();
 
-        });
+            }
+        );
     }
 
     /**

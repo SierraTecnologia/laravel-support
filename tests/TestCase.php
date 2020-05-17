@@ -38,15 +38,19 @@ abstract class TestCase extends Orchestra
 
         config()->set('mail.driver', 'log');
 
-        config()->set('database.connections.db1', [
+        config()->set(
+            'database.connections.db1', [
             'driver' => 'sqlite',
             'database' => $this->createSQLiteDatabase('database1.sqlite'),
-        ]);
+            ]
+        );
 
-        config()->set('database.connections.db2', [
+        config()->set(
+            'database.connections.db2', [
             'driver' => 'sqlite',
             'database' => $this->createSQLiteDatabase('database2.sqlite'),
-        ]);
+            ]
+        );
 
         config()->set('database.default', 'db1');
 
@@ -61,10 +65,12 @@ abstract class TestCase extends Orchestra
     {
         touch($this->getTempDirectory().'/database.sqlite');
 
-        Schema::create('test_models', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-        });
+        Schema::create(
+            'test_models', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+            }
+        );
     }
 
     protected function seeInConsoleOutput($expectedText)

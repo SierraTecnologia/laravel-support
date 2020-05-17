@@ -12,9 +12,11 @@ class AddPolicyNameToDataTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table('data_types', function (Blueprint $table) {
-            $table->string('policy_name')->nullable()->after('model_name');
-        });
+        Schema::table(
+            'data_types', function (Blueprint $table) {
+                $table->string('policy_name')->nullable()->after('model_name');
+            }
+        );
     }
 
     /**
@@ -24,8 +26,10 @@ class AddPolicyNameToDataTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('data_types', function (Blueprint $table) {
-            $table->dropColumn('policy_name');
-        });
+        Schema::table(
+            'data_types', function (Blueprint $table) {
+                $table->dropColumn('policy_name');
+            }
+        );
     }
 }

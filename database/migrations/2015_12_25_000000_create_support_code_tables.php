@@ -26,13 +26,15 @@ class CreateSupportCodeTables extends Migration
         // });
 
         // Create table for storing roles
-        Schema::create('support_code_classes', function (Blueprint $table) {
-            $table->string('class_name')->primary()->unique();
-            $table->string('filename')->unique();
-            $table->string('parent_class')->nullable();
-            $table->string('type')->nullable();
-            $table->text('data')->nullable();
-        });
+        Schema::create(
+            'support_code_classes', function (Blueprint $table) {
+                $table->string('class_name')->primary()->unique();
+                $table->string('filename')->unique();
+                $table->string('parent_class')->nullable();
+                $table->string('type')->nullable();
+                $table->text('data')->nullable();
+            }
+        );
     }
 
     /**

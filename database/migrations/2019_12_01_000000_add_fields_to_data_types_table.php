@@ -13,12 +13,14 @@ class AddFieldsToDataTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table('data_types', function (Blueprint $table) {
-            $table->string('table_name')->nullable()->after('model_name');
-            $table->string('key_name')->nullable()->after('table_name');
-            $table->string('key_type')->nullable()->after('key_name');
-            $table->string('foreign_key')->nullable()->after('key_type');
-        });
+        Schema::table(
+            'data_types', function (Blueprint $table) {
+                $table->string('table_name')->nullable()->after('model_name');
+                $table->string('key_name')->nullable()->after('table_name');
+                $table->string('key_type')->nullable()->after('key_name');
+                $table->string('foreign_key')->nullable()->after('key_type');
+            }
+        );
     }
 
     /**
@@ -28,11 +30,13 @@ class AddFieldsToDataTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table('data_types', function (Blueprint $table) {
-            $table->dropColumn('foreign_key');
-            $table->dropColumn('key_type');
-            $table->dropColumn('key_name');
-            $table->dropColumn('table_name');
-        });
+        Schema::table(
+            'data_types', function (Blueprint $table) {
+                $table->dropColumn('foreign_key');
+                $table->dropColumn('key_type');
+                $table->dropColumn('key_name');
+                $table->dropColumn('table_name');
+            }
+        );
     }
 }

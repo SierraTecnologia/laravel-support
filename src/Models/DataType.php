@@ -110,7 +110,8 @@ class DataType extends Model
             }
 
             if ($this->fill($requestData)->save()) {
-                $fields = $this->fields((strlen($this->model_name) != 0)
+                $fields = $this->fields(
+                    (strlen($this->model_name) != 0)
                     ? app($this->model_name)->getTable()
                     : Arr::get($requestData, 'name')
                 );
@@ -226,7 +227,8 @@ class DataType extends Model
         // Get ordered BREAD fields
         $orderedFields = $this->rows()->pluck('field')->toArray();
 
-        $_fieldOptions = SchemaManager::describeTable((strlen($this->model_name) != 0)
+        $_fieldOptions = SchemaManager::describeTable(
+            (strlen($this->model_name) != 0)
             ? app($this->model_name)->getTable()
             : $this->name
         )->toArray();
@@ -329,11 +331,13 @@ class DataType extends Model
     }
     public function allDataRelactionships()
     {
-        return $this->dataRelactionships()->union($this->hasMany(
-            Facilitador::modelClass('DataRelationship'),
-            'related_table_name',
-            'table_name'
-        ));
+        return $this->dataRelactionships()->union(
+            $this->hasMany(
+                Facilitador::modelClass('DataRelationship'),
+                'related_table_name',
+                'table_name'
+            )
+        );
     }
 
     /**

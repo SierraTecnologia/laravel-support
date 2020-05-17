@@ -13,9 +13,11 @@ class AddOrderToDataRowsTable extends Migration
      */
     public function up()
     {
-        Schema::table('data_rows', function (Blueprint $table) {
-            $table->integer('order')->default(1)->after('details');
-        });
+        Schema::table(
+            'data_rows', function (Blueprint $table) {
+                $table->integer('order')->default(1)->after('details');
+            }
+        );
     }
 
     /**
@@ -25,8 +27,10 @@ class AddOrderToDataRowsTable extends Migration
      */
     public function down()
     {
-        Schema::table('data_rows', function (Blueprint $table) {
-            $table->dropColumn('order');
-        });
+        Schema::table(
+            'data_rows', function (Blueprint $table) {
+                $table->dropColumn('order');
+            }
+        );
     }
 }
