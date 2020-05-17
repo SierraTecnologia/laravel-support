@@ -120,7 +120,7 @@ trait ArrayableTrait
         $multiDimensional = false;
         $mapper = self::$mapper;
         foreach ($mapper as $indice=>$mapperValue) {
-            if (is_array()) {
+            if (is_array($mapperValue)) {
                 $multiDimensional = true;
                 if (isset($datas[$indice])) {
                     foreach ($mapperValue as $atributeNameVariable) {
@@ -152,13 +152,30 @@ trait ArrayableTrait
         $display = [];
         $array = $this->toArray();
         foreach ($array as $category => $infos) {
-            foreach ($infos as $title => $value) {
-                $display[] = $category.' > '.$title;
-                $display[] = $value;
+            if ($this->arrayIsMultiDimensional()) {
+                foreach ($infos as $title => $value) {
+                    $display[] = $category.' > '.$title;
+                    $display[] = $value;
+                }
+            } else {
+                $display[] = $category;
+                $display[] = $infos;
             }
         }
         dd(
             ...$display
         );
+    }
+
+    private function arrayIsMultiDimensional()
+    {
+        $multiDimensional = false;
+        $mapper = self::$mapper;
+        foreach ($mapper as $indice=>$mapperValue) {
+            if (is_array($mapperValue)) {
+                $multiDimensional = true;
+            }
+        }
+        return $multiDimensional;
     }
 }

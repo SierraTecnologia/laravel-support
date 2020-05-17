@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Components\Database\Render;
+namespace Support\Patterns\Reader;
 
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Debug\Exception\FatalErrorException;
@@ -42,72 +42,6 @@ class Database
 
     }
 
-
-
-    protected function renderTables()
-    {
-        $this->dicionarioPrimaryKeys = [];
-
-        $tables = [];
-        Type::registerCustomPlatformTypes();
-        $listTables = SchemaManager::listTables();
-        // return $this->getSchemaManagerTable()->getIndexes(); //@todo indexe
-
-
-        foreach ($listTables as $listTable){
-            $columns = ArrayModificator::includeKeyFromAtribute($listTable->exportColumnsToArray(), 'name');
-            $indexes = $listTable->exportIndexesToArray();
-
-            // Salva Primaria
-           
-            if (!$primary = $this->loadMapperPrimaryKeysAndReturnPrimary($listTable->getName(), $indexes)) {
-                // @todo VEridica aqui
-                // $this->setWarnings(
-                //     'Tabela sem primary key: '.$listTable->getName(),
-                //     [
-                //         'table' => $listTable->getName(),
-                //     ],
-                //     [
-                //         'indexes' => $indexes
-                //     ]
-                // );
-
-                $this->tempAppTablesWithNotPrimaryKey[$listTable->getName()] = [
-                    'name' => $listTable->getName(),
-                    'columns' => $columns,
-                    'indexes' => $indexes
-                ];
-
-            } else {
-                $tables[$listTable->getName()] = [
-                    'name' => $listTable->getName(),
-                    'columns' => $columns,
-                    'indexes' => $indexes
-                ];
-
-                // Qual coluna ira mostrar em uma Relacao ?
-                if ($listTable->hasColumn('name')) {
-                    $tables[$listTable->getName()]['displayName'] = 'name';
-                } else if ($listTable->hasColumn('displayName')) {
-                    $tables[$listTable->getName()]['displayName'] = 'displayName';
-                } else {
-                    $achou = false;
-                    foreach ($tables[$listTable->getName()]['columns'] as $column) {
-                        if ($column['type']['name'] == 'varchar') {
-                            $tables[$listTable->getName()]['displayName'] = $column['name'];
-                            $achou = true;
-                            break;
-                        }
-                    }
-                    if (!$achou) {
-                        $tables[$listTable->getName()]['displayName'] = $primary;
-                    }
-                }
-            }
-        }
-
-        $this->displayTables = $tables;
-    }
 
 
 }

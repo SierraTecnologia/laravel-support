@@ -3,52 +3,47 @@
 declare(strict_types=1);
 
 
-namespace Support\Components\Database\Mount;
+namespace Support\Patterns\Builder;
 
-
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Support\Result\RelationshipResult;
-use SierraTecnologia\Crypto\Services\Crypto;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Support\Components\Database\DatabaseUpdater;
-use Support\Components\Database\Schema\Column;
-use Support\Components\Database\Schema\Identifier;
-use Support\Components\Database\Schema\SchemaManager;
-use Support\Components\Database\Schema\Table;
-use Support\Components\Database\Types\Type;
-use Support\Components\Coders\Parser\ParseModelClass;
+use Support\Utils\Modificators\ArrayModificator;
 use Support\Utils\Modificators\StringModificator;
-use Support\Utils\Extratores\ArrayExtractor;
-use Support\Components\Coders\Parser\ComposerParser;
-
-use Support\Elements\Entities\DatabaseEntity;
-use Support\Elements\Entities\EloquentEntity;
-use Support\Elements\Entities\Relationship;
-use Illuminate\Support\Facades\Cache;
+use Support\Traits\Coder\GetSetTrait;
 
 use Log;
 
 class TablesBuilder
 {
+    /**
+     * Atributos
+     */
+    use GetSetTrait;
+
+
+    /**
+     * Nome da Classe
+     *
+     * @var string
+     * @getter true
+     * @setter false
+     */
     protected $tables = [];
+
+    /**
+     * Nome da Classe
+     *
+     * @var string
+     * @getter true
+     * @setter false
+     */
     protected $relationTables = [];
 
 
-    public function __construct($eloquentClasses)
+    public function __construct($tablesList)
     {
-        Log::debug(
-            'Mount Database -> Iniciando'
-        );
-        $this->eloquentClasses = $eloquentClasses;
-
-        $this->render();
+        $this->builder($tablesList);
     }
 
-    protected function builderTables($tables)
+    protected function builder($tables)
     {
         foreach ($tables as $table){
             $this->builderTable($table);
@@ -57,7 +52,7 @@ class TablesBuilder
 
     protected function builderTable($table)
     {
-        $columns = ArrayModificator::includeKeyFromAtribute($listTable->exportColumnsToArray(), 'name');
+        $columns = ArrayModificator::includeKeyFromAtribute($table->exportColumnsToArray(), 'name');
         $indexes = $listTable->exportIndexesToArray();
         $tableData = [
             'name' => $listTable->getName(),

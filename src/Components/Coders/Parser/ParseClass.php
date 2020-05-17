@@ -138,7 +138,7 @@ class ParseClass implements Arrayable
     public function fromArray(Array $array)
     {
         if (isset($array['class'])) {
-            $this->setClasseName($array['class']);
+            $this->setClassName($array['class']);
         }
         if (isset($array['filename'])) {
             $this->setClassFilename($array['filename']);

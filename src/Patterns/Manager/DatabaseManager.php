@@ -6,7 +6,8 @@
 declare(strict_types=1);
 
 
-namespace Support\Components\Database\Mount;
+
+namespace Support\Patterns\Manager;
 
 
 use Exception;

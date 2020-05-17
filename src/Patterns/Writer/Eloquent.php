@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Components\Database\Render;
+namespace Support\Patterns\Writer;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;

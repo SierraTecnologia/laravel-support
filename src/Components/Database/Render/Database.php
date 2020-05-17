@@ -24,9 +24,11 @@ use Support\Elements\Entities\Relationship;
 use Support\Components\Database\Types\Type;
 use Log;
 use Support\Components\Database\Schema\SchemaManager;
+
 use Support\Utils\Modificators\ArrayModificator;
 use Support\Utils\Inclusores\ArrayInclusor;
 use Support\Utils\Modificators\StringModificator;
+use Support\Utils\Extratores\ClasserExtractor;
 
 use Support\Components\Coders\Parser\ParseClass;
 
@@ -225,11 +227,42 @@ class Database implements Arrayable
     }
 
 
+    /**
+     * Nivel 2
+     */
+    private function returnEloquents($eloquentClasses)
+    {
+        return $eloquentClasses->map(function($filePath, $class) {
+            return $this->returnEloquentForClasss($class);
+        })->reject(function($class) {
+            if ( !$class->getTableName()) {
+                return true;
+            }
+            if ( $class->hasError()) {
+                dd(
+                    'Render Eloqunet: Error',
+                    $class,
+                    $class->getErrors()
+                );
+                return true;
+            }
+            return false;
+        });
+    }
     protected function renderMappersClasses()
     {
         foreach ($this->eloquentClasses as $eloquentService) {
             $this->loadMapperTableToClasses($eloquentService->getTableName(), $eloquentService->getModelClass());
         }
+    }
+
+    protected function renderTables()
+    {
+        $listTables = new \Support\Patterns\Parser\DatabaseParser();
+        $tableBuilder = new \Support\Patterns\Builder\TablesBuilder($listTables);
+
+        $this->tempAppTablesWithNotPrimaryKey = $tableBuilder->getRelationTables();
+        $this->displayTables = $tableBuilder->getTables();
     }
 
     protected function renderClasses()
@@ -248,95 +281,6 @@ class Database implements Arrayable
 
 
 
-    /**
-     * Nivel 2
-     */
-    protected function renderTables()
-    {
-        $this->dicionarioPrimaryKeys = [];
-        $tables = [];
-        Type::registerCustomPlatformTypes();
-        $listTables = SchemaManager::listTables();
-        // return $this->getSchemaManagerTable()->getIndexes(); //@todo indexe
-
-
-        foreach ($listTables as $listTable){
-            $columns = ArrayModificator::includeKeyFromAtribute($listTable->exportColumnsToArray(), 'name');
-            $indexes = $listTable->exportIndexesToArray();
-
-            // Salva Primaria
-           
-            if (!$primary = $this->loadMapperPrimaryKeysAndReturnPrimary($listTable->getName(), $indexes)) {
-                // @todo VEridica aqui
-                // $this->setWarnings(
-                //     'Tabela sem primary key: '.$listTable->getName(),
-                //     [
-                //         'table' => $listTable->getName(),
-                //     ],
-                //     [
-                //         'indexes' => $indexes
-                //     ]
-                // );
-
-                $this->tempAppTablesWithNotPrimaryKey[$listTable->getName()] = [
-                    'name' => $listTable->getName(),
-                    'columns' => $columns,
-                    'indexes' => $indexes
-                ];
-
-            } else {
-                $tables[$listTable->getName()] = [
-                    'name' => $listTable->getName(),
-                    'columns' => $columns,
-                    'indexes' => $indexes
-                ];
-
-                // Qual coluna ira mostrar em uma Relacao ?
-                if ($listTable->hasColumn('name')) {
-                    $tables[$listTable->getName()]['displayName'] = 'name';
-                } else if ($listTable->hasColumn('displayName')) {
-                    $tables[$listTable->getName()]['displayName'] = 'displayName';
-                } else {
-                    $achou = false;
-                    foreach ($tables[$listTable->getName()]['columns'] as $column) {
-                        if ($column['type']['name'] == 'varchar') {
-                            $tables[$listTable->getName()]['displayName'] = $column['name'];
-                            $achou = true;
-                            break;
-                        }
-                    }
-                    if (!$achou) {
-                        $tables[$listTable->getName()]['displayName'] = $primary;
-                    }
-                }
-            }
-        }
-
-        $this->displayTables = $tables;
-    }
-
-    /**
-     * Nivel 3
-     */
-    private function loadMapperPrimaryKeysAndReturnPrimary($tableName, $indexes)
-    {
-        $primary = false;
-        if (!empty($indexes)) {
-            foreach ($indexes as $index) {
-                if ($index['type'] == 'PRIMARY') {
-                    $primary = $index['columns'][0];
-                    $singulariRelationName = StringModificator::singularizeAndLower($tableName);
-                    $this->dicionarioPrimaryKeys[$singulariRelationName.'_'.$primary] = [
-                        'name' => $tableName,
-                        'key' => $primary,
-                        'label' => 'name'
-                    ];
-                }
-            }
-        }
-
-        return $primary;
-    }
 
 
     /**
@@ -478,29 +422,6 @@ class Database implements Arrayable
         return false;
     }
 
-
-    /**
-     * Nivel 3
-     */
-    private function returnEloquents($eloquentClasses)
-    {
-        return $eloquentClasses->map(function($filePath, $class) {
-            return $this->returnEloquentForClasss($class);
-        })->reject(function($class) {
-            if ( !$class->getTableName()) {
-                return true;
-            }
-            if ( $class->hasError()) {
-                dd(
-                    'Render Eloqunet: Error',
-                    $class,
-                    $class->getErrors()
-                );
-                return true;
-            }
-            return false;
-        });
-    }
 
 
     /**

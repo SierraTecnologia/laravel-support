@@ -1,4 +1,5 @@
-<?php namespace App\Transformer;
+<?php 
+namespace Support\Patterns\Transformer;
 
 use Acme\Model\Book;
 use League\Fractal\TransformerAbstract;

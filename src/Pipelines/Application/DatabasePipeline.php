@@ -25,7 +25,7 @@ class DatabasePipeline
 
 
     }
-    public function run($eloquentClasses)
+    public function runTwo($eloquentClasses)
     {
         
 

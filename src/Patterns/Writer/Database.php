@@ -1,6 +1,5 @@
 <?php
-
-namespace Support\Components\Database\Render;
+namespace Support\Patterns\Writer;
 
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Debug\Exception\FatalErrorException;
