@@ -28,12 +28,11 @@ class ManyToManyChecklist extends Checkbox
      * will get 2 params: the rendered html for the checkbox and the model
      * instance.  It should return a string, the html for th checkbox.
      *
-     *
      * Example:
      *
      *    echo Former::manyToManyChecklist('categories')
-     *    	->decorate(function($html, $model) {
-     *    		return $html;
+     *        ->decorate(function($html, $model) {
+     *            return $html;
      *      })
      *
      * @param  callable $callback

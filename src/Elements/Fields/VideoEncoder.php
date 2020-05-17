@@ -128,13 +128,17 @@ class VideoEncoder extends Upload
         // Create the dropdown menu options
         $config = \Illuminate\Support\Facades\Config::get('sitec.encode.presets');
         $presets = array_keys($config);
-        $dropdown = implode('', array_map(function ($config, $preset) {
-            return '<li>
-                <a href="#" data-val="'.$preset.'">
-                    '.$config['title'].'
+        $dropdown = implode(
+            '', array_map(
+                function ($config, $preset) {
+                    return '<li>
+                    <a href="#" data-val="'.$preset.'">
+                        '.$config['title'].'
                 </a>
-            </li>';
-        }, $config, $presets));
+                </li>';
+                }, $config, $presets
+            )
+        );
 
         // Make the hidden field
         $hidden = '<input type="hidden"
@@ -211,23 +215,23 @@ class VideoEncoder extends Upload
         }
 
         switch ($this->encoding->status) {
-            case 'complete':
-                return $this->renderPlayer();
+        case 'complete':
+            return $this->renderPlayer();
 
-            case 'error':
-                return $this->renderError($this->encoding->message);
+        case 'error':
+            return $this->renderError($this->encoding->message);
 
-            case 'cancelled':
-                return $this->renderError('The encoding job was manually cancelled');
+        case 'cancelled':
+            return $this->renderError('The encoding job was manually cancelled');
 
-            case 'pending':
-                return $this->renderProgress('');
+        case 'pending':
+            return $this->renderProgress('');
 
-            case 'queued':
-                return $this->renderProgress($this->encoding->status);
+        case 'queued':
+            return $this->renderProgress($this->encoding->status);
 
-            case 'processing':
-                return $this->renderProgress($this->encoding->status);
+        case 'processing':
+            return $this->renderProgress($this->encoding->status);
 
         }
     }

@@ -53,7 +53,7 @@ abstract class Base extends Eloquent
      * @var array
      */
     // public $rules = [];
-	public $rules = [
+    public $rules = [
         
     ];
     
@@ -121,11 +121,13 @@ abstract class Base extends Eloquent
     public function __construct(array $attributes = [])
     {
         // Blacklist special columns that aren't intended for the DB
-        $this->guarded = array_merge($this->guarded, [
+        $this->guarded = array_merge(
+            $this->guarded, [
             'parent_controller', // Backbone.js sends this with sort updates
             'parent_id', // Backbone.js may also send this with sort
             'select-row', // This is the name of the checkboxes used for bulk delete
-        ]);
+            ]
+        );
 
         // Continue Laravel construction
         parent::__construct($attributes);
@@ -144,16 +146,32 @@ abstract class Base extends Eloquent
      * No-Op callbacks invoked by Observers\ModelCallbacks.  These allow quick handling
      * of model event states.
      *
-     * @return  void|false
+     * @return void|false
      */
-    public function onSaving() { }
-    public function onSaved() { }
-    public function onCreating() { }
-    public function onCreated() { }
-    public function onUpdating() { }
-    public function onUpdated() { }
-    public function onDeleting() { }
-    public function onDeleted() { }
+    public function onSaving()
+    { 
+    }
+    public function onSaved()
+    { 
+    }
+    public function onCreating()
+    { 
+    }
+    public function onCreated()
+    { 
+    }
+    public function onUpdating()
+    { 
+    }
+    public function onUpdated()
+    { 
+    }
+    public function onDeleting()
+    { 
+    }
+    public function onDeleted()
+    { 
+    }
 
     /**
      * Validation callback no-ops
@@ -161,19 +179,31 @@ abstract class Base extends Eloquent
      * @param  $validation Illuminate\Validation\Validator
      * @return void|false
      */
-    public function onValidating($validation) { }
-    public function onValidated($validation) { }
+    public function onValidating($validation)
+    { 
+    }
+    public function onValidated($validation)
+    { 
+    }
 
     /**
      * Many to many attach/detach callback no-ops
      *
-     * @param $parent Eloquent\Model
+     * @param  $parent Eloquent\Model
      * @return void|false
      */
-    public function onAttaching($parent) { }
-    public function onAttached($parent) { }
-    public function onRemoving($parent) { }
-    public function onRemoved($parent) { }
+    public function onAttaching($parent)
+    { 
+    }
+    public function onAttached($parent)
+    { 
+    }
+    public function onRemoving($parent)
+    { 
+    }
+    public function onRemoved($parent)
+    { 
+    }
 
     /**
      * Check for a validation rule for a slug column
@@ -231,9 +261,13 @@ abstract class Base extends Eloquent
      */
     public function getAdminTitleAttribute()
     {
-        return implode(' ', array_map(function ($attribute) {
-            return $this->$attribute;
-        }, $this->titleAttributes())) ?: __('facilitador::base.untitled');
+        return implode(
+            ' ', array_map(
+                function ($attribute) {
+                    return $this->$attribute;
+                }, $this->titleAttributes()
+            )
+        ) ?: __('facilitador::base.untitled');
     }
 
     /**
@@ -287,7 +321,9 @@ abstract class Base extends Eloquent
      *
      * @return string
      */
-    public function getUriAttribute() {}
+    public function getUriAttribute()
+    {
+    }
 
     /**
      * Get all file fields by looking at Upchuck config and validation rules
@@ -298,14 +334,22 @@ abstract class Base extends Eloquent
     {
 
         // Get all the file validation rule keys
-        $attributes = array_keys(array_filter($this->rules, function ($rules) {
-            return preg_match('#file|image|mimes|video|dimensions#i', $rules);
-        }));
+        $attributes = array_keys(
+            array_filter(
+                $this->rules, function ($rules) {
+                    return preg_match('#file|image|mimes|video|dimensions#i', $rules);
+                }
+            )
+        );
 
         // Get all the model attributes from upchuck
         if (method_exists($this, 'getUploadMap')) {
-            $attributes = array_unique(array_merge($attributes,
-                array_values($this->getUploadMap())));
+            $attributes = array_unique(
+                array_merge(
+                    $attributes,
+                    array_values($this->getUploadMap())
+                )
+            );
         }
 
         // Return array of attributes
@@ -332,7 +376,8 @@ abstract class Base extends Eloquent
      *
      * @return string
      */
-    public function getAdminRowClassAttribute() {
+    public function getAdminRowClassAttribute()
+    {
         $classes = [];
 
         // Add a visbility classs
@@ -403,7 +448,7 @@ abstract class Base extends Eloquent
      * Sluggable trait.
      *
      * @param  string $string
-     * @param  array $columns
+     * @param  array  $columns
      * @return Illuminate\Database\Eloquent\Model
      *
      * @throws Illuminate\Database\Eloquent\ModelNotFoundException
@@ -434,7 +479,8 @@ abstract class Base extends Eloquent
     {
         if (array_key_exists('public', $this->getAttributes())
             && !$this->getAttribute('public')
-            && !app('facilitador.user')) {
+            && !app('facilitador.user')
+        ) {
             throw new AccessDeniedHttpException;
         }
     }
@@ -537,7 +583,11 @@ abstract class Base extends Eloquent
         $modelFind = false;
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
-        
+        dd(
+            static::class,
+            $data,
+            $eloquentEntityForModel = EloquentService::getForClass(static::class)
+        );
 
         if (!$eloquentEntityForModel = EloquentService::getForClass(static::class)) {
             return static::firstOrCreate($data);
@@ -559,9 +609,11 @@ abstract class Base extends Eloquent
                 }
                 return false;
             }
-        )->reject(function($result) {
+        )->reject(
+            function ($result) {
                 return !$result;
-        });
+            }
+        );
         if ($results->isNotEmpty()) {
             return $results->first();
         }
@@ -585,7 +637,6 @@ abstract class Base extends Eloquent
 
     /**
      * Fiz pq tava quebrando @todo vericar, acho que vem do magento ou synfone
-     * 
      */
     public function setModified($date)
     {

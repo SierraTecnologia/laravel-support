@@ -47,6 +47,7 @@ class ClasserExtractor
      */
     /**
      * Gets the class name.
+     *
      * @return string
      */
     public static function getClassName($class)

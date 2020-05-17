@@ -20,21 +20,22 @@ class Checklist extends Checkbox
      * @param Container $app
      * @param string    $type
      * @param array     $name
-     * @param           $label
-     * @param           $value
-     * @param           $attributes
+     * @param $label
+     * @param $value
+     * @param $attributes
      */
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
         // Make Former treat this commponent like a regular checkbox field
-        if ($type == 'checklist') $type = 'checkbox';
+        if ($type == 'checklist') { $type = 'checkbox';
+        }
         parent::__construct($app, $type, $name, $label, $value, $attributes);
     }
 
     /**
      * Accept checkbox configuration from an associative array
      *
-     * @param array $options
+     * @param  array $options
      * @return $this
      */
     public function from(array $options)

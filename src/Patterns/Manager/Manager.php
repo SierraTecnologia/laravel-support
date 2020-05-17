@@ -23,7 +23,7 @@ class Manager
     /**
      * Params
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter false
      */
@@ -32,7 +32,7 @@ class Manager
     /**
      * Entity Gerado
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter false
      */
@@ -47,13 +47,15 @@ class Manager
 
     protected function run()
     {
-        $this->setEntity(Cache::remember(
-            'sitec_support_'.static::class.'_'.$this->getMd5ForParams(),
-            30,
-            function () {
-                return $this->render();
-            }
-        ));
+        $this->setEntity(
+            Cache::remember(
+                'sitec_support_'.static::class.'_'.$this->getMd5ForParams(),
+                30,
+                function () {
+                    return $this->render();
+                }
+            )
+        );
     }
 
     protected function getMd5ForParams()

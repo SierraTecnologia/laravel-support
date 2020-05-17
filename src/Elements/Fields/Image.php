@@ -69,8 +69,10 @@ class Image extends File
 
         // Add the max upload info
         $this->addClass('js-tooltip');
-        $this->title('Max upload size: <b>'
-            .Utils\Text::humanSize(Utils\File::maxUpload(), 1).'</b>');
+        $this->title(
+            'Max upload size: <b>'
+            .Utils\Text::humanSize(Utils\File::maxUpload(), 1).'</b>'
+        );
 
         // Add validation rules
         $this->applyRules();
@@ -165,8 +167,10 @@ class Image extends File
         $html .= $this->createHidden('name', $this->name);
 
         // Will store the crop coordinates
-        $html .= $this->createHidden('crop_box',
-            $this->image()->getAttributeValue('crop_box'));
+        $html .= $this->createHidden(
+            'crop_box',
+            $this->image()->getAttributeValue('crop_box')
+        );
 
         // Begin the image upload section
         $html .= '
@@ -182,8 +186,10 @@ class Image extends File
 				<div class="glyphicon glyphicon-screenshot"></div></div>';
 
             // Will store the focal point
-            $html .= $this->createHidden('focal_point',
-                $this->image()->getAttributeValue('focal_point'));
+            $html .= $this->createHidden(
+                'focal_point',
+                $this->image()->getAttributeValue('focal_point')
+            );
         }
 
         // Will close out the button group
@@ -207,9 +213,11 @@ class Image extends File
             $src = Croppa::url($src, 1050);
         }
 
-        $html .= sprintf('</div>
+        $html .= sprintf(
+            '</div>
 			<div class="preview"><img class="source" src="%s"></div>
-			</div>', $src);
+			</div>', $src
+        );
 
         return $html;
     }
@@ -306,7 +314,7 @@ class Image extends File
     /**
      * Toggle the presence of the focal point ui
      *
-     * @param  bool  $bool
+     * @param  bool $bool
      * @return $this
      */
     public function addFocalPoint($bool = true)

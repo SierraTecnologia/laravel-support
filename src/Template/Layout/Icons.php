@@ -44,33 +44,35 @@ class Icons
         $icons = [];
 
         if (!empty($name)) {
-            $icons = collect(self::icons())->reject(function ($icon) use ($name) {
-                $reject = true;
-                if (is_string($name)) {
-                    $name = [$name];
+            $icons = collect(self::icons())->reject(
+                function ($icon) use ($name) {
+                    $reject = true;
+                    if (is_string($name)) {
+                        $name = [$name];
+                    }
+                    foreach ($name as $searchName) {
+
+                        // Procura na class
+                        if (isset($icon['class']) && strpos($icon['class'], $searchName) !== false) {
+                            $reject = false;
+                        }
+                        // Procura no nome
+                        if (isset($icon['name']) && strpos($icon['name'], $searchName) !== false) {
+                            $reject = false;
+                        }
+
+                        // Procura no uses
+                        if (!isset($icon['uses']) || !is_array($icon['uses']) || empty($icon['uses'])) {
+                            continue;
+                        }
+                        if (in_array($searchName, $icon['uses'])) {
+                            $reject = false;
+                        }
+                    }
+
+                    return $reject;
                 }
-                foreach ($name as $searchName) {
-
-                    // Procura na class
-                    if (isset($icon['class']) && strpos($icon['class'], $searchName) !== false) {
-                        $reject = false;
-                    }
-                    // Procura no nome
-                    if (isset($icon['name']) && strpos($icon['name'], $searchName) !== false) {
-                        $reject = false;
-                    }
-
-                    // Procura no uses
-                    if (!isset($icon['uses']) || !is_array($icon['uses']) || empty($icon['uses'])) {
-                        continue;
-                    }
-                    if (in_array($searchName, $icon['uses'])) {
-                        $reject = false;
-                    }
-                }
-
-                return $reject;
-            })->toArray();
+            )->toArray();
         }
 
         if (empty($icons)) {
@@ -4079,7 +4081,8 @@ class Icons
 
             // public function icons('Brand Icons') {
 
-            /** All brand icons are trademarks of their respective owners.</li>
+            /**
+ * All brand icons are trademarks of their respective owners.</li>
              *  <li>The use of these trademarks does not indicate endorsement of the trademark holder by Font
              *    Awesome, nor vice versa.
              */

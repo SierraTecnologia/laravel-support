@@ -20,21 +20,22 @@ class Radiolist extends Radio
      * @param Container $app
      * @param string    $type
      * @param array     $name
-     * @param           $label
-     * @param           $value
-     * @param           $attributes
+     * @param $label
+     * @param $value
+     * @param $attributes
      */
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
         // Make Former treat this commponent like a regular radio field
-        if ($type == 'radiolist') $type = 'radio';
+        if ($type == 'radiolist') { $type = 'radio';
+        }
         parent::__construct($app, $type, $name, $label, $value, $attributes);
     }
 
     /**
      * Accept radio configuration from an associative array
      *
-     * @param array $options
+     * @param  array $options
      * @return $this
      */
     public function from(array $options)

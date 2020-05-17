@@ -17,9 +17,8 @@ class DbalInclusor
      */
     public static function includeDataFromEloquentEntity($eloquentEntityForModel, $data, $keyName)
     {
-        if (
-            (!isset($data['name']) || empty($data['name'])) && 
-            (isset($data[$keyName]) && $eloquentEntityForModel->hasColumn('name') && $eloquentEntityForModel->columnIsType($keyName, 'string'))
+        if ((!isset($data['name']) || empty($data['name']))  
+            && (isset($data[$keyName]) && $eloquentEntityForModel->hasColumn('name') && $eloquentEntityForModel->columnIsType($keyName, 'string'))
         ) {
             $data['name'] = StringModificator::convertSlugToName($data[$keyName]);
         }

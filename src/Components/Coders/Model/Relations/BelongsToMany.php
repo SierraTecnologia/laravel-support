@@ -44,8 +44,8 @@ class BelongsToMany implements Relation
     /**
      * BelongsToMany constructor.
      *
-     * @param \Illuminate\Support\Fluent $parentCommand
-     * @param \Illuminate\Support\Fluent $referenceCommand
+     * @param \Illuminate\Support\Fluent             $parentCommand
+     * @param \Illuminate\Support\Fluent             $referenceCommand
      * @param \Support\Components\Coders\Model\Model $parent
      * @param \Support\Components\Coders\Model\Model $pivot
      * @param \Support\Components\Coders\Model\Model $reference
@@ -198,12 +198,14 @@ class BelongsToMany implements Relation
 
     private function getPivotFields()
     {
-        return array_diff(array_keys($this->pivot->getProperties()), [
+        return array_diff(
+            array_keys($this->pivot->getProperties()), [
             $this->foreignKey(),
             $this->otherKey(),
             $this->pivot->getCreatedAtField(),
             $this->pivot->getUpdatedAtField(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -231,12 +233,16 @@ class BelongsToMany implements Relation
      */
     private function parametrize($fields = [])
     {
-        return (string) implode(', ', array_map(function ($field) {
-            $field = $this->reference->usesPropertyConstants()
-                ? $this->pivot->getQualifiedUserClassName().'::'.strtoupper($field)
-                : $field;
+        return (string) implode(
+            ', ', array_map(
+                function ($field) {
+                    $field = $this->reference->usesPropertyConstants()
+                    ? $this->pivot->getQualifiedUserClassName().'::'.strtoupper($field)
+                    : $field;
 
-            return Dumper::export($field);
-        }, $fields));
+                    return Dumper::export($field);
+                }, $fields
+            )
+        );
     }
 }

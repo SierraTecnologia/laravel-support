@@ -54,9 +54,9 @@ class Factory
     /**
      * ModelsFactory constructor.
      *
-     * @param \Illuminate\Database\DatabaseManager $db
-     * @param \Illuminate\Filesystem\Filesystem $files
-     * @param \Support\Utils\Debugger\Classify $writer
+     * @param \Illuminate\Database\DatabaseManager    $db
+     * @param \Illuminate\Filesystem\Filesystem       $files
+     * @param \Support\Utils\Debugger\Classify        $writer
      * @param \Support\Components\Coders\Model\Config $config
      */
     public function __construct(DatabaseManager $db, Filesystem $files, Classify $writer, Config $config)
@@ -181,7 +181,7 @@ class Factory
      * @param string $schema
      * @param string $table
      *
-     * @param bool $withRelations
+     * @param bool   $withRelations
      *
      * @return \Support\Components\Coders\Model\Model
      */
@@ -229,7 +229,7 @@ class Factory
 
     /**
      * @param \Support\Components\Coders\Model\Model $model
-     * @param string $name
+     * @param string                                 $name
      *
      * @return string
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
@@ -243,7 +243,7 @@ class Factory
     }
 
     /**
-     * @param string $template
+     * @param string                                 $template
      * @param \Support\Components\Coders\Model\Model $model
      *
      * @return mixed
@@ -279,7 +279,7 @@ class Factory
      * Returns imports section for model.
      *
      * @param string $baseNamespace base namespace to avoid importing classes from same namespace
-     * @param array $usedClasses Array of used in model classes
+     * @param array  $usedClasses   Array of used in model classes
      *
      * @return string
      */
@@ -470,7 +470,7 @@ class Factory
 
     /**
      * @param \Support\Components\Coders\Model\Model $model
-     * @param array $custom
+     * @param array                                  $custom
      *
      * @return string
      */
@@ -525,7 +525,7 @@ class Factory
     }
 
     /**
-     * @param Model $model
+     * @param  Model $model
      * @return string
      */
     private function formatBaseClasses(Model $model)
@@ -534,7 +534,7 @@ class Factory
     }
 
     /**
-     * @param Model $model
+     * @param  Model $model
      * @return string
      */
     private function getBaseClassName(Model $model)
@@ -567,8 +567,8 @@ class Factory
 
     /**
      * @param \Support\Components\Database\Meta\Blueprint|null $blueprint
-     * @param string $key
-     * @param mixed $default
+     * @param string                                           $key
+     * @param mixed                                            $default
      *
      * @return mixed|\Support\Components\Coders\Model\Config
      */

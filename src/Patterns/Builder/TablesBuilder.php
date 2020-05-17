@@ -22,7 +22,7 @@ class TablesBuilder
     /**
      * Nome da Classe
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter false
      */
@@ -31,7 +31,7 @@ class TablesBuilder
     /**
      * Nome da Classe
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter false
      */

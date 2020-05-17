@@ -9,13 +9,13 @@ use Facilitador\Models\Value;
 /**
  * Support\Elements\Entities\Type\Text.
  *
- * @property int                                                $id
- * @property string                                             $content
- * @property int                                                $attribute_id
- * @property int                                                $entity_id
- * @property string                                             $entity_type
- * @property \Carbon\Carbon|null                                $created_at
- * @property \Carbon\Carbon|null                                $updated_at
+ * @property      int                                                $id
+ * @property      string                                             $content
+ * @property      int                                                $attribute_id
+ * @property      int                                                $entity_id
+ * @property      string                                             $entity_type
+ * @property      \Carbon\Carbon|null                                $created_at
+ * @property      \Carbon\Carbon|null                                $updated_at
  * @property-read \Facilitador\Models\Attribute           $attribute
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $entity
  *
@@ -26,7 +26,7 @@ use Facilitador\Models\Value;
  * @method static \Illuminate\Database\Eloquent\Builder|\Support\Elements\Entities\Type\Text whereEntityType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Support\Elements\Entities\Type\Text whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Support\Elements\Entities\Type\Text whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  */
 class Text extends Value
 {
@@ -50,11 +50,13 @@ class Text extends Value
         parent::__construct($attributes);
 
         $this->setTable(\Illuminate\Support\Facades\Config::get('sitec.attributes.tables.attribute_text_values'));
-        $this->setRules([
+        $this->setRules(
+            [
             'content' => 'required|string|max:10000',
             'attribute_id' => 'required|integer|exists:'.\Illuminate\Support\Facades\Config::get('sitec.attributes.tables.attributes').',id',
             'entity_id' => 'required|integer',
             'entity_type' => 'required|string',
-        ]);
+            ]
+        );
     }
 }

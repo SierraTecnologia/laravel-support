@@ -38,12 +38,16 @@ class Xml
             $dom->validateOnParse     = false;
             $dom->recover             = true;
 
-            $dom->loadXML(strtr(
-                file_get_contents($filePath),
-                ['&quot;' => "'"] // &quot; in attribute names may mislead the parser
-            ));
+            $dom->loadXML(
+                strtr(
+                    file_get_contents($filePath),
+                    ['&quot;' => "'"] // &quot; in attribute names may mislead the parser
+                )
+            );
 
-            /** @var LibXMLError $xmlError */
+            /**
+ * @var LibXMLError $xmlError 
+*/
             $xmlError = libxml_get_last_error();
             if ($xmlError) {
                 $warning = sprintf('L%s C%s: %s', $xmlError->line, $xmlError->column, $xmlError->message);

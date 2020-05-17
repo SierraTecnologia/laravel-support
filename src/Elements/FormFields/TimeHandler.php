@@ -8,11 +8,13 @@ class TimeHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::components.formfields.time', [
+        return view(
+            'facilitador::components.formfields.time', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,
             'dataTypeContent' => $dataTypeContent,
-        ]);
+            ]
+        );
     }
 }

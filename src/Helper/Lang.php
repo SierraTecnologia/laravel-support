@@ -36,7 +36,7 @@ class Lang
     /**
      * Get a specific string from the language file.
      *
-     * @param array  ...$params
+     * @param array ...$params
      *
      * @return string
      */
@@ -91,7 +91,7 @@ class Lang
     {
         $languages = [];
         foreach (self::$languages as $language) {
-            $strings = include(SRC_DIR . 'Languages/lang.' . $language . '.php');
+            $strings = include SRC_DIR . 'Languages/lang.' . $language . '.php';
             $languages[$language] = !empty($strings['language_name'])
                 ? $strings['language_name'] . ' (' . $language . ')'
                 : $language;
@@ -127,7 +127,9 @@ class Lang
 
         $user = null;
         if (!empty($_SESSION['php-censor-user-id'])) {
-            /** @var UserStore $userStore */
+            /**
+ * @var UserStore $userStore 
+*/
             $userStore = Factory::getStore('User');
             $user      = $userStore->getById($_SESSION['php-censor-user-id']);
         }
@@ -165,7 +167,7 @@ class Lang
             return null;
         }
 
-        $strings = include($langFile);
+        $strings = include $langFile;
         if (is_null($strings) || !is_array($strings) || !count($strings)) {
             return null;
         }

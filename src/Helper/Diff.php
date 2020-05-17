@@ -9,7 +9,8 @@ class Diff
 {
     /**
      * Take a diff
-     * @param string $diff
+     *
+     * @param  string $diff
      * @return array
      */
     public function getLinePositions($diff)

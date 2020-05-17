@@ -24,26 +24,32 @@ class Money extends Number
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
-        $this->withMeta([
+        $this->withMeta(
+            [
             'currency' => $currency,
             'subUnits' => $this->subunits($currency),
-        ]);
+            ]
+        );
 
         $this->step(1 / $this->minorUnit($currency));
 
         $this
-            ->resolveUsing(function ($value) use ($currency) {
-                return $this->inMinorUnits ? $value / $this->minorUnit($currency) : (float) $value;
-            })
-            ->fillUsing(function (NovaRequest $request, $model, $attribute, $requestAttribute) use ($currency) {
-                $value = $request[$requestAttribute];
-
-                if ($this->inMinorUnits) {
-                    $value *= $this->minorUnit($currency);
+            ->resolveUsing(
+                function ($value) use ($currency) {
+                    return $this->inMinorUnits ? $value / $this->minorUnit($currency) : (float) $value;
                 }
+            )
+            ->fillUsing(
+                function (NovaRequest $request, $model, $attribute, $requestAttribute) use ($currency) {
+                    $value = $request[$requestAttribute];
 
-                $model->{$attribute} = $value;
-            });
+                    if ($this->inMinorUnits) {
+                        $value *= $this->minorUnit($currency);
+                    }
+
+                    $model->{$attribute} = $value;
+                }
+            );
     }
 
     /**
@@ -63,10 +69,12 @@ class Money extends Number
 
     public function subUnits(string $currency)
     {
-        return (new AggregateCurrencies([
+        return (new AggregateCurrencies(
+            [
             new ISOCurrencies(),
             new BitcoinCurrencies(),
-        ]))->subunitFor(new Currency($currency));
+            ]
+        ))->subunitFor(new Currency($currency));
     }
 
     public function minorUnit($currency)

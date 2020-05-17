@@ -17,12 +17,14 @@ trait HasSlug
     protected static function bootHasSlug()
     {
         // Auto generate slugs early before validation
-        static::validating(function (Model $model) {
-            if ($model->exists && $model->getSlugOptions()->generateSlugsOnUpdate) {
-                $model->generateSlugOnUpdate();
-            } elseif (! $model->exists && $model->getSlugOptions()->generateSlugsOnCreate) {
-                $model->generateSlugOnCreate();
+        static::validating(
+            function (Model $model) {
+                if ($model->exists && $model->getSlugOptions()->generateSlugsOnUpdate) {
+                    $model->generateSlugOnUpdate();
+                } elseif (! $model->exists && $model->getSlugOptions()->generateSlugsOnCreate) {
+                    $model->generateSlugOnCreate();
+                }
             }
-        });
+        );
     }
 }

@@ -27,7 +27,7 @@ use Support\Components\Coders\Parser\ComposerParser;
 
 use Support\Elements\Entities\DatabaseEntity;
 use Support\Elements\Entities\EloquentEntity;
-use Support\Elements\Entities\Relationship;
+use Support\Elements\Entities\RelationshipEntity;
 use Illuminate\Support\Facades\Cache;
 
 use Log;
@@ -72,13 +72,15 @@ class DatabaseMount implements Arrayable
     {
         $eloquentClasses = $this->eloquentClasses;
         // Cache In Minutes
-        $renderDatabaseArray = Cache::remember('sitec_support_render_database_'.md5(implode('|', $eloquentClasses->values()->all())), 30, function () use ($eloquentClasses) {
-            Log::debug(
-                'Mount Database -> Renderizando'
-            );
-            $renderDatabase = (new \Support\Components\Database\Render\Database($eloquentClasses));
-            return $renderDatabase->toArray();
-        });
+        $renderDatabaseArray = Cache::remember(
+            'sitec_support_render_database_'.md5(implode('|', $eloquentClasses->values()->all())), 30, function () use ($eloquentClasses) {
+                Log::debug(
+                    'Mount Database -> Renderizando'
+                );
+                $renderDatabase = (new \Support\Components\Database\Render\DatabaseRender($eloquentClasses));
+                return $renderDatabase->toArray();
+            }
+        );
         
         // // Persist Models With Errors @todo retirar ignoretedClasses
         // $this->ignoretedClasses = $this->eloquentClasses->diffKeys($renderDatabaseArray["Leitoras"]["displayClasses"]);
@@ -91,30 +93,41 @@ class DatabaseMount implements Arrayable
 
         $this->renderDatabase = $renderDatabaseArray;
         
-        $this->relationships = $eloquentClasses->map(function($eloquentData, $className) use ($renderDatabaseArray) {
+        $this->relationships = $eloquentClasses->map(
+            function ($eloquentData, $className) use ($renderDatabaseArray) {
 
-            foreach ($eloquentData['relations'] as $relation) {
-                if (!isset($relation['origin_table_name']) || empty($relation['origin_table_name'])) {
-                    $relation['origin_table_name'] = $renderDatabaseArray["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
+                foreach ($eloquentData['relations'] as $relation) {
+                    if (!isset($relation['origin_table_name']) || empty($relation['origin_table_name'])) {
+                        $relation['origin_table_name'] = $renderDatabaseArray["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
+                    }
+                    if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
+                        $relation['related_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
+                            $relation['related_table_class'],
+                            $renderDatabaseArray,
+                            '["Leitoras"]["displayClasses"][{{index}}]["tableName"]'
+                        );
+                    }
+                    return new RelationshipEntity($relation);
                 }
-                if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
-                    $relation['related_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
-                        $relation['related_table_class'],
-                        $renderDatabaseArray,
-                        '["Leitoras"]["displayClasses"][{{index}}]["tableName"]'
-                    );
-                }
-                return new Relationship($relation);
             }
-        });
+        );
         
 
 
-        $this->entitys = $eloquentClasses->reject(function($eloquentData, $className) {
-            return $this->eloquentHasError($className);
-        })->map(function($eloquentData, $className) use ($renderDatabaseArray) {
-            return (new EloquentMount($className, $renderDatabaseArray))->getEntity();
-        });
+        $this->entitys = $eloquentClasses->reject(
+            function ($eloquentData, $className) {
+                return $this->eloquentHasError($className);
+            }
+        )->map(
+            function ($eloquentData, $className) use ($renderDatabaseArray) {
+                return (new EloquentMount($className, $renderDatabaseArray))->getEntity();
+            }
+        );
+        dd(
+            $eloquentClasses,
+            $this->entitys,
+            $this->entitys->toArray()
+        );
         //     dd(
         //         $this->entitys,
         //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
@@ -129,9 +142,9 @@ class DatabaseMount implements Arrayable
 
     public function getAllEloquentsEntitys()
     {
-    //     dd($this->entitys,
-    //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
-    // );
+        //     dd($this->entitys,
+        //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
+        // );
         return $this->entitys->toArray();
     }
 

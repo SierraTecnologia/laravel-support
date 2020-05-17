@@ -28,14 +28,18 @@ trait ConsoleTools
             $stubs = $this->app['files']->glob($path.'/*.php.stub');
             $existing = $this->app['files']->glob($this->app->databasePath('migrations/'.$package.'/*.php'));
 
-            $migrations = collect($stubs)->flatMap(function ($migration) use ($existing, $package) {
-                $sequence = mb_substr(basename($migration), 0, 2);
-                $match = collect($existing)->first(function ($item, $key) use ($migration, $sequence) {
-                    return mb_strpos($item, str_replace(['.stub', $sequence], '', basename($migration))) !== false;
-                });
+            $migrations = collect($stubs)->flatMap(
+                function ($migration) use ($existing, $package) {
+                    $sequence = mb_substr(basename($migration), 0, 2);
+                    $match = collect($existing)->first(
+                        function ($item, $key) use ($migration, $sequence) {
+                            return mb_strpos($item, str_replace(['.stub', $sequence], '', basename($migration))) !== false;
+                        }
+                    );
 
-                return [$migration => $this->app->databasePath('migrations/'.$package.'/'.($match ? basename($match) : date('Y_m_d_His', time() + $sequence).str_replace(['.stub', $sequence], '', basename($migration))))];
-            })->toArray();
+                    return [$migration => $this->app->databasePath('migrations/'.$package.'/'.($match ? basename($match) : date('Y_m_d_His', time() + $sequence).str_replace(['.stub', $sequence], '', basename($migration))))];
+                }
+            )->toArray();
 
             $this->publishes($migrations, $namespace.'-migrations');
         }
@@ -133,56 +137,64 @@ trait ConsoleTools
     }
 
     /**
-     * @param string $path
+     * @param  string $path
      * @return $this
      */
-    private function loadCommandsFromPath($path, $namespace) {
+    private function loadCommandsFromPath($path, $namespace)
+    {
         $path = $path.'/';
         $commands = [];
         
         collect(scandir($path))
-            ->each(function ($item) use ($path, $namespace, &$commands) {
-                if (in_array($item, ['.', '..'])) return;
+            ->each(
+                function ($item) use ($path, $namespace, &$commands) {
+                    if (in_array($item, ['.', '..'])) { return;
+                    }
                 
-                if (is_dir($path . $item)) {
-                    $commands = array_merge(
-                        $commands,
-                        $this->loadCommandsFromPath($path . $item . '/', $namespace.'\\'.ucfirst($item))
-                    );
-                }
+                    if (is_dir($path . $item)) {
+                        $commands = array_merge(
+                            $commands,
+                            $this->loadCommandsFromPath($path . $item . '/', $namespace.'\\'.ucfirst($item))
+                        );
+                    }
 
-                if (is_file($path . $item)) {
-                    $item = str_replace('.php', '', $item);
-                    $classNamespace = $namespace.'\\'.ucfirst($item);
-                    if (class_exists($classNamespace)) {
-                        $commands[] = $classNamespace;
-                    }                  
+                    if (is_file($path . $item)) {
+                        $item = str_replace('.php', '', $item);
+                        $classNamespace = $namespace.'\\'.ucfirst($item);
+                        if (class_exists($classNamespace)) {
+                            $commands[] = $classNamespace;
+                        }                  
+                    }
                 }
-            });
+            );
         return $commands;
     }
 
-    private function loadCommandsFromAppPath($path) {
+    private function loadCommandsFromAppPath($path)
+    {
         $realPath = app_path($path);
         $commands = [];
         
         collect(scandir($realPath))
-            ->each(function ($item) use ($path, $realPath) {
-                if (in_array($item, ['.', '..'])) return;
+            ->each(
+                function ($item) use ($path, $realPath) {
+                    if (in_array($item, ['.', '..'])) { return;
+                    }
 
-                if (is_dir($realPath . $item)) {
-                    $this->loadCommandsFromAppPath($path . $item . '/');
+                    if (is_dir($realPath . $item)) {
+                        $this->loadCommandsFromAppPath($path . $item . '/');
+                    }
+
+                    if (is_file($realPath . $item)) {
+                        $item = str_replace('.php', '', $item);
+                        $class = str_replace('/', '\\', "Facilitador\\{$path}$item");
+
+                        if (class_exists($class)) {
+                            $commands[] = $class;
+                        }                  
+                    }
                 }
-
-                if (is_file($realPath . $item)) {
-                    $item = str_replace('.php', '', $item);
-                    $class = str_replace('/', '\\', "Facilitador\\{$path}$item");
-
-                    if (class_exists($class)) {
-                        $commands[] = $class;
-                    }                  
-                }
-            });
+            );
     }
 
 
@@ -217,17 +229,21 @@ trait ConsoleTools
     private function setProviders()
     {
         $this->setDependencesAlias();
-        (new Collection(self::$providers))->map(function ($provider) {
-            if (class_exists($provider)) {
-                $this->app->register($provider);
+        (new Collection(self::$providers))->map(
+            function ($provider) {
+                if (class_exists($provider)) {
+                    $this->app->register($provider);
+                }
             }
-        });
+        );
     }
     private function setDependencesAlias()
     {
         $loader = AliasLoader::getInstance();
-        (new Collection(self::$aliasProviders))->map(function ($class, $alias) use ($loader) {
-            $loader->alias($alias, $class);
-        });
+        (new Collection(self::$aliasProviders))->map(
+            function ($class, $alias) use ($loader) {
+                $loader->alias($alias, $class);
+            }
+        );
     }
 }

@@ -40,7 +40,7 @@ class EloquentEntity
     /**
      * modelClass
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter false
      */
@@ -49,7 +49,7 @@ class EloquentEntity
     /**
      * primaryKey
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -58,7 +58,7 @@ class EloquentEntity
     /**
      * name
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -68,7 +68,7 @@ class EloquentEntity
     /**
      * tablename
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -78,7 +78,7 @@ class EloquentEntity
     /**
      * indexes
      *
-     * @var array
+     * @var    array
      * @getter true
      * @setter true
      */
@@ -87,7 +87,7 @@ class EloquentEntity
     /**
      * icon
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -96,7 +96,7 @@ class EloquentEntity
     /**
      * groupPackage
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -105,7 +105,7 @@ class EloquentEntity
     /**
      * groupType
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -114,7 +114,7 @@ class EloquentEntity
     /**
      * historyType
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -123,7 +123,7 @@ class EloquentEntity
     /**
      * registerType
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -203,13 +203,15 @@ class EloquentEntity
     {
         $fillables = $this->getColumns();
 
-        $fillables = $fillables->reject(function($column) {
-            if ($column->getColumnName === 'deleted_at') {
+        $fillables = $fillables->reject(
+            function ($column) {
+                if ($column->getColumnName === 'deleted_at') {
+                    return false;
+                }
+            
                 return false;
             }
-            
-            return false;
-        });
+        );
 
         dd($fillables);
 

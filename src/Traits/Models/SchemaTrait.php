@@ -17,6 +17,6 @@ trait SchemaTrait
     {
         // split schema string by comma only before the next attribute name
         // new attribute name is a comma followed by VALID_COLUMN_NAME_REGEX and then a colon
-        return preg_split('/,(?='.ValidatorService::VALID_COLUMN_NAME_REGEX.':)/',$schemaString);
+        return preg_split('/,(?='.ValidatorService::VALID_COLUMN_NAME_REGEX.':)/', $schemaString);
     }
 }

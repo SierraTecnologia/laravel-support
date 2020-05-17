@@ -68,12 +68,14 @@ class MenuRepository
             $group = $groupParent;
             if (is_string($indice)) {
                 if (!empty($group)) {
-                    $mergeArray = array_merge($mergeArray, [
+                    $mergeArray = array_merge(
+                        $mergeArray, [
                         [
                             'text' => $indice,
                             'group' => $group
                         ]
-                    ]);
+                        ]
+                    );
                     $group .= '.';
                 } else {
                     $mergeArray = array_merge($mergeArray, [$indice]);

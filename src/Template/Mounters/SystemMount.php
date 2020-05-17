@@ -33,9 +33,11 @@ class SystemMount
     {
         // dd($this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-            collect($this->getAllMenus()->getTreeInArray())->map(function ($valor) use ($event) {
-                $event->menu->add($valor);
-            });
+            collect($this->getAllMenus()->getTreeInArray())->map(
+                function ($valor) use ($event) {
+                    $event->menu->add($valor);
+                }
+            );
         // });
     }
 
@@ -43,9 +45,11 @@ class SystemMount
     {
         // dd($this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-        return collect($this->getAllMenus()->getTreeInArray())->map(function ($valor) {
+        return collect($this->getAllMenus()->getTreeInArray())->map(
+            function ($valor) {
                 return $valor;
-            })->values()->all();
+            }
+        )->values()->all();
         // });
     }
 
@@ -55,7 +59,7 @@ class SystemMount
             collect(
                 $this->getProviders()
             )->map(
-                function($class) {
+                function ($class) {
                     return $class::$menuItens;
                 }
             )

@@ -26,9 +26,9 @@ class Boolean extends Checkbox
      * @param Container $app
      * @param string    $type
      * @param array     $name
-     * @param           $label
-     * @param           $value
-     * @param           $attributes
+     * @param $label
+     * @param $value
+     * @param $attributes
      */
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
@@ -66,11 +66,13 @@ class Boolean extends Checkbox
      */
     protected function makeBooleanCheckbox()
     {
-        $this->checkboxes([
+        $this->checkboxes(
+            [
             $this->message => [
                 'name' => $this->name,
                 'value' => 1,
             ]
-        ]);
+            ]
+        );
     }
 }

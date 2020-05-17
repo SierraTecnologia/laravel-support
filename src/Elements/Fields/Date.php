@@ -33,11 +33,13 @@ class Date extends Field
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
         // Set default attributes
-        $attributes = array_merge([
+        $attributes = array_merge(
+            [
             'maxlength' => 10,
             'placeholder' => __('facilitador::form.date.placeholder'),
             'id' => null, // We don't want to conflict on the id
-        ], (array) $attributes);
+            ], (array) $attributes
+        );
 
         // Create a text type field
         parent::__construct($app, 'text', $name, $label, $value, $attributes);
@@ -80,7 +82,7 @@ class Date extends Field
         // Convert the value to a mysql friendly format or leave null.
         $mysql_date = $this->value ?
             \DateTime::createFromFormat(__('facilitador::form.date.format'), $this->value)
-                ->format(Library\Utils\Constants::MYSQL_DATE) : null;
+            ->format(Library\Utils\Constants::MYSQL_DATE) : null;
 
         // Add a hidden field that will contain the mysql value, for storing in db
         $html .= HtmlInput::hidden($this->name, $mysql_date)->id($this->name);

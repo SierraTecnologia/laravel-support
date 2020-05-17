@@ -28,7 +28,7 @@ class ParseClass implements Arrayable
     /**
      * Nome da Classe
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -37,7 +37,7 @@ class ParseClass implements Arrayable
     /**
      * Tipo da Classe
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -92,8 +92,9 @@ class ParseClass implements Arrayable
             $this->supportModelCodeClass->data = $this->toArray();
             $this->supportModelCodeClass->save();
         } else {
-            if (is_object($this->supportModelCodeClass->data))
-            dd('Debug ParseClass', $this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
+            if (is_object($this->supportModelCodeClass->data)) {
+                dd('Debug ParseClass', $this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
+            }
             $this->fromArray($this->supportModelCodeClass->data);
         }
         // @debug
@@ -157,7 +158,7 @@ class ParseClass implements Arrayable
     public function getParentClassName()
     {
         if ($this->parentClass === false) {
-            if (!$parentClass = $this->getReflectionClassForUse()->getParentClass()){
+            if (!$parentClass = $this->getReflectionClassForUse()->getParentClass()) {
                 $this->parentClass = null;
             } else {
                 $this->parentClass = $parentClass->getName();

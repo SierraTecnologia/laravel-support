@@ -376,7 +376,7 @@ trait Attributable
      * Set the entity attribute value.
      *
      * @param \Facilitador\Models\Attribute $attribute
-     * @param mixed                               $value
+     * @param mixed                         $value
      *
      * @return $this
      */
@@ -442,9 +442,11 @@ trait Attributable
      */
     public function scopeHasAttribute(Builder $builder, string $key, $value): Builder
     {
-        return $builder->whereHas($key, function (Builder $builder) use ($value) {
-            $builder->where('content', $value)->where('entity_type', $this->getMorphClass());
-        });
+        return $builder->whereHas(
+            $key, function (Builder $builder) use ($value) {
+                $builder->where('content', $value)->where('entity_type', $this->getMorphClass());
+            }
+        );
     }
 
     /**

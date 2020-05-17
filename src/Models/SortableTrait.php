@@ -11,11 +11,13 @@ trait SortableTrait
 {
     public static function bootSortableTrait()
     {
-        static::creating(function ($model) {
-            if ($model instanceof Sortable && $model->shouldSortWhenCreating()) {
-                $model->setHighestOrderNumber();
+        static::creating(
+            function ($model) {
+                if ($model instanceof Sortable && $model->shouldSortWhenCreating()) {
+                    $model->setHighestOrderNumber();
+                }
             }
-        });
+        );
     }
 
     public function setHighestOrderNumber()
@@ -63,9 +65,8 @@ trait SortableTrait
 
     protected function determineOrderColumnName(): string
     {
-        if (
-            isset($this->sortable['order_column_name']) &&
-            ! empty($this->sortable['order_column_name'])
+        if (isset($this->sortable['order_column_name']) 
+            && ! empty($this->sortable['order_column_name'])
         ) {
             return $this->sortable['order_column_name'];
         }
@@ -211,23 +212,23 @@ trait SortableTrait
 
         // Concatenate all the attributes with spaces and look for the term.
         switch(DB::getDriverName()) {
-            case 'mysql':
-                $source = DB::raw('CONCAT('.implode('," ",', $attributes).')');
-                break;
-            case 'sqlite':
-            case 'pgsql':
-                $source = DB::raw(implode(' || ', $attributes));
-                break;
+        case 'mysql':
+            $source = DB::raw('CONCAT('.implode('," ",', $attributes).')');
+            break;
+        case 'sqlite':
+        case 'pgsql':
+            $source = DB::raw(implode(' || ', $attributes));
+            break;
 
             // For SQL Server, only support concatenating of two attributes so
             // it works in 2008 and above.
             // https://stackoverflow.com/a/47423292/59160
-            case 'sqlsrv':
-                if (count($attributes) == 2) {
-                    $source = DB::raw('{fn CONCAT('.implode(',', $attributes).')}');
-                } else {
-                    $source = $attributes[0];
-                }
+        case 'sqlsrv':
+            if (count($attributes) == 2) {
+                $source = DB::raw('{fn CONCAT('.implode(',', $attributes).')}');
+            } else {
+                $source = $attributes[0];
+            }
         }
 
         return $exact ?

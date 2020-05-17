@@ -24,7 +24,7 @@ class Relationship
     /**
      * name
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -33,7 +33,7 @@ class Relationship
     /**
      * type
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -42,7 +42,7 @@ class Relationship
     /**
      * model
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -95,8 +95,7 @@ class Relationship
 
     public function __construct($relationship = [])
     {
-        if ($relationship)
-        {
+        if ($relationship) {
             foreach ($this->filliables as $filliable) {
                 if (isset($relationship[$filliable])) {
                     $this->{$filliable} = $relationship[$filliable];

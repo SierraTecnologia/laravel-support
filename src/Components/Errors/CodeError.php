@@ -16,7 +16,7 @@ abstract class CodeError
     /**
      * Target do erro
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */

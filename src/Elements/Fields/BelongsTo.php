@@ -58,11 +58,13 @@ class BelongsTo extends Field
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
         // Set default attributes
-        $attributes = array_merge([
+        $attributes = array_merge(
+            [
             'class' => 'span5',
             'placeholder' => __('facilitador::form.belongs_to.search'),
             'autocomplete' => 'off',
-        ], (array) $attributes);
+            ], (array) $attributes
+        );
 
         // Create a text type field
         parent::__construct($app, 'text', $name, $label, $value, $attributes);
@@ -148,13 +150,17 @@ class BelongsTo extends Field
     protected function appendEditButton()
     {
         if ($this->value) {
-            $this->append('<button type="button" class="btn btn-default">
+            $this->append(
+                '<button type="button" class="btn btn-default">
 				<span class="glyphicon glyphicon-pencil"></span>
-			</button>');
+			</button>'
+            );
         } else {
-            $this->append('<button type="button" class="btn btn-default" disabled>
+            $this->append(
+                '<button type="button" class="btn btn-default" disabled>
 				<span class="glyphicon glyphicon-ban-circle"></span>
-			</button>');
+			</button>'
+            );
         }
     }
 
@@ -179,8 +185,8 @@ class BelongsTo extends Field
         if ($parent = $this->parentModel()) {
             $this->value = $parent->getAdminTitleAttribute();
 
-        // Else, if there is no parent (it's a create page), set the value if a
-        // title was set
+            // Else, if there is no parent (it's a create page), set the value if a
+            // title was set
         } elseif ($this->title) {
             $this->value = $this->title;
         }
@@ -199,7 +205,8 @@ class BelongsTo extends Field
         if ($this->value
             && ($relation = $this->guessRelation())
             && ($model = $this->getModel())
-            && method_exists($model, $relation)) {
+            && method_exists($model, $relation)
+        ) {
             return $model->$relation;
         }
     }

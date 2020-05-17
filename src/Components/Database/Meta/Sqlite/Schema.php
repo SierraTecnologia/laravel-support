@@ -35,7 +35,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
     /**
      * Mapper constructor.
      *
-     * @param string $schema
+     * @param string                               $schema
      * @param \Illuminate\Database\MySqlConnection $connection
      */
     public function __construct($schema, $connection)
@@ -49,7 +49,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
 
     /**
      * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
-     * @todo: Use Doctrine instead of raw database queries
+     * @todo:  Use Doctrine instead of raw database queries
      */
     public function manager()
     {
@@ -72,18 +72,20 @@ class Schema implements \Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @return array
+     * @return   array
      * @internal param string $schema
      */
     protected function fetchTables()
     {
         $names = $this->manager()->listTableNames();
 
-        return array_diff($names, [
+        return array_diff(
+            $names, [
             'sqlite_master',
             'sqlite_sequence',
             'sqlite_stat1',
-        ]);
+            ]
+        );
     }
 
     /**
@@ -125,7 +127,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
      * Quick little hack since it is no longer possible to set PDO's fetch mode
      * to PDO::FETCH_ASSOC.
      *
-     * @param $data
+     * @param  $data
      * @return mixed
      */
     protected function arraify($data)
@@ -151,7 +153,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param \Support\Components\Database\Meta\Blueprint $blueprint
+     * @param    \Support\Components\Database\Meta\Blueprint $blueprint
      * @internal param string $sql
      */
     protected function fillIndexes(Blueprint $blueprint)

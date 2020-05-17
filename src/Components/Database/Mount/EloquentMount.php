@@ -65,7 +65,8 @@ class EloquentMount
             $tableName,
             $this->renderDatabaseData["Leitoras"]["displayTables"],
             'name'
-        )) {
+        )
+        ) {
             // @todo criar erro
             return false;
         }
@@ -73,10 +74,10 @@ class EloquentMount
         $indexes = $this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]][
             'indexes'
         ];
-// dd(
-//         $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className],
-//         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
-// );
+        // dd(
+        //         $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className],
+        //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
+        // );
         $eloquentEntity = new EloquentEntity($this->className);
         $eloquentEntity->setTablename($tableName);
         $eloquentEntity->setName($name);
@@ -93,7 +94,7 @@ class EloquentMount
         $eloquentEntity->setRegisterType($tableClassArray['registerType']);
         
         foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]]['columns'] as $column) {
-            $eloquentEntity->addColumn( (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
+            $eloquentEntity->addColumn((new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
         }
 
         // Debug

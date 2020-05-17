@@ -24,13 +24,11 @@ class ClassReader
 
     private function parseSingle($key)
     {
-        if(isset($this->parameters[$key]))
-        {
+        if(isset($this->parameters[$key])) {
             return $this->parameters[$key];
         }
         
-        if(preg_match("/@".preg_quote($key).$this->endPattern."/", $this->rawDocBlock, $match))
-        {
+        if(preg_match("/@".preg_quote($key).$this->endPattern."/", $this->rawDocBlock, $match)) {
             return true;
         }
     
@@ -38,13 +36,11 @@ class ClassReader
         $size = sizeof($matches[1]);
 
         // not found
-        if($size === 0)
-        {
+        if($size === 0) {
             return null;
         }
         // found one, save as scalar
-        if($size === 1)
-        {
+        if($size === 1) {
             return $this->parseValue($matches[1][0]);
         }
 
@@ -66,10 +62,8 @@ class ClassReader
 
         foreach($matches[1] as $rawParameter)
         {
-            if(preg_match("/^(".$this->keyPattern.") (.*)$/", $rawParameter, $match))
-            {
-                if(isset($this->parameters[$match[1]]))
-                {
+            if(preg_match("/^(".$this->keyPattern.") (.*)$/", $rawParameter, $match)) {
+                if(isset($this->parameters[$match[1]])) {
                     $this->parameters[$match[1]] = array_merge((array)$this->parameters[$match[1]], (array)$match[2]);
                 }
                 else
@@ -77,8 +71,7 @@ class ClassReader
                     $this->parameters[$match[1]] = $this->parseValue($match[2]);
                 }
             }
-            else if(preg_match("/^".$this->keyPattern."$/", $rawParameter, $match))
-            {
+            else if(preg_match("/^".$this->keyPattern."$/", $rawParameter, $match)) {
                 $this->parameters[$rawParameter] = true;
             }
             else
@@ -104,21 +97,20 @@ class ClassReader
     {
         $type = gettype($declaration);
 
-        if($type !== 'string')
-        {
+        if($type !== 'string') {
             throw new \InvalidArgumentException(
-                "Raw declaration must be string, $type given. Key='$name'.");
+                "Raw declaration must be string, $type given. Key='$name'."
+            );
         }
 
-        if(strlen($declaration) === 0)
-        {
+        if(strlen($declaration) === 0) {
             throw new \InvalidArgumentException(
-                "Raw declaration cannot have zero length. Key='$name'.");
+                "Raw declaration cannot have zero length. Key='$name'."
+            );
         }
 
         $declaration = explode(" ", $declaration);
-        if(sizeof($declaration) == 1)
-        {
+        if(sizeof($declaration) == 1) {
             // string is default type
             array_unshift($declaration, "string");
         }
@@ -134,11 +126,9 @@ class ClassReader
 
     private function parseValue($originalValue)
     {
-        if($originalValue && $originalValue !== 'null')
-        {
+        if($originalValue && $originalValue !== 'null') {
             // try to json decode, if cannot then store as string
-            if( ($json = json_decode($originalValue,true)) === null)
-            {
+            if(($json = json_decode($originalValue, true)) === null) {
                 $value = $originalValue;
             }
             else
@@ -156,8 +146,7 @@ class ClassReader
 
     public function getParameters()
     {
-        if(! $this->parsedAll)
-        {
+        if(! $this->parsedAll) {
             $this->parse();
             $this->parsedAll = true;
         }

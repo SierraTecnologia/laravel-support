@@ -124,7 +124,8 @@ trait CrudForms
         $withTrashed = $this->withTrashed;
         $bladeLayout = $this->bladeLayout;
 
-        return view('crud-forms::index',
+        return view(
+            'crud-forms::index',
             compact(
                 'entities',
                 'fields',
@@ -154,7 +155,8 @@ trait CrudForms
         $route = $this->getRoute();
         $bladeLayout = $this->bladeLayout;
 
-        return view('crud-forms::create',
+        return view(
+            'crud-forms::create',
             compact(
                 'entity',
                 'fields',
@@ -175,7 +177,8 @@ trait CrudForms
      */
     public function store(Request $request)
     {
-        Validator::make($request->all(),
+        Validator::make(
+            $request->all(),
             $this->getValidationRules(),
             $this->getValidationMessages(),
             $this->getValidationAttributes()
@@ -208,7 +211,8 @@ trait CrudForms
         $route = $this->getRoute();
         $bladeLayout = $this->bladeLayout;
 
-        return view('crud-forms::show',
+        return view(
+            'crud-forms::show',
             compact(
                 'entity',
                 'fields',
@@ -241,7 +245,8 @@ trait CrudForms
         $route = $this->getRoute();
         $bladeLayout = $this->bladeLayout;
 
-        return view('crud-forms::edit',
+        return view(
+            'crud-forms::edit',
             compact(
                 'entity',
                 'fields',
@@ -263,7 +268,8 @@ trait CrudForms
      */
     public function update(Request $request, $id)
     {
-        Validator::make($request->all(),
+        Validator::make(
+            $request->all(),
             $this->getValidationRules(),
             $this->getValidationMessages(),
             $this->getValidationAttributes()
@@ -353,10 +359,9 @@ trait CrudForms
     public function getRelationships()
     {
         foreach ($this->getFormFields() as $field) {
-            if (
-                Arr::has($field, 'relationship') &&
-                !Arr::has($this->relationships, $field['relationship']) &&
-                method_exists($this->model, $field['relationship'])
+            if (Arr::has($field, 'relationship') 
+                && !Arr::has($this->relationships, $field['relationship']) 
+                && method_exists($this->model, $field['relationship'])
             ) {
                 $this->relationships[] = $field['relationship'];
             }
@@ -452,9 +457,11 @@ trait CrudForms
             return array_slice($this->getFormFields(), 0, 1);
         }
 
-        return Arr::where($this->getFormFields(), function ($value) {
-            return in_array($value['name'], $this->indexFields, true);
-        });
+        return Arr::where(
+            $this->getFormFields(), function ($value) {
+                return in_array($value['name'], $this->indexFields, true);
+            }
+        );
     }
 
     /**
@@ -470,11 +477,15 @@ trait CrudForms
 
         foreach ($relationships as $relationship) {
             // We need to find the relationship's field
-            $field = Arr::first(array_filter($formFields, function ($var) use ($relationship) {
-                if (Arr::has($var, 'relationship') && ($relationship == $var['relationship'])) {
-                    return $var;
-                }
-            }));
+            $field = Arr::first(
+                array_filter(
+                    $formFields, function ($var) use ($relationship) {
+                        if (Arr::has($var, 'relationship') && ($relationship == $var['relationship'])) {
+                            return $var;
+                        }
+                    }
+                )
+            );
 
             if (in_array(get_class($this->model->$relationship()), $this->relationTypesToLoad, true)) {
                 $relationshipData["$relationship"] = $this->model->$relationship()->getRelated()->all()->pluck($field['relFieldName'], 'id');

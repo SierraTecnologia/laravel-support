@@ -39,7 +39,7 @@ class CodeModelsCommand extends Command
      * Create a new command instance.
      *
      * @param \Support\Components\Coders\Model\Factory $models
-     * @param \Illuminate\Contracts\Config\Repository $config
+     * @param \Illuminate\Contracts\Config\Repository  $config
      */
     public function __construct(Factory $models, Repository $config)
     {

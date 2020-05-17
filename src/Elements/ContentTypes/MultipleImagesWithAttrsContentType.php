@@ -13,7 +13,7 @@ class MultipleImagesWithAttrsContentType extends BaseType
     public function handle()
     {
         $files = []; 
-        if ($this->request->file($this->row->field)){
+        if ($this->request->file($this->row->field)) {
             $pathes = (new MultipleImage($this->request, $this->slug, $this->row, $this->options))->handle();
             foreach (json_decode($pathes) as $i => $path) {
                 $files[$i]['name'] = $path;

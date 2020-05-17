@@ -21,15 +21,14 @@ class HasOneOrManyStrategy implements Relation
     /**
      * HasManyWriter constructor.
      *
-     * @param \Illuminate\Support\Fluent $command
+     * @param \Illuminate\Support\Fluent             $command
      * @param \Support\Components\Coders\Model\Model $parent
      * @param \Support\Components\Coders\Model\Model $related
      */
     public function __construct(Fluent $command, Model $parent, Model $related)
     {
-        if (
-            $related->isPrimaryKey($command) ||
-            $related->isUniqueKey($command)
+        if ($related->isPrimaryKey($command) 
+            || $related->isUniqueKey($command)
         ) {
             $this->relation = new HasOne($command, $parent, $related);
         } else {

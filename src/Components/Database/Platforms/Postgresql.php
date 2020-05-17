@@ -11,7 +11,8 @@ abstract class Postgresql extends Platform
         // todo: need to create
         // box, circle, line, lseg, path, pg_lsn, point, polygon
 
-        $typeMapping->forget([
+        $typeMapping->forget(
+            [
             'smallint',
             'serial',
             'serial4',
@@ -30,7 +31,8 @@ abstract class Postgresql extends Platform
             'char',
             'datetime',
             'year',
-        ]);
+            ]
+        );
 
         return $typeMapping;
     }

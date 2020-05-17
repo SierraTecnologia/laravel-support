@@ -4,9 +4,13 @@ namespace Support\Template\Form\DataTransformer;
 
 interface DataTransformerInterface
 {
-    /** transform when putting the data into a form */
+    /**
+     * transform when putting the data into a form 
+     */
     public function transform($value);
 
-    /** reversen when getting the data from a form */
+    /**
+     * reversen when getting the data from a form 
+     */
     public function reverseTransform($value);
 }

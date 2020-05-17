@@ -22,15 +22,20 @@ trait Exportable
     public function csv()
     {
         $items = $this->makeCsvQuery()->get();
-        if ($items->isEmpty()) abort(404);
+        if ($items->isEmpty()) { abort(404);
+        }
         $csv = $this->makeCsv($items);
-        return response($csv->getContent())->withHeaders([
+        return response($csv->getContent())->withHeaders(
+            [
             'Content-Encoding' => 'none',
             'Content-Type' => 'text/csv; charset=UTF-8',
-            'Content-Disposition' => sprintf('attachment; filename="%s"',
-                $this->makeCsvFileTitle()),
+            'Content-Disposition' => sprintf(
+                'attachment; filename="%s"',
+                $this->makeCsvFileTitle()
+            ),
             'Content-Description' => 'File Transfer',
-        ]);
+            ]
+        );
     }
 
     /**
@@ -57,13 +62,15 @@ trait Exportable
     {
         $csv = Writer::createFromFileObject(new SplTempFileObject());
         $csv->insertOne($this->getCsvHeaderNames($items));
-        $items->each(function($item) use ($csv) {
-            $row = $item->forExport();
-            if (is_object($row) && method_exists($row, 'toArray')) {
-                $row = $row->toArray();
+        $items->each(
+            function ($item) use ($csv) {
+                $row = $item->forExport();
+                if (is_object($row) && method_exists($row, 'toArray')) {
+                    $row = $row->toArray();
+                }
+                $csv->insertOne($row);
             }
-            $csv->insertOne($row);
-        });
+        );
         return $csv;
     }
 
@@ -85,12 +92,14 @@ trait Exportable
      */
     protected function makeCsvFileTitle()
     {
-        return vsprintf('%s %s as of %s at %s.csv', [
+        return vsprintf(
+            '%s %s as of %s at %s.csv', [
             Facilitador::site(),
             $this->title(),
             Carbon::now()->format('n.j.y'),
             Carbon::now()->format('g:i A'),
-        ]);
+            ]
+        );
     }
 
 

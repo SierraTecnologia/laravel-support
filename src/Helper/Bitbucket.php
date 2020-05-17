@@ -14,10 +14,10 @@ class Bitbucket
      * Create a comment on a specific file (and commit) in a Bitbucket Pull Request.
      *
      * @param string $repo
-     * @param int $pullId
+     * @param int    $pullId
      * @param string $commitId
      * @param string $file
-     * @param int $line
+     * @param int    $line
      * @param string $comment
      *
      * @return null
@@ -44,23 +44,25 @@ class Bitbucket
 
         $client = new Client(['base_uri' => 'https://api.bitbucket.org']);
 
-        $client->post($url, [
+        $client->post(
+            $url, [
             'auth'      => [$username, $appPassword],
             'headers'   => [
                 'Content-Type' => 'application/json',
             ],
             'json'      => $data,
-        ]);
+            ]
+        );
     }
 
     /**
      * Create a comment on a Bitbucket commit.
      *
-     * @param $repo
-     * @param $commitId
-     * @param $file
-     * @param $line
-     * @param $comment
+     * @param  $repo
+     * @param  $commitId
+     * @param  $file
+     * @param  $line
+     * @param  $comment
      * @return null
      */
     public function createCommitComment($repo, $commitId, $file, $line, $comment)
@@ -85,18 +87,20 @@ class Bitbucket
 
         $client = new Client(['base_uri' => 'https://api.bitbucket.org']);
 
-        $client->post($url, [
+        $client->post(
+            $url, [
             'auth'      => [$username, $appPassword],
             'headers'   => [
                 'Content-Type' => 'application/json',
             ],
             'json'      => $data,
-        ]);
+            ]
+        );
     }
 
     /**
      * @param string $repo
-     * @param int $pullRequestId
+     * @param int    $pullRequestId
      *
      * @return string
      */

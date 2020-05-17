@@ -44,17 +44,23 @@ trait CacheableEloquent
      */
     public static function bootCacheableEloquent(): void
     {
-        static::updated(function (Model $cachedModel) {
-            ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
-        });
+        static::updated(
+            function (Model $cachedModel) {
+                ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
+            }
+        );
 
-        static::created(function (Model $cachedModel) {
-            ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
-        });
+        static::created(
+            function (Model $cachedModel) {
+                ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
+            }
+        );
 
-        static::deleted(function (Model $cachedModel) {
-            ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
-        });
+        static::deleted(
+            function (Model $cachedModel) {
+                ! $cachedModel->isCacheClearEnabled() || $cachedModel::forgetCache();
+            }
+        );
     }
 
     /**
@@ -265,16 +271,20 @@ trait CacheableEloquent
             'lock' => $query->lock,
         ];
 
-        return md5(json_encode([
-            $vars,
-            $columns,
-            static::class,
-            $this->getCacheDriver(),
-            $this->getCacheLifetime(),
-            $builder instanceof Builder ? $builder->getEagerLoads() : null,
-            $builder->getBindings(),
-            $builder->toSql(),
-        ]));
+        return md5(
+            json_encode(
+                [
+                $vars,
+                $columns,
+                static::class,
+                $this->getCacheDriver(),
+                $this->getCacheLifetime(),
+                $builder instanceof Builder ? $builder->getEagerLoads() : null,
+                $builder->getBindings(),
+                $builder->toSql(),
+                ]
+            )
+        );
     }
 
     /**

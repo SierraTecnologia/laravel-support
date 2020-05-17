@@ -39,13 +39,15 @@ class Input extends Element
      */
     protected $customError = false;
 
-    /** @var DataTransformerInterface */
+    /**
+     * @var DataTransformerInterface 
+     */
     protected $dataTransformator;
 
     /**
-     * @param string  $name
-     * @param string  $label
-     * @param bool $required
+     * @param string $name
+     * @param string $label
+     * @param bool   $required
      *
      * @return static
      */

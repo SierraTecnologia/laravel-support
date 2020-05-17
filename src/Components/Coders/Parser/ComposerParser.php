@@ -28,15 +28,18 @@ class ComposerParser
         $classMapPath = $this->getComposerFolder().'/composer/autoload_classmap.php';
         $vendorPath = dirname(dirname($classMapPath));
 
-        $classes = require $classMapPath;
+        $classes = include $classMapPath;
         foreach ($classes as $class => $path) {
             if (! Str::contains($class, '\\') || ($ignorePackages && Str::startsWith($path, $vendorPath))) {
                 continue;
             }
 
-            if (!$excludedAliases->filter(function ($alias) use ($class) {
-                return Str::startsWith($class, $alias);
-            })->isEmpty()) {
+            if (!$excludedAliases->filter(
+                function ($alias) use ($class) {
+                    return Str::startsWith($class, $alias);
+                }
+            )->isEmpty()
+            ) {
                 continue;
             }
 
@@ -48,15 +51,17 @@ class ComposerParser
 
     public function returnClassesByAlias($alias)
     {
-        return collect($this->classes)->filter(function ($path, $class) use ($alias) {
-            // if (!is_string($class)) dd($path, $class, $alias);
-            // try {
+        return collect($this->classes)->filter(
+            function ($path, $class) use ($alias) {
+                // if (!is_string($class)) dd($path, $class, $alias);
+                // try {
                 return Str::startsWith($class, $alias);
 
-            // }catch(\Exception $e) {
-            //     dd('Aqui', $path, $class, $alias);
-            // }
-        });
+                // }catch(\Exception $e) {
+                //     dd('Aqui', $path, $class, $alias);
+                // }
+            }
+        );
     }
 
     private function getComposerFolder()

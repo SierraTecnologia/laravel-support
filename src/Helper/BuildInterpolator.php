@@ -24,7 +24,7 @@ class BuildInterpolator
      * Sets the variables that will be used for interpolation.
      *
      * @param BaseBuild $build
-     * @param           $url
+     * @param $url
      *
      * @throws Exception
      */
@@ -63,7 +63,9 @@ class BuildInterpolator
         putenv('PHP_CENSOR_BRANCH_LINK=' . $this->interpolationVars['%BRANCH_LINK%']);
         putenv('PHP_CENSOR_ENVIRONMENT=' . $this->interpolationVars['%ENVIRONMENT%']);
 
-        /** @deprecated The variables are deprecated and will be deleted in version 2.0. Use the variables '%COMMIT_ID%', '%SHORT_COMMIT_ID%' etc. instead. */
+        /**
+ * @deprecated The variables are deprecated and will be deleted in version 2.0. Use the variables '%COMMIT_ID%', '%SHORT_COMMIT_ID%' etc. instead. 
+*/
         $this->interpolationVars['%COMMIT%']       = $this->interpolationVars['%COMMIT_ID%'];
         $this->interpolationVars['%SHORT_COMMIT%'] = $this->interpolationVars['%SHORT_COMMIT_ID%'];
         $this->interpolationVars['%COMMIT_EMAIL%'] = $this->interpolationVars['%COMMITTER_EMAIL%'];
@@ -84,7 +86,9 @@ class BuildInterpolator
         putenv('PHP_CENSOR_BUILD_URI=' . $this->interpolationVars['%BUILD_LINK%']);
         putenv('PHP_CENSOR_BRANCH_URI=' . $this->interpolationVars['%BRANCH_LINK%']);
 
-        /** @deprecated This environment variables are deprecated and will be deleted in version 2.0. Use the variables 'PHP_CENSOR_' instead. */
+        /**
+ * @deprecated This environment variables are deprecated and will be deleted in version 2.0. Use the variables 'PHP_CENSOR_' instead. 
+*/
         $this->interpolationVars['%PHPCI%']                = 1;
         $this->interpolationVars['%PHPCI_COMMIT%']         = $this->interpolationVars['%COMMIT_ID%'];
         $this->interpolationVars['%PHPCI_SHORT_COMMIT%']   = $this->interpolationVars['%SHORT_COMMIT_ID%'];

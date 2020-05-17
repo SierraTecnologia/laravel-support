@@ -34,7 +34,7 @@ class LoadLaravel
         $vendorPath = $binariesPath = null;
         foreach ($composerAutoload as $autoload) {
             if (file_exists($autoload)) {
-                require($autoload);
+                include $autoload;
                 $vendorPath = dirname($autoload);
                 $binariesPath = $vendorPath . '/bin/';
                 break;
@@ -44,9 +44,11 @@ class LoadLaravel
 
     public function getMigrationsPaths()
     {
-        return (new Collection($this->migrationsPaths))->map(function($value) {
-            return $value;
-        })->values()->all();
+        return (new Collection($this->migrationsPaths))->map(
+            function ($value) {
+                return $value;
+            }
+        )->values()->all();
     }
 
     public function addMigrationsPaths($migrationsPaths)

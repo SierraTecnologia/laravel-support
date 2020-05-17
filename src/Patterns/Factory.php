@@ -38,4 +38,4 @@ Esse código usa uma “Factory” para criar o objeto do tipo “Automobile”.
 Usar o padrão de “Factory” não é sempre necessário (ou esperto). O código de exemplo usado aqui é tão simples que essa “Factory” estaria simplesmente adicionando complexidade indesejada. Entretanto se você estiver realizando um projeto um pouco maior ou mais complexo você pode se salvar de muitos problemas com o uso do padrão “Factory”.
 
 Padrão “Factory” na Wikipedia
-*/
+ */

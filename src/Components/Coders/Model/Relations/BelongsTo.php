@@ -33,7 +33,7 @@ class BelongsTo implements Relation
     /**
      * BelongsToWriter constructor.
      *
-     * @param \Illuminate\Support\Fluent $command
+     * @param \Illuminate\Support\Fluent             $command
      * @param \Support\Components\Coders\Model\Model $parent
      * @param \Support\Components\Coders\Model\Model $related
      */
@@ -50,13 +50,13 @@ class BelongsTo implements Relation
     public function name()
     {
         switch ($this->parent->getRelationNameStrategy()) {
-            case 'foreign_key':
-                $relationName = preg_replace("/[^a-zA-Z0-9]?{$this->otherKey()}$/", '', $this->foreignKey());
-                break;
-            default:
-            case 'related':
-                $relationName = $this->related->getClassName();
-                break;
+        case 'foreign_key':
+            $relationName = preg_replace("/[^a-zA-Z0-9]?{$this->otherKey()}$/", '', $this->foreignKey());
+            break;
+        default:
+        case 'related':
+            $relationName = $this->related->getClassName();
+            break;
         }
 
         if ($this->parent->usesSnakeAttributes()) {

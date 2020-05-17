@@ -8,7 +8,8 @@ use Illuminate\Pagination\UrlWindow as LaravelUrlWindow;
  * Sub class UrlWindow so I can control the size of the window to make it
  * smaller on mobile
  */
-class UrlWindow extends LaravelUrlWindow {
+class UrlWindow extends LaravelUrlWindow
+{
 
     /**
      * How many links to show on the edges
@@ -20,7 +21,7 @@ class UrlWindow extends LaravelUrlWindow {
     /**
      * Get the slider of URLs when too close to beginning of window.
      *
-     * @param  int  $window
+     * @param  int $window
      * @return array
      */
     protected function getSliderTooCloseToBeginning($window)
@@ -35,7 +36,7 @@ class UrlWindow extends LaravelUrlWindow {
     /**
      * Get the slider of URLs when too close to ending of window.
      *
-     * @param  int  $window
+     * @param  int $window
      * @return array
      */
     protected function getSliderTooCloseToEnding($window)

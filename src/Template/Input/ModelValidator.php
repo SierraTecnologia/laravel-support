@@ -104,9 +104,11 @@ class ModelValidator
 
         // Otherwise, remove any image rules because this is a non-Image and
         // these rules will get applied by NestedModels
-        return array_where($rules, function ($val, $key) {
-            return !starts_with($key, 'images.');
-        });
+        return array_where(
+            $rules, function ($val, $key) {
+                return !starts_with($key, 'images.');
+            }
+        );
     }
 
     /**
@@ -134,9 +136,13 @@ class ModelValidator
      */
     public function prefixArrayKeys($prefix, $array)
     {
-        return array_combine(array_map(function ($key) use ($prefix) {
-            return $prefix.$key;
-        }, array_keys($array)), array_values($array));
+        return array_combine(
+            array_map(
+                function ($key) use ($prefix) {
+                    return $prefix.$key;
+                }, array_keys($array)
+            ), array_values($array)
+        );
     }
 
     /**
@@ -152,10 +158,12 @@ class ModelValidator
         $rules = array_flatten($validator->getRules());
 
         // Get just the rules, not rule modifiers
-        $rules = array_map(function($rule) {
-            preg_match('#^([^:]+)#', $rule, $matches);
-            return $matches[1];
-        }, $rules);
+        $rules = array_map(
+            function ($rule) {
+                preg_match('#^([^:]+)#', $rule, $matches);
+                return $matches[1];
+            }, $rules
+        );
 
         // Callback that removes isntances of the prefix from a message. Laravel
         // will have already replaced underscores with spaces, so we need to

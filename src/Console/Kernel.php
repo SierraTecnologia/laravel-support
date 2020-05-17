@@ -12,7 +12,8 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
  */
 class Kernel extends ConsoleKernel
 {
-    public function __construct(Application $app, Dispatcher $events) {
+    public function __construct(Application $app, Dispatcher $events)
+    {
         $this->loadCommands('Console/Commands');
         parent::__construct($app, $events);
     }
@@ -36,6 +37,6 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        require base_path('routes/console.php');
+        include base_path('routes/console.php');
     }
 }

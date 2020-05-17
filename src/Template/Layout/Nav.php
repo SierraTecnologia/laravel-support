@@ -100,7 +100,7 @@ class Nav
         // Loop through the list of pages and massage
         $massaged = [];
         foreach ($pages as $key => $val) {
-dd($pages, $key, $val);
+            dd($pages, $key, $val);
             // If val is an array, make a drop down menu
             if (is_array($val)) {
 
@@ -126,7 +126,7 @@ dd($pages, $key, $val);
                 // Add the pulldown to the list of pages
                 $massaged[] = (object) $page;
 
-            // The page is a simple (non pulldown) link
+                // The page is a simple (non pulldown) link
             } else {
                 $massaged[] = $this->makePage($key, $val);
             }

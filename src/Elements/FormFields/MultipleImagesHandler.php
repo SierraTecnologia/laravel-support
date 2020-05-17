@@ -8,11 +8,13 @@ class MultipleImagesHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::components.formfields.multiple_images', [
+        return view(
+            'facilitador::components.formfields.multiple_images', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,
             'dataTypeContent' => $dataTypeContent,
-        ]);
+            ]
+        );
     }
 }

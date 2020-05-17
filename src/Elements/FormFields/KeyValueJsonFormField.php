@@ -10,12 +10,14 @@ class KeyValueJsonFormField extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('extended-fields::formfields.key_value_json', [
+        return view(
+            'extended-fields::formfields.key_value_json', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,
             'dataTypeContent' => $dataTypeContent,
-        ]);
+            ]
+        );
     }
 
 }

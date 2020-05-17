@@ -42,12 +42,14 @@ class NestedModels
             // Write child data when the model is saved.  Because of how the saved
             // listener works, we need to explicitly make sure the saved model is
             // the one whose data we're parsing.
-            $model::saved(function ($saved_model) use ($model, $relation, $name, $data) {
-                if ($model != $saved_model) {
-                    return;
+            $model::saved(
+                function ($saved_model) use ($model, $relation, $name, $data) {
+                    if ($model != $saved_model) {
+                        return;
+                    }
+                    $this->writeOnSaved($relation, $name, $data);
                 }
-                $this->writeOnSaved($relation, $name, $data);
-            });
+            );
         }
 
         // Returning all input without the related attribtues
@@ -58,10 +60,10 @@ class NestedModels
      * Check if the input is a relation and, if it is, return the relationship
      * object
      *
-     * @param  Model          $model
-     * @param  string         $name  The input name, like from <input name="$name">, which
-     *                               is also the naem of the relationship function.
-     * @param  mixed          $data
+     * @param  Model  $model
+     * @param  string $name  The input name, like from <input name="$name">, which
+     *                       is also the naem of the relationship function.
+     * @param  mixed  $data
      * @return false|Relation
      */
     protected function makeRelation($model, $name, $data)
@@ -69,9 +71,14 @@ class NestedModels
         // The data must be an array and must contain arrays
         if (!is_array($data)
             || empty($data)
-            || count(array_filter($data, function ($child) {
-                return !is_array($child);
-            }))) {
+            || count(
+                array_filter(
+                    $data, function ($child) {
+                        return !is_array($child);
+                    }
+                )
+            )
+        ) {
             return false;
         }
 

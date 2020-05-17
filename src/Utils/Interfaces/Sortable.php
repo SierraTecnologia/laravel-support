@@ -25,7 +25,7 @@ interface Sortable
      * will get order 1, the record with the second it will get order 2,...
      *
      * @param array|\ArrayAccess $ids
-     * @param int $startOrder
+     * @param int                $startOrder
      */
     public static function setNewOrder($ids, int $startOrder = 1);
 

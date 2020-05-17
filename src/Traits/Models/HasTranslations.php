@@ -62,9 +62,11 @@ trait HasTranslations
      */
     public function attributesToArray()
     {
-        $values = array_map(function ($attribute) {
-            return $this->getTranslation($attribute, \Illuminate\Support\Facades\Config::get('app.locale')) ?: null;
-        }, $keys = $this->getTranslatableAttributes());
+        $values = array_map(
+            function ($attribute) {
+                return $this->getTranslation($attribute, \Illuminate\Support\Facades\Config::get('app.locale')) ?: null;
+            }, $keys = $this->getTranslatableAttributes()
+        );
 
         return array_replace(parent::attributesToArray(), array_combine($keys, $values));
     }

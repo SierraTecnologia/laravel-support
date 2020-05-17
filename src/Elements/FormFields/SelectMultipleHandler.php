@@ -8,11 +8,13 @@ class SelectMultipleHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::components.formfields.select_multiple', [
+        return view(
+            'facilitador::components.formfields.select_multiple', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,
             'dataTypeContent' => $dataTypeContent,
-        ]);
+            ]
+        );
     }
 }

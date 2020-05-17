@@ -8,11 +8,13 @@ class ImageHandler extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('facilitador::components.formfields.image', [
+        return view(
+            'facilitador::components.formfields.image', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,
             'dataTypeContent' => $dataTypeContent,
-        ]);
+            ]
+        );
     }
 }

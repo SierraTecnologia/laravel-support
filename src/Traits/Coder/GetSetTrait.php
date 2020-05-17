@@ -18,8 +18,8 @@ trait GetSetTrait
      * Lets catch all non-existing methods and
      * process if we have 'set' or 'get' prefix
      *
-     * @param  String $method [name of the calling method]
-     * @param  Array  $params [Method's parameters]
+     * @param String $method [name of the calling method]
+     * @param Array  $params [Method's parameters]
      *
      * @throws \InvalidArgumentException
      * @throws SetterGetterException
@@ -72,8 +72,10 @@ trait GetSetTrait
                 throw new SetterGetterException('Can\'t set restricted property ' . $property, 1);
                 // All parameters are given
             } elseif (count($params) < 1 || (!is_null($params[0]) && !isset($params[0]))) {
-                throw new \InvalidArgumentException("Invalid parameter given, method <strong>$method</strong> requires 1 parameter,  but "
-                . count($params) . " given!", 2);
+                throw new \InvalidArgumentException(
+                    "Invalid parameter given, method <strong>$method</strong> requires 1 parameter,  but "
+                    . count($params) . " given!", 2
+                );
             }
 
             // The value given in parameter
@@ -109,37 +111,37 @@ trait GetSetTrait
     {
         // Switch various types
         switch ($type) {
-            case 'string':
-                if (!is_string($value)) {
-                    throw new SetterGetterException('String type expected', 3);
-                }
-                break;
+        case 'string':
+            if (!is_string($value)) {
+                throw new SetterGetterException('String type expected', 3);
+            }
+            break;
 
-            case 'number':
-                if (!is_numeric($value)) {
-                    throw new SetterGetterException('Number type expected', 4);
-                }
-                break;
+        case 'number':
+            if (!is_numeric($value)) {
+                throw new SetterGetterException('Number type expected', 4);
+            }
+            break;
 
-            case 'array':
-                if (!is_array($value)) {
-                    throw new SetterGetterException('Array type expected', 5);
-                }
-                break;
+        case 'array':
+            if (!is_array($value)) {
+                throw new SetterGetterException('Array type expected', 5);
+            }
+            break;
 
-            case 'object':
-                if (!is_object($value)) {
-                    throw new SetterGetterException('Object type expected.', 6);
-                }
-                break;
+        case 'object':
+            if (!is_object($value)) {
+                throw new SetterGetterException('Object type expected.', 6);
+            }
+            break;
 
-            default:
-                // If a @var type is given in annotation and we haven't received
-                // proper type.
-                if (!is_null($type) && !$value instanceof $type) {
-                    throw new SetterGetterException('Instance of ' . $type . ' expected.', 7);
-                }
-                break;
+        default:
+            // If a @var type is given in annotation and we haven't received
+            // proper type.
+            if (!is_null($type) && !$value instanceof $type) {
+                throw new SetterGetterException('Instance of ' . $type . ' expected.', 7);
+            }
+            break;
         }
     }
 }

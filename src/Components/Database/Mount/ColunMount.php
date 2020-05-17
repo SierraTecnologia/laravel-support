@@ -23,7 +23,7 @@ use Support\Components\Database\Types\Type;
 use Support\Components\Coders\Parser\ParseModelClass;
 
 use Support\Components\Coders\Parser\ComposerParser;
-
+use Support\Utils\Searchers\ArraySearcher;
 use Support\Elements\Entities\EloquentColumn;
 
 class ColunMount
@@ -49,8 +49,24 @@ class ColunMount
         // );
     }
 
+    /**
+     * Caso seja ***able_type deve ser ignorado
+     */
+    public function isToIgnoreColumn()
+    {
+        return ArraySearcher::arraySearchByAttribute(
+            $this->column['name'],
+            $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'],
+            'morph_type'
+        );
+    }
+
     public function getEntity()
     {
+        if ($this->isToIgnoreColumn()) {
+            return false;
+        }
+
         $columnEntity = new EloquentColumn();
 
         /**
@@ -112,8 +128,8 @@ class ColunMount
 
     protected function isBelongTo($type = false)
     {
-        if (isset($this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()])) {
-            return $this->renderDatabaseData['Mapper']['mapperPrimaryKeys'][$this->getColumnName()];
+        if (isset($this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()])) {
+            return $this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()];
         }
 
         return false;
@@ -121,23 +137,33 @@ class ColunMount
 
     protected function isMorphTo($type = false)
     {
-        if ($this->className==\Population\Models\Market\Abouts\Info::class
-        && $this->column['name']!=='id'&& $this->column['name']!=='text'
+        // if ($this->className==\Population\Models\Market\Abouts\Info::class
+        // && $this->column['name']!=='id'&& $this->column['name']!=='text'
+        // ) {
+        if ($searchForeachKey = ArraySearcher::arraySearchByAttribute(
+            $this->column['name'],
+            // $this->renderDatabaseData['Leitoras']['displayTables'],
+                $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'],
+            'foreignKey'
+        )
         ) {
-            // if ($searchForeachKey = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
-            //     $this->column['name'],
-            //     $this->displayTables,
-            //     'foreignKey'
-            // )) {
-            //     dd($searchForeachKey);
-            //     return true;
-            // }
-            dd(
-                $this->className,
-                $this->column,
-                $this->renderDatabaseData
-            );
+            $isMorph = false;
+            // $found = [];
+            foreach ($searchForeachKey as $valorFound) {
+                if (in_array($valorFound['type'], ['MorphMany', 'MorphTo'])) {
+                    $isMorph = true;
+                }
+                // $found[] = $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'][$valorFound];
+            }
+            // dd($found);
+            return $isMorph;
         }
+        //     dd(
+        //         $this->className,
+        //         $this->column,
+        //         $this->renderDatabaseData
+        //     );
+        // }
         
         return false;
     }
@@ -245,7 +271,7 @@ class ColunMount
             $array['type'] = 'belongsTo';
             $array['column'] = $this->getColumnName();
             $array['key'] = $relation['key'];
-            $array['label'] = $relation['label'];
+            $array['label'] = $relation['displayName'];
             $array['pivot_table'] = $relation['name'];
             $array['pivot'] = 0;
         }
@@ -267,7 +293,7 @@ class ColunMount
             $array['type'] = 'morphTo';
             $array['column'] = $this->getColumnName();
             $array['key'] = $relation['key'];
-            $array['label'] = $relation['label'];
+            $array['label'] = $relation['displayName'];
             $array['pivot_table'] = $relation['name'];
             $array['pivot'] = 0;
         }
@@ -281,7 +307,7 @@ class ColunMount
         //     $array['type'] = 'belongsToMany';
         //     $array['column'] = $relation['id'];
         //     $array['key'] = $relation['key'];
-        //     $array['label'] = $relation['label'];
+        //     $array['label'] = $relation['ladisplayNamebel'];
         //     $array['pivot_table'] = $relation['user_roles'];
         //     $array['pivot'] = 1; // @todo
         //     $array['taggable'] = 0; // @todo
@@ -356,7 +382,6 @@ class ColunMount
 
 
     /**
-     * 
                 'details'      => [
                     'model'       => 'Facilitador\\Models\\Role',
                     'table'       => 'roles',
@@ -379,13 +404,4 @@ class ColunMount
      * morphedByMany (O modelo possui a tabela taggables)
      * morphToMany   (nao possui a tabela taggables)
      */
-    protected function readEloquentService(EloquentService $eloquentService)
-    {
-        $relations = $eloquentService->getRelations();
-        if (!empty($relations)) {
-            foreach ($relations as $relation) {
-
-            }
-        }
-    }
 }

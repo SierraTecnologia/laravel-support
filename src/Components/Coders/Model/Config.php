@@ -29,8 +29,8 @@ class Config
 
     /**
      * @param \Support\Components\Database\Meta\Blueprint $blueprint
-     * @param string $key
-     * @param mixed $default
+     * @param string                                      $key
+     * @param mixed                                       $default
      *
      * @return mixed
      */

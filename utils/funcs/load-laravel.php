@@ -1,7 +1,8 @@
 <?php
 
 if (!function_exists('config')) {
-    function config($address, $defaultValue) {
+    function config($address, $defaultValue)
+    {
         return $defaultValue;
     }
 }
@@ -14,7 +15,8 @@ if (!file_exists($databaseFileSqlite)) {
 
 // Configure Database with Laravel Illuminate
 $capsule = new \Illuminate\Database\Capsule\Manager;
-$capsule->addConnection([
+$capsule->addConnection(
+    [
 
     "driver" => "sqlite",
 
@@ -22,11 +24,12 @@ $capsule->addConnection([
 
     "database" => $databaseFileSqlite,
 
-//    "username" => "root",
+    //    "username" => "root",
 
-//    "password" => ""
+    //    "password" => ""
 
-]);
+    ]
+);
 
 //Make this Capsule instance available globally.
 $capsule->setAsGlobal();

@@ -8,7 +8,9 @@ use Symfony\Component\Yaml\Parser;
 
 class Yaml implements ValidatorInterface
 {
-    /** @var Parser */
+    /**
+     * @var Parser 
+     */
     protected $parser;
 
     public function __invoke($value)

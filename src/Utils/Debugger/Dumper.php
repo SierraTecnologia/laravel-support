@@ -23,7 +23,7 @@ class Dumper
 
     /**
      * @param mixed $value
-     * @param int $tabs
+     * @param int   $tabs
      *
      * @return string
      */
@@ -34,15 +34,17 @@ class Dumper
             $indent = str_repeat("\t", $tabs);
             $closingIndent = str_repeat("\t", $tabs - 1);
             $keys = array_keys($value);
-            $array = array_map(function ($value, $key) use ($tabs) {
-                if (is_numeric($key)) {
-                    return static::export($value, $tabs + 1);
-                }
+            $array = array_map(
+                function ($value, $key) use ($tabs) {
+                    if (is_numeric($key)) {
+                        return static::export($value, $tabs + 1);
+                    }
 
-                $key = static::hasStaticCall($key) ? $key : "'$key'";
+                    $key = static::hasStaticCall($key) ? $key : "'$key'";
 
-                return "$key => ".static::export($value, $tabs + 1);
-            }, $value, $keys);
+                    return "$key => ".static::export($value, $tabs + 1);
+                }, $value, $keys
+            );
 
             return "[\n$indent".implode(",\n$indent", $array)."\n$closingIndent]";
         }

@@ -24,7 +24,7 @@ class RadioButton extends Field
     /**
      * Which value should be the default?
      *
-     * @param mixed $default
+     * @param  mixed $default
      * @return RadioButton
      */
     public function default($default)
@@ -37,7 +37,7 @@ class RadioButton extends Field
     /**
      * This is a key => value pair of the value => label for the radios.
      *
-     * @param mixed $options
+     * @param  mixed $options
      * @return RadioButton
      */
     public function options(array $options)
@@ -95,7 +95,7 @@ class RadioButton extends Field
      *     1 => ['email'] // when the value is 1, it will hide the email field.
      * ]
      *
-     * @param array $fields
+     * @param  array $fields
      * @return RadioField
      */
     public function toggle(array $fields = [])

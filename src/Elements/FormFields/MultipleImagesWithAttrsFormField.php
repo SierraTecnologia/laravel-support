@@ -10,11 +10,13 @@ class MultipleImagesWithAttrsFormField extends AbstractHandler
 
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
-        return view('extended-fields::formfields.multiple_images_with_attrs', [
+        return view(
+            'extended-fields::formfields.multiple_images_with_attrs', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,
             'dataTypeContent' => $dataTypeContent,
-        ]);
+            ]
+        );
     }
 }

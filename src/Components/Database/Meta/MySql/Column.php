@@ -88,8 +88,8 @@ class Column implements \Support\Components\Database\Meta\Column
     }
 
     /**
-     * @param string $databaseType
-     * @param string $precision
+     * @param string                     $databaseType
+     * @param string                     $precision
      * @param \Illuminate\Support\Fluent $attributes
      */
     protected function parsePrecision($databaseType, $precision, Fluent $attributes)
@@ -168,7 +168,7 @@ class Column implements \Support\Components\Database\Meta\Column
 
     /**
      * @param string $key
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return mixed
      */

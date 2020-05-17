@@ -23,24 +23,32 @@ trait HasImages
     public static function bootHasImages()
     {
         // Automatically add images relationship to the cleoneable relations
-        Event::listen('cloner::cloning: '.get_called_class(), function ($clone, $src) {
-            $src->addCloneableRelation('images');
-        });
+        Event::listen(
+            'cloner::cloning: '.get_called_class(), function ($clone, $src) {
+                $src->addCloneableRelation('images');
+            }
+        );
 
         // Delete all Images if the parent is deleted.  Need to use "each" to get
         // the Image deleted events to fire.
-        static::deleted(function ($model) {
-            if ($model->deleteImagesWithModel()) {
-                $model->images->each(function ($image) {
-                    $image->delete();
-                });
+        static::deleted(
+            function ($model) {
+                if ($model->deleteImagesWithModel()) {
+                    $model->images->each(
+                        function ($image) {
+                            $image->delete();
+                        }
+                    );
+                }
             }
-        });
+        );
 
         // Automatically eager load the images relationship
-        static::addGlobalScope('facilitador.images', function (Builder $builder) {
-            $builder->with('images');
-        });
+        static::addGlobalScope(
+            'facilitador.images', function (Builder $builder) {
+                $builder->with('images');
+            }
+        );
     }
 
     /**
@@ -71,18 +79,20 @@ trait HasImages
      */
     public function img($name = null)
     {
-        return $this->images->first(function (Image $image, $key) use ($name) {
+        return $this->images->first(
+            function (Image $image, $key) use ($name) {
 
-            // Support (deprecated) null image names
-            if (!$name && $image->getAttribute('name') == 'image') {
-                return true;
+                // Support (deprecated) null image names
+                if (!$name && $image->getAttribute('name') == 'image') {
+                    return true;
+                }
+
+                return $image->getAttribute('name') == $name;
+
+                // When the $name isn't found, return an empty Image object so all the
+                // accessors can be invoked and will return an empty string.
             }
-
-            return $image->getAttribute('name') == $name;
-
-        // When the $name isn't found, return an empty Image object so all the
-        // accessors can be invoked and will return an empty string.
-        }) ?: new Image;
+        ) ?: new Image;
     }
 
     /**
@@ -92,16 +102,18 @@ trait HasImages
     public function croppedImages($width = null, $height = null, $options = null)
     {
         return array_combine(
-
             // Keys
-            $this->images->map(function ($image) {
-                return $image->name ?: 'default';
-            })->toArray(),
-
+            $this->images->map(
+                function ($image) {
+                    return $image->name ?: 'default';
+                }
+            )->toArray(),
             // Values
-            $this->images->map(function ($image) use ($width, $height, $options) {
-                return $image->crop($width, $height, $options)->url;
-            })->toArray()
+            $this->images->map(
+                function ($image) use ($width, $height, $options) {
+                    return $image->crop($width, $height, $options)->url;
+                }
+            )->toArray()
         );
     }
 
@@ -145,11 +157,13 @@ trait HasImages
      */
     public function getSitemapImagesAttribute()
     {
-        return $this->images->map(function ($image) {
-            return [
+        return $this->images->map(
+            function ($image) {
+                return [
                 'url' => $image->url,
                 'title' => $image->title,
-            ];
-        })->all();
+                ];
+            }
+        )->all();
     }
 }

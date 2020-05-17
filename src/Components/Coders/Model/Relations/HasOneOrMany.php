@@ -32,7 +32,7 @@ abstract class HasOneOrMany implements Relation
     /**
      * HasManyWriter constructor.
      *
-     * @param \Illuminate\Support\Fluent $command
+     * @param \Illuminate\Support\Fluent             $command
      * @param \Support\Components\Coders\Model\Model $parent
      * @param \Support\Components\Coders\Model\Model $related
      */

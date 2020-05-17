@@ -20,7 +20,7 @@ class BookTransformer extends TransformerAbstract
     /**
      * Include Author
      *
-     * @param Book $book
+     * @param  Book $book
      * @return \League\Fractal\Resource\Item
      */
     public function includeAuthor(Book $book)

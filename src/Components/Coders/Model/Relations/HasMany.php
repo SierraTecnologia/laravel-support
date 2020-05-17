@@ -36,21 +36,21 @@ class HasMany extends HasOneOrMany
         }
 
         switch ($this->parent->getRelationNameStrategy()) {
-            case 'foreign_key':
-                $suffix = preg_replace("/[^a-zA-Z0-9]?{$this->localKey()}$/", '', $this->foreignKey());
+        case 'foreign_key':
+            $suffix = preg_replace("/[^a-zA-Z0-9]?{$this->localKey()}$/", '', $this->foreignKey());
 
-                $relationName = $relationBaseName;
+            $relationName = $relationBaseName;
 
-                // Don't make relations such as users_user, just leave it as 'users'.
-                if ($this->parent->getTable(true) !== $suffix) {
-                    $relationName .= "_{$suffix}";
-                }
+            // Don't make relations such as users_user, just leave it as 'users'.
+            if ($this->parent->getTable(true) !== $suffix) {
+                $relationName .= "_{$suffix}";
+            }
 
-                break;
-            case 'related':
-            default:
-                $relationName = $relationBaseName;
-                break;
+            break;
+        case 'related':
+        default:
+            $relationName = $relationBaseName;
+            break;
         }
 
         if ($this->parent->usesSnakeAttributes()) {

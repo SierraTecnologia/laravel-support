@@ -27,13 +27,17 @@ class SupportServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
+            $this->publishes(
+                [
                 __DIR__.'/../../config/models.php' => config_path('models.php'),
-            ], 'reliese-models');
+                ], 'reliese-models'
+            );
 
-            $this->commands([
+            $this->commands(
+                [
                 CodeModelsCommand::class,
-            ]);
+                ]
+            );
         }
 
         $this->loadLogger();
@@ -50,9 +54,11 @@ class SupportServiceProvider extends ServiceProvider
 
         $this->loadMigrations();
 
-        $this->app->singleton(\Support\Services\DatabaseService::class, function () {
-            return new \Support\Services\DatabaseService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
-        });
+        $this->app->singleton(
+            \Support\Services\DatabaseService::class, function () {
+                return new \Support\Services\DatabaseService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
+            }
+        );
     }
 
 
@@ -70,14 +76,16 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerModelFactory()
     {
-        $this->app->singleton(ModelFactory::class, function ($app) {
-            return new ModelFactory(
-                $app->make('db'),
-                $app->make(Filesystem::class),
-                new Classify(),
-                new GenerateConfig($app->make('config')->get('models'))
-            );
-        });
+        $this->app->singleton(
+            ModelFactory::class, function ($app) {
+                return new ModelFactory(
+                    $app->make('db'),
+                    $app->make(Filesystem::class),
+                    new Classify(),
+                    new GenerateConfig($app->make('config')->get('models'))
+                );
+            }
+        );
     }
 
     /**
@@ -105,16 +113,20 @@ class SupportServiceProvider extends ServiceProvider
     {
         $level = env('APP_LOG_LEVEL_FOR_SUPPORT', 'warning');
         //@todo configurar adaptada dos leveis
-        Config::set('logging.channels.sitec-support', [
+        Config::set(
+            'logging.channels.sitec-support', [
             'driver' => 'single',
             'path' => storage_path('logs/sitec-support.log'),
             'level' => $level,
-        ]);
+            ]
+        );
 
-        Config::set('logging.channels.sitec-providers', [
+        Config::set(
+            'logging.channels.sitec-providers', [
             'driver' => 'single',
             'path' => storage_path('logs/sitec-providers.log'),
             'level' => $level,
-        ]);
+            ]
+        );
     }
 }

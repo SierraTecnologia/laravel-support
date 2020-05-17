@@ -40,7 +40,7 @@ use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
 use Support\Traits\Debugger\HasErrors;
 
-class Eloquent implements Arrayable
+class EloquentRender implements Arrayable
 {
     use HasErrors, ArrayableTrait;
     use DevDebug;
@@ -88,9 +88,9 @@ class Eloquent implements Arrayable
     /**
      * Params
      *
-     * @var string
-     * @getter false
-     * @setter false
+     * @var          string
+     * @getter       false
+     * @setter       false
      * @serializable true
      */
     protected $tableData;
@@ -98,9 +98,9 @@ class Eloquent implements Arrayable
     /**
      * Params
      *
-     * @var string
-     * @getter false
-     * @setter false
+     * @var          string
+     * @getter       false
+     * @setter       false
      * @serializable true
      */
     protected $tableName;
@@ -108,9 +108,9 @@ class Eloquent implements Arrayable
     /**
      * Params
      *
-     * @var string
-     * @getter false
-     * @setter false
+     * @var          string
+     * @getter       false
+     * @setter       false
      * @serializable true
      */
     protected $relations = false;
@@ -118,9 +118,9 @@ class Eloquent implements Arrayable
     /**
      * Params
      *
-     * @var string
-     * @getter false
-     * @setter false
+     * @var          string
+     * @getter       false
+     * @setter       false
      * @serializable true
      */
     protected $name;
@@ -128,9 +128,9 @@ class Eloquent implements Arrayable
     /**
      * Params
      *
-     * @var string
-     * @getter false
-     * @setter false
+     * @var          string
+     * @getter       false
+     * @setter       false
      * @serializable true
      */
     protected $icon;
@@ -267,15 +267,15 @@ class Eloquent implements Arrayable
     {
         try {
             if ($key) {
-                return (new Relationships($this->modelClass))($key);
+                return (new RelationshipsRender($this->modelClass))($key);
             }
 
             if (!$this->relations) {
-                $this->relations = (new Relationships($this->modelClass))($key);
+                $this->relations = (new RelationshipsRender($this->modelClass))($key);
                 // $this->setErrors($this->relations->getError()); @todo PEgar erro do relationsscripts
             }
             
-            // dd($key, (new Relationships($this->modelClass)),(new Relationships($this->modelClass))($key));
+            // dd($key, (new RelationshipsRender($this->modelClass)),(new RelationshipsRender($this->modelClass))($key));
             return $this->relations;
 
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {

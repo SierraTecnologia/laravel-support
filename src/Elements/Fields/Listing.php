@@ -104,7 +104,8 @@ class Listing extends Field
         $this->parent_item = $this->getModel();
 
         // Instantiate a controller given the model name
-        $this->controller(isset($config['controller'])
+        $this->controller(
+            isset($config['controller'])
             ? $config['controller']
             : Decoy::controllerForModel($model)
         );
@@ -130,17 +131,19 @@ class Listing extends Field
      * duplicate controller instantations when invoked from the base controller.
      *
      * @param  Facilitador\Http\Controllers\Decoy\Base $controller
-     * @param  LengthAwarePaginator         $items
+     * @param  LengthAwarePaginator                    $items
      * @return Facilitador\Field\Listing
      */
     public static function createFromController($controller, $items)
     {
         $model = $controller->model();
 
-        return Former::listing($model, null, null, null, [
+        return Former::listing(
+            $model, null, null, null, [
             'controller' => $controller,
             'items' => $items,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -155,7 +158,8 @@ class Listing extends Field
         // Instantiate a string controller
         if (is_string($controller)
             && class_exists($controller)
-            && is_subclass_of($controller, 'Facilitador\Http\Controllers\Decoy\Base')) {
+            && is_subclass_of($controller, 'Facilitador\Http\Controllers\Decoy\Base')
+        ) {
             $this->controller_name = $controller;
             $this->controller = new $controller;
 
@@ -164,9 +168,10 @@ class Listing extends Field
                 $this->controller->parent($this->parent_item);
             }
 
-        // Or, validate a passed controller instance
+            // Or, validate a passed controller instance
         } elseif (is_object($controller)
-            && is_a($controller, 'Facilitador\Http\Controllers\Decoy\Base')) {
+            && is_a($controller, 'Facilitador\Http\Controllers\Decoy\Base')
+        ) {
             $this->controller_name = get_class($controller);
             $this->controller = $controller;
         }
@@ -235,7 +240,7 @@ class Listing extends Field
     /**
      * Store the number of items to fetch, the per_page
      *
-     * @param  int   $take
+     * @param  int $take
      * @return Field This field
      */
     public function take($take)
@@ -320,10 +325,12 @@ class Listing extends Field
         // If in a sidebar and there is no parent (like if you are on a create page)
         // then don't show a special message
         if ($this->layout == 'sidebar' && !$this->parent_item) {
-            return View::make('facilitador::shared.list._pending', [
+            return View::make(
+                'facilitador::shared.list._pending', [
                 'title' => $this->label_text,
                 'description' => $this->controller->description(),
-            ])->render();
+                ]
+            )->render();
         }
 
         // Get the listing of items
@@ -421,7 +428,7 @@ class Listing extends Field
             $val = reset($columns); // Making sure this gets called before `key()`
             return [key($columns) => $val];
 
-        // Otherwise, just return all columns
+            // Otherwise, just return all columns
         }
 
         return $columns;

@@ -21,16 +21,18 @@ trait Encodable
      */
 
      /**
-     * Boot events
-     *
-     * @return void
-     */
+      * Boot events
+      *
+      * @return void
+      */
     public static function bootEncodable()
     {
         // Automatically eager load the images relationship
-        static::addGlobalScope('encodings', function (Builder $builder) {
-            $builder->with('encodings');
-        });
+        static::addGlobalScope(
+            'encodings', function (Builder $builder) {
+                $builder->with('encodings');
+            }
+        );
     }
 
     /**
@@ -46,7 +48,7 @@ trait Encodable
     /**
      * Find the encoding for a given database field
      *
-     * @param  string         $attribute
+     * @param  string $attribute
      * @return Encoding|false
      */
     public function encoding($attribute = 'video')
@@ -56,9 +58,11 @@ trait Encodable
             $encodings = Encoding::hydrate($encodings);
         }
 
-        return $encodings->first(function ($i, $encoding) use ($attribute) {
-            return data_get($encoding, 'encodable_attribute') == $attribute;
-        });
+        return $encodings->first(
+            function ($i, $encoding) use ($attribute) {
+                return data_get($encoding, 'encodable_attribute') == $attribute;
+            }
+        );
     }
 
     /**
@@ -74,22 +78,24 @@ trait Encodable
             return [];
         }
 
-        return array_filter($this->encodable_attributes, function ($attribute) {
+        return array_filter(
+            $this->encodable_attributes, function ($attribute) {
 
-            // The file has changed
-            if ($this->isDirty($attribute)) {
-                return true;
+                // The file has changed
+                if ($this->isDirty($attribute)) {
+                    return true;
+                }
+
+                // The encoding preset is changing
+                return $this->hasDirtyPreset($attribute);
             }
-
-            // The encoding preset is changing
-            return $this->hasDirtyPreset($attribute);
-        });
+        );
     }
 
     /**
      * Check if the preset choice is dirty
      *
-     * @param  string  $attribute
+     * @param  string $attribute
      * @return boolean
      */
     public function hasDirtyPreset($attribute)
@@ -143,19 +149,19 @@ trait Encodable
             return '<span class="label">Pending</span>';
         }
         switch ($encode->status) {
-            case 'pending':
-                return '<span class="label">'.ucfirst($encode->status).'</span>';
+        case 'pending':
+            return '<span class="label">'.ucfirst($encode->status).'</span>';
 
-            case 'error':
-            case 'cancelled':
-                return '<span class="label label-important">'.ucfirst($encode->status).'</span>';
+        case 'error':
+        case 'cancelled':
+            return '<span class="label label-important">'.ucfirst($encode->status).'</span>';
 
-            case 'queued':
-            case 'processing':
-                return '<span class="label label-info">'.ucfirst($encode->status).'</span>';
+        case 'queued':
+        case 'processing':
+            return '<span class="label label-info">'.ucfirst($encode->status).'</span>';
 
-            case 'complete':
-                return '<span class="label label-success">'.ucfirst($encode->status).'</span>';
+        case 'complete':
+            return '<span class="label label-success">'.ucfirst($encode->status).'</span>';
         }
     }
 
@@ -178,39 +184,43 @@ trait Encodable
         // Create a new encoding model instance. It's callbacks will talk to the
         // encoding provider. Save it after the model is fully saved so the foreign
         // id is available for the  polymorphic relationship.
-        $this->saved(function ($model) use ($attribute, $key) {
+        $this->saved(
+            function ($model) use ($attribute, $key) {
 
-            // Make sure that that the model instance handling the event is the one
-            // we're updating.
-            if ($this != $model) {
-                return;
+                // Make sure that that the model instance handling the event is the one
+                // we're updating.
+                if ($this != $model) {
+                    return;
+                }
+
+                // Restore the key value (see above).  It will be defined for Elements but
+                // not of most models.
+                if ($key) {
+                    $model->setAttribute($this->getKeyName(), $key);
+                }
+
+                // Create the new encoding
+                $this->encode($attribute, $this->encodingPresetInputVal($attribute));
             }
-
-            // Restore the key value (see above).  It will be defined for Elements but
-            // not of most models.
-            if ($key) {
-                $model->setAttribute($this->getKeyName(), $key);
-            }
-
-            // Create the new encoding
-            $this->encode($attribute, $this->encodingPresetInputVal($attribute));
-        });
+        );
     }
 
     /**
      * Delete any existing encoding for the attribute and then encode from the
      * source.  The deleting happens automatically onCreating.
      *
-     * @param  string   $attribute The attribute on the model to use as source
-     * @param  string   $preset    The output config key
+     * @param  string $attribute The attribute on the model to use as source
+     * @param  string $preset    The output config key
      * @return Encoding The new output instance
      */
     public function encode($attribute, $preset)
     {
-        $encoding = new Encoding([
+        $encoding = new Encoding(
+            [
             'encodable_attribute' => $attribute,
             'preset' => $preset,
-        ]);
+            ]
+        );
 
         $this->encodings()->save($encoding);
 
@@ -224,8 +234,10 @@ trait Encodable
      */
     public function deleteEncodings()
     {
-        $this->encodings()->get()->each(function ($encode) {
-            $encode->delete();
-        });
+        $this->encodings()->get()->each(
+            function ($encode) {
+                $encode->delete();
+            }
+        );
     }
 }

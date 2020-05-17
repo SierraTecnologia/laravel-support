@@ -88,9 +88,11 @@ abstract class EncodingProvider
         }
 
         // Merge defaults with each output in the settings
-        return array_map(function ($output) {
-            return array_merge($this->defaults, $output);
-        }, $settings);
+        return array_map(
+            function ($output) {
+                return array_merge($this->defaults, $output);
+            }, $settings
+        );
     }
 
     /**

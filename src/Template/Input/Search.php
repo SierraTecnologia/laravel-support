@@ -21,21 +21,27 @@ class Search
      * provided in the args
      *
      * @param  array $terms An associative array where the keys are "fields"
-     *         and the values are "inputs"
+     *                      and the values are "inputs"
      * @return string
      */
     public static function query($terms)
     {
-        return 'query='.urlencode(json_encode(array_map(function ($input, $field) {
-            return [$field, '=', $input];
-        }, $terms, array_keys($terms))));
+        return 'query='.urlencode(
+            json_encode(
+                array_map(
+                    function ($input, $field) {
+                        return [$field, '=', $input];
+                    }, $terms, array_keys($terms)
+                )
+            )
+        );
     }
 
     /**
      * Apply the effect of a search (which is communicated view request('query'))
      *
      * @param  Illuminate\Database\Query\Builder $query
-     * @param  array $config Search config from the controller class definition
+     * @param  array                             $config Search config from the controller class definition
      * @return Illuminate\Database\Query\Builder
      */
     public function apply($query, $config)
@@ -70,7 +76,7 @@ class Search
             if (isset($config[$field]['query'])) {
                 call_user_func($config[$field]['query'], $query, $comparison, $input);
 
-            // ... or one of the simple, standard ones
+                // ... or one of the simple, standard ones
             } else {
                 $this->condition($query, $field, $comparison, $input, $config[$field]['type']);
             }
@@ -103,26 +109,26 @@ class Search
         switch ($comparison) {
 
             // NULL safe equals and not equals
-			case '=':
-			case '!=':
-				return $this->applyEquality($comparison, $query, $field, $input);
+        case '=':
+        case '!=':
+            return $this->applyEquality($comparison, $query, $field, $input);
 
             // Not Like
-            case '!%*%':
-                $comparison = substr($comparison, 1);
-                $input = str_replace('*', $input, $comparison);
-                return $query->where($field, 'NOT LIKE', $input);
+        case '!%*%':
+            $comparison = substr($comparison, 1);
+            $input = str_replace('*', $input, $comparison);
+            return $query->where($field, 'NOT LIKE', $input);
 
             // Like
-            case '*%':
-            case '%*':
-            case '%*%':
-                $input = str_replace('*', $input, $comparison);
-                return $query->where($field, 'LIKE', $input);
+        case '*%':
+        case '%*':
+        case '%*%':
+            $input = str_replace('*', $input, $comparison);
+            return $query->where($field, 'LIKE', $input);
 
             // Defaults
-            default:
-                return $query->where($field, $comparison, $input);
+        default:
+            return $query->where($field, $comparison, $input);
         }
     }
 
@@ -135,40 +141,48 @@ class Search
      */
     protected function convertDateField($field)
     {
-    	switch(DB::getDriverName())
-		{
-            case 'sqlsrv': return DB::raw("CONVERT(date, [{$field}])");
-            default: return DB::raw("DATE(`{$field}`)");
+        switch(DB::getDriverName())
+        {
+        case 'sqlsrv': 
+            return DB::raw("CONVERT(date, [{$field}])");
+        default: 
+            return DB::raw("DATE(`{$field}`)");
         }
     }
 
     /**
      * Make the NULL-safe equals query
      *
-     * @param  string $comparison
+     * @param  string  $comparison
      * @param  Builder $query
-     * @param  string $field
-     * @param  string $input
+     * @param  string  $field
+     * @param  string  $input
      * @return Builder
      */
     protected function applyEquality($comparison, $query, $field, $input)
-	{
-		// Make SQL safe values
-		$safe_field = $this->makeSafeField($field);
-		$safe_input = $input  == '' ?
-			'NULL' : DB::connection()->getPdo()->quote($input);
+    {
+        // Make SQL safe values
+        $safe_field = $this->makeSafeField($field);
+        $safe_input = $input  == '' ?
+        'NULL' : DB::connection()->getPdo()->quote($input);
 
-		// Different engines have different APIs
-		switch(DB::getDriverName())
-		{
-			case 'mysql': return $this->applyMysqlEquality(
-					$comparison, $query, $safe_field, $safe_input);
-			case 'sqlite': return $this->applySqliteEquality(
-					$comparison, $query, $safe_field, $safe_input);
-            case 'sqlsrv': return $this->applySqlServerEquality(
-					$comparison, $query, $safe_field, $safe_input);
+        // Different engines have different APIs
+        switch(DB::getDriverName())
+        {
+        case 'mysql': 
+            return $this->applyMysqlEquality(
+                $comparison, $query, $safe_field, $safe_input
+            );
+        case 'sqlite': 
+            return $this->applySqliteEquality(
+                $comparison, $query, $safe_field, $safe_input
+            );
+        case 'sqlsrv': 
+            return $this->applySqlServerEquality(
+                $comparison, $query, $safe_field, $safe_input
+            );
         }
-	}
+    }
 
     /**
      * Make SQL safe field name.  Different engines use different escapes:
@@ -180,9 +194,11 @@ class Search
     protected function makeSafeField($field)
     {
         switch(DB::getDriverName())
-		{
-            case 'sqlsrv': return is_string($field) ? "[{$field}]" : $field;
-            default: return is_string($field) ? "`{$field}`" : $field;
+        {
+        case 'sqlsrv': 
+            return is_string($field) ? "[{$field}]" : $field;
+        default: 
+            return is_string($field) ? "`{$field}`" : $field;
         }
     }
 
@@ -190,67 +206,70 @@ class Search
      * Make NULL-safe MySQL query
      * http://stackoverflow.com/a/19778341/59160
      *
-     * @param  string $comparison
+     * @param  string  $comparison
      * @param  Builder $query
-     * @param  string $field
-     * @param  string $input
+     * @param  string  $field
+     * @param  string  $input
      * @return Builder
      */
-    protected function applyMysqlEquality($comparison, $query, $field, $input) {
-		switch($comparison)
-		{
-			case '=':
-				$sql = sprintf('%s <=> %s', $field, $input);
-				return $query->whereRaw($sql);
-			case '!=':
-				$sql = sprintf('NOT(%s <=> %s)', $field, $input);
-				return $query->whereRaw($sql);
-		}
-	}
+    protected function applyMysqlEquality($comparison, $query, $field, $input)
+    {
+        switch($comparison)
+        {
+        case '=':
+            $sql = sprintf('%s <=> %s', $field, $input);
+            return $query->whereRaw($sql);
+        case '!=':
+            $sql = sprintf('NOT(%s <=> %s)', $field, $input);
+            return $query->whereRaw($sql);
+        }
+    }
 
-	/**
+    /**
      * Make NULL-safe SQLITE query
      * http://www.sqlite.org/lang_expr.html#isisnot
      *
-     * @param  string $comparison
+     * @param  string  $comparison
      * @param  Builder $query
-     * @param  string $field
-     * @param  string $input
+     * @param  string  $field
+     * @param  string  $input
      * @return Builder
      */
-    protected function applySqliteEquality($comparison, $query, $field, $input) {
-		switch($comparison)
-		{
-			case '=':
-				$sql = sprintf('%s IS %s', $field, $input);
-				return $query->whereRaw($sql);
-			case '!=':
-				$sql = sprintf('%s IS NOT %s', $field, $input);
-				return $query->whereRaw($sql);
-		}
-	}
+    protected function applySqliteEquality($comparison, $query, $field, $input)
+    {
+        switch($comparison)
+        {
+        case '=':
+            $sql = sprintf('%s IS %s', $field, $input);
+            return $query->whereRaw($sql);
+        case '!=':
+            $sql = sprintf('%s IS NOT %s', $field, $input);
+            return $query->whereRaw($sql);
+        }
+    }
 
     /**
      * Make NULL-safe SQL Server query
      * https://stackoverflow.com/a/802666/59160
      *
-     * @param  string $comparison
+     * @param  string  $comparison
      * @param  Builder $query
-     * @param  string $field
-     * @param  string $input
+     * @param  string  $field
+     * @param  string  $input
      * @return Builder
      */
-    protected function applySqlServerEquality($comparison, $query, $field, $input) {
-		switch($comparison)
-		{
-			case '=':
-				$sql = sprintf("COALESCE(%s, '') = COALESCE(%s, '')", $field, $input);
-				return $query->whereRaw($sql);
-			case '!=':
-				$sql = sprintf("COALESCE(%s, '') != COALESCE(%s, '')", $field, $input);
-				return $query->whereRaw($sql);
-		}
-	}
+    protected function applySqlServerEquality($comparison, $query, $field, $input)
+    {
+        switch($comparison)
+        {
+        case '=':
+            $sql = sprintf("COALESCE(%s, '') = COALESCE(%s, '')", $field, $input);
+            return $query->whereRaw($sql);
+        case '!=':
+            $sql = sprintf("COALESCE(%s, '') != COALESCE(%s, '')", $field, $input);
+            return $query->whereRaw($sql);
+        }
+    }
 
     /**
      * Make the shorthand options of the search config explicit
@@ -271,15 +290,15 @@ class Search
                     'options' => Config::get('facilitador.site.locales'),
                 ];
 
-            // Not associative assume it's a text field
+                // Not associative assume it's a text field
             } elseif (is_numeric($key)) {
                 $search[$val] = ['type' => 'text', 'label' => Text::titleFromKey($val)];
 
-            // If value isn't an array, make a default label
+                // If value isn't an array, make a default label
             } elseif (!is_array($val)) {
                 $search[$key] = ['type' => $val, 'label' => Text::titleFromKey($key)];
 
-            // Add the meta array
+                // Add the meta array
             } else {
 
                 // Make a default label
@@ -291,7 +310,8 @@ class Search
                 if (!empty($val['type'])
                     && $val['type'] == 'select'
                     && !empty($val['options'])
-                    && is_string($val['options'])) {
+                    && is_string($val['options'])
+                ) {
                     $val['options'] = $this->longhandOptions($val['options']);
                 }
 
@@ -338,7 +358,8 @@ class Search
      */
     public function makeSoftDeletesCondition($controller)
     {
-        if (!$controller->withTrashed()) return [];
+        if (!$controller->withTrashed()) { return [];
+        }
         return [
             'deleted_at' => [
                 'type' => 'select',
@@ -347,16 +368,18 @@ class Search
                     'exists' => 'exists',
                     'deleted' => 'deleted'
                 ],
-                'query' => function($query, $condition, $input) {
+                'query' => function ($query, $condition, $input) {
 
                     // If not deleted...
-                    if (($input == 'exists' && $condition == '=') ||
-                        ($input == 'deleted' && $condition == '!=')) {
+                    if (($input == 'exists' && $condition == '=') 
+                        || ($input == 'deleted' && $condition == '!=')
+                    ) {
                         $query->whereNull('deleted_at');
 
-                    // If deleted...
-                    } else if (($input == 'deleted' && $condition == '=') ||
-                        ($input == 'exists' && $condition == '!=')) {
+                        // If deleted...
+                    } else if (($input == 'deleted' && $condition == '=') 
+                        || ($input == 'exists' && $condition == '!=')
+                    ) {
                         $query->whereNotNull('deleted_at');
                     }
                 },

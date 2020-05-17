@@ -26,14 +26,15 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 
 class ArraySearcher
 {
-    public static function arrayIsearch($str, $array){
+    public static function arrayIsearch($str, $array)
+    {
         if (empty($str) || is_null($str) || $str===false) {
             return false;
         }
         $found = array();
         foreach ($array as $k => $v) {
             if (is_array($v)) {
-                if ($subFound = self::arrayIsearch($str, $v)){
+                if ($subFound = self::arrayIsearch($str, $v)) {
                     // dd(
                     //     'Debug ArrayExtarctor',
                     //     $subFound,
@@ -48,10 +49,12 @@ class ArraySearcher
                     if (self::arrayIsearch($v, $str)) {
                         $found[] = $k;
                     }
-                } else {
-                    if (empty($v) || is_null($v) && strtolower($v) == strtolower($str)) {
-                        $found[] = $k;
-                    }
+                } else
+                // Caso seja inteiro, não transforma em minuscula pra nao dar problema
+                if (!empty($v) && !is_null($v) && (is_int($v) || is_int($str)) && ($v === $str)) {
+                    $found[] = $k;
+                } else if (!empty($v) && !is_null($v) && strtolower($v) == strtolower($str)) {
+                    $found[] = $k;
                 }
             }
         }
@@ -63,7 +66,8 @@ class ArraySearcher
         return $found;
     }
 
-    public static function arraySearchByAttribute($str, $array, $attribute){
+    public static function arraySearchByAttribute($str, $array, $attribute)
+    {
         if (empty($str) || is_null($str) || $str===false) {
             return false;
         }
@@ -74,14 +78,14 @@ class ArraySearcher
                 if (is_array($v[$attribute])) {
                     // Caso o Attributo seja um array entao procura normalmente,
                     // sem levar em conta o parametro
-                    if ($subFound = self::arrayIsearch($str, $v[$attribute])){
+                    if ($subFound = self::arrayIsearch($str, $v[$attribute])) {
                         $found[] = $k;
                     }
                 } else if (strtolower($v[$attribute]) == strtolower($str)) {
                     $found[] = $k;
                 }
             } else if (is_array($v)) {
-                if ($subFound = self::arraySearchByAttribute($str, $v, $attribute)){
+                if ($subFound = self::arraySearchByAttribute($str, $v, $attribute)) {
                     $found[] = $k;
                 }
             }

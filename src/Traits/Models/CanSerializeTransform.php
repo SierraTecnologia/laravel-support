@@ -48,7 +48,7 @@ trait CanSerializeTransform
     /**
      * Override toArray() to fire transforms before serialization
      *
-     * @param  int   $options
+     * @param  int $options
      * @return array
      */
     public function toJson($options = 0)
@@ -76,7 +76,7 @@ trait CanSerializeTransform
         if (is_a($this, Collection::class)) {
             $this->items = $this->runSerializeTransformsOnCollection($this);
 
-        // Otherwise, if the class is a model, act directly on it
+            // Otherwise, if the class is a model, act directly on it
         } elseif (is_a($this, Model::class)) {
             $this->runSerializeTransformsOnModel($this);
         }
@@ -90,23 +90,26 @@ trait CanSerializeTransform
     protected function runSerializeTransformsOnCollection(Collection $collection)
     {
         // Loop through the collection and transform each model
-        return $collection->map(function ($item) {
+        return $collection->map(
+            function ($item) {
 
-            // If collection item isn't a model, don't do anything
-            if (!is_a($item, Model::class)) return $item;
+                // If collection item isn't a model, don't do anything
+                if (!is_a($item, Model::class)) { return $item;
+                }
 
-            // Serialize the model
-            return $this->runSerializeTransformsOnModel($item);
+                // Serialize the model
+                return $this->runSerializeTransformsOnModel($item);
 
-        // Remove all the models whose transforms did not return a value. Then
-        // convert back to an array.
-        })->filter()->all();
+                // Remove all the models whose transforms did not return a value. Then
+                // convert back to an array.
+            }
+        )->filter()->all();
     }
 
     /**
      * Run transforms on a single model
      *
-     * @param  Model      $model
+     * @param  Model $model
      * @return Model|void
      */
     protected function runSerializeTransformsOnModel(Model $model)

@@ -36,7 +36,7 @@ use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
 use Support\Traits\Debugger\HasErrors;
 
-class Database implements Arrayable
+class DatabaseRender implements Arrayable
 {
     use HasErrors, ArrayableTrait;
 
@@ -130,7 +130,8 @@ class Database implements Arrayable
         if (in_array(
             ClasserExtractor::getClassName($classParent),
             ParseClass::$typesIgnoreName['model']
-        )) {
+        )
+        ) {
             return false;
         }
 
@@ -141,77 +142,81 @@ class Database implements Arrayable
     {
         $selfInstance = $this;
         // Cache In Minutes
-        $value = Cache::remember('sitec_database', 30, function () {
-            Log::debug(
-                'Render Database -> Renderizando'
-            );
-            try {
-                $classUniversal = false; // for reference in debug
-                $this->eloquentClasses = $this->returnEloquents($this->eloquentClasses);
+        $value = Cache::remember(
+            'sitec_database', 30, function () {
+                Log::debug(
+                    'Render Database -> Renderizando'
+                );
+                try {
+                    $classUniversal = false; // for reference in debug
+                    $this->eloquentClasses = $this->returnEloquents($this->eloquentClasses);
 
-                // Cria mapeamento de classes antes de remover as invalidas
-                $this->renderMappersClasses();
-                $this->renderTables();
+                    // Cria mapeamento de classes antes de remover as invalidas
+                    $this->renderMappersClasses();
+                    $this->renderTables();
 
-                // Remove as Classes que não sao Finais
-                $tmp = $this->eloquentClasses;
-                $this->eloquentClasses = $this->eloquentClasses->reject(function($class) {
-                    $classUniversal = $class->getModelClass(); // for reference in debug
-                    if ( $this->isForIgnoreClass($class->getModelClass())) {
-                        return true;
-                    }
-                    return false;
-                })
-                ->values()->all();
+                    // Remove as Classes que não sao Finais
+                    $tmp = $this->eloquentClasses;
+                    $this->eloquentClasses = $this->eloquentClasses->reject(
+                        function ($class) {
+                            $classUniversal = $class->getModelClass(); // for reference in debug
+                            if ($this->isForIgnoreClass($class->getModelClass())) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    )
+                    ->values()->all();
                 
-                $this->renderClasses();
+                    $this->renderClasses();
 
-                // Debug Temp
-                $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
+                    // Debug Temp
+                    $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
 
-                // Reordena
-                $this->sortArrays();
-            } catch(SchemaException|DBALException $e) {
-                dd(
-                    'Aqui nao era pra cair pois tem outro',
-                    $e
-                );
-                $reference = false;
-                if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                    $reference = [
+                    // Reordena
+                    $this->sortArrays();
+                } catch(SchemaException|DBALException $e) {
+                    dd(
+                        'Aqui nao era pra cair pois tem outro',
+                        $e
+                    );
+                    $reference = false;
+                    if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                        $reference = [
                         'model' => $classUniversal
-                    ];
-                } 
-                // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
-                //     $reference = [
-                //         'model' => $classUniversal
-                //     ];
-                // }
-                // @todo Tratar, Tabela Nao existe
-                $this->setErrors(
-                    $e,
-                    $reference
-                );
+                        ];
+                    } 
+                    // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
+                    //     $reference = [
+                    //         'model' => $classUniversal
+                    //     ];
+                    // }
+                    // @todo Tratar, Tabela Nao existe
+                    $this->setErrors(
+                        $e,
+                        $reference
+                    );
 
-            } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-                dd(
-                    'Aqui nao era pra cair pois tem outro',
-                    $e
-                );
-                $reference = false;
-                if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                    $reference = [
+                } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                    dd(
+                        'Aqui nao era pra cair pois tem outro',
+                        $e
+                    );
+                    $reference = false;
+                    if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                        $reference = [
                         'model' => $classUniversal
-                    ];
-                } 
-                $this->setErrors(
-                    $e,
-                    $reference
-                );
+                        ];
+                    } 
+                    $this->setErrors(
+                        $e,
+                        $reference
+                    );
+                }
+
+                return $this->toArray();
             }
-
-            return $this->toArray();
-        });
+        );
         $this->setArray($value);
     }
 
@@ -230,22 +235,26 @@ class Database implements Arrayable
      */
     private function returnEloquents($eloquentClasses)
     {
-        return $eloquentClasses->map(function($filePath, $class) {
-            return $this->returnEloquentForClasss($class);
-        })->reject(function($class) {
-            if ( !$class->getTableName()) {
-                return true;
+        return $eloquentClasses->map(
+            function ($filePath, $class) {
+                return $this->returnEloquentForClasss($class);
             }
-            if ( $class->hasError()) {
-                dd(
-                    'Render Eloqunet: Error',
-                    $class,
-                    $class->getErrors()
-                );
-                return true;
+        )->reject(
+            function ($class) {
+                if (!$class->getTableName()) {
+                    return true;
+                }
+                if ($class->hasError()) {
+                    dd(
+                        'Render Eloqunet: Error',
+                        $class,
+                        $class->getErrors()
+                    );
+                    return true;
+                }
+                return false;
             }
-            return false;
-        });
+        );
     }
     protected function renderMappersClasses()
     {
@@ -356,7 +365,7 @@ class Database implements Arrayable
                     $e,
                     $reference
                 );
-            // } catch (\Exception $e) {
+                // } catch (\Exception $e) {
                 dd(
                     'LaravelSupport>Database>> Não era pra Cair Erro aqui',
                     $e,
@@ -383,7 +392,7 @@ class Database implements Arrayable
         $classUniversal = false; // for reference in debug
 
         try {
-            $eloquent = new Eloquent($className);
+            $eloquent = new EloquentRender($className);
             $classUniversal = $className; // for reference in debug
             $this->registerMapperClassParents($className, $eloquent->parentClass);
             return $eloquent;
@@ -463,7 +472,8 @@ class Database implements Arrayable
                 $tableName,
                 $this->displayTables,
                 'name'
-            )) {
+            )
+            ) {
                 return true;
             }
             
@@ -477,7 +487,7 @@ class Database implements Arrayable
                 $error
             );
             $this->tempErrorClasses[$className] = $error->getDescription();
-        }    
+        }
         return false;
     }
 
@@ -503,7 +513,8 @@ class Database implements Arrayable
             foreach ($childrens as $children) {
                 if (ClasserExtractor::getClassName($className) === ClasserExtractor::getClassName($children)) {
                     // @todo Verificar outras classes que nao possue nome igual mas é filha
-                    /**^ "Chieldren"
+                    /**
+* ^ "Chieldren"
                     ^ "Finder\Models\Digital\Infra\Ci\Build"
                     ^ "build"
                     ^ "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
@@ -513,8 +524,8 @@ class Database implements Arrayable
                     1 => "Finder\Models\Digital\Infra\Ci\Build\HgBuild"
                     2 => "Finder\Models\Digital\Infra\Ci\Build\LocalBuild"
                     3 => "Finder\Models\Digital\Infra\Ci\Build\SvnBuild"
-                    ] */
-
+                    ] 
+*/
 
                     $this->loadMapperClasserProcuracao(
                         $children,
@@ -537,16 +548,16 @@ class Database implements Arrayable
          * Caso tenha um pai com nome diferente tbm ignora
          */
         if ($parent = $this->haveParent($className)) {
-            if(
-                !in_array(
-                    ClasserExtractor::getClassName($parent),
-                    ParseClass::$typesIgnoreName['model']
-                ) && ClasserExtractor::getClassName($className) !== ClasserExtractor::getClassName($parent)
+            if(!in_array(
+                ClasserExtractor::getClassName($parent),
+                ParseClass::$typesIgnoreName['model']
+            ) && ClasserExtractor::getClassName($className) !== ClasserExtractor::getClassName($parent)
             ) {
                 $this->loadMapperClasserProcuracao(
                     $parent,
                     $className
                 );
+                
                 return true;
             }
         }
@@ -561,6 +572,7 @@ class Database implements Arrayable
         if (is_null($className) || empty($className)) {
             return false;
         }
+
         // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
         if (!$find = \Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
             return false;

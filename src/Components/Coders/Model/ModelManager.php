@@ -34,10 +34,10 @@ class ModelManager implements IteratorAggregate
     }
 
     /**
-     * @param string $schema
-     * @param string $table
+     * @param string                                     $schema
+     * @param string                                     $table
      * @param \Support\Components\Coders\Model\Mutator[] $mutators
-     * @param bool $withRelations
+     * @param bool                                       $withRelations
      *
      * @return \Support\Components\Coders\Model\Model
      */

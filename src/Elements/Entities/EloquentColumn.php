@@ -25,7 +25,7 @@ class EloquentColumn
     /**
      * name
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -35,7 +35,7 @@ class EloquentColumn
     /**
      * columnName
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -44,7 +44,7 @@ class EloquentColumn
     /**
      * columnType
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -53,7 +53,7 @@ class EloquentColumn
     /**
      * displayType
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -62,7 +62,7 @@ class EloquentColumn
     /**
      * details
      *
-     * @var array
+     * @var    array
      * @getter true
      * @setter true
      */

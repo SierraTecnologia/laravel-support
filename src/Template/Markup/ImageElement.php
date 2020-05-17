@@ -33,19 +33,22 @@ class ImageElement extends Element
         switch ($this->element) {
 
             // Img tags use the src
-            case 'img':
-                if (empty($this->getAttribute('src'))) {
-                    return '';
-                }
-                break;
+        case 'img':
+            if (empty($this->getAttribute('src'))) {
+                return '';
+            }
+            break;
 
             // Divs have the image as a background-image
             // https://regex101.com/r/eF0oD0/1
-            default:
-                if (!preg_match('#background-image:\s*url\([\'"]?[\w\/]#',
-                    $this->getAttribute('style'))) {
-                    return '';
-                }
+        default:
+            if (!preg_match(
+                '#background-image:\s*url\([\'"]?[\w\/]#',
+                $this->getAttribute('style')
+            )
+            ) {
+                return '';
+            }
         }
 
         // Carry on with normal rendering

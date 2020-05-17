@@ -38,12 +38,12 @@ class ErrorHelper
      */
     public static function registerError($error, $type = 'error')
     {
-        if ($type === 'error'){
+        if ($type === 'error') {
             Log::channel('sitec-support')->error($error);
-        } else if ($type === 'warning'){
+        } else if ($type === 'warning') {
             // @todo
             // Log::channel('sitec-support')->warning($error);
-        } else if ($type === 'info'){
+        } else if ($type === 'info') {
             Log::channel('sitec-support')->info($error);
         } else {
             Log::channel('sitec-support')->debug($error);

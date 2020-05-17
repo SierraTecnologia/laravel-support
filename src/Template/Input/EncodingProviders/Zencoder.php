@@ -17,6 +17,7 @@ class Zencoder extends EncodingProvider
      * Default outputs configuration
      *
      * Regarding internet speeds
+     *
      * @link http://gizmodo.com/americas-internet-inequality-a-map-of-whos-got-the-b-1057686215
      *
      * @var array
@@ -60,15 +61,17 @@ class Zencoder extends EncodingProvider
         // Tell the Zencoder SDK to create a job
         try {
             $outputs = $this->outputsConfig($preset);
-            $job = $this->sdk()->jobs->create([
+            $job = $this->sdk()->jobs->create(
+                [
                 'input' => $source,
                 'output' => $outputs,
-            ]);
+                ]
+            );
 
             // Store the response from the SDK
             $this->model->storeJob($job->id, $this->outputsToHash($job->outputs));
 
-        // Report an error with the encode
+            // Report an error with the encode
         } catch (Services_Zencoder_Exception $e) {
             $this->model->status('error', implode(' ', $this->zencoderArray($e->getErrors())));
         } catch (Exception $e) {
@@ -105,9 +108,11 @@ class Zencoder extends EncodingProvider
     {
         // Do not allow any outputs that have a type of "segmented" or "playlist"
         if (empty($config['playlist'])) {
-            return array_filter($config, function ($output) {
-                return !(isset($output['type']) && in_array($output['type'], ['segmented', 'playlist']));
-            });
+            return array_filter(
+                $config, function ($output) {
+                    return !(isset($output['type']) && in_array($output['type'], ['segmented', 'playlist']));
+                }
+            );
         }
 
         // Else, passthrough the config
@@ -157,17 +162,19 @@ class Zencoder extends EncodingProvider
      */
     protected function outputsToHash($outputs)
     {
-        return array_map(function ($output) {
+        return array_map(
+            function ($output) {
 
-            // If a destination_root was set, subsitute that in for the destination
-            // in the retured URL
-            if ($root = Config::get('facilitador.encode.destination_root')) {
-                return str_replace(Config::get('facilitador.encode.destination'), $root, $output->url);
-            }
+                // If a destination_root was set, subsitute that in for the destination
+                // in the retured URL
+                if ($root = Config::get('facilitador.encode.destination_root')) {
+                    return str_replace(Config::get('facilitador.encode.destination'), $root, $output->url);
+                }
 
-            // Else just return the URL
-            return $output->url;
-        }, $this->zencoderArray($outputs));
+                // Else just return the URL
+                return $output->url;
+            }, $this->zencoderArray($outputs)
+        );
     }
 
     /**
@@ -191,9 +198,15 @@ class Zencoder extends EncodingProvider
         // Loop through the jobs and look for error messages.  A job may recieve a
         // seperate notification for each output that has failed though the job
         // is still processessing.
-        $errors = trim(implode(' ', array_map(function ($output) {
-            return isset($output->error_message) ? '(Output '.$output->label.') '.$output->error_message : null;
-        }, $this->zencoderArray($job->outputs))));
+        $errors = trim(
+            implode(
+                ' ', array_map(
+                    function ($output) {
+                        return isset($output->error_message) ? '(Output '.$output->label.') '.$output->error_message : null;
+                    }, $this->zencoderArray($job->outputs)
+                )
+            )
+        );
 
         // If there were any messages, treat the job as errored.  This also tries
         // to fix an issue I saw where a final "error" notifcation wasn't fired even
@@ -204,25 +217,25 @@ class Zencoder extends EncodingProvider
         switch ($state) {
 
             // Simple passthru of status
-            case 'processing':
-            case 'cancelled':
-                $model->status($job->state);
-                break;
+        case 'processing':
+        case 'cancelled':
+            $model->status($job->state);
+            break;
 
             // Massage name
-            case 'finished':
-                $model->response = $input;
-                $model->status('complete');
-                break;
+        case 'finished':
+            $model->response = $input;
+            $model->status('complete');
+            break;
 
             // Find error messages on the output
-            case 'failed':
-                $model->status('error', $errors);
-                break;
+        case 'failed':
+            $model->status('error', $errors);
+            break;
 
             // Default
-            default:
-                $model->status('error', 'Unkown Zencoder state: '.$job->state);
+        default:
+            $model->status('error', 'Unkown Zencoder state: '.$job->state);
         }
     }
 

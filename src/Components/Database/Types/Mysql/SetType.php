@@ -19,9 +19,11 @@ class SetType extends Type
         $pdo = DB::connection()->getPdo();
 
         // trim the values
-        $fieldDeclaration['allowed'] = array_map(function ($value) use ($pdo) {
-            return $pdo->quote(trim($value));
-        }, $allowed);
+        $fieldDeclaration['allowed'] = array_map(
+            function ($value) use ($pdo) {
+                return $pdo->quote(trim($value));
+            }, $allowed
+        );
 
         return 'set('.implode(', ', $field['allowed']).')';
     }

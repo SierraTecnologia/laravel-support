@@ -29,7 +29,7 @@ class ReferenceFactory
     /**
      * ReferenceFactory constructor.
      *
-     * @param array $related
+     * @param array                                  $related
      * @param \Support\Components\Coders\Model\Model $parent
      */
     public function __construct($related, $parent)
@@ -67,8 +67,7 @@ class ReferenceFactory
 
         // See whether this potencial pivot table has the parent record name in it.
         // Not sure whether we should only take into account composite primary keys.
-        if (
-            ! Str::contains($pivot, $firstRecord)
+        if (! Str::contains($pivot, $firstRecord)
         ) {
             return false;
         }

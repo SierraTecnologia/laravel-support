@@ -8,7 +8,6 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Log;
-use Support\Elements\Entities\Relationship;
 use Support\Components\Coders\Parser\ParseClass;
 
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -22,14 +21,15 @@ use TypeError;
 use Throwable;
 use Watson\Validating\ValidationException;
 
-class Relationships
+class RelationshipsRender
 {
     use HasErrors;
 
     private $model;
     private $relationships;
 
-    public function __construct($model) {
+    public function __construct($model)
+    {
         // $this->model = resolve($model);
         $this->model = $model;
 
@@ -61,8 +61,8 @@ class Relationships
             if ($method->class == $this->model
                 && empty($method->getParameters())
                 && $method->getName() !== __FUNCTION__
-                /* && $method->isFinal() */) // Retirado o lance do method ser final
-            {
+                /* && $method->isFinal() */ // Retirado o lance do method ser final
+            ) {
                 $reference = [
                     'type' => 'Relationship Render'
                 ];
@@ -70,13 +70,12 @@ class Relationships
                     $return = $method->invoke(new $this->model);
 
 
-                    if ($return instanceof Relation)
-                    {
+                    if ($return instanceof Relation) {
                         // dd($return);
                         $ownerKey = null;
-                        if ((new ReflectionClass($return))->hasMethod('getOwnerKey'))
+                        if ((new ReflectionClass($return))->hasMethod('getOwnerKey')) {
                             $ownerKey = $return->getOwnerKey();
-                        else
+                        } else
                         {
                             $segments = explode('.', $return->getQualifiedParentKeyName());
                             $ownerKey = $segments[count($segments) - 1];
@@ -92,10 +91,11 @@ class Relationships
                         } else if ($tmpReturnReflectionClass->hasMethod('getForeignPivotKeyName')) {
                             $tmpForeignKey = $return->getForeignPivotKeyName();
                         } else {
-                            dd('[Support] Discover (Não Deveria Cair Aqui) -> Relação de Tabelas sem Chave Privada: ', $tmpReturnReflectionClass, $return, $this->model,
-                            $tmpReturnReflectionClass->hasMethod('getForeignPivotKeyName'),
-                            $return->getForeignPivotKeyName()
-                        );
+                            dd(
+                                '[Support] Discover (Não Deveria Cair Aqui) -> Relação de Tabelas sem Chave Privada: ', $tmpReturnReflectionClass, $return, $this->model,
+                                $tmpReturnReflectionClass->hasMethod('getForeignPivotKeyName'),
+                                $return->getForeignPivotKeyName()
+                            );
                         }
 
                         $dataRelationship = [
@@ -149,7 +149,6 @@ class Relationships
                                 $return->getPivotAccessor(),
                                 $return->getPivotColumns(),
                                 $return->getPivotClass()
-                                
                             );
                         }
 
@@ -209,10 +208,13 @@ class Relationships
     {
         $relationships = new Collection;
 
-        foreach ($this->relationships as $name => $relationship)
+        foreach ($this->relationships as $name => $relationship) {
             if ($relationship->type == 'BelongsTo'
-                && $relationship->foreignKey == $key)
+                && $relationship->foreignKey == $key
+            ) {
                 $relationships[$name] = $relationship;
+            }
+        }
 
         return $relationships;
     }

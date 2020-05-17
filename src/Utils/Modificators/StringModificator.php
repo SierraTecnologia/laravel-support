@@ -63,8 +63,10 @@ class StringModificator
     }
     public static function convertSlugToName($slug)
     {
-        return collect(explode('.', static::cleanCodeSlug($slug)))->map(function($namePart) {
-            return ucfirst($namePart);
-        })->implode(' ');
+        return collect(explode('.', static::cleanCodeSlug($slug)))->map(
+            function ($namePart) {
+                return ucfirst($namePart);
+            }
+        )->implode(' ');
     }
 }

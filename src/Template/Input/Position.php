@@ -12,6 +12,7 @@ class Position
 {
     /**
      * Constructor
+     *
      * @param Eloquent $item         A model isntance
      * @param string   $relationship The name of the relationship function on the instance
      */
@@ -60,7 +61,7 @@ class Position
             $this->pivot->position = request('position');
             $this->pivot->save();
 
-        // Write position value to the item
+            // Write position value to the item
         } elseif (isset($this->item->position)) {
 
             // Visiblity may be set at the same time and would be ignored otherwise

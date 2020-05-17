@@ -33,11 +33,13 @@ class Time extends Field
     public function __construct(Container $app, $type, $name, $label, $value, $attributes)
     {
         // Set default attributes
-        $attributes = array_merge([
+        $attributes = array_merge(
+            [
             'maxlength' => 8,
             'placeholder' => 'HH:MM',
             'id' => null, // We don't want to conflict on the id
-        ], (array) $attributes);
+            ], (array) $attributes
+        );
 
         // Create a text type field
         parent::__construct($app, 'text', $name, $label, $value, $attributes);

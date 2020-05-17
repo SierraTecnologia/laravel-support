@@ -43,7 +43,7 @@ class Sidebar
     /**
      * Add an item to the sidebar
      *
-     * @param mixed Generally an Support\Elements\Fields\Listing object or stringable
+     * @param  mixed Generally an Support\Elements\Fields\Listing object or stringable
      * @return $this
      */
     public function add($item)
@@ -57,7 +57,7 @@ class Sidebar
      * Add an item to the END of the sidebar, regardless of when it was added
      * in the logic flow
      *
-     * @param mixed Generally an Support\Elements\Fields\Listing object or stringable
+     * @param  mixed Generally an Support\Elements\Fields\Listing object or stringable
      * @return $this
      */
     public function addToEnd($item)
@@ -85,20 +85,24 @@ class Sidebar
     public function render()
     {
         // Massage the response from base controller subclassings of sidebar
-        $items = array_map(function ($item) {
+        $items = array_map(
+            function ($item) {
 
-            // If a listing instance, apply defaults common to all sidebar instances
-            if (is_a($item, 'Support\Elements\Fields\Listing')) {
-                return $item->layout('sidebar')->parent($this->parent)->__toString();
-            }
+                // If a listing instance, apply defaults common to all sidebar instances
+                if (is_a($item, 'Support\Elements\Fields\Listing')) {
+                    return $item->layout('sidebar')->parent($this->parent)->__toString();
+                }
 
-            // Anything else will be converted to a string in the next step
-            return $item;
-        }, array_merge($this->items, $this->ending_items));
+                // Anything else will be converted to a string in the next step
+                return $item;
+            }, array_merge($this->items, $this->ending_items)
+        );
 
         // Combine all listing items into a single string and return
-        return array_reduce($items, function ($carry, $item) {
-            return $carry.$item;
-        }, '');
+        return array_reduce(
+            $items, function ($carry, $item) {
+                return $carry.$item;
+            }, ''
+        );
     }
 }

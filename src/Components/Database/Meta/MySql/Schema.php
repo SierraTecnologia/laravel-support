@@ -36,7 +36,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
     /**
      * Mapper constructor.
      *
-     * @param string $schema
+     * @param string                               $schema
      * @param \Illuminate\Database\MySqlConnection $connection
      */
     public function __construct($schema, $connection)
@@ -49,7 +49,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
 
     /**
      * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
-     * @todo: Use Doctrine instead of raw database queries
+     * @todo:  Use Doctrine instead of raw database queries
      */
     public function manager()
     {
@@ -139,7 +139,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
      * Quick little hack since it is no longer possible to set PDO's fetch mode
      * to PDO::FETCH_ASSOC.
      *
-     * @param $data
+     * @param  $data
      * @return mixed
      */
     protected function arraify($data)
@@ -148,7 +148,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param string $sql
+     * @param string                                      $sql
      * @param \Support\Components\Database\Meta\Blueprint $blueprint
      * @todo: Support named primary keys
      */
@@ -169,7 +169,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param string $sql
+     * @param string                                      $sql
      * @param \Support\Components\Database\Meta\Blueprint $blueprint
      */
     protected function fillIndexes($sql, Blueprint $blueprint)
@@ -190,7 +190,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
     }
 
     /**
-     * @param string $sql
+     * @param string                                      $sql
      * @param \Support\Components\Database\Meta\Blueprint $blueprint
      * @todo: Support named foreign keys
      */
@@ -235,13 +235,17 @@ class Schema implements \Support\Components\Database\Meta\Schema
     {
         $pieces = explode('.', str_replace('`', '', $table));
 
-        return implode('.', array_map(function ($piece) {
-            return "`$piece`";
-        }, $pieces));
+        return implode(
+            '.', array_map(
+                function ($piece) {
+                    return "`$piece`";
+                }, $pieces
+            )
+        );
     }
 
     /**
-     * @param string $table
+     * @param string                                      $table
      * @param \Support\Components\Database\Meta\Blueprint $blueprint
      *
      * @return array
@@ -272,12 +276,14 @@ class Schema implements \Support\Components\Database\Meta\Schema
     {
         $schemas = $connection->getDoctrineSchemaManager()->listDatabases();
 
-        return array_diff($schemas, [
+        return array_diff(
+            $schemas, [
             'information_schema',
             'sys',
             'mysql',
             'performance_schema',
-        ]);
+            ]
+        );
     }
 
     /**
@@ -351,7 +357,7 @@ class Schema implements \Support\Components\Database\Meta\Schema
 
     /**
      * @param string $table
-     * @param bool $isView
+     * @param bool   $isView
      */
     protected function loadTable($table, $isView = false)
     {

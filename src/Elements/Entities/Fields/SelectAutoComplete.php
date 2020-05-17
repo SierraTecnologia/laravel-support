@@ -25,7 +25,8 @@ class SelectAutoComplete extends Select
 
     /**
      * SelectAutoComplete constructor.
-     * @param               $name
+     *
+     * @param $name
      * @param null          $attribute
      * @param callable|null $resolveCallback
      */
@@ -33,12 +34,14 @@ class SelectAutoComplete extends Select
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
-        $this->withMeta(['maxResults' => (int)$this->maxResults ?: 30,
-                         'maxHeight'  => $this->maxHeight]);
+        $this->withMeta(
+            ['maxResults' => (int)$this->maxResults ?: 30,
+            'maxHeight'  => $this->maxHeight]
+        );
     }
 
     /**
-     * @param null $default
+     * @param  null $default
      * @return mixed
      */
     public function default($default = null)
@@ -49,7 +52,7 @@ class SelectAutoComplete extends Select
     }
 
     /**
-     * @param int $maxResults
+     * @param  int $maxResults
      * @return mixed
      * @throws \Exception
      */
@@ -64,7 +67,7 @@ class SelectAutoComplete extends Select
     }
 
     /**
-     * @param string $maxHeight
+     * @param  string $maxHeight
      * @return mixed
      */
     public function maxHeight(string $maxHeight)

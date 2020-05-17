@@ -166,9 +166,9 @@ class Model
      * ModelClass constructor.
      *
      * @param \Support\Components\Database\Meta\Blueprint $blueprint
-     * @param \Support\Components\Coders\Model\Factory $factory
-     * @param \Support\Components\Coders\Model\Mutator[] $mutators
-     * @param bool $loadRelations
+     * @param \Support\Components\Coders\Model\Factory    $factory
+     * @param \Support\Components\Coders\Model\Mutator[]  $mutators
+     * @param bool                                        $loadRelations
      */
     public function __construct(Blueprint $blueprint, Factory $factory, $mutators = [], $loadRelations = true)
     {
@@ -341,19 +341,19 @@ class Model
     public function phpTypeHint($castType)
     {
         switch ($castType) {
-            case 'object':
-                return '\stdClass';
-            case 'array':
-            case 'json':
-                return 'array';
-            case 'collection':
-                return '\Illuminate\Support\Collection';
-            case 'date':
-                return '\Carbon\Carbon';
-            case 'binary':
-                return 'string';
-            default:
-                return $castType;
+        case 'object':
+            return '\stdClass';
+        case 'array':
+        case 'json':
+            return 'array';
+        case 'collection':
+            return '\Illuminate\Support\Collection';
+        case 'date':
+            return '\Carbon\Carbon';
+        case 'binary':
+            return 'string';
+        default:
+            return $castType;
         }
     }
 
@@ -797,7 +797,7 @@ class Model
     }
 
     /**
-     * @todo: Improve it
+     * @todo:  Improve it
      * @return string
      */
     public function getPrimaryKey()
@@ -811,7 +811,7 @@ class Model
 
     /**
      * @return string
-     * @todo: check
+     * @todo:  check
      */
     public function getPrimaryKeyType()
     {
@@ -819,7 +819,7 @@ class Model
     }
 
     /**
-     * @todo: Check whether it is necessary
+     * @todo:  Check whether it is necessary
      * @return bool
      */
     public function hasCustomPrimaryKeyCast()
@@ -952,9 +952,8 @@ class Model
      */
     public function getCasts()
     {
-        if (
-            array_key_exists($this->getPrimaryKey(), $this->casts) &&
-            $this->autoincrement()
+        if (array_key_exists($this->getPrimaryKey(), $this->casts) 
+            && $this->autoincrement()
         ) {
             unset($this->casts[$this->getPrimaryKey()]);
         }
@@ -1214,7 +1213,7 @@ class Model
 
     /**
      * @param string $key
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return mixed
      */

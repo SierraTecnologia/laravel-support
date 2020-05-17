@@ -25,9 +25,11 @@ class EnumType extends Type
             $pdo = DB::connection()->getPdo();
 
             // trim the values
-            $allowed = array_map(function ($value) use ($pdo) {
-                return $pdo->quote(trim($value));
-            }, $allowed);
+            $allowed = array_map(
+                function ($value) use ($pdo) {
+                    return $pdo->quote(trim($value));
+                }, $allowed
+            );
 
             return 'enum('.implode(', ', $allowed).')';
         }

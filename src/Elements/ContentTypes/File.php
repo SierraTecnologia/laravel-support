@@ -30,10 +30,12 @@ class File extends BaseType
                 \Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk', 'public')
             );
 
-            array_push($filesPath, [
+            array_push(
+                $filesPath, [
                 'download_link' => $path.$filename.'.'.$file->getClientOriginalExtension(),
                 'original_name' => $file->getClientOriginalName(),
-            ]);
+                ]
+            );
         }
 
         return json_encode($filesPath);

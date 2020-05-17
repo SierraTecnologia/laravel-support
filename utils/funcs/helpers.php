@@ -172,8 +172,10 @@ if (! function_exists('array_filter_recursive')) {
             }
         }
 
-        return ! $strOnly ? array_filter($values) : array_filter($values, function ($item) {
-            return ! is_null($item) && ! ((is_string($item) || is_array($item)) && empty($item));
-        });
+        return ! $strOnly ? array_filter($values) : array_filter(
+            $values, function ($item) {
+                return ! is_null($item) && ! ((is_string($item) || is_array($item)) && empty($item));
+            }
+        );
     }
 }

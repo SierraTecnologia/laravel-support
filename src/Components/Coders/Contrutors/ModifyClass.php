@@ -14,6 +14,7 @@ class ModifyClass
 
     /**
      * Gets the class name.
+     *
      * @return string
      */
     public static function parsed($class)
@@ -34,5 +35,5 @@ class ModifyClass
         } catch (Error $e) {
             echo 'Parse Error: ', $e->getMessage();
         }
-        }
     }
+}

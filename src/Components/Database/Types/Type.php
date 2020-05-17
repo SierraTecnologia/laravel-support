@@ -33,9 +33,11 @@ abstract class Type extends DoctrineType
     {
         $customTypeOptions = $type->customOptions ?? [];
 
-        return array_merge([
+        return array_merge(
+            [
             'name' => $type->getName(),
-        ], $customTypeOptions);
+            ], $customTypeOptions
+        );
     }
 
     public static function getPlatformTypes()
@@ -55,9 +57,11 @@ abstract class Type extends DoctrineType
             static::getPlatformTypeMapping($platform)
         );
 
-        static::$platformTypes = static::$platformTypes->map(function ($type) {
-            return static::toArray(static::getType($type));
-        })->groupBy('category');
+        static::$platformTypes = static::$platformTypes->map(
+            function ($type) {
+                return static::toArray(static::getType($type));
+            }
+        )->groupBy('category');
 
         return static::$platformTypes;
     }
@@ -150,9 +154,11 @@ abstract class Type extends DoctrineType
                 $types = static::getAllTypes()->toArray();
             } elseif (strpos($types, '*') !== false) {
                 $searchType = str_replace('*', '', $types);
-                $types = static::getAllTypes()->filter(function ($type) use ($searchType) {
-                    return strpos($type, $searchType) !== false;
-                })->toArray();
+                $types = static::getAllTypes()->filter(
+                    function ($type) use ($searchType) {
+                        return strpos($type, $searchType) !== false;
+                    }
+                )->toArray();
             } else {
                 $types = [$types];
             }
@@ -176,23 +182,31 @@ abstract class Type extends DoctrineType
         $types = static::getTypeCategories();
 
         // Numbers
-        static::registerCustomOption('default', [
+        static::registerCustomOption(
+            'default', [
             'type' => 'number',
             'step' => 'any',
-        ], $types['numbers']);
+            ], $types['numbers']
+        );
 
         // Date and Time
-        static::registerCustomOption('default', [
+        static::registerCustomOption(
+            'default', [
             'type' => 'date',
-        ], 'date');
-        static::registerCustomOption('default', [
+            ], 'date'
+        );
+        static::registerCustomOption(
+            'default', [
             'type' => 'time',
             'step' => '1',
-        ], 'time');
-        static::registerCustomOption('default', [
+            ], 'time'
+        );
+        static::registerCustomOption(
+            'default', [
             'type' => 'number',
             'min'  => '0',
-        ], 'year');
+            ], 'year'
+        );
     }
 
     protected static function registerTypeCategories()
