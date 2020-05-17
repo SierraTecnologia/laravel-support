@@ -24,10 +24,11 @@ use Support\Components\Coders\Parser\ComposerParser;
 
 class DatabaseService
 {
-    protected $allModels = false;
+    protected $modelsFindInAlias = false;
 
     protected $composerParser = false;
-    protected $configModelsAlias = [];
+
+    protected $eloquentEntitysLoaders = [];
 
 
     protected $renderDatabase = false;
@@ -39,34 +40,82 @@ class DatabaseService
         $this->getRenderDatabase(); // @todo Fazer isso aqui
     }
 
-    public function getAllModels()
-    {
-        if (!$this->allModels) {
-            $this->allModels = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
-        }
-        return $this->allModels;
-    }
-
-    public function getRenderDatabase()
-    {
-        if (!$this->renderDatabase) {
-            $this->renderDatabase = (new \Support\Components\Database\Mount\DatabaseMount(collect($this->getAllModels())));
-        }
-        return $this->renderDatabase;
-    }
-
     public function getAllEloquentsEntitys()
     {
-        return $this->getRenderDatabase()->getAllEloquentsEntitys();
-    }
-
-    public function getEloquentService($class)
-    {
-        return $this->getRenderDatabase()->getEloquentEntity($class);
+        $this->getRenderDatabase();
+        return $this->eloquentEntitysLoaders;
+        // return $this->getRenderDatabase()->getAllEloquentsEntitys();
     }
 
     /**
-     * Cached
+     * Novos
      */
+
+
+    public function hasEloquentEntityFromClassName($className)
+    {
+        return isset($this->eloquentEntitysLoaders[$className]);
+    }
+
+    public function getEloquentEntityFromClassName($className)
+    {
+        if (!$this->hasEloquentEntityFromClassName($className)) {
+            return false;
+        }
+        return $this->eloquentEntitysLoaders[$className];
+        // return $this->getRenderDatabase()->getEloquentEntity($class);
+    }
+
+
+    public function registerManyEloquentEntity(array $eloquentEntitys)
+    {
+        foreach ($eloquentEntitys as $eloquentEntity) {
+            $this->registerEloquentEntity($eloquentEntity);
+        }
+
+    }
+
+    public function registerEloquentEntity(EloquentEntity $eloquentEntity)
+    {
+        if ($this->hasEloquentEntityFromClassName($eloquentEntity->getModelClass())) {
+            return false;
+        }
+        return $this->eloquentEntitysLoaders[$eloquentEntity->getModelClass()] = $eloquentEntity;
+        // return $this->getRenderDatabase()->getEloquentEntity($class);
+    }
+
+    public function renderEloquentEntityFromClassName($className)
+    {
+        if (!$this->hasEloquentEntityFromClassName($className)) {
+            $this->registerEloquentEntity(
+                $this->getRenderDatabase()->getEloquentEntity($class)
+            );
+        }
+
+        return $this->getEloquentEntityFromClassName($className);
+    }
+
+
+    /**
+     * Privados
+     */
+
+    private function extractAllModelsFromComposerWithNamespaceAlias()
+    {
+        if (!$this->modelsFindInAlias) {
+            $this->modelsFindInAlias = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
+        }
+        return $this->modelsFindInAlias;
+    }
+    private function getRenderDatabase()
+    {
+        if (!$this->renderDatabase) {
+            $this->renderDatabase = (new \Support\Components\Database\Mount\DatabaseMount(
+                collect($this->extractAllModelsFromComposerWithNamespaceAlias())
+            ));
+            $this->registerManyEloquentEntity($this->renderDatabase->getAllEloquentsEntitys());
+        }
+        return $this->renderDatabase;
+    }
 
 }

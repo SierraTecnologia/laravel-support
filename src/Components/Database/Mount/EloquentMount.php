@@ -18,7 +18,6 @@ use ReflectionMethod;
 use Illuminate\Support\Collection;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Http\Request;
-use Support\Elements\Entities\Relationships;
 use App;
 use Log;
 use Artisan;
@@ -94,7 +93,9 @@ class EloquentMount
         $eloquentEntity->setRegisterType($tableClassArray['registerType']);
         
         foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]]['columns'] as $column) {
-            $eloquentEntity->addColumn((new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity());
+            if ($columnEntity = (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity()) {
+                $eloquentEntity->addColumn($columnEntity);
+            }
         }
 
         // Debug

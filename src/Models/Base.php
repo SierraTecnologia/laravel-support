@@ -586,10 +586,10 @@ abstract class Base extends Eloquent
         dd(
             static::class,
             $data,
-            $eloquentEntityForModel = EloquentService::getForClass(static::class)
+            $eloquentEntityForModel = EloquentService::getEloquentEntityFromClassName(static::class)
         );
 
-        if (!$eloquentEntityForModel = EloquentService::getForClass(static::class)) {
+        if (!$eloquentEntityForModel = EloquentService::getEloquentEntityFromClassName(static::class)) {
             return static::firstOrCreate($data);
         }
 

@@ -37,7 +37,7 @@ class Classes extends Model
      */
     public static function getClassWithProcuracao($className)
     {
-        // resolve(DatabaseService::class)->getEloquentService($className);
+        // resolve(DatabaseService::class)->getEloquentEntityFromClassName($className);
         // while ($result = self::where('parent_class', $className)->first()) {
         //     $className = $result->class_name;
         // }

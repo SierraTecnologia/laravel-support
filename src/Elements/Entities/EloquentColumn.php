@@ -2,7 +2,6 @@
 
 namespace Support\Elements\Entities;
 
-use Support\Elements\Entities\Relationship;
 use Illuminate\Support\Collection;
 use Facilitador\Services\ModelService;
 use Facilitador\Services\RepositoryService;

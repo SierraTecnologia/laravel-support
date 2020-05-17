@@ -126,90 +126,6 @@ class ColunMount
         return $name;
     }
 
-    protected function isBelongTo($type = false)
-    {
-        if (isset($this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()])) {
-            return $this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()];
-        }
-
-        return false;
-    }
-
-    protected function isMorphTo($type = false)
-    {
-        // if ($this->className==\Population\Models\Market\Abouts\Info::class
-        // && $this->column['name']!=='id'&& $this->column['name']!=='text'
-        // ) {
-        if ($searchForeachKey = ArraySearcher::arraySearchByAttribute(
-            $this->column['name'],
-            // $this->renderDatabaseData['Leitoras']['displayTables'],
-                $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'],
-            'foreignKey'
-        )
-        ) {
-            $isMorph = false;
-            // $found = [];
-            foreach ($searchForeachKey as $valorFound) {
-                if (in_array($valorFound['type'], ['MorphMany', 'MorphTo'])) {
-                    $isMorph = true;
-                }
-                // $found[] = $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'][$valorFound];
-            }
-            // dd($found);
-            return $isMorph;
-        }
-        //     dd(
-        //         $this->className,
-        //         $this->column,
-        //         $this->renderDatabaseData
-        //     );
-        // }
-        
-        return false;
-    }
-
-    /**
-     * number
-     * text
-     * text_area
-     * rich_text_box
-     * 
-     * select_dropdown
-     * 
-     * timestamp
-     */
-    protected function isRelationship($type)
-    {
-        if ($this->isBelongTo($type)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * number
-     * text
-     * text_area
-     * rich_text_box
-     * 
-     * select_dropdown
-     * 
-     * timestamp
-     */
-    public function getColumnDisplayType($type)
-    {
-        if ($this->isRelationship($type)) {
-            return 'relationship';
-        }
-
-        if ($type == 'varchar') {
-            return 'text';
-        }
-        
-        return $type;
-    }
-
 
 
     // 'details'      => [
@@ -268,6 +184,7 @@ class ColunMount
 
             $array['model'] = $relationClassName;
             $array['table'] = $relation['name'];
+            $array['method'] = $relation['name'];
             $array['type'] = 'belongsTo';
             $array['column'] = $this->getColumnName();
             $array['key'] = $relation['key'];
@@ -277,25 +194,45 @@ class ColunMount
         }
 
         if ($relation = $this->isMorphTo()) {
-            if (!isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
-                dd('deu ruim aqui mountcolumn');
-                return null; //@todo tratar erro de tabela que nao existe
-            }
+            // Filtra o Primeiro
+            $relation = $relation[count($relation)-1];
+
+            // @todo Ajeitar aqu dps 
+            // if (!isset($relation['table_target']) || !isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['table_target']])) {
+            //     dd(
+            //         'deu ruim aqui mountcolumn',
+            //         $relation
+            //     );
+            //     return null; //@todo tratar erro de tabela que nao existe
+            // }
             // name, key, label
             $haveDetails = true;
 
-            if (is_array($relationClassName = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+            if (is_array($relationClassName = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['table_target']])) {
                 $relationClassName = $relationClassName[0];
             }
 
-            $array['model'] = $relationClassName;
+            // Get Relation Data
+            $relationData = $relation['relations'][0];
+
+            // Aqui invez do modelo fica a coluna que armazena o modelo
+            $array['model'] = $relationData['morph_type'];
             $array['table'] = $relation['name'];
+            $array['method'] = $relation['name'];
             $array['type'] = 'morphTo';
             $array['column'] = $this->getColumnName();
-            $array['key'] = $relation['key'];
-            $array['label'] = $relation['displayName'];
-            $array['pivot_table'] = $relation['name'];
+            $array['key'] = $relationData['ownerKey']; // id, code
+            $array['label'] = 'name';
             $array['pivot'] = 0;
+            if ($relationData['pivot']) {
+                $array['pivot'] = 1;
+                $array['pivot_table'] = $relationData['pivot'];
+                dd(
+                    'fazer pivon',
+                    $relation,
+                    $array
+                );
+            }
         }
 
         // Belongs to many
@@ -404,4 +341,113 @@ class ColunMount
      * morphedByMany (O modelo possui a tabela taggables)
      * morphToMany   (nao possui a tabela taggables)
      */
+
+    /**
+     * number
+     * text
+     * text_area
+     * rich_text_box
+     * 
+     * select_dropdown
+     * 
+     * timestamp
+     */
+    public function getColumnDisplayType($type)
+    {
+        if ($this->isRelationship($type)) {
+            return 'relationship';
+        }
+
+        if ($type == 'varchar') {
+            return 'text';
+        }
+        
+        return $type;
+    }
+
+    protected function isBelongTo($type = false)
+    {
+        if (isset($this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()])) {
+            return $this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()];
+        }
+
+        return false;
+    }
+
+    /**
+     * name" => "gasto_MorphMany_person"
+    "table_origin" => "gastos"
+    "table_target" => "persons"
+    "pivot" => 0
+    "type" => "MorphMany"
+    "relations" => array:1 [
+      0 => array:12 [
+        "origin_table_class" => "Population\Models\Identity\Actors\Person"
+        "origin_foreignKey" => "gastoable_id"
+        "related_table_class" => "Casa\Models\Economic\Gasto"
+        "is_inverse" => false
+        "pivot" => false
+        "name" => "gastos"
+        "type" => "MorphMany"
+        "model" => "Casa\Models\Economic\Gasto"
+        "ownerKey" => "code"
+        "foreignKey" => "gastoable_id"
+        "morph_type" => "gastoable_type"
+        "related_foreignKey" => "code"
+      ]
+
+     */
+    protected function isMorphTo($type = false)
+    {
+        // if ($this->className==\Population\Models\Market\Abouts\Info::class
+        // && $this->column['name']!=='id'&& $this->column['name']!=='text'
+        // ) {
+        if ($searchForeachKey = ArraySearcher::arraySearchByAttribute(
+            $this->column['name'],
+            // $this->renderDatabaseData['Leitoras']['displayTables'],
+                $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'],
+            'foreignKey'
+        )
+        ) {
+            $isMorph = false;
+            $found = [];
+            foreach ($searchForeachKey as $valorFound) {
+                if (in_array($this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'][$valorFound]['type'], ['MorphMany', 'MorphTo'])) {
+                    $isMorph = true;
+                    $found[] = $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'][$valorFound];
+                }
+            }
+            // dd($found);
+            if ($isMorph) {
+                return $found;
+            }
+        }
+        //     dd(
+        //         $this->className,
+        //         $this->column,
+        //         $this->renderDatabaseData
+        //     );
+        // }
+        
+        return false;
+    }
+
+    /**
+     * number
+     * text
+     * text_area
+     * rich_text_box
+     * 
+     * select_dropdown
+     * 
+     * timestamp
+     */
+    protected function isRelationship($type)
+    {
+        if ($this->isBelongTo($type)) {
+            return true;
+        }
+
+        return false;
+    }
 }

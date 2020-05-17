@@ -20,7 +20,7 @@ use Illuminate\Support\Collection;
 use Support\Services\EloquentService;
 use Support\Components\Coders\Parser\ComposerParser;
 use Illuminate\Support\Facades\Cache;
-use Support\Elements\Entities\Relationship;
+use Support\Elements\Entities\RelationshipEntity;
 use Support\Components\Database\Types\Type;
 use Log;
 use Support\Components\Database\Schema\SchemaManager;
@@ -334,8 +334,8 @@ class DatabaseRender implements Arrayable
                 $tableNameSingulari = StringModificator::singularizeAndLower($tableName);
 
                 $type = $relation['type'];
-                if (Relationship::isInvertedRelation($relation['type'])) {
-                    $type = Relationship::getInvertedRelation($type);
+                if (RelationshipEntity::isInvertedRelation($relation['type'])) {
+                    $type = RelationshipEntity::getInvertedRelation($type);
                     $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
                 } else {
                     $temp = $tableOrigin;
@@ -345,7 +345,9 @@ class DatabaseRender implements Arrayable
                 }
                 if (!isset($this->dicionarioTablesRelations[$novoIndice])) {
                     $this->dicionarioTablesRelations[$novoIndice] = [
-                        'name' => $novoIndice,
+                        'code' => $novoIndice,
+                        // Nome da Funcao
+                        'name' => $tableTarget,
                         'table_origin' => $tableOrigin,
                         'table_target' => $tableTarget,
                         'pivot' => 0,
@@ -370,13 +372,13 @@ class DatabaseRender implements Arrayable
                     'LaravelSupport>Database>> Não era pra Cair Erro aqui',
                     $e,
                     $relation,
-                    $relation->name,
-                    $relation->type,
+                    $relation['name'],
+                    $relation['type'],
                     $eloquentService->getTableName(),
                     $tableNameSingulari,
                     $singulariRelationName
-                    // StringModificator::singularizeAndLower($relation->name).'_'.$relation->type.'_'.StringModificator::singularizeAndLower($eloquentService->getTableName()),
-                    // StringModificator::singularizeAndLower($relation->name)
+                    // StringModificator::singularizeAndLower($relation['name']).'_'.$relation['type'].'_'.StringModificator::singularizeAndLower($eloquentService->getTableName()),
+                    // StringModificator::singularizeAndLower($relation['name'])
                     // $novoIndice
                 );
             }

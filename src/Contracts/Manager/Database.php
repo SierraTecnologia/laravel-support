@@ -18,7 +18,7 @@ interface Database
 
     public function getAllEloquentsEntitys();
 
-    public function getEloquentService($class);
+    public function getEloquentEntityFromClassName($class);
 
     /**
      * Get the URL for a given page.
