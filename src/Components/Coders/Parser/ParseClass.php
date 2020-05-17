@@ -14,6 +14,7 @@ use Support\Traits\Debugger\HasErrors;
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
 use Support\Traits\Coder\GetSetTrait;
+use Support\Utils\Extratores\ClasserExtractor;
 
 class ParseClass implements Arrayable
 {
@@ -84,7 +85,7 @@ class ParseClass implements Arrayable
         $this->type = $this->detectType();
         if (!$this->supportModelCodeClass = Classes::find($this->className)) {
             $this->supportModelCodeClass = new Classes;
-            $this->supportModelCodeClass->class_name = $this->getClasseName();
+            $this->supportModelCodeClass->class_name = $this->getClassName();
             $this->supportModelCodeClass->filename = $this->getFilename();
             $this->supportModelCodeClass->parent_class = $this->getParentClassName();
             $this->supportModelCodeClass->type = $this->getType();
@@ -111,7 +112,7 @@ class ParseClass implements Arrayable
     public function getReflectionClassForUse()
     {
         if (!$this->reflectionClass) {
-            $this->reflectionClass = static::getReflectionClass($this->className);
+            $this->reflectionClass = ClasserExtractor::getReflectionClass($this->className);
         }
         return $this->reflectionClass;
     }
@@ -120,16 +121,16 @@ class ParseClass implements Arrayable
     {
         return [
 
-            'class' => $this->getClasseName(),
+            'class' => $this->getClassName(),
             'filename' => $this->getFilename(),
             'parentClass' => $this->getParentClassName(),
             'interfaces' => $this->getInterfaceNames(),
             'type' => $this->getType(),
 
-            'groupPackage' => ClasserExtractor::getPackageNamespace($className),
-            'groupType' => ClasserExtractor::getPackageNamespace($className),
-            'historyType' => ClasserExtractor::getPackageNamespace($className),
-            'registerType' => ClasserExtractor::getPackageNamespace($className),
+            'groupPackage' => ClasserExtractor::getPackageNamespace($this->className),
+            'groupType' => ClasserExtractor::getPackageNamespace($this->className),
+            'historyType' => ClasserExtractor::getPackageNamespace($this->className),
+            'registerType' => ClasserExtractor::getPackageNamespace($this->className),
         ];
 
     }
@@ -207,74 +208,14 @@ class ParseClass implements Arrayable
         foreach (static::$types as $type => $subClassName) {
             // Detected
             if (is_subclass_of($this->className, $subClassName)) {
-                if (!isset(static::$typesIgnoreName[$type]) || !in_array(static::getClassName($this->className), static::$typesIgnoreName[$type])) {
-                    // dd(static::$typesIgnoreName, static::getClassName($this->className), $this->className);
+                if (!isset(static::$typesIgnoreName[$type]) || !in_array(ClasserExtractor::getClassName($this->className), static::$typesIgnoreName[$type])) {
+                    // dd(static::$typesIgnoreName, ClasserExtractor::getClassName($this->className), $this->className);
                     return $type;
                 }
             }
         }
 
         return 'other';
-    }
-    
-    /**
-     * @todo tirar daqui
-     */
-    public static function getFileName($classOrReflectionClass = false)
-    {
-        return (static::getReflectionClass($classOrReflectionClass))->getFileName();
-    }
-
-    
-    /**
-     * @todo tirar daqui
-     */
-    /**
-     * Gets the class name.
-     * @return string
-     */
-    public static function getClassName($class)
-    {
-        return strtolower(array_slice(explode('\\', $class), -1, 1)[0]);
-    }
-
-    
-    /**
-     * @todo tirar daqui
-     */
-    public static function returnInstanceForClass($class, $with = false)
-    {
-
-        if (is_object($class)) {
-            return $class;
-        }
-
-        if (!class_exists($class)) {
-            Log::warning('[Support] Code Parser -> Class não encontrada no ModelService -> ' . $class);
-            throw new Exception('Class não encontrada no ModelService' . $class);
-        }
-        
-        if ($with) {
-            return with(new $class);
-        }
-        return App::make($class);
-    }
-
-
-
-
-
-
-    
-    /**
-     * @todo tirar daqui
-     */
-    protected static function getReflectionClass($classOrReflectionClass = false)
-    {
-        if (!$classOrReflectionClass || is_string($classOrReflectionClass)) {
-            $classOrReflectionClass = new \ReflectionClass($classOrReflectionClass);
-        }
-        return $classOrReflectionClass;
     }
 
     /**
@@ -290,14 +231,4 @@ class ParseClass implements Arrayable
     }
 
 
-    
-
-    // /**
-    //  * Gets the class name.
-    //  * @return string
-    //  */
-    // public static function getClassName()
-    // {
-    //     return self::getClassName(static::class);
-    // }
 }

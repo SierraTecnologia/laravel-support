@@ -128,7 +128,7 @@ class Database implements Arrayable
 
         // Ignora Oq nao serve
         if (in_array(
-            ParseClass::getClassName($classParent),
+            ClasserExtractor::getClassName($classParent),
             ParseClass::$typesIgnoreName['model']
         )) {
             return false;
@@ -313,26 +313,6 @@ class Database implements Arrayable
         }
 
         $this->displayTables = $tables;
-    }
-
-    private function loadDisplayClasses($tableName, $indexes)
-    {
-        $primary = false;
-        if (!empty($indexes)) {
-            foreach ($indexes as $index) {
-                if ($index['type'] == 'PRIMARY') {
-                    $primary = $index['columns'][0];
-                    $singulariRelationName = StringModificator::singularizeAndLower($tableName);
-                    $this->dicionarioPrimaryKeys[$singulariRelationName.'_'.$primary] = [
-                        'name' => $tableName,
-                        'key' => $primary,
-                        'label' => 'name'
-                    ];
-                }
-            }
-        }
-
-        return $primary;
     }
 
     /**
@@ -599,7 +579,7 @@ class Database implements Arrayable
 
         if ($childrens = $this->haveChildren($className)) {
             foreach ($childrens as $children) {
-                if (ParseClass::getClassName($className) === ParseClass::getClassName($children)) {
+                if (ClasserExtractor::getClassName($className) === ClasserExtractor::getClassName($children)) {
                     // @todo Verificar outras classes que nao possue nome igual mas é filha
                     /**^ "Chieldren"
                     ^ "Finder\Models\Digital\Infra\Ci\Build"
@@ -622,7 +602,7 @@ class Database implements Arrayable
                 } 
                 // else if(
                 //     !in_array(
-                //         ParseClass::getClassName($children),
+                //         ClasserExtractor::getClassName($children),
                 //         ParseClass::$typesIgnoreName['model']
                 //     )
                 // ) {
@@ -637,9 +617,9 @@ class Database implements Arrayable
         if ($parent = $this->haveParent($className)) {
             if(
                 !in_array(
-                    ParseClass::getClassName($parent),
+                    ClasserExtractor::getClassName($parent),
                     ParseClass::$typesIgnoreName['model']
-                ) && ParseClass::getClassName($className) !== ParseClass::getClassName($parent)
+                ) && ClasserExtractor::getClassName($className) !== ClasserExtractor::getClassName($parent)
             ) {
                 $this->loadMapperClasserProcuracao(
                     $parent,

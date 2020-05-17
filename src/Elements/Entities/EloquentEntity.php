@@ -10,8 +10,6 @@ use Doctrine\DBAL\Schema\TableDiff;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
-use Support\Traits\Debugger\DevDebug;
-use Support\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -29,26 +27,114 @@ use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
+use Support\Traits\Coder\GetSetTrait;
 
 class EloquentEntity
 {
-    use DevDebug;
-    use HasErrors;
 
     /**
-     * Identify
+     * Atributos
+     */
+    use GetSetTrait;
+
+    /**
+     * modelClass
+     *
+     * @var string
+     * @getter true
+     * @setter false
      */
     protected $modelClass;
 
     /**
-     * Dados
+     * primaryKey
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $primaryKey;
+
+    /**
+     * name
+     *
+     * @var string
+     * @getter true
+     * @setter true
      */
     protected $name;
-    protected $icon;
-    protected $indexes;
-    protected $group = 'other';
+
+
+    /**
+     * tablename
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
     protected $tablename;
-    protected $primaryKey;
+
+
+    /**
+     * indexes
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $indexes;
+
+    /**
+     * icon
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $icon;
+
+    /**
+     * groupPackage
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $groupPackage;
+
+    /**
+     * groupType
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $groupType;
+
+    /**
+     * historyType
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $historyType;
+
+    /**
+     * registerType
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $registerType;
+
+
+
+
+    /**
+     * Dados
+     */
 
     public $data;
     public $dataForColumns; // Array
@@ -63,48 +149,8 @@ class EloquentEntity
     }
 
     /**
-     * Caracteristicas das Tabelas
+     * Colocar isso em um Trait
      */
-    public function getPrimaryKey()
-    {
-        return $this->primaryKey;
-    }
-    public function setPrimaryKey($primaryKey)
-    {
-        return $this->primaryKey = $primaryKey;
-    }
-
-
-    //@todo fazer plural
-    public function getName($plural = false)
-    {
-        return $this->name;
-    }
-    public function setName($name)
-    {
-        return $this->name = $name;
-    }
-
-
-    public function getTablename()
-    {
-        return $this->tablename;
-    }
-    public function setTablename($tablename)
-    {
-        return $this->tablename = $tablename;
-    }
-
-    public function getIndexes()
-    {
-        return $this->indexes;
-    }
-    public function setIndexes($indexes)
-    {
-        return $this->indexes = $indexes;
-    }
-
-
     public function getData($indexe = false)
     {
         if (!$indexe || empty($indexe)) {
@@ -119,6 +165,8 @@ class EloquentEntity
     {
         return $this->data = $data;
     }
+
+
 
     public function getDataForColumns($indexe = false)
     {
@@ -150,14 +198,6 @@ class EloquentEntity
 
 
 
-
-
-    public function getModelClass()
-    {
-
-        return $this->modelClass;
-    }
-    
 
     public function getColumnsForList()
     {
@@ -326,26 +366,6 @@ class EloquentEntity
         // $column = \Support\Components\Database\Schema\Column::make($columnArray, $this->getTableName());
         // dd($column);
         // return $column->columnIsType($columnName, $typeClass);
-    }
-
-
-
-
-    public function getGroup()
-    {
-        return $this->group;
-    }
-    public function setGroup($group)
-    {
-        return $this->group = $group;
-    }
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-    public function setIcon($icon)
-    {
-        return $this->icon = $icon;
     }
 
 }

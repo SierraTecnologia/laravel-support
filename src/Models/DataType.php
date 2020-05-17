@@ -44,7 +44,10 @@ class DataType extends Model
         'key_type',
         'foreign_key',
 
-        'group'
+        'group_package',
+        'group_type',
+        'history_type',
+        'register_type',
     ];
 
     protected $modelService = false;

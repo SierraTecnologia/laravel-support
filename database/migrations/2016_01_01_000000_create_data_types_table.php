@@ -23,7 +23,10 @@ class CreateDataTypesTable extends Migration
             $table->string('model_name')->nullable();
             $table->string('description')->nullable();
             $table->boolean('generate_permissions')->default(false);
-            $table->string('group')->nullable();
+            $table->string('group_package')->nullable();
+            $table->string('group_type')->nullable();
+            $table->string('history_type')->nullable();
+            $table->string('register_type')->nullable();
             $table->timestamps();
         });
 

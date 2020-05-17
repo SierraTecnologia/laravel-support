@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Support\Utils\Extratores;
 
+use App;
+use Log;
+use Exception;
+
 class ClasserExtractor
 {
     

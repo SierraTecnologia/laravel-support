@@ -12,91 +12,70 @@ use Illuminate\Database\Eloquent\Model;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Symfony\Component\Inflector\Inflector;
 use Support\Services\EloquentService;
+use Support\Traits\Coder\GetSetTrait;
 
 class EloquentColumn
 {
 
-    public $name;
-    public $columnName;
-    public $columnType;
-    public $displayType;
+    /**
+     * Atributos
+     */
+    use GetSetTrait;
+
+    /**
+     * name
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $name;
+
+
+    /**
+     * columnName
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $columnName;
+
+    /**
+     * columnType
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $columnType;
+
+    /**
+     * displayType
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $displayType;
+
+    /**
+     * details
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $details;
+
+
 
     public $displayName = false;
     public $displayColumn;
     public $fillable;
     protected $data;
-    protected $details;
 
-    public function __construct()
-    {
-        
-    }
-    
-    /**
-     * Nome para Exibição
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 
-    public function setName($name)
-    {
-        return $this->name = $name;
-    }
-    
-    /**
-     * Nome da Coluna no Banco
-     */
-    public function getColumnName()
-    {
-        return $this->columnName;
-    }
-
-    public function setColumnName($columnName)
-    {
-        return $this->columnName = $columnName;
-    }
-
-    /**
-     * Tipo de Coluna no banco
-     */
-    public function getColumnType()
-    {
-        return $this->columnType;
-    }
-
-    public function setColumnType($columnType)
-    {
-        return $this->columnType = $columnType;
-    }
-
-    /**
-     * Tipo de Coluna na aplicacao
-     */
-    public function getDisplayType()
-    {
-        return $this->details;
-    }
-
-    public function setDisplayType($displayType)
-    {
-        return $this->displayType = $displayType;
-    }
-
-    /**
-     * Detalhes
-     */
-    public function getDetails()
-    {
-        return $this->details;
-    }
-
-    public function setDetails($details)
-    {
-        return $this->details = $details;
-    }
-    
 
     /**
      * @todo esse codigo é reptid remover depois

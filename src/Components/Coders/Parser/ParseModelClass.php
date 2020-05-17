@@ -23,6 +23,7 @@ use TypeError;
 use Throwable;
 use Watson\Validating\ValidationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Support\Utils\Extratores\ClasserExtractor;
 
 class ParseModelClass extends ParseClass
 {
@@ -59,7 +60,7 @@ class ParseModelClass extends ParseClass
     {
         if (!$this->instanceClass) {
             try {
-                $this->instanceClass = static::returnInstanceForClass($this->className);
+                $this->instanceClass = ClasserExtractor::returnInstanceForClass($this->className);
             } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
                 $this->setErrors(
                     $e,

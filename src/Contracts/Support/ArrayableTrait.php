@@ -11,31 +11,31 @@ trait ArrayableTrait
     /**
      * Attributes to Array Mapper
      */
-    public static $mapper = [
-        // 'Dicionario' => [
-        //     'dicionarioTablesRelations',
-        //     'dicionarioPrimaryKeys',
-        // ],
-        // 'Mapper' => [
-        //     'mapperTableToClasses',
-        //     'mapperParentClasses',
-        //     'mapperClasserProcuracao',
-        // ],
-        // 'Leitoras' => [
-        //     'displayTables',
-        //     'displayClasses',
-        // ],
-        // 'AplicationTemp' => [
-        //     'tempAppTablesWithNotPrimaryKey',
-        //     'tempErrorClasses',
-        //     'tempIgnoreClasses'
-        // ],
+    // public static $mapper = [
+    //     // 'Dicionario' => [
+    //     //     'dicionarioTablesRelations',
+    //     //     'dicionarioPrimaryKeys',
+    //     // ],
+    //     // 'Mapper' => [
+    //     //     'mapperTableToClasses',
+    //     //     'mapperParentClasses',
+    //     //     'mapperClasserProcuracao',
+    //     // ],
+    //     // 'Leitoras' => [
+    //     //     'displayTables',
+    //     //     'displayClasses',
+    //     // ],
+    //     // 'AplicationTemp' => [
+    //     //     'tempAppTablesWithNotPrimaryKey',
+    //     //     'tempErrorClasses',
+    //     //     'tempIgnoreClasses'
+    //     // ],
 
-        // // Esse eh manual pq pera da funcao
-        // // 'Errors' => [
-        // //     'errors',
-        // // ]
-    ];
+    //     // // Esse eh manual pq pera da funcao
+    //     // // 'Errors' => [
+    //     // //     'errors',
+    //     // // ]
+    // ];
 
 
 

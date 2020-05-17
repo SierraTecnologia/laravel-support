@@ -11,9 +11,44 @@ use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Symfony\Component\Inflector\Inflector;
 use Support\Models\DataRelationship;
+use Support\Traits\Coder\GetSetTrait;
 
 class Relationship
 {
+
+    /**
+     * Atributos
+     */
+    use GetSetTrait;
+
+    /**
+     * name
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $name;
+
+    /**
+     * type
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $type;
+
+    /**
+     * model
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $model;
+    public $foreignKey;
+    public $ownerKey;
 
 
     public $origin_table_name;
@@ -31,12 +66,6 @@ class Relationship
 
     // Others Values
     public $pivot;
-
-    public $name;
-    public $type;
-    public $model;
-    public $foreignKey;
-    public $ownerKey;
 
 
     protected $filliables = [
