@@ -34,6 +34,9 @@ use Log;
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
 
+use Support\Exceptions\Coder\EloquentHasErrorException;
+use Support\Exceptions\Coder\EloquentNotExistException;
+
 class DatabaseMount implements Arrayable
 {
     use ArrayableTrait;
@@ -68,7 +71,7 @@ class DatabaseMount implements Arrayable
     }
 
 
-    protected function render()
+    protected function render(): void
     {
         $eloquentClasses = $this->eloquentClasses;
         // Cache In Minutes
@@ -126,7 +129,7 @@ class DatabaseMount implements Arrayable
 
     }
 
-    public function getAllEloquentsEntitys()
+    public function getAllEloquentsEntitys(): array
     {
         //     dd($this->entitys,
         //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
@@ -134,26 +137,18 @@ class DatabaseMount implements Arrayable
         return $this->entitys->toArray();
     }
 
-    public function getEloquentEntity($className)
+    public function getEloquentEntityFromClassName($className): EloquentEntity
     {
         $className = $this->returnProcuracaoClasse($className);
         if ($this->eloquentHasError($className)) {
-            return false;
+            throw new EloquentHasErrorException($className, $this->renderDatabase['AplicationTemp']['tempErrorClasses'][$className]);
         }
 
         if (!empty($className) && isset($this->entitys->toArray()[$className])) {
             return $this->entitys->toArray()[$className];
         }
 
-        Log::channel('sitec-support')->error(
-            'DatabaseMount. Nao encontrado pra classe: '.$className
-        );
-        // dd(
-        //     'Aqui Agora',
-        //     $class,
-        //     debug_backtrace()
-        // );
-        return false;
+        throw new EloquentNotExistException($className);
     }
 
     public function eloquentHasError($className)

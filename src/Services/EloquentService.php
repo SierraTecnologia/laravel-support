@@ -2,6 +2,7 @@
 
 namespace Support\Services;
 
+use Support\Elements\Entities\EloquentEntity;
 
 
 class EloquentService
@@ -9,24 +10,23 @@ class EloquentService
     protected $eloquentEntity;
 
     // public function __construct(DatabaseService $databaseService, $class)
-    public function __construct($class)
+    public function __construct(string $className)
     {
         $databaseService = resolve(DatabaseService::class);
-        if (!$databaseService->hasEloquentEntityFromClassName($class)) {
-            $this->eloquentEntity = $databaseService->renderEloquentEntityFromClassName($class);
+        if (!$databaseService->hasEloquentEntityFromClassName($className)) {
+            $this->eloquentEntity = $databaseService->renderEloquentEntityFromClassName($className);
+            return ;
         }
-        $this->eloquentEntity = $databaseService->getEloquentEntityFromClassName($class);
+        $this->eloquentEntity = $databaseService->getEloquentEntityFromClassName($className);
     }
 
-    public function __invoke()
+    public function __invoke(): EloquentEntity
     {
         return $this->eloquentEntity;
     }
 
-    public static function getEloquentEntityFromClassName($className)
+    public static function getEloquentEntityFromClassName(string $className): EloquentEntity
     {
-        // $databaseService = resolve(DatabaseService::class);
-        // return resolve(DatabaseService::class)->getEloquentEntityFromClassName($className);
         return (new self($className))();
     }
 }

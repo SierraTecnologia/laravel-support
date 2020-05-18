@@ -2,25 +2,11 @@
 
 namespace Support\Services;
 
-use Log;
-use Illuminate\Http\Request;
-use Support\Result\RelationshipResult;
-use SierraTecnologia\Crypto\Services\Crypto;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Support\Components\Database\DatabaseUpdater;
-use Support\Components\Database\Schema\Column;
-use Support\Components\Database\Schema\Identifier;
-use Support\Components\Database\Schema\SchemaManager;
-use Support\Components\Database\Schema\Table;
-use Support\Components\Database\Types\Type;
-use Support\Components\Coders\Parser\ParseModelClass;
 use Support\Components\Database\Mount\DatabaseMount;
-use Exception;
 use Support\Elements\Entities\EloquentEntity;
 use Support\Components\Coders\Parser\ComposerParser;
 use Illuminate\Support\Collection;
+use Support\Exceptions\Coder\EloquentNotExistException;
 
 class DatabaseService
 {
@@ -37,14 +23,14 @@ class DatabaseService
     {
         $this->configModelsAlias = $configModelsAlias;
         $this->composerParser = $composerParser;
-        $this->getRenderDatabase(); // @todo Fazer isso aqui
+        $this->getDatabaseMount(); // @todo Remover isso aqui e ver se funciona
     }
 
     public function getAllEloquentsEntitys(): array
     {
-        $this->getRenderDatabase();
+        $this->getDatabaseMount();
         return $this->eloquentEntitysLoaders;
-        // return $this->getRenderDatabase()->getAllEloquentsEntitys();
+        // return $this->getDatabaseMount()->getAllEloquentsEntitys();
     }
 
     /**
@@ -60,10 +46,9 @@ class DatabaseService
     public function getEloquentEntityFromClassName($className): EloquentEntity
     {
         if (!$this->hasEloquentEntityFromClassName($className)) {
-            throw new EloquentNotExistException;
+            throw new EloquentNotExistException($className);
         }
         return $this->eloquentEntitysLoaders[$className];
-        // return $this->getRenderDatabase()->getEloquentEntity($class);
     }
 
 
@@ -81,14 +66,13 @@ class DatabaseService
             return false;
         }
         return $this->eloquentEntitysLoaders[$eloquentEntity->getModelClass()] = $eloquentEntity;
-        // return $this->getRenderDatabase()->getEloquentEntity($class);
     }
 
     public function renderEloquentEntityFromClassName(string $className): EloquentEntity
     {
         if (!$this->hasEloquentEntityFromClassName($className)) {
             $this->registerEloquentEntity(
-                $this->getRenderDatabase()->getEloquentEntity($class)
+                $this->getDatabaseMount()->getEloquentEntityFromClassName($className)
             );
         }
 
@@ -107,7 +91,7 @@ class DatabaseService
         }
         return $this->modelsFindInAlias;
     }
-    private function getRenderDatabase(): DatabaseMount
+    private function getDatabaseMount(): DatabaseMount
     {
         if (!$this->renderDatabase) {
             $this->renderDatabase = (new DatabaseMount(
