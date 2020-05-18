@@ -4,7 +4,6 @@ namespace Support\Services;
 
 use Log;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Support\Result\RelationshipResult;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Support\Facades\Artisan;
@@ -17,10 +16,11 @@ use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
 use Support\Components\Coders\Parser\ParseModelClass;
-
+use Support\Components\Database\Mount\DatabaseMount;
 use Exception;
-
+use Support\Elements\Entities\EloquentEntity;
 use Support\Components\Coders\Parser\ComposerParser;
+use Illuminate\Support\Collection;
 
 class DatabaseService
 {
@@ -40,7 +40,7 @@ class DatabaseService
         $this->getRenderDatabase(); // @todo Fazer isso aqui
     }
 
-    public function getAllEloquentsEntitys()
+    public function getAllEloquentsEntitys(): array
     {
         $this->getRenderDatabase();
         return $this->eloquentEntitysLoaders;
@@ -52,15 +52,15 @@ class DatabaseService
      */
 
 
-    public function hasEloquentEntityFromClassName($className)
+    public function hasEloquentEntityFromClassName($className): bool
     {
         return isset($this->eloquentEntitysLoaders[$className]);
     }
 
-    public function getEloquentEntityFromClassName($className)
+    public function getEloquentEntityFromClassName($className): EloquentEntity
     {
         if (!$this->hasEloquentEntityFromClassName($className)) {
-            return false;
+            throw new EloquentNotExistException;
         }
         return $this->eloquentEntitysLoaders[$className];
         // return $this->getRenderDatabase()->getEloquentEntity($class);
@@ -84,7 +84,7 @@ class DatabaseService
         // return $this->getRenderDatabase()->getEloquentEntity($class);
     }
 
-    public function renderEloquentEntityFromClassName($className)
+    public function renderEloquentEntityFromClassName(string $className): EloquentEntity
     {
         if (!$this->hasEloquentEntityFromClassName($className)) {
             $this->registerEloquentEntity(
@@ -100,17 +100,17 @@ class DatabaseService
      * Privados
      */
 
-    private function extractAllModelsFromComposerWithNamespaceAlias()
+    private function extractAllModelsFromComposerWithNamespaceAlias(): Collection
     {
         if (!$this->modelsFindInAlias) {
             $this->modelsFindInAlias = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
         }
         return $this->modelsFindInAlias;
     }
-    private function getRenderDatabase()
+    private function getRenderDatabase(): DatabaseMount
     {
         if (!$this->renderDatabase) {
-            $this->renderDatabase = (new \Support\Components\Database\Mount\DatabaseMount(
+            $this->renderDatabase = (new DatabaseMount(
                 collect($this->extractAllModelsFromComposerWithNamespaceAlias())
             ));
             $this->registerManyEloquentEntity($this->renderDatabase->getAllEloquentsEntitys());

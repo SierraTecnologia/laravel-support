@@ -123,20 +123,6 @@ class DatabaseMount implements Arrayable
                 return (new EloquentMount($className, $renderDatabaseArray))->getEntity();
             }
         );
-        dd(
-            $eloquentClasses,
-            $this->entitys,
-            $this->entitys->toArray()
-        );
-        //     dd(
-        //         $this->entitys,
-        //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
-        // );
-        
-        // $databaseEntity = new DatabaseEntity();
-        
-        // $databaseEntity = new DatabaseEntity();
-        // $databaseEntity
 
     }
 

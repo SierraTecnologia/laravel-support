@@ -208,10 +208,6 @@ class ColunMount
             // name, key, label
             $haveDetails = true;
 
-            if (is_array($relationClassName = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['table_target']])) {
-                $relationClassName = $relationClassName[0];
-            }
-
             // Get Relation Data
             $relationData = $relation['relations'][0];
 

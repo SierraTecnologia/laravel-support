@@ -583,12 +583,6 @@ abstract class Base extends Eloquent
         $modelFind = false;
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
-        dd(
-            static::class,
-            $data,
-            $eloquentEntityForModel = EloquentService::getEloquentEntityFromClassName(static::class)
-        );
-
         if (!$eloquentEntityForModel = EloquentService::getEloquentEntityFromClassName(static::class)) {
             return static::firstOrCreate($data);
         }
@@ -618,9 +612,9 @@ abstract class Base extends Eloquent
             return $results->first();
         }
 
-        // Cado nada de certo retorna o primeiro ou cria
-        // @debug Resolver essa gambiarra @todo
-        $eloquentEntityForModel->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $eloquentEntityForModel]);
+        // // Cado nada de certo retorna o primeiro ou cria
+        // // @debug Resolver essa gambiarra @todo
+        // $eloquentEntityForModel->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $eloquentEntityForModel]);
         return static::firstOrCreate($data);
 
     }

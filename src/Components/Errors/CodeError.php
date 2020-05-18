@@ -69,7 +69,7 @@ abstract class CodeError
     public function __construct($target, $customData = [])
     {
         if (!is_string($target) || empty($target)) {
-            dd($target);
+            dd('CodeError Problem:', $target);
         }
         $this->setTarget($target);
         if (!$this->supportModelCodeClass = Error::where($this->whereFind())->first()) {
