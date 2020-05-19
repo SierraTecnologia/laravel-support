@@ -10,8 +10,10 @@ class HistoryDinamicTypeEntity extends AbstractHistoryType
 {
     public static $name = 'Dinamic';
 
-    public static $examples = [
-
+    public $examples = [
+        'temperature',
+        'registro',
+        'contador'
     ];
 
 

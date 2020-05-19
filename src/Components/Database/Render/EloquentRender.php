@@ -20,7 +20,6 @@ use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Elements\Entities\EloquentColumn;
 use Support\Components\Coders\Parser\ParseModelClass;
-use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
@@ -39,40 +38,37 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
 use Support\Traits\Debugger\HasErrors;
+use Support\Traits\Coder\GetSetTrait;
+use Support\Utils\Modificators\StringModificator;
 
 class EloquentRender implements Arrayable
 {
     use HasErrors, ArrayableTrait;
     use DevDebug;
     /**
-     * Identify
+     * Atributos
+     */
+    use GetSetTrait;
+
+    /**
+     * Identify ClassName
+     *
+     * @var          string
+     * @getter       true
+     * @setter       false
+     * @serializable true
      */
     protected $modelClass;
 
     /**
-     * Cached
-     */
-    protected $colunasDaTabela;
-    protected $columns;
-    protected $indexes;
-    protected $primaryKey;
-    protected $attributes;
-
-
-    /**
-     * NOt Cached
-     */
-    protected $schemaManagerTable;
-    protected $hardParserModelClass;
-
-
-    /**
-     * Other Datas
+     * Parejt
+     *
+     * @var          string
+     * @getter       true
+     * @setter       false
+     * @serializable true
      */
     public $parentClass;
-
-
-
 
     /**
      * Attributes to Array Mapper
@@ -89,7 +85,7 @@ class EloquentRender implements Arrayable
      * Params
      *
      * @var          string
-     * @getter       false
+     * @getter       true
      * @setter       false
      * @serializable true
      */
@@ -99,7 +95,7 @@ class EloquentRender implements Arrayable
      * Params
      *
      * @var          string
-     * @getter       false
+     * @getter       true
      * @setter       false
      * @serializable true
      */
@@ -109,7 +105,7 @@ class EloquentRender implements Arrayable
      * Params
      *
      * @var          string
-     * @getter       false
+     * @getter       true
      * @setter       false
      * @serializable true
      */
@@ -119,7 +115,7 @@ class EloquentRender implements Arrayable
      * Params
      *
      * @var          string
-     * @getter       false
+     * @getter       true
      * @setter       false
      * @serializable true
      */
@@ -129,7 +125,7 @@ class EloquentRender implements Arrayable
      * Params
      *
      * @var          string
-     * @getter       false
+     * @getter       true
      * @setter       false
      * @serializable true
      */
@@ -161,45 +157,9 @@ class EloquentRender implements Arrayable
         return false;
     }
 
-    /**
-     * Static functions
-     */ 
-    public static function makeFromArray($array)
-    {
-        // @todo
-        // return new self($modelClass);
-    }
     public static function make($modelClass)
     {
         return new self($modelClass);
-    }
-
-    public function getModelClass()
-    {
-        return $this->modelClass;
-    }
-
-    public function getTableName()
-    {
-        return $this->tableName;
-    }
-    /**
-     * Trabalhos Leves
-     */
-    public function getName($plural = false)
-    {
-        $reflection = new ReflectionClass($this->modelClass);
-        $name = $reflection->getShortName();
-
-        // @todo Fazer plural
-        if ($plural) {
-            $name = Inflector::pluralize($name);
-            if (is_array($name)) {
-                $name = $name[count($name) - 1];
-            }
-        }
-
-        return $name;
     }
 
     /**
@@ -212,11 +172,12 @@ class EloquentRender implements Arrayable
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
             if (!$parserModelClass->typeIs('model')) {
+                $this->setError('Class not is type model');
                 return false;
             }
             if ($parserModelClass->hasError() || !$this->tableData = $parserModelClass->toArray()) {
                 Log::channel('sitec-support')->info(
-                    'Eloquent Render (HavaError ou eh do tipo model ou del merda no parser): '.
+                    'Eloquent Render (HavaError ou del merda no parser): '.
                     $this->modelClass
                 );
                 $this->mergeErrors($parserModelClass->getErrors());
@@ -224,9 +185,9 @@ class EloquentRender implements Arrayable
             }
 
             $this->tableName = $parserModelClass->getData('table');
-            $this->name = $this->getName();
-            $this->icon = $this->getIcon();
-            $this->relations = $this->getRelations();
+            $this->name = $this->generateName();
+            $this->icon = $this->generateIcon();
+            $this->relations = $this->generateRelations();
             $this->parentClass = $parserModelClass->getData('parentClass');
         } catch(BindingResolutionException $e) {
             // Erro Leve
@@ -255,15 +216,32 @@ class EloquentRender implements Arrayable
         } 
         return true;
     }
-    public function getIcon()
+
+    /**
+     * Trabalhos Leves
+     */
+    public function generateName($plural = false)
+    {
+        $reflection = new ReflectionClass($this->modelClass);
+        $name = $reflection->getShortName();
+
+        if ($plural) {
+            return StringModificator::pluralize($name);
+        }
+
+        return $name;
+    }
+
+    public function generateIcon()
     {
         return \Support\Template\Layout\Icons::getForNameAndCache($this->name, false);
     }
 
+
     /**
      * Trabalhos Pesados
      */
-    public function getRelations($key = false)
+    public function generateRelations($key = false)
     {
         try {
             if ($key) {

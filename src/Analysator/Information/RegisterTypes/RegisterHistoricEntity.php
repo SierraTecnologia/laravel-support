@@ -9,7 +9,7 @@ class RegisterHistoricEntity extends AbstractRegisterType
 {
     public static $name = 'Historic';
 
-    public static $examples = [
+    public $examples = [
         'log', 'logger', 'registro', 'data'
     ];
 

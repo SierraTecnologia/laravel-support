@@ -70,7 +70,7 @@ class ParseClass implements Arrayable
     public $fileName = false;
 
     public static $types = [
-        'model' => 'Illuminate\Database\Eloquent\Model',
+        'model' => \Illuminate\Database\Eloquent\Model::class,
     ];
 
     // Tudo em minusculo

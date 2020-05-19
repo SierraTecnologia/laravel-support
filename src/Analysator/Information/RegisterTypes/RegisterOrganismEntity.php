@@ -9,7 +9,7 @@ namespace Support\Analysator\Information\RegisterTypes;
 class RegisterOrganismEntity extends AbstractRegisterType
 {
     public static $name = 'Organism';
-    public static $examples = [
+    public $examples = [
         'person', 'pessoa', 'personagem', 'persona',
 
         'business', 'negocio', 'organismo', 'empreendimento'

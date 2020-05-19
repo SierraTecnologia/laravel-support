@@ -8,7 +8,7 @@ namespace Support\Analysator\Information\RegisterTypes;
 class RegisterEventEntity extends AbstractRegisterType
 {
     public static $name = 'Event';
-    public static $examples = [
+    public $examples = [
         'event',
         'post',
         'calendar',

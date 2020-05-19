@@ -10,7 +10,7 @@ class GroupFinanceEntity extends EloquentGroup
 {
     public static $name = 'Finance';
 
-    public static $examples = [
+    public $examples = [
         'bank',
         'gasto',
         'renda'

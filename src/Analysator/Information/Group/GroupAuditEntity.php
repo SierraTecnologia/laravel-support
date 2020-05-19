@@ -10,7 +10,7 @@ class GroupAuditEntity extends EloquentGroup
 {
     public static $name = 'Audit';
 
-    public static $examples = [
+    public $examples = [
         'log', 'logger', 'registro', 'data'
     ];
 

@@ -84,6 +84,8 @@ trait HasErrors
     public function setError($error, $reference = [], $debugData = [])
     { 
         if (ErrorHelper::isToIgnore($error)) {
+        //     dd('Istoignore',
+        // $error);
             return false;
         }
         $reference['locateClassFromError'] = get_class($this);

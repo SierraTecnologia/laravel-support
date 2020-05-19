@@ -10,10 +10,12 @@ class HistoryProgressTypeEntity extends AbstractHistoryType
 {
     public static $name = 'Progress';
 
-    public static $examples = [
+    public $examples = [
         'idade',
         'contato','contact',
-        'skill', 'habilidade', 'caracteristica'
+        'skill', 'habilidade', 'caracteristica',
+
+        'weapon'
     ];
 
 

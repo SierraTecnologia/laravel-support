@@ -378,9 +378,24 @@ class DataType extends Model
     {
         return $this->icon;
     }
-    public function getGroup()
+    public function getGroupPackage()
     {
-        return $this->group;
+        return $this->group_package;
+    }
+
+    public function getGroupType()
+    {
+        return $this->group_type;
+    }
+
+    public function getHistoryType()
+    {
+        return $this->history_type;
+    }
+
+    public function getRegisterType()
+    {
+        return $this->register_type;
     }
 
 }

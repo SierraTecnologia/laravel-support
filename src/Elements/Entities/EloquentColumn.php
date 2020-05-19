@@ -9,7 +9,6 @@ use Support\Elements\Entities\DataType;
 use Illuminate\Database\Eloquent\Model;
 
 use Support\Elements\Entities\DataTypes\Varchar;
-use Symfony\Component\Inflector\Inflector;
 use Support\Services\EloquentService;
 use Support\Traits\Coder\GetSetTrait;
 

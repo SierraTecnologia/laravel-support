@@ -10,7 +10,7 @@ class HistoryImutavelTypeEntity extends AbstractHistoryType
 {
     public static $name = 'Imutavel';
 
-    public static $examples = [
+    public $examples = [
         'name',
         'aniversario','nascimento','birthday',
         'email',

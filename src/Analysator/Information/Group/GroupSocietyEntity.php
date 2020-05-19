@@ -10,7 +10,7 @@ class GroupSocietyEntity extends EloquentGroup
 {
     public static $name = 'Society';
 
-    public static $examples = [
+    public $examples = [
         'gender',
         'genero',
         'business'

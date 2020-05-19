@@ -8,12 +8,14 @@ class RegisterInformationEntity extends AbstractRegisterType
 {
     public static $name = 'Information';
 
-    public static $examples = [
+    public $examples = [
         'category', 'categoria', 'type', 'tipo',
 
         'gosto', 'skill',
 
-        'role', 'grupo'
+        'role', 'grupo',
+
+        'weapon'
     ];
 
 

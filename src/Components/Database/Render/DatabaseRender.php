@@ -15,7 +15,6 @@ use Watson\Validating\ValidationException;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
-use Symfony\Component\Inflector\Inflector;
 use Illuminate\Support\Collection;
 use Support\Services\EloquentService;
 use Support\Components\Coders\Parser\ComposerParser;
@@ -389,7 +388,7 @@ class DatabaseRender implements Arrayable
             return false;
         }
 
-        $this->loadMapperTableToClasses($eloquentRender->getTableName(), $className);
+        $this->loadMapperTableToClasses($eloquentRender->getTableName(), $eloquentRender->getModelClass());
         return $eloquentRender;
     }
     public function buildEloquentRenderForClass(string $className): EloquentRender

@@ -41,7 +41,7 @@ class ErrorHelper
         if ($type === 'error') {
             Log::channel('sitec-support')->error($error);
         } else if ($type === 'warning') {
-            // @todo
+            // @todo desfazer comentario que botei pra nao sujar o log
             // Log::channel('sitec-support')->warning($error);
         } else if ($type === 'info') {
             Log::channel('sitec-support')->info($error);
@@ -50,11 +50,11 @@ class ErrorHelper
         }
         return $error;
     }
-    public static function registerAndReturnMessage($error, $reference = false, $type = 'error')
+    public static function registerAndReturnMessage($error, $reference = false, $type = 'error'): string
     {
         return self::registerError(self::tratarMensagem($error, $reference), $type);
     }
-    public static function tratarMensagem($error, $reference = false)
+    public static function tratarMensagem($error, $reference = false): string
     {
         if (is_object($error) && is_a($error, CodeError::class)) {
             return $error->getMessage();

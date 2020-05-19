@@ -32,7 +32,8 @@ class EloquentEntityFailedException extends CoderException
         $this->eloquentRender = $eloquentRender;
         $this->eloquentRenderErrors = $eloquentRender->getErrors();
 
-        $message = 'Eloquent '.$eloquentRender->getModelClass().' hasError '.implode($eloquentRender->getErrors);
+        $message = 'Eloquent '.$eloquentRender->getModelClass().
+        ' hasErrors '.implode('; ', $this->eloquentRenderErrors);
 
         parent::__construct($message);
     }

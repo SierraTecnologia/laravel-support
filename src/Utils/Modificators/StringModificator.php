@@ -16,33 +16,34 @@ class StringModificator
 
     public static function plurarize($name)
     {
-        /**
-         *  $method = Str::plural(Str::lower(class_basename($model)));
-         */
-        $name = Inflector::pluralize($name);
-        if (is_array($name)) {
-            $name = $name[count($name) - 1];
-        }
-        return $name;
+        // return Str::plural(Str::lower($name));
+        return Str::plural($name);
+
+        // $name = Inflector::pluralize($name);
+        // if (is_array($name)) {
+        //     $name = $name[count($name) - 1];
+        // }
+        // return $name;
     }
     public static function plurarizeAndLower($name)
     {
-        return strtolower(
+        return Str::lower(
             self::plurarize($name)
         );
     }
 
     public static function singularize($name)
     {
-        $name = Inflector::singularize($name);
-        if (is_array($name)) {
-            $name = $name[count($name) - 1];
-        }
-        return $name;
+        return Str::singular($name);
+        // $name = Inflector::singularize($name);
+        // if (is_array($name)) {
+        //     $name = $name[count($name) - 1];
+        // }
+        // return $name;
     }
     public static function singularizeAndLower($name)
     {
-        return strtolower(
+        return Str::lower(
             self::singularize($name)
         );
     }
