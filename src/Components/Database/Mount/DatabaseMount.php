@@ -52,9 +52,15 @@ class DatabaseMount implements Arrayable
 
 
     protected $eloquentClasses = false;
+    protected $eloquentRenders = false;
+    protected $eloquentEntitys = false;
 
 
     protected $renderDatabase = false;
+    protected $renderDatabaseArray = false;
+
+
+
     protected $relationships = false;
     protected $ignoretedClasses = [];
 
@@ -70,33 +76,33 @@ class DatabaseMount implements Arrayable
         $this->render();
     }
 
+    private function loadRenderDatabaseArray()
+    {
+        if (!$this->renderDatabase) {
+            $this->renderDatabase = (new \Support\Components\Database\Render\DatabaseRender($this->eloquentClasses));
+        }
+        $this->renderDatabaseArray = $this->renderDatabase->toArray();
+    }
+
 
     protected function render(): void
     {
         $eloquentClasses = $this->eloquentClasses;
-        // Cache In Minutes
-        $renderDatabaseArray = Cache::remember(
-            'sitec_support_render_database_'.md5(implode('|', $eloquentClasses->values()->all())), 30, function () use ($eloquentClasses) {
-                Log::debug(
-                    'Mount Database -> Renderizando'
-                );
-                $renderDatabase = (new \Support\Components\Database\Render\DatabaseRender($eloquentClasses));
-                return $renderDatabase->toArray();
-            }
-        );
         
+        $this->loadRenderDatabaseArray();
+        $renderDatabaseArray = $this->renderDatabaseArray;
+
         // // Persist Models With Errors @todo retirar ignoretedClasses
         // $this->ignoretedClasses = $this->eloquentClasses->diffKeys($renderDatabaseArray["Leitoras"]["displayClasses"]);
-        $eloquentClasses = $this->eloquentClasses = collect($renderDatabaseArray["Leitoras"]["displayClasses"]);
+        $eloquentRenders = $this->eloquentRenders = collect($renderDatabaseArray["Leitoras"]["displayClasses"]);
         // dd(
         //     'Olaaaa Database Mount',
         //     $eloquentClasses,
         //     $this->ignoretedClasses 
         // );
 
-        $this->renderDatabase = $renderDatabaseArray;
         
-        $this->relationships = $eloquentClasses->map(
+        $this->relationships = $eloquentRenders->map(
             function ($eloquentData, $className) use ($renderDatabaseArray) {
 
                 foreach ($eloquentData['relations'] as $relation) {
@@ -117,7 +123,7 @@ class DatabaseMount implements Arrayable
         
 
 
-        $this->entitys = $eloquentClasses->reject(
+        $this->eloquentEntitys = $eloquentRenders->reject(
             function ($eloquentData, $className) {
                 return $this->eloquentHasError($className);
             }
@@ -131,35 +137,49 @@ class DatabaseMount implements Arrayable
 
     public function getAllEloquentsEntitys(): array
     {
-        //     dd($this->entitys,
-        //     $this->renderDatabase['AplicationTemp']['tempErrorClasses']
+        //     dd($this->eloquentEntitys,
+        //     $this->renderDatabaseArray['AplicationTemp']['tempErrorClasses']
         // );
-        return $this->entitys->toArray();
+        return $this->eloquentEntitys->toArray();
     }
 
     public function getEloquentEntityFromClassName($className): EloquentEntity
     {
         $className = $this->returnProcuracaoClasse($className);
+        if (empty($className)) {
+            throw new EloquentNotExistException($className);
+        }
         if ($this->eloquentHasError($className)) {
-            throw new EloquentHasErrorException($className, $this->renderDatabase['AplicationTemp']['tempErrorClasses'][$className]);
+            throw new EloquentHasErrorException($className, $this->renderDatabaseArray['AplicationTemp']['tempErrorClasses'][$className]);
         }
 
-        if (!empty($className) && isset($this->entitys->toArray()[$className])) {
-            return $this->entitys->toArray()[$className];
+        if (isset($this->eloquentEntitys->toArray()[$className])) {
+            return $this->eloquentEntitys->toArray()[$className];
         }
 
-        throw new EloquentNotExistException($className);
+
+
+        $eloquentRender = $this->renderDatabase->buildAndMapperEloquentRenderForClass($className);
+        $this->renderDatabase->registerAndMapperDisplayClassesFromEloquentRender($eloquentRender);
+        $this->loadRenderDatabaseArray();
+
+        return $this->eloquentEntitys[$className] = (new EloquentMount($className, $this->renderDatabaseArray))->getEntity();
     }
 
     public function eloquentHasError($className)
     {
-        return isset($this->renderDatabase['AplicationTemp']['tempErrorClasses'][$className]);
+        return isset($this->renderDatabaseArray['AplicationTemp']['tempErrorClasses'][$className]);
+    }
+
+    public function getEloquentError($className)
+    {
+        return $this->renderDatabaseArray['AplicationTemp']['tempErrorClasses'][$className];
     }
 
     public function returnProcuracaoClasse($className)
     {
-        if (isset($this->renderDatabase['Mapper']['mapperClasserProcuracao'][$className])) {
-            return $this->renderDatabase['Mapper']['mapperClasserProcuracao'][$className];
+        if (isset($this->renderDatabaseArray['Mapper']['mapperClasserProcuracao'][$className])) {
+            return $this->renderDatabaseArray['Mapper']['mapperClasserProcuracao'][$className];
         }
         return $className;
     }

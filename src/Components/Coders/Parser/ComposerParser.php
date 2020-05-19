@@ -17,6 +17,10 @@ class ComposerParser
      */
     protected $classes = [];
 
+
+    protected $composerFolder = false;
+    protected $namespaces = false;
+
     /**
      * Create a new alias loader instance.
      *
@@ -26,11 +30,10 @@ class ComposerParser
     {
         $excludedAliases = collect($excludedAliases);
         $classMapPath = $this->getComposerFolder().'/composer/autoload_classmap.php';
-        $vendorPath = dirname(dirname($classMapPath));
 
         $classes = include $classMapPath;
         foreach ($classes as $class => $path) {
-            if (! Str::contains($class, '\\') || ($ignorePackages && Str::startsWith($path, $vendorPath))) {
+            if (! Str::contains($class, '\\') || ($ignorePackages && Str::startsWith($path, $this->getComposerFolder()))) {
                 continue;
             }
 
@@ -49,6 +52,45 @@ class ComposerParser
         }
     }
 
+    public function getClasses()
+    {
+        return $this->classes;
+    }
+
+    public function getFilePathFromClass($className)
+    {
+        return $this->classes[$className];
+    }
+    public function getNamespaceFromClass($className)
+    {
+        return $this->getNamespaceFromFilePath(
+            $this->getFilePathFromClass($className)
+        );
+    }
+    public function getNamespaceFromFilePath($filePath)
+    {
+        foreach ($this->getNamespaces() as $namespace => $paths) {
+            if (!is_array($paths)) {
+                $paths = [$paths];
+            }
+
+            foreach ($paths as $path) {
+
+
+                if (Str::startsWith($filePath, $path)) {
+                    return $namespace;
+                }
+            }
+
+        }
+        return false;
+    }
+    public function getPathFromNamespace($namespace)
+    {
+        return $this->getNamespaces()[$namespace];
+    }
+
+
     public function returnClassesByAlias($alias)
     {
         return collect($this->classes)->filter(
@@ -64,16 +106,30 @@ class ComposerParser
         );
     }
 
-    private function getComposerFolder()
+    protected function getComposerFolder()
     {
+        if (!$this->composerFolder) {
 
-        // if (isset($_ENV['COMPOSER_VENDOR_DIR'])) {
-        //     $classMapPath = $_ENV['COMPOSER_VENDOR_DIR'];
-        // } else {
-        //     $classMapPath = base_path().DIRECTORY_SEPARATOR.'vendor';
-        // }
-        $reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
-        $classMapPath = dirname(dirname($reflection->getFileName()));
-        return $classMapPath;
+            // if (isset($_ENV['COMPOSER_VENDOR_DIR'])) {
+            //     $classMapPath = $_ENV['COMPOSER_VENDOR_DIR'];
+            // } else {
+            //     $classMapPath = base_path().DIRECTORY_SEPARATOR.'vendor';
+            // }
+            $reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
+            $this->composerFolder = dirname(dirname($reflection->getFileName()));
+        }
+        return $this->composerFolder;
+    }
+    protected function getNamespaces()
+    {
+        if (!$this->namespaces) {
+            $this->namespaces = array_merge(
+                include $this->getComposerFolder().'/composer/autoload_psr4.php',
+                include $this->getComposerFolder().'/composer/autoload_namespaces.php'
+            );
+
+        }
+        return $this->namespaces;
+
     }
 }

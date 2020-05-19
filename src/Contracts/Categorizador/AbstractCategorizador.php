@@ -31,14 +31,14 @@ abstract class AbstractCategorizador implements InterfaceCategorizador
     /**
      * Estaticos
      */
-    public static function discoverType($name)
+    public static function discoverType(string $name): string
     {
         foreach (static::$typesByOrder as $type) {
             if ($type = (new $type($name))->isValid()) {
                 return $type->getName();
             }
         }
-        return false;
+        return 'Outro';
     }
 
 

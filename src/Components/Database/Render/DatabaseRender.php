@@ -44,6 +44,7 @@ class DatabaseRender implements Arrayable
      * Eloquent CLasse (Work and Register in Databse)
      **************************************/
     public $eloquentClasses;
+    public $eloquentRenders;
 
     
     /**
@@ -65,7 +66,7 @@ class DatabaseRender implements Arrayable
     // From  Datatavle
     public $displayTables = [];
     // From  Eloquent
-    public $displayClasses;
+    public $displayClasses; // igual eloqunetRenders
 
 
     /**
@@ -138,6 +139,15 @@ class DatabaseRender implements Arrayable
         $this->mapperParentClasses[$className] = $classParent;
     }
 
+    protected function renderTables()
+    {
+        $listTables = (new \Support\Patterns\Parser\DatabaseParser())();
+        $tableBuilder = new \Support\Patterns\Builder\TablesBuilder($listTables);
+
+        $this->tempAppTablesWithNotPrimaryKey = $tableBuilder->getRelationTables();
+        $this->displayTables = $tableBuilder->getTables();
+    }
+
     protected function render()
     {
         $selfInstance = $this;
@@ -147,72 +157,56 @@ class DatabaseRender implements Arrayable
                 Log::debug(
                     'Render Database -> Renderizando'
                 );
-                try {
-                    $classUniversal = false; // for reference in debug
-                    $this->eloquentClasses = $this->returnEloquents($this->eloquentClasses);
-
-                    // Cria mapeamento de classes antes de remover as invalidas
-                    $this->renderMappersClasses();
+                // try {
+                    // $classUniversal = false; // for reference in debug
+                    $this->eloquentRenders = $this->returnEloquentRenders($this->eloquentClasses);
                     $this->renderTables();
-
-                    // Remove as Classes que não sao Finais
-                    $tmp = $this->eloquentClasses;
-                    $this->eloquentClasses = $this->eloquentClasses->reject(
-                        function ($class) {
-                            $classUniversal = $class->getModelClass(); // for reference in debug
-                            if ($this->isForIgnoreClass($class->getModelClass())) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    )
-                    ->values()->all();
                 
-                    $this->renderClasses();
+                    $this->registerAndMapperDisplayClassesFromEloquentRenders();
 
-                    // Debug Temp
-                    $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
+                    // // Debug Temp
+                    // $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
 
                     // Reordena
                     $this->sortArrays();
-                } catch(SchemaException|DBALException $e) {
-                    dd(
-                        'Aqui nao era pra cair pois tem outro',
-                        $e
-                    );
-                    $reference = false;
-                    if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                        $reference = [
-                        'model' => $classUniversal
-                        ];
-                    } 
-                    // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
-                    //     $reference = [
-                    //         'model' => $classUniversal
-                    //     ];
-                    // }
-                    // @todo Tratar, Tabela Nao existe
-                    $this->setErrors(
-                        $e,
-                        $reference
-                    );
+                // } catch(SchemaException|DBALException $e) {
+                //     dd(
+                //         'Aqui nao era pra cair pois tem outro',
+                //         $e
+                //     );
+                //     $reference = false;
+                //     if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                //         $reference = [
+                //         'model' => $classUniversal
+                //         ];
+                //     } 
+                //     // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
+                //     //     $reference = [
+                //     //         'model' => $classUniversal
+                //     //     ];
+                //     // }
+                //     // @todo Tratar, Tabela Nao existe
+                //     $this->setErrors(
+                //         $e,
+                //         $reference
+                //     );
 
-                } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-                    dd(
-                        'Aqui nao era pra cair pois tem outro',
-                        $e
-                    );
-                    $reference = false;
-                    if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                        $reference = [
-                        'model' => $classUniversal
-                        ];
-                    } 
-                    $this->setErrors(
-                        $e,
-                        $reference
-                    );
-                }
+                // } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                //     dd(
+                //         'Aqui nao era pra cair pois tem outro',
+                //         $e
+                //     );
+                //     $reference = false;
+                //     if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                //         $reference = [
+                //         'model' => $classUniversal
+                //         ];
+                //     } 
+                //     $this->setErrors(
+                //         $e,
+                //         $reference
+                //     );
+                // }
 
                 return $this->toArray();
             }
@@ -233,57 +227,52 @@ class DatabaseRender implements Arrayable
     /**
      * Nivel 2
      */
-    private function returnEloquents($eloquentClasses)
+    private function returnEloquentRenders($eloquentClasses)
     {
         return $eloquentClasses->map(
             function ($filePath, $class) {
-                return $this->returnEloquentForClasss($class);
+                return $this->buildAndMapperEloquentRenderForClass($class);
             }
         )->reject(
             function ($class) {
-                if (!$class->getTableName()) {
-                    return true;
-                }
-                if ($class->hasError()) {
-                    dd(
-                        'Render Eloqunet: Error',
-                        $class,
-                        $class->getErrors()
-                    );
+                if (!$class) {
                     return true;
                 }
                 return false;
             }
         );
     }
-    protected function renderMappersClasses()
+    protected function registerAndMapperDisplayClassesFromEloquentRenders()
     {
-        foreach ($this->eloquentClasses as $eloquentService) {
-            $this->loadMapperTableToClasses($eloquentService->getTableName(), $eloquentService->getModelClass());
+        // Remove as Classes que não sao Finais
+        $this->eloquentRenders = $this->eloquentRenders->reject(
+            function ($class) {
+                if ($this->isForIgnoreClass($class->getModelClass())) {
+                    return true;
+                }
+                return false;
+            }
+        )
+        ->values()->all();
+
+
+        foreach ($this->eloquentRenders as $eloquentRender) {
+            $this->registerAndMapperDisplayClassesFromEloquentRender($eloquentRender);
         }
     }
 
-    protected function renderTables()
+    /**
+     * Chamado de Fora Tbm
+     */
+    public function registerAndMapperDisplayClassesFromEloquentRender(EloquentRender $eloquentRender)
     {
-        $listTables = (new \Support\Patterns\Parser\DatabaseParser())();
-        $tableBuilder = new \Support\Patterns\Builder\TablesBuilder($listTables);
+        $this->loadMapperBdRelations($eloquentRender->getTableName(), $eloquentRender->getRelations());
 
-        $this->tempAppTablesWithNotPrimaryKey = $tableBuilder->getRelationTables();
-        $this->displayTables = $tableBuilder->getTables();
-    }
+        // Guarda Dados Carregados do Eloquent
+        $this->displayClasses[$eloquentRender->getModelClass()] = $eloquentRender->toArray();
 
-    protected function renderClasses()
-    {
-        foreach ($this->eloquentClasses as $eloquentService) {
-            $this->loadMapperBdRelations($eloquentService->getTableName(), $eloquentService->getRelations());
-
-
-            // Guarda Dados Carregados do Eloquent
-            $this->displayClasses[$eloquentService->getModelClass()] = $eloquentService->toArray();
-
-            // Guarda Errors
-            $this->mergeErrors($eloquentService->getErrors());
-        }
+        // Guarda Errors
+        $this->mergeErrors($eloquentRender->getErrors());
     }
 
 
@@ -387,48 +376,22 @@ class DatabaseRender implements Arrayable
 
 
     /**
-     * Nivel 3
+     * Nivel 3 - Chamado no Mount
      */
-    private function returnEloquentForClasss($className)
+    public function buildAndMapperEloquentRenderForClass($className)
     {
-        $classUniversal = false; // for reference in debug
+        $eloquentRender = new EloquentRender($className);
+        $this->registerMapperClassParents($className, $eloquentRender->parentClass);
 
-        try {
-            $eloquent = new EloquentRender($className);
-            $classUniversal = $className; // for reference in debug
-            $this->registerMapperClassParents($className, $eloquent->parentClass);
-            return $eloquent;
-        } catch(SchemaException|DBALException $e) {
-            $reference = false;
-            if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                $reference = [
-                    'model' => $classUniversal
-                ];
-            } 
-            // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
-            //     $reference = [
-            //         'model' => $classUniversal
-            //     ];
-            // }
-            // @todo Tratar, Tabela Nao existe
-            $this->setErrors(
-                $e,
-                $reference
-            );
-
-        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-            $reference = false;
-            if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                $reference = [
-                    'model' => $classUniversal
-                ];
-            } 
-            $this->setErrors(
-                $e,
-                $reference
-            );
+        if (!$eloquentRender->getTableName()) {
+            return false;
         }
-        return false;
+        if ($eloquentRender->hasError()) {
+            return false;
+        }
+
+        $this->loadMapperTableToClasses($eloquentRender->getTableName(), $className);
+        return $eloquentRender;
     }
 
 

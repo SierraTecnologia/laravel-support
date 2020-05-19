@@ -32,18 +32,6 @@ class Classes extends Model
         return $className;
     }
 
-    /**
-     * Retorna a Classe Correspondente a Procuração @todo refazer essa e a anteror
-     */
-    public static function getClassWithProcuracao($className)
-    {
-        // resolve(DatabaseService::class)->getEloquentEntityFromClassName($className);
-        // while ($result = self::where('parent_class', $className)->first()) {
-        //     $className = $result->class_name;
-        // }
-        return $className;
-    }
-
     public function setDataAttribute($value)
     {
         $this->attributes['data'] = json_encode($value);

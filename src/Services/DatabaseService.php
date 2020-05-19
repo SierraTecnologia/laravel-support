@@ -7,6 +7,7 @@ use Support\Elements\Entities\EloquentEntity;
 use Support\Components\Coders\Parser\ComposerParser;
 use Illuminate\Support\Collection;
 use Support\Exceptions\Coder\EloquentNotExistException;
+use Support\Exceptions\Coder\EloquentHasErrorException;
 
 class DatabaseService
 {
@@ -17,7 +18,7 @@ class DatabaseService
     protected $eloquentEntitysLoaders = [];
 
 
-    protected $renderDatabase = false;
+    protected $databaseMount = false;
 
     public function __construct($configModelsAlias, ComposerParser $composerParser)
     {
@@ -40,15 +41,28 @@ class DatabaseService
 
     public function hasEloquentEntityFromClassName($className): bool
     {
+        $className = $this->returnProcuracaoClasse($className);
         return isset($this->eloquentEntitysLoaders[$className]);
     }
 
     public function getEloquentEntityFromClassName($className): EloquentEntity
     {
         if (!$this->hasEloquentEntityFromClassName($className)) {
-            throw new EloquentNotExistException($className);
+            if (!$this->eloquentHasError($className)) {
+                throw new EloquentNotExistException($className);
+            }
+            throw new EloquentHasErrorException($className, $this->getEloquentError($className));
         }
+        $className = $this->returnProcuracaoClasse($className);
         return $this->eloquentEntitysLoaders[$className];
+    }
+
+    public function forceGetEloquentEntityFromClassName($className): EloquentEntity
+    {
+        if ($this->hasEloquentEntityFromClassName($className)) {
+            return $this->getEloquentEntityFromClassName($className);
+        }
+        return $this->renderEloquentEntityFromClassName($className);
     }
 
 
@@ -71,6 +85,9 @@ class DatabaseService
     public function renderEloquentEntityFromClassName(string $className): EloquentEntity
     {
         if (!$this->hasEloquentEntityFromClassName($className)) {
+            if ($this->eloquentHasError($className)) {
+                throw new EloquentHasErrorException($className, $this->getEloquentError($className));
+            }
             $this->registerEloquentEntity(
                 $this->getDatabaseMount()->getEloquentEntityFromClassName($className)
             );
@@ -91,15 +108,32 @@ class DatabaseService
         }
         return $this->modelsFindInAlias;
     }
+
+
+    /**
+     * FROM MOUNTS
+     */
     private function getDatabaseMount(): DatabaseMount
     {
-        if (!$this->renderDatabase) {
-            $this->renderDatabase = (new DatabaseMount(
+        if (!$this->databaseMount) {
+            $this->databaseMount = (new DatabaseMount(
                 collect($this->extractAllModelsFromComposerWithNamespaceAlias())
             ));
-            $this->registerManyEloquentEntity($this->renderDatabase->getAllEloquentsEntitys());
+            $this->registerManyEloquentEntity($this->databaseMount->getAllEloquentsEntitys());
         }
-        return $this->renderDatabase;
+        return $this->databaseMount;
     }
+    private function eloquentHasError(string $className): string
+    {
+        return $this->getDatabaseMount()->eloquentHasError($className);
+    }
+    private function getEloquentError(string $className): string
+    {
+        return $this->getDatabaseMount()->getEloquentError($className);
+    }
+    private function returnProcuracaoClasse(string $className): string
+    {
+        return $this->getDatabaseMount()->returnProcuracaoClasse($className);
+    } 
 
 }

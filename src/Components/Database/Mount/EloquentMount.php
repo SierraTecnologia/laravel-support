@@ -30,6 +30,7 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
 use Support\Elements\Entities\EloquentEntity;
+use Support\Exceptions\Coder\EloquentTableNotExistException;
 
 class EloquentMount
 {
@@ -53,28 +54,41 @@ class EloquentMount
     public function getEntity()
     {
 
-        $tableName = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableName"];
-        $name = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["name"];
-        $icon = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["icon"];
-        $tableClassArray = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className]["tableData"];
-        $primaryKey = $tableClassArray["getKeyName"];
-        
+        $eloquentClassArray = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className];
+        $tableName = $eloquentClassArray["tableName"];
 
-        if (!$foundEntity = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+        $databaseTableArray = false;
+        if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
             $tableName,
             $this->renderDatabaseData["Leitoras"]["displayTables"],
             'name'
         )
         ) {
-            // @todo criar erro
-            return false;
+            $databaseTableArray = $this->renderDatabaseData["Leitoras"]["displayTables"][$foundTableRender[0]];
         }
+        // Procura nas tabelas de relacionamento
+        if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+            $tableName,
+            $this->renderDatabaseData["AplicationTemp"]["tempAppTablesWithNotPrimaryKey"],
+            'name'
+        )
+        ) {
+            $databaseTableArray = $this->renderDatabaseData["AplicationTemp"]["tempAppTablesWithNotPrimaryKey"][$foundTableRender[0]];
+        }
+        if (!$databaseTableArray) {
+            throw new EloquentTableNotExistException($this->className, $tableName);
+        }
+        $eloquentClassDataArray = $eloquentClassArray["tableData"];
 
-        $indexes = $this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]][
+        $name = $eloquentClassArray["name"];
+        $icon = $eloquentClassArray["icon"];
+        $primaryKey = $eloquentClassDataArray["getKeyName"];
+
+        $indexes = $databaseTableArray[
             'indexes'
         ];
         // dd(
-        //         $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className],
+        //         $eloquentClassArray,
         //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
         // );
         $eloquentEntity = new EloquentEntity($this->className);
@@ -84,15 +98,15 @@ class EloquentMount
         $eloquentEntity->setPrimaryKey($primaryKey);
         $eloquentEntity->setIndexes($indexes);
 
-        $eloquentEntity->setData($tableClassArray);
-        $eloquentEntity->setDataForColumns($this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]]['columns']);
+        $eloquentEntity->setData($eloquentClassDataArray);
+        $eloquentEntity->setDataForColumns($databaseTableArray['columns']);
 
-        $eloquentEntity->setGroupPackage($tableClassArray['groupPackage']);
-        $eloquentEntity->setGroupType($tableClassArray['groupType']);
-        $eloquentEntity->setHistoryType($tableClassArray['historyType']);
-        $eloquentEntity->setRegisterType($tableClassArray['registerType']);
+        $eloquentEntity->setGroupPackage($eloquentClassDataArray['groupPackage']);
+        $eloquentEntity->setGroupType($eloquentClassDataArray['groupType']);
+        $eloquentEntity->setHistoryType($eloquentClassDataArray['historyType']);
+        $eloquentEntity->setRegisterType($eloquentClassDataArray['registerType']);
         
-        foreach ($this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]]['columns'] as $column) {
+        foreach ($databaseTableArray['columns'] as $column) {
             if ($columnEntity = (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity()) {
                 $eloquentEntity->addColumn($columnEntity);
             }
@@ -101,7 +115,7 @@ class EloquentMount
         // Debug
         // if ($tableName=='persons') {
         //     dd(
-        //         $this->renderDatabaseData["Leitoras"]["displayTables"][$foundEntity[0]],
+        //         $databaseTableArray,
         //         $eloquentEntity
         //     );
         // }

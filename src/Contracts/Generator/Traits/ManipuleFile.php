@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Support\Contracts\Generators\Traits;
+namespace Support\Contracts\Generator\Traits;
 
 use Support\Components\Coders\Parser\ClassReader;
 use Support\Exceptions\SetterGetterException;
+use Support\Components\Coders\Parser\ComposerParser;
+use Illuminate\Filesystem\Filesystem;
+
+
+use Support\Components\Coders\Parser\ParseModelClass;
 
 /**
  * https://github.com/usmanhalalit/GetSetGo
@@ -13,29 +18,97 @@ use Support\Exceptions\SetterGetterException;
 trait ManipuleFile
 {
     
+    protected $composerParser = false;
+
     /**
-     * Export a CSV
-     * https://csv.thephpleague.com/9.0/connections/output/
-     *
+     * 
      * @return void
      */
-    public function csv()
+    protected function commentRules()
     {
-        $items = $this->makeCsvQuery()->get();
-        if ($items->isEmpty()) { abort(404);
+
+        $this->comment($this->rules());
+
+        if (!$this->confirm('Are you happy to proceed? [yes|no]')) {
+            $this->error('Error: User is a chicken.');
+            exit();
         }
-        $csv = $this->makeCsv($items);
-        return response($csv->getContent())->withHeaders(
-            [
-            'Content-Encoding' => 'none',
-            'Content-Type' => 'text/csv; charset=UTF-8',
-            'Content-Disposition' => sprintf(
-                'attachment; filename="%s"',
-                $this->makeCsvFileTitle()
-            ),
-            'Content-Description' => 'File Transfer',
-            ]
+    }
+    protected function getComposerParser()
+    {
+        if (!$this->composerParser) {
+            $this->composerParser = new ComposerParser;
+        }
+        return $this->composerParser;
+    }
+
+
+    protected function getNamespacePath($name)
+    {
+        [
+            $className,
+            $namespaceClassName
+        ] = $this->getClassAndNamespace($name);
+    
+        $namespacePure = str_replace(
+            $this->getComposerParser()->getNamespaceFromClass($name),
+            '',
+            $namespaceClassName
         );
+    
+        return explode(
+            str_replace(
+                '\\',
+                DIRECTORY_SEPARATOR,
+                $namespacePure
+            ),
+            $this->getComposerParser()->getFilePathFromClass($name)
+            
+        )[0];
+    }
+
+    protected function getClassAndNamespace($name)
+    {
+        $parts = array_map('studly_case', explode('\\', $name));
+        
+        return [
+            array_pop($parts),
+            $namespaceClassName = count($parts) > 0 ? implode('\\', $parts).'\\' : ''
+        ];
+
+    }
+
+    protected function getPathForMigration($name)
+    {
+
+        $namespacePath = $this->getNamespacePath($name);
+        $migrationLocationPath = false;
+        foreach (
+            [
+                $namespacePath.'../database',
+                $namespacePath.'Migrations'
+            ] as $path
+        ) {
+            if ($this->files->exists($path)) {
+                $migrationLocationPath = $path;
+            }
+        }
+        if (!$migrationLocationPath) {
+            $this->error("\n\n\tPasta para migration nao localizada!"."\n");
+            die;
+        }
+    
+        return $migrationLocationPath;
+    }
+
+    protected function getParserClass($nameClass): ParseModelClass
+    {
+        $parserModelClass = new ParseModelClass($nameClass);
+        if (!$parserModelClass->typeIs('model')) {
+            $this->error("\n\n\tClass nao eh um modelo!"."\n");
+            die;
+        }
+        return $parserModelClass;
     }
 
 }

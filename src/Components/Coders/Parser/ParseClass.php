@@ -16,6 +16,10 @@ use Support\Contracts\Support\ArrayableTrait;
 use Support\Traits\Coder\GetSetTrait;
 use Support\Utils\Extratores\ClasserExtractor;
 
+use Finder\Analysator\Informate\Group\EloquentGroup;
+use Finder\Analysator\HistoryType\AbstractHistoryType;
+use Finder\Analysator\RegisterTypes\AbstractRegisterType;
+
 class ParseClass implements Arrayable
 {
     use HasErrors; //, ArrayableTrait;
@@ -127,11 +131,10 @@ class ParseClass implements Arrayable
             'parentClass' => $this->getParentClassName(),
             'interfaces' => $this->getInterfaceNames(),
             'type' => $this->getType(),
-
             'groupPackage' => ClasserExtractor::getPackageNamespace($this->className),
-            'groupType' => ClasserExtractor::getPackageNamespace($this->className),
-            'historyType' => ClasserExtractor::getPackageNamespace($this->className),
-            'registerType' => ClasserExtractor::getPackageNamespace($this->className),
+            'groupType' => EloquentGroup::discoverType($this->className),
+            'historyType' => AbstractHistoryType::discoverType($this->className),
+            'registerType' => AbstractRegisterType::discoverType($this->className),
         ];
 
     }
