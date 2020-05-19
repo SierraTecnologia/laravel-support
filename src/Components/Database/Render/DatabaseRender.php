@@ -227,11 +227,13 @@ class DatabaseRender implements Arrayable
     /**
      * Nivel 2
      */
-    private function returnEloquentRenders($eloquentClasses)
+    private function returnEloquentRenders($eloquentClasses): Collection
     {
         return $eloquentClasses->map(
             function ($filePath, $class) {
-                return $this->buildAndMapperEloquentRenderForClass($class);
+                return $this->mapperEloquentRenderForClass(
+                    $this->buildEloquentRenderForClass($class)
+                );
             }
         )->reject(
             function ($class) {
@@ -378,11 +380,8 @@ class DatabaseRender implements Arrayable
     /**
      * Nivel 3 - Chamado no Mount
      */
-    public function buildAndMapperEloquentRenderForClass($className)
+    public function mapperEloquentRenderForClass(EloquentRender $eloquentRender)
     {
-        $eloquentRender = new EloquentRender($className);
-        $this->registerMapperClassParents($className, $eloquentRender->parentClass);
-
         if (!$eloquentRender->getTableName()) {
             return false;
         }
@@ -393,6 +392,12 @@ class DatabaseRender implements Arrayable
         $this->loadMapperTableToClasses($eloquentRender->getTableName(), $className);
         return $eloquentRender;
     }
+    public function buildEloquentRenderForClass(string $className): EloquentRender
+    {
+        $eloquentRender = new EloquentRender($className);
+        $this->registerMapperClassParents($className, $eloquentRender->parentClass);
+        return $eloquentRender;
+    }
 
 
 
@@ -401,7 +406,7 @@ class DatabaseRender implements Arrayable
      */
 
 
-    public function getEloquentClasses()
+    public function getEloquentClasses(): Collection
     {
         return collect($this->eloquentClasses);
     }

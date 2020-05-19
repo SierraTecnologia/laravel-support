@@ -36,6 +36,7 @@ use Support\Contracts\Support\ArrayableTrait;
 
 use Support\Exceptions\Coder\EloquentHasErrorException;
 use Support\Exceptions\Coder\EloquentNotExistException;
+use Support\Exceptions\Coder\EloquentEntityFailedException;
 
 class DatabaseMount implements Arrayable
 {
@@ -158,8 +159,10 @@ class DatabaseMount implements Arrayable
         }
 
 
-
-        $eloquentRender = $this->renderDatabase->buildAndMapperEloquentRenderForClass($className);
+        $eloquentRender = $this->renderDatabase->buildEloquentRenderForClass($className);
+        if (!$this->renderDatabase->mapperEloquentRenderForClass($eloquentRender)) {
+            throw new EloquentEntityFailedException($eloquentRender);
+        }
         $this->renderDatabase->registerAndMapperDisplayClassesFromEloquentRender($eloquentRender);
         $this->loadRenderDatabaseArray();
 

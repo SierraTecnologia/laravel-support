@@ -16,9 +16,9 @@ use Support\Contracts\Support\ArrayableTrait;
 use Support\Traits\Coder\GetSetTrait;
 use Support\Utils\Extratores\ClasserExtractor;
 
-use Finder\Analysator\Informate\Group\EloquentGroup;
-use Finder\Analysator\HistoryType\AbstractHistoryType;
-use Finder\Analysator\RegisterTypes\AbstractRegisterType;
+use Support\Analysator\Information\Group\EloquentGroup;
+use Support\Analysator\Information\HistoryType\AbstractHistoryType;
+use Support\Analysator\Information\RegisterTypes\AbstractRegisterType;
 
 class ParseClass implements Arrayable
 {
