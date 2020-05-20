@@ -9,11 +9,16 @@ namespace Support\Analysator\Information\Group;
 class GroupFinanceEntity extends EloquentGroup
 {
     public static $name = 'Finance';
+    public static $order = 20;
 
     public $examples = [
         'bank',
         'gasto',
-        'renda'
+        'renda',
+
+
+
+        'spent', 'saldo',
     ];
 
 

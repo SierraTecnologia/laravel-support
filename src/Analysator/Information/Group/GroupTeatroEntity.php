@@ -6,13 +6,15 @@
 namespace Support\Analysator\Information\Group;
 
 
-class GroupAuditEntity extends EloquentGroup
+class GroupTeatroEntity extends EloquentGroup
 {
-    public static $name = 'Audit';
-    public static $order = 100;
+    public static $name = 'Teatro';
+    public static $order = 90;
 
     public $examples = [
-        'log', 'logger', 'registro', 'data'
+        'scene',
+        'cena',
+        'personagem'
     ];
 
 

@@ -9,11 +9,20 @@ namespace Support\Analysator\Information\Group;
 class GroupSocietyEntity extends EloquentGroup
 {
     public static $name = 'Society';
+    public static $order = 10;
 
     public $examples = [
         'gender',
         'genero',
-        'business'
+        'business','empresa',
+
+
+        'user', 'usuario',
+
+        'location', 'country',
+
+
+        'pircing', 'tatuagem', 'skill', 'habilidade', 'hability', 
     ];
 
 

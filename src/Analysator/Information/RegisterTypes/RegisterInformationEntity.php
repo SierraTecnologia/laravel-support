@@ -7,6 +7,7 @@ namespace Support\Analysator\Information\RegisterTypes;
 class RegisterInformationEntity extends AbstractRegisterType
 {
     public static $name = 'Information';
+    public static $order = 500;
 
     public $examples = [
         'category', 'categoria', 'type', 'tipo',
@@ -15,7 +16,8 @@ class RegisterInformationEntity extends AbstractRegisterType
 
         'role', 'grupo',
 
-        'weapon'
+        'weapon',
+        'acessorio'
     ];
 
 

@@ -13,8 +13,13 @@ class EloquentGroup extends AbstractCategorizador
      * Identify
      */
     public static $typesByOrder = [
-        GroupFinanceEntity::class,
         GroupSocietyEntity::class,
+        GroupFinanceEntity::class,
+        GroupBusinessEntity::class,
+        GroupProjectEntity::class,
+        GroupTeatroEntity::class,
+        GroupBotsEntity::class,
+        GroupMediaEntity::class,
         GroupAuditEntity::class,
     ];
 

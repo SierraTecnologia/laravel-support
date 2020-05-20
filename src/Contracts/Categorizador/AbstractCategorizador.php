@@ -34,11 +34,9 @@ abstract class AbstractCategorizador implements InterfaceCategorizador
     public static function discoverType(string $name): string
     {
         foreach (static::$typesByOrder as $type) {
-            // dd(
-            //     new $type($name)
-            // );
-            if ($type = (new $type($name))->isValid()) {
-                return $type->getName();
+            $typeInstance = (new $type($name));
+            if ($typeInstance->isValid()) {
+                return $typeInstance->getName();
             }
         }
         return 'Outro';
@@ -55,6 +53,10 @@ abstract class AbstractCategorizador implements InterfaceCategorizador
     public function isValid(): bool
     {
         $material = explode('\\', $this->materialDescription);
+        // dd(
+        //     $material, $this->examples,
+        //     StringCompare::isSimilar($material, $this->examples)
+        // );
         return StringCompare::isSimilar($material, $this->examples);
     }
 

@@ -35,6 +35,14 @@ class StringCompare
         if (StringModificator::singularizeAndLower($strOne) == StringModificator::singularizeAndLower($strTwo)) {
             return true;
         }
+        
+        if (strpos(StringModificator::singularizeAndLower($strOne), StringModificator::singularizeAndLower($strTwo)) !== false) {
+            return true;
+        }
+        
+        if (strpos(StringModificator::singularizeAndLower($strTwo), StringModificator::singularizeAndLower($strOne)) !== false) {
+            return true;
+        }
 
         return false;
     }
