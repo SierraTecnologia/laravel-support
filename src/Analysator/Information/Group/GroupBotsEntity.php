@@ -26,3 +26,4 @@ class GroupBotsEntity extends EloquentGroup
 
 
 }
+
