@@ -51,8 +51,15 @@ class MenuRepository
             }
         }
 
+        $this->menus = $this->getInOrder(
+            array_values($mergeByCode)
+        
+        );
+        // dd(
 
-        $this->menus = array_values($mergeByCode);
+        //     $this->menus
+        // // return $this->getInOrder($menuArrayList);
+        // );
     }
 
     protected static function mergeDinamicGroups($array, $groupParent = '')
@@ -80,7 +87,7 @@ class MenuRepository
                     $mergeArray = array_merge($mergeArray, [$indice]);
                 }
 
-                $group .= $indice;
+                $group .= explode('|', $indice)[0];
             }
             if (Menu::isArrayMenu($values, $indice)) {
                 if (!empty($group)) {
@@ -141,6 +148,17 @@ class MenuRepository
 
     public function getInOrder($arrayMenu)
     {
+        if (is_object($arrayMenu[0])) {
+            usort(
+                $arrayMenu,
+                function($a, $b) {
+                    return $a->getOrder() > $b->getOrder();
+                }
+            );
+            return $arrayMenu;
+        }
+
+
         $columns = array_column($arrayMenu, 'order');
         if (count($columns)==count($arrayMenu)) {
             array_multisort($columns, SORT_ASC, $arrayMenu);

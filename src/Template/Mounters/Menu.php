@@ -30,6 +30,7 @@ class Menu
      * 
      */
     protected $group = null;
+    protected $order = null;
 
 
 
@@ -41,7 +42,6 @@ class Menu
 
     protected $error = null;
 
-    protected $order = 100;
 
 
     /**
@@ -54,11 +54,25 @@ class Menu
     {
         $instance = new Menu;
 
-        if (is_string($data)) {
+        // Caso seja uma divisoria
+        if (is_string($data) || (is_array($data) && isset($data['divisory']))) {
             $instance->isDivisory = true;
-            $instance->setText($data);
-        }
 
+            if (is_array($data)) {
+                $instance->setText($data['text']);
+                if (isset($data['order'])) {
+                    $instance->setOrder($data['order']);
+                }
+            } else {
+                $data = explode('|', $data);
+                $instance->setText($data[0]);
+                if (!empty($data[1])) {
+                    $instance->setOrder($data[1]);
+                }
+            }
+            
+        }else
+        // Caso seja um menu
         if (is_array($data)) {
             foreach ($data as $attribute => $valor) {
                 $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
@@ -85,6 +99,7 @@ class Menu
 
     public function mergeWithMenu(Menu $menu)
     {
+        $divisory = $this->isDivisory;
 
         foreach ($this->getAttributes() as $attribute) {
             if ($this->attributeIsDefault($attribute) && !$menu->attributeIsDefault($attribute)) {
@@ -93,9 +108,12 @@ class Menu
                 $this->{$methodName}(
                     $menu->{$getMethodName}()
                 );
-                $this->isDivisory = false;
+                // $this->isDivisory = false;
             }
         }
+        // if () {
+
+        // }
 
         return $this;
     }
@@ -241,6 +259,10 @@ class Menu
 
     public function getOrder()
     {
+        if (is_null($this->order) || empty($this->order)) {
+            return 100;
+        }
+
         return $this->order;
     }
     public function setOrder($value)
@@ -258,7 +280,8 @@ class Menu
     }
     public function setGroup($value)
     {
-        $this->group = $value;
+        $value = explode('|', $value);
+        $this->group = $value[0];
     }
     public function getError()
     {
