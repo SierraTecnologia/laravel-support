@@ -15,6 +15,13 @@ abstract class AbstractCategorizador implements InterfaceCategorizador
         
     ];
 
+    public static $linkable = [
+        // \Casa\Models\Economic\Gasto::class => [
+        //     'extrato', 'transferencia'
+        // ]
+    ];
+
+
     /**
      * Parametro a Ser observado
      */
@@ -31,13 +38,20 @@ abstract class AbstractCategorizador implements InterfaceCategorizador
     /**
      * Estaticos
      */
-    public static function discoverType(string $name): string
+    public static function discoverType(string $name, $returnClass = false): string
     {
         foreach (static::$typesByOrder as $type) {
             $typeInstance = (new $type($name));
             if ($typeInstance->isValid()) {
+                if ($returnClass) {
+                    return $type;
+                }
                 return $typeInstance->getName();
             }
+        }
+
+        if ($returnClass) {
+            return false;
         }
         return 'Outro';
     }
@@ -63,6 +77,23 @@ abstract class AbstractCategorizador implements InterfaceCategorizador
     public function getName(): string
     {
         return static::$name;
+    }
+
+
+
+
+
+    /**
+     * Estaticos
+     */
+    public static function discoverModel(string $name)
+    {
+        foreach (static::$linkable as $className => $links) {
+            if (StringCompare::isSimilar($name, $links)) {
+                return $className;
+            }
+        }
+        return false;
     }
 
 }

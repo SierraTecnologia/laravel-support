@@ -13,7 +13,7 @@ class CodeModelsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'code:models
+    protected $signature = 'sigenerate:code:models
                             {--s|schema= : The name of the MySQL database}
                             {--c|connection= : The name of the connection}
                             {--t|table= : The name of the table}';

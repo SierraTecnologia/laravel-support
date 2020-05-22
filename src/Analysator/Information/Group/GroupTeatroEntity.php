@@ -14,7 +14,7 @@ class GroupTeatroEntity extends EloquentGroup
     public $examples = [
         'scene',
         'cena',
-        'personagem'
+        'personagem',
     ];
 
 

@@ -16,9 +16,18 @@ class GroupFinanceEntity extends EloquentGroup
         'gasto',
         'renda',
 
-
+        'finance', 'financeiro',
 
         'spent', 'saldo',
+    ];
+
+
+
+
+    public static $linkable = [
+        \Casa\Models\Economic\Gasto::class => [
+            'extrato', 'transferencia'
+        ]
     ];
 
 

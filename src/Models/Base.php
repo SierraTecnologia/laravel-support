@@ -30,6 +30,8 @@ use Support\Utils\Extratores\DbalExtractor;
 use Support\Utils\Mergeators\DbalMergeator;
 use Support\Utils\Inclusores\DbalInclusor;
 
+use Support\Traits\Models\Importable;
+
 abstract class Base extends Eloquent
 {
     /**
@@ -40,7 +42,7 @@ abstract class Base extends Eloquent
     * umn not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:61)                                                                                                                                   
     * [stacktrace]                                                                                                                                   
      */
-    use /*ValidatingTrait, */SortableTrait;
+    use /*ValidatingTrait, */SortableTrait, Importable;
 
     //---------------------------------------------------------------------------
     // Overrideable properties

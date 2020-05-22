@@ -30,6 +30,10 @@ class HistoryProgressTypeEntity extends AbstractHistoryType
         'lib', 'biblioteca',
 
         'branch', 
+
+
+
+        'language', 'linguagem', 'idioma'
     ];
 
 
