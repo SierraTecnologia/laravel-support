@@ -53,7 +53,6 @@ class MenuRepository
 
 
         $this->menus = array_values($mergeByCode);
-        // dd($this->menus);
     }
 
     protected static function mergeDinamicGroups($array, $groupParent = '')
@@ -142,7 +141,10 @@ class MenuRepository
 
     public function getInOrder($arrayMenu)
     {
-        // @todo Ordenar
+        $columns = array_column($arrayMenu, 'order');
+        if (count($columns)==count($arrayMenu)) {
+            array_multisort($columns, SORT_ASC, $arrayMenu);
+        }
         return $arrayMenu;
     }
 

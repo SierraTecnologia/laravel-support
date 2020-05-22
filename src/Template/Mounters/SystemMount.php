@@ -31,7 +31,6 @@ class SystemMount
 
     public function loadMenuForAdminlte($event)
     {
-        // dd($this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
             collect($this->getAllMenus()->getTreeInArray())->map(
                 function ($valor) use ($event) {

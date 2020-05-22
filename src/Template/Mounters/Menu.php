@@ -41,6 +41,8 @@ class Menu
 
     protected $error = null;
 
+    protected $order = 100;
+
 
     /**
      *  'text'    => 'Finder',
@@ -132,6 +134,7 @@ class Menu
             'icon_color',
 
             'nivel',
+            'order',
         ];
     }
 
@@ -234,6 +237,15 @@ class Menu
     public function setNivel($value)
     {
         $this->nivel = $value;
+    }
+
+    public function getOrder()
+    {
+        return $this->order;
+    }
+    public function setOrder($value)
+    {
+        $this->order = $value;
     }
 
     public function getGroup()
