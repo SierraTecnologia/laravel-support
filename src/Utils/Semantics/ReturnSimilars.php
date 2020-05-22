@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Support\Utils\Semantics;
 
+/**
+ * @todo fazer aqui
+ */
+
 class ReturnSimilars
 {
     protected $word;

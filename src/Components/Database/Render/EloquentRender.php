@@ -172,14 +172,10 @@ class EloquentRender implements Arrayable
         try {
             $parserModelClass = new ParseModelClass($this->modelClass);
             if (!$parserModelClass->typeIs('model')) {
-                $this->setError('Class not is type model');
+                $this->setDebug('Class not is type model: '.$this->modelClass);
                 return false;
             }
             if ($parserModelClass->hasError() || !$this->tableData = $parserModelClass->toArray()) {
-                Log::channel('sitec-support')->info(
-                    'Eloquent Render (HavaError ou del merda no parser): '.
-                    $this->modelClass
-                );
                 $this->mergeErrors($parserModelClass->getErrors());
                 return false;
             }

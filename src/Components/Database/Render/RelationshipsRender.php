@@ -180,7 +180,7 @@ class RelationshipsRender
                         $this->relationships[$dataRelationship['name']] = $dataRelationship;
                     }
                 } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-                    $this->setErrors($e);
+                    $this->setWarnings($e);
                 } 
                 // Verificar se tem algo importante e depois deletar e tratar no hasError @todo
                 // catch(LogicException $e) {

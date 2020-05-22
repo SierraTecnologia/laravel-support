@@ -16,6 +16,8 @@ trait HasErrors
     protected $isError = false;
     protected $warning = [];
     protected $isWarning = false;
+    protected $debug = [];
+    protected $isDebug = false;
 
     public function markWithError()
     {  
@@ -47,6 +49,15 @@ trait HasErrors
     public function getWarnings()
     {
         return $this->getWarning();
+    }
+
+    public function getDebug()
+    {
+        return $this->debug;
+    }
+    public function getDebugs()
+    {
+        return $this->getDebug();
     }
 
     /**
@@ -143,6 +154,51 @@ trait HasErrors
             dd(
                 'IsToDebug Warning',
                 $warning,
+                $reference,
+                $debugData
+            );
+        }
+        
+        return true;
+    }
+
+
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function setDebugs($debugs, $reference = [], $debugData = [])
+    {  
+        if (is_array($debugs)) {
+            // if (is_array($debug) && count($debug) == 1) {
+            foreach ($debugs as $debug) {
+                $this->setDebug($debug, $reference);
+            }
+            return true;
+        }
+        return $this->setDebug($debugs, $reference);
+    }
+
+    /**
+     * Update the table.
+     *
+     * @return void
+     */
+    public function setDebug($debug, $reference = [], $debugData = [])
+    { 
+        if (ErrorHelper::isToIgnore($debug)) {
+            return false;
+        }
+        $reference['locateClassFromDebug'] = get_class($this);
+
+        $this->debug[] = ErrorHelper::registerAndReturnMessage($debug, $reference, 'debug');
+        $this->isDebug = true;
+
+        if (ErrorHelper::isToDebug($reference)) {
+            dd(
+                'IsToDebug Debug',
+                $debug,
                 $reference,
                 $debugData
             );

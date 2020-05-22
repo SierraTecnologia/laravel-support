@@ -229,7 +229,7 @@ trait ConsoleTools
     private function setProviders()
     {
         $this->setDependencesAlias();
-        (new Collection(self::$providers))->map(
+        (new Collection(static::$providers))->map(
             function ($provider) {
                 if (class_exists($provider)) {
                     $this->app->register($provider);
@@ -240,7 +240,7 @@ trait ConsoleTools
     private function setDependencesAlias()
     {
         $loader = AliasLoader::getInstance();
-        (new Collection(self::$aliasProviders))->map(
+        (new Collection(static::$aliasProviders))->map(
             function ($class, $alias) use ($loader) {
                 $loader->alias($alias, $class);
             }

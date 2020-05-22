@@ -11,7 +11,7 @@ trait DevDebug
      * Helpers for Development @todo Tirar daqui
      */ 
     // @todo Tirar essa gambiarra
-    public $debug = false;
+    public $isDebugging = false;
     public $modelsForDebug = [
         // \Population\Models\Identity\Digital\Account::class,
         // \Population\Models\Identity\Digital\Email::class,
@@ -23,7 +23,7 @@ trait DevDebug
      */ 
     public function sendToDebug($data)
     {
-        if (!$this->debug) {
+        if (!$this->isDebugging) {
             return ;
         }
 

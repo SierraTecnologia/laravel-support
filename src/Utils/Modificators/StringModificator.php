@@ -67,9 +67,11 @@ class StringModificator
     
     public static function cleanCodeSlug($slug)
     {
-        $slugify = new Slugify();
-        
-        $slug = $slugify->slugify($slug, '.'); // hello-world
+        // $slugify = new Slugify();
+        // $slug = $slugify->slugify($slug, '.'); // hello-world
+
+        $slug = Str::kebab($slug);
+        $slug = Str::slug($slug, '.');
         
         return $slug;
     }
