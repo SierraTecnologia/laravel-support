@@ -19,6 +19,52 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected $defer = true;
 
+
+    public static $menuItens = [
+        'System|450' => [
+            [
+                'text' => 'Debugger',
+                'icon' => 'fas fa-fw fa-bomb',
+                'icon_color' => "blue",
+                'label_color' => "success",
+            ],
+            [
+                'text' => 'Manipule',
+                'icon' => 'fas fa-fw fa-bomb',
+                'icon_color' => "blue",
+                'label_color' => "success",
+            ],
+            'Debugger' => [
+                [
+                    'text'        => 'View Errors',
+                    'route'       => 'facilitador.dashboard',
+                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+            'Manipule' => [
+                [
+                    'text'        => 'Bread',
+                    'route'       => 'facilitador.bread.index',
+                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Database',
+                    'route'       => 'facilitador.database.index',
+                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+        ],
+    ];
+
     /**
      * Bootstrap the application services.
      *
