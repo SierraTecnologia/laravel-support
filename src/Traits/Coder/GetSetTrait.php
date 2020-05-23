@@ -46,7 +46,7 @@ trait GetSetTrait
         $reader = new ClassReader(__CLASS__, $property, 'ReflectionProperty');
 
         // Get what Type user needs
-        $type = $reader->getParameter('var');
+        $type = trim($reader->getParameter('var'));
 
         // @todo tratar qnd type vier vazio como true
         // dd(
@@ -57,8 +57,8 @@ trait GetSetTrait
 
         // If we have to detect generic types, then make the $type lowercase,
         // so it remains case insensitive.
-        if ($type && in_array(trim(strtolower($type)), ['string', 'number', 'array', 'object'])) {
-            $type = trim(strtolower($type));
+        if ($type && in_array(strtolower($type), ['string', 'number', 'array', 'object'])) {
+            $type = strtolower($type);
         }
 
         // @getter is marked as false on property annotation
