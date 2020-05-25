@@ -29,7 +29,7 @@ use Symfony\Component\Inflector\Inflector;
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-use Support\Elements\Entities\EloquentEntity;
+use Support\Patterns\Entity\CodeEloquentEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 use Support\Contracts\Manager\BuilderAbstract;
 
@@ -92,7 +92,7 @@ class CodeEloquentBuilder extends BuilderAbstract
         //         $eloquentClassArray,
         //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
         // );
-        $eloquentEntity = new EloquentEntity($this->className);
+        $eloquentEntity = new CodeEloquentEntity($this->className);
         $eloquentEntity->setTablename($tableName);
         $eloquentEntity->setName($name);
         $eloquentEntity->setIcon($icon);
@@ -108,7 +108,7 @@ class CodeEloquentBuilder extends BuilderAbstract
         $eloquentEntity->setRegisterType($eloquentClassDataArray['registerType']);
         
         foreach ($databaseTableArray['columns'] as $column) {
-            if ($columnEntity = (new ColunMount($this->className, $column, $this->renderDatabaseData))->getEntity()) {
+            if ($columnEntity = (new CodeEloquentColumnBuilder($this->className, $column, $this->renderDatabaseData))->getEntity()) {
                 $eloquentEntity->addColumn($columnEntity);
             }
         }

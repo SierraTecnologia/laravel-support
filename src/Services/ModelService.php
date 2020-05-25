@@ -79,7 +79,7 @@ class ModelService
                 // );
                 return false;
             }
-            $name = 
+            // $name = 
 
             $this->modelDataType = $this->dataTypeForCode($eloquentService->getModelClass());
             if (!$this->modelDataType->exists) {

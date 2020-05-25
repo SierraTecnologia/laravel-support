@@ -31,6 +31,14 @@ use Doctrine\DBAL\DBALException;
 
 use Support\Elements\Entities\EloquentEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
+
+
+
+use Support\Components\Coders\Parser\ParseClass;
+use Support\Utils\Modificators\ArrayModificator;
+use Support\Utils\Inclusores\ArrayInclusor;
+use Support\Utils\Modificators\StringModificator;
+use Support\Utils\Extratores\ClasserExtractor;
 use Support\Contracts\Manager\BuilderAbstract;
 use Support\Patterns\Entity\CodeEntity;
 
@@ -46,27 +54,42 @@ class CodeBuilder extends BuilderAbstract
 
         $this->entity = new CodeEntity();
 
-        $results->reject(
+        $results = (new Collection($results))->reject(
             function ($result) {
                 if (!$result) {
-                    return true;
-                }
-                if (!$result->getTableName()) {
                     return true;
                 }
                 if ($result->hasError()) {
                     return true;
                 }
+                return false;
+            }
+        );
+        $results->map(
+            function ($result) {
+                $this->builderClasser($result);
+            }
+        );
+
+        $results = $results->reject(
+            function ($result) {
                 if (!$result->typeIs('model')) {
+                    return true;
+                }
+                if (!$result->getTableName()) {
                     return true;
                 }
                 return false;
             }
-        )->map(
+        );
+        $results->map(
             function ($result) {
                 $this->builderEloquent($result);
             }
         );
+
+
+
         // // $results = $render->getData();
         // foreach ($results as $indice=>$result){
         //     }
@@ -80,8 +103,7 @@ class CodeBuilder extends BuilderAbstract
     // {
     //     $this->entity = new CodeEntity();
     // }
-
-    protected function builderEloquent($modelParser)
+    protected function builderClasser($modelParser)
     {
         $this->registerMapperClassParents(
             $modelParser->getClassName(),
@@ -89,7 +111,17 @@ class CodeBuilder extends BuilderAbstract
         );
     }
 
-    public function registerMapperClassParents($className, $classParent)
+    protected function builderEloquent($modelParser)
+    {
+        $this->loadMapperTableToClasses(
+            $modelParser->getTableName(),
+            $modelParser->getClassName()
+        );
+        $this->entity->models[$modelParser->getModelClass()] = $modelParser;
+    }
+
+
+    private function registerMapperClassParents($className, $classParent)
     {
         if (is_null($className) || empty($className) || is_null($classParent) || empty($classParent) || isset($this->mapperParentClasses[$className])) {
             return false;
@@ -106,5 +138,22 @@ class CodeBuilder extends BuilderAbstract
 
         $this->entity->mapperParentClasses[$className] = $classParent;
     }
+    private function loadMapperTableToClasses(string $tableName, string $tableClass)
+    {
+        // Guarda Classe por Table
+        if (isset($this->entity->mapperTableToClasses[$tableName])) {
+            $this->entity->mapperTableToClasses = ArrayInclusor::setAndPreservingOldDataConvertingToArray(
+                $this->entity->mapperTableToClasses,
+                $tableName,
+                $tableClass
+            );
+
+            // @todo Ignorar classes que uma extend a outra
+            $this->entity->errors[] = 'Duas classes para a mesma tabela: '.$tableName;
+            return ;
+        }
+        $this->entity->mapperTableToClasses[$tableName] = $tableClass;
+    }
+
 
 }

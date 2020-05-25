@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use Support\Components\Coders\Model\Factory;
 use Illuminate\Contracts\Config\Repository;
 use Support\Services\SystemService;
+use Support\Models\DataRow;
+use Support\Models\DataType;
 
 class MapperCommand extends Command
 {
@@ -74,6 +76,69 @@ class MapperCommand extends Command
 
 
         $render = new \Support\Patterns\Builder\CodeBuilder($this);
+
+
+        foreach ($render->entity->models as $eloquentService) {
+            
+            $modelDataType = $this->dataTypeForCode($eloquentService->getModelClass());
+            if (!$modelDataType->exists) {
+                // Name e Slug sao unicos
+                $modelDataType->fill(
+                    [
+                    'name'                  => $eloquentService->getModelClass(), //strtolower($eloquentService->getName(true)),
+                    'slug'                  => $eloquentService->getModelClass(), //strtolower($eloquentService->getName(true)),
+                    'display_name_singular' => $eloquentService->getName(false),
+                    'display_name_plural'   => $eloquentService->getName(true),
+                    'icon'                  => $eloquentService->getIcon(),
+                    'model_name'            => $eloquentService->getModelClass(),
+                    'controller'            => '',
+                    'generate_permissions'  => 1,
+                    'description'           => '',
+                    'table_name'              => $eloquentService->getTablename(),
+                    'key_name'                => $eloquentService->getData('getKeyName'),
+                    'key_type'                => $eloquentService->getData('getKeyType'),
+                    'foreign_key'             => $eloquentService->getData('getForeignKey'),
+                    'group_package'           => $eloquentService->getGroupPackage(),
+                    'group_type'              => $eloquentService->getGroupType(),
+                    'history_type'            => $eloquentService->getHistoryType(),
+                    'register_type'           => $eloquentService->getRegisterType(),
+                    ]
+                )->save();
+
+                $order = 1;
+                foreach ($eloquentService->getColumns() as $column) {
+                    // dd(
+                    //     $eloquentService->getColumns(),
+                    //     $column,
+                    //     $column->getData('notnull')
+                    // );
+
+                    $dataRow = $this->dataRow($this->modelDataType, $column->getColumnName());
+                    if (!$dataRow->exists) {
+                        $dataRow->fill(
+                            [
+                            // 'type'         => 'select_dropdown',
+                            'type'         => $column->getColumnType(),
+                            'display_name' => $column->getName(),
+                            'required'     => $column->isRequired() ? 1 : 0,
+                            'browse'     => $column->isBrowse() ? 1 : 0,
+                            'read'     => $column->isRead() ? 1 : 0,
+                            'edit'     => $column->isEdit() ? 1 : 0,
+                            'add'     => $column->isAdd() ? 1 : 0,
+                            'delete'     => $column->isDelete() ? 1 : 0,
+                            'details'      => $column->getDetails(),
+                            'order' => $order,
+                            ]
+                        )->save();
+                        ++$order;
+                    }
+                }
+            }
+        }
+
+
+
+
         // $render = new \Support\Patterns\Builder\DatabaseBuilder($this);
         // $render = new \Support\Patterns\Builder\ModelagemBuilder($this);
         dd(
@@ -137,29 +202,47 @@ class MapperCommand extends Command
         // }
     }
 
-    // /**
-    //  * @return string
-    //  */
-    // protected function getConnection()
-    // {
-    //     return $this->option('connection') ?: $this->config->get('database.default');
-    // }
 
-    // /**
-    //  * @param $connection
-    //  *
-    //  * @return string
-    //  */
-    // protected function getSchema($connection)
-    // {
-    //     return $this->option('schema') ?: $this->config->get("database.connections.$connection.database");
-    // }
+    /**
+     * [dataRow description].
+     *
+     * @param [type] $type  [description]
+     * @param [type] $field [description]
+     *
+     * @return [type] [description]
+     */
+    protected function dataRow($type, $field)
+    {
+        return DataRow::firstOrNew(
+            [
+                'data_type_id' => $type->id,
+                'field'        => $field,
+            ]
+        );
+    }
 
-    // /**
-    //  * @return string
-    //  */
-    // protected function getTable()
-    // {
-    //     return $this->option('table');
-    // }
+    /**
+     * [dataType description].
+     *
+     * @param [type] $field [description]
+     * @param [type] $for   [description]
+     *
+     * @return [type] [description]
+     */
+    protected function dataType($field, $for)
+    {
+        return DataType::firstOrNew([$field => $for]);
+    }
+    protected function dataTypeForCode($code)
+    {
+        if ($return = DataType::where('name', $code)->first()) {
+            return $return;
+        }
+        if ($return = DataType::where('slug', $code)->first()) {
+            return $return;
+        }
+
+        return $this->dataType('model_name', $code);
+    }
+    
 }
