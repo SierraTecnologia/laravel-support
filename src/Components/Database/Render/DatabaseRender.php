@@ -138,15 +138,6 @@ class DatabaseRender implements Arrayable
         $this->mapperParentClasses[$className] = $classParent;
     }
 
-    protected function renderTables()
-    {
-        $listTables = (new \Support\Patterns\Parser\DatabaseParser())();
-        $tableBuilder = new \Support\Patterns\Builder\TablesBuilder($listTables);
-
-        $this->tempAppTablesWithNotPrimaryKey = $tableBuilder->getRelationTables();
-        $this->displayTables = $tableBuilder->getTables();
-    }
-
     protected function render()
     {
         $selfInstance = $this;

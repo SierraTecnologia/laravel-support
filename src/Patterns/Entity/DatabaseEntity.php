@@ -1,9 +1,14 @@
 <?php
+/**
+ * Baseado no Modelo System
+ */
 
-namespace Support\Patterns\Entities;
+namespace Support\Patterns\Entity;
 
 class DatabaseEntity
 {
+    public static $builder = '';
+
     /**
      * indice = 'PrimaryKeys
      */

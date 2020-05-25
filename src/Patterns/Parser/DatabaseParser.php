@@ -20,14 +20,5 @@ class DatabaseParser
     {
         return $this->tables;
     }
-    /**
-     * Nivel 2
-     */
-    protected function parser()
-    {
-        Type::registerCustomPlatformTypes();
-        $this->tables = SchemaManager::listTables();
-
-    }
     
 }
