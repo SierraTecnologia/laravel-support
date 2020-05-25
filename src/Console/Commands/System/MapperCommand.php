@@ -69,14 +69,48 @@ class MapperCommand extends Command
         $this->info("Check out your models for");
 
 
-        if (!$this->systemService->getEntity(
-            \Support\Patterns\Entity\DatabaseEntity::class
-        )) {
-            $render = \Support\Patterns\Render\DatabaseRender::make('', $this)();
-            dd(
-                $render
-            );
-        }
+
+
+
+
+        $render = new \Support\Patterns\Builder\CodeBuilder($this);
+        // $render = new \Support\Patterns\Builder\DatabaseBuilder($this);
+        // $render = new \Support\Patterns\Builder\ModelagemBuilder($this);
+        dd(
+            $render
+        );
+
+
+
+
+        // dd(
+        //     $render
+        // );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // if (!$this->systemService->getEntity(
+        //     \Support\Patterns\Entity\DatabaseEntity::class
+        // )) {
+        //     $render = \Support\Patterns\Render\DatabaseRender::make('', $this)();
+        //     dd(
+        //         $render
+        //     );
+        // }
 
 
 

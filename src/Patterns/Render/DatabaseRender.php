@@ -26,7 +26,7 @@ class DatabaseRender extends RenderAbstract
 
         $results = $this->getChildrens();
         foreach($results as $result) {
-            $data[$result] = $this->childrenRenders[$result]->getData()->toArray();
+            $data[$result] = $this->childrenRenders[$result]->getData(); //->toArray();
         }
         
         return $data;

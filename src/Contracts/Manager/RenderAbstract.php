@@ -6,11 +6,10 @@ use Support\Contracts\Support\ArrayableTrait;
 use Support\Traits\Debugger\HasErrors;
 use Support\Traits\Coder\GetSetTrait;
 use Support\Contracts\Output\OutputableTrait;
+use Illuminate\Database\Eloquent\Collection;
 
-abstract class RenderAbstract implements Arrayable, RenderInterface
+abstract class RenderAbstract extends ManagerAbstract implements RenderInterface
 {
-    use HasErrors, ArrayableTrait, OutputableTrait;
-    
     /**
      * Atributos
      */
@@ -29,7 +28,7 @@ abstract class RenderAbstract implements Arrayable, RenderInterface
     /**
      * Identify ClassName
      *
-     * @var          array
+     * @var          \Illuminate\Database\Eloquent\Collection
      * @getter       true
      * @setter       true
      * @serializable true
@@ -39,14 +38,12 @@ abstract class RenderAbstract implements Arrayable, RenderInterface
     /**
      * Identify ClassName
      *
-     * @var          array
+     * @var          \Illuminate\Database\Eloquent\Collection
      * @getter       true
      * @setter       true
      * @serializable true
      */
     protected $childrenRenders = [];
-
-    protected $data;
 
     public static function make($parameter, $output = false)
     {
@@ -60,14 +57,7 @@ abstract class RenderAbstract implements Arrayable, RenderInterface
     public function __construct($parameter = '', $output = false)
     {
         $this->parameter = $parameter;
-        $this->output = $output;
-        $this->run();
-    }
-
-    public function __invoke()
-    {
-        return $this->data;
-        // return $this->getChildrens();
+        parent::__construct($output);
     }
 
     // abstract function render();
@@ -84,7 +74,7 @@ abstract class RenderAbstract implements Arrayable, RenderInterface
     public function generateChildrens()
     {
         $model = $this->setChildrens(
-            $this->renderChildrens()
+            new Collection($this->renderChildrens())
         );
         
         return true;
@@ -93,10 +83,6 @@ abstract class RenderAbstract implements Arrayable, RenderInterface
     public function generateData()
     {
         return $this->data = $this->renderData();
-    }
-    public function getData()
-    {
-        return $this->data;
     }
 
 

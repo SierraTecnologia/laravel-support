@@ -10,45 +10,24 @@ use Support\Utils\Modificators\StringModificator;
 use Support\Traits\Coder\GetSetTrait;
 use Support\Components\Database\Schema\Table;
 use Log;
+use Support\Contracts\Manager\BuilderAbstract;
 
-class TablesBuilder
+class DatabaseTableBuilder extends BuilderAbstract
 {
-    /**
-     * Atributos
-     */
-    use GetSetTrait;
+    
 
-
-    /**
-     * Nome da Classe
-     *
-     * @var    string
-     * @getter true
-     * @setter false
-     */
-    protected $tables = [];
-
-    /**
-     * Nome da Classe
-     *
-     * @var    string
-     * @getter true
-     * @setter false
-     */
-    protected $relationTables = [];
-
-
-    public function __construct(Array $tablesList)
+    public function builder()
     {
-        $this->builder($tablesList);
-    }
+        $render = \Support\Patterns\Render\DatabaseRender::make('', $this->output)();
 
-    protected function builder(Array $tables): void
-    {
-        foreach ($tables as $table){
-            $this->builderTable($table);
+        dd($render);
+
+        $results = $render->getData();
+        foreach ($results as $result){
+            $this->builderTable($result);
         }
     }
+
 
     protected function builderTable(Table $table): Array
     {
@@ -61,13 +40,13 @@ class TablesBuilder
         ];
 
         if (!$primary = $this->returnPrimaryKeyFromIndexes($indexes)) {
-            return $this->relationTables[$table->getName()] = $tableData;
+            return $this->data[$table->getName()] = $tableData;
         }
 
         $tableData['key'] = $primary;
         $tableData['displayName'] = $this->getDisplayName($table, $columns);
         
-        return $this->tables[$this->returnRelationPrimaryKey($table->getName(), $primary)] = $tableData;
+        return $this->data[$this->returnRelationPrimaryKey($table->getName(), $primary)] = $tableData;
     }
 
     /**
@@ -113,5 +92,4 @@ class TablesBuilder
         }
         return false;
     }
-
 }

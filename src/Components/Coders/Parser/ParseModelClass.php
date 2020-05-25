@@ -73,15 +73,12 @@ class ParseModelClass extends ParseClass
         return $this->instanceClass;
     }
 
-    public function getData($indice)
-    {
-        $array = $this->toArray();
-        return $array[$indice];
-    }
-
 
     public function toArray()
     {
+        if ($this->data) {
+            return $this->data;
+        }
         // // @debug
         // dd(
         //     $this->instanceClass->getTable(), // Ex: persons

@@ -2,14 +2,16 @@
 
 namespace Support\Patterns\Render;
 
-
 use Support\Contracts\Manager\RenderAbstract;
 use Support\Components\Database\Types\Type;
 use Support\Components\Database\Schema\SchemaManager;
 
+use Support\Components\Coders\Parser\ParseModelClass;
 
-class ModelagemRender extends RenderAbstract
+
+class CodeEloquentRender extends RenderAbstract
 {
+
     public static $renderForChildrens = false;
 
     protected function renderChildrens()
@@ -17,10 +19,10 @@ class ModelagemRender extends RenderAbstract
         return [];
     }
 
+
     protected function renderData()
     {
-        return [];
+        return new ParseModelClass($this->parameter);
     }
-
 
 }

@@ -7,7 +7,6 @@ namespace Support\Components\Coders\Parser;
 
 use App;
 use Log;
-use Exception;
 use Support\Models\Code\Classes;
 use Support\Traits\Debugger\HasErrors;
 
@@ -19,6 +18,21 @@ use Support\Utils\Extratores\ClasserExtractor;
 use Support\Analysator\Information\Group\EloquentGroup;
 use Support\Analysator\Information\HistoryType\AbstractHistoryType;
 use Support\Analysator\Information\RegisterTypes\AbstractRegisterType;
+
+
+use Doctrine\DBAL\Schema\SchemaException;
+use Doctrine\DBAL\DBALException;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\Debug\Exception\FatalErrorException;
+use Exception;
+use ErrorException;
+use LogicException;
+use OutOfBoundsException;
+use RuntimeException;
+use TypeError;
+use Throwable;
+use Watson\Validating\ValidationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class ParseClass implements Arrayable
 {
@@ -68,6 +82,7 @@ class ParseClass implements Arrayable
     public $reflectionClass = false;
     public $parentClass = false;
     public $fileName = false;
+    public $data = false;
 
     public static $types = [
         'model' => \Illuminate\Database\Eloquent\Model::class,
@@ -85,33 +100,65 @@ class ParseClass implements Arrayable
 
     public function __construct($classOrReflectionClass)
     {
-        $this->className = $classOrReflectionClass;
-        $this->type = $this->detectType();
-        if (!$this->supportModelCodeClass = Classes::find($this->className)) {
-            $this->supportModelCodeClass = new Classes;
-            $this->supportModelCodeClass->class_name = $this->getClassName();
-            $this->supportModelCodeClass->filename = $this->getFilename();
-            $this->supportModelCodeClass->parent_class = $this->getParentClassName();
-            $this->supportModelCodeClass->type = $this->getType();
-            $this->supportModelCodeClass->data = $this->toArray();
-            $this->supportModelCodeClass->save();
-        } else {
-            if (is_object($this->supportModelCodeClass->data)) {
-                dd('Debug ParseClass', $this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
-            }
-            $this->fromArray($this->supportModelCodeClass->data);
-        }
-        // @debug
-        // dd($this->reflectionClass->getProperties());
-        // dd($this->reflectionClass->getMethods());
 
-        // dd(
-        //     $this->reflectionClass->getProperty('fillable'),
-        //     $this->reflectionClass->getProperty('primaryKey'),
-        //     // $this->reflectionClass->getProperty('cast'),
-        //     $this->reflectionClass->getProperty('table')
-        // );
-        // var_dump($this->reflectionClass->getFileName());
+
+        try {
+                
+            $this->className = $classOrReflectionClass;
+            $this->type = $this->detectType();
+            if (!$this->supportModelCodeClass = Classes::find($this->className)) {
+                $this->supportModelCodeClass = new Classes;
+                $this->supportModelCodeClass->class_name = $this->getClassName();
+                $this->supportModelCodeClass->filename = $this->getFilename();
+                $this->supportModelCodeClass->parent_class = $this->getParentClassName();
+                $this->supportModelCodeClass->type = $this->getType();
+                $this->supportModelCodeClass->data = $this->data = $this->toArray();
+                $this->supportModelCodeClass->save();
+            } else {
+                if (is_object($this->supportModelCodeClass->data)) {
+                    dd('Debug ParseClass', $this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
+                }
+                $this->data = $this->supportModelCodeClass->data;
+                $this->fromArray($this->supportModelCodeClass->data);
+            }
+            // @debug
+            // dd($this->reflectionClass->getProperties());
+            // dd($this->reflectionClass->getMethods());
+
+            // dd(
+            //     $this->reflectionClass->getProperty('fillable'),
+            //     $this->reflectionClass->getProperty('primaryKey'),
+            //     // $this->reflectionClass->getProperty('cast'),
+            //     $this->reflectionClass->getProperty('table')
+            // );
+            // var_dump($this->reflectionClass->getFileName());
+
+        } catch(BindingResolutionException $e) {
+            // Erro Leve
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->parameter
+                ]
+            );
+            
+        } catch(SchemaException|DBALException $e) {
+            // @todo Tratar, Tabela Nao existe
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->parameter
+                ]
+            );
+        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->parameter
+                ]
+            );
+        } 
+        
     }
     
     public function getReflectionClassForUse()
@@ -122,8 +169,23 @@ class ParseClass implements Arrayable
         return $this->reflectionClass;
     }
 
+    public function getData($indice = false)
+    {
+        if (!$this->data) {
+            $this->data = $this->toArray();
+        }
+        if (!$indice) {
+            return $this->data;
+        }
+        return $this->data[$indice];
+    }
+
     public function toArray()
     {
+        if ($this->data) {
+            return $this->data;
+        }
+
         return [
 
             'class' => $this->getClassName(),
