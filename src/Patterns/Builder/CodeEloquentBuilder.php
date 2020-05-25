@@ -35,46 +35,23 @@ use Support\Contracts\Manager\BuilderAbstract;
 
 class CodeEloquentBuilder extends BuilderAbstract
 {
-    use DevDebug;
-    use HasErrors;
-    /**
-     * Identify
-     */
-    protected $className;
-    protected $renderDatabaseData;
+    public static $entityClasser = EloquentEntity::class;
 
-    /**
-     * Construct
-     */
-    public function __construct($className, $renderDatabase)
-    {
-        $this->className = $className;
-        $this->renderDatabaseData = $renderDatabase;
-    }
 
-    public function getEntity()
+    public function builder()
     {
 
-        $eloquentClassArray = $this->renderDatabaseData["Leitoras"]["displayClasses"][$this->className];
+        $eloquentClassArray = $this->parentEntity->models[$this->className];
         $tableName = $eloquentClassArray["tableName"];
 
         $databaseTableArray = false;
         if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
             $tableName,
-            $this->renderDatabaseData["Leitoras"]["displayTables"],
+            $this->parentEntity->tables,
             'name'
         )
         ) {
-            $databaseTableArray = $this->renderDatabaseData["Leitoras"]["displayTables"][$foundTableRender[0]];
-        }
-        // Procura nas tabelas de relacionamento
-        if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
-            $tableName,
-            $this->renderDatabaseData["AplicationTemp"]["tempAppTablesWithNotPrimaryKey"],
-            'name'
-        )
-        ) {
-            $databaseTableArray = $this->renderDatabaseData["AplicationTemp"]["tempAppTablesWithNotPrimaryKey"][$foundTableRender[0]];
+            $databaseTableArray = $this->parentEntity->tables[$foundTableRender[0]];
         }
         if (!$databaseTableArray) {
             throw new EloquentTableNotExistException($this->className, $tableName);
@@ -92,26 +69,28 @@ class CodeEloquentBuilder extends BuilderAbstract
         //         $eloquentClassArray,
         //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
         // );
-        $eloquentEntity = new CodeEloquentEntity($this->className);
-        $eloquentEntity->setTablename($tableName);
-        $eloquentEntity->setName($name);
-        $eloquentEntity->setIcon($icon);
-        $eloquentEntity->setPrimaryKey($primaryKey);
-        $eloquentEntity->setIndexes($indexes);
+        $this->entity->setTablename($tableName);
+        $this->entity->setName($name);
+        $this->entity->setIcon($icon);
+        $this->entity->setPrimaryKey($primaryKey);
+        $this->entity->setIndexes($indexes);
 
-        $eloquentEntity->setData($eloquentClassDataArray);
-        $eloquentEntity->setDataForColumns($databaseTableArray['columns']);
+        $this->entity->setData($eloquentClassDataArray);
+        $this->entity->setDataForColumns($databaseTableArray['columns']);
 
-        $eloquentEntity->setGroupPackage($eloquentClassDataArray['groupPackage']);
-        $eloquentEntity->setGroupType($eloquentClassDataArray['groupType']);
-        $eloquentEntity->setHistoryType($eloquentClassDataArray['historyType']);
-        $eloquentEntity->setRegisterType($eloquentClassDataArray['registerType']);
+        $this->entity->setGroupPackage($eloquentClassDataArray['groupPackage']);
+        $this->entity->setGroupType($eloquentClassDataArray['groupType']);
+        $this->entity->setHistoryType($eloquentClassDataArray['historyType']);
+        $this->entity->setRegisterType($eloquentClassDataArray['registerType']);
         
+        $columnEntity = \Support\Patterns\Builder\EloquentColumnBuilder::make(
+            $this->parentEntity,
+            $this->output
+        );
         foreach ($databaseTableArray['columns'] as $column) {
-            if ($columnEntity = (new CodeEloquentColumnBuilder($this->className, $column, $this->renderDatabaseData))->getEntity()) {
-                $eloquentEntity->addColumn($columnEntity);
-            }
+            $this->entity->addColumn($columnEntity($column));
         }
+    
 
         // Debug
         // if ($tableName=='persons') {
@@ -123,6 +102,5 @@ class CodeEloquentBuilder extends BuilderAbstract
 
         return $eloquentEntity;
     }
-
 
 }

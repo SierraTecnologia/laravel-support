@@ -68,20 +68,20 @@ class MapperCommand extends Command
      */
     public function handle()
     {
-        $this->info("Check out your models for");
 
 
 
 
 
 
-        $render = new \Support\Patterns\Builder\CodeBuilder($this);
+        $render = new \Support\Patterns\Builder\SystemBuilder($this);
 
 
         foreach ($render->entity->models as $eloquentService) {
             
             $modelDataType = $this->dataTypeForCode($eloquentService->getModelClass());
             if (!$modelDataType->exists) {
+                $this->info("Criando DataType");
                 // Name e Slug sao unicos
                 $modelDataType->fill(
                     [

@@ -40,19 +40,29 @@ use Support\Utils\Inclusores\ArrayInclusor;
 use Support\Utils\Modificators\StringModificator;
 use Support\Utils\Extratores\ClasserExtractor;
 use Support\Contracts\Manager\BuilderAbstract;
-use Support\Patterns\Entity\CodeEntity;
+use Support\Patterns\Entity\SystemEntity;
 
-class CodeBuilder extends BuilderAbstract
+class SystemBuilder extends BuilderAbstract
 {
+    public static $entityClasser = SystemEntity::class;
+
+    public $renderDatabase;
+    public $renderCoder;
+
+    public function prepare()
+    {
+        $this->renderDatabase = \Support\Patterns\Render\DatabaseRender::make('', $this->output)();
+        $this->renderCoder = \Support\Patterns\Render\CodeRender::make('', $this->output)();
+    }
     
 
     public function builder()
     {
-        $results = \Support\Patterns\Render\CodeRender::make('', $this->output)();
+        $this->entity->tables = $this->renderDatabase;
+        $results = $this->renderCoder;
 
         // dd($results);
 
-        $this->entity = new CodeEntity();
 
         $results = (new Collection($results))->reject(
             function ($result) {
@@ -87,21 +97,11 @@ class CodeBuilder extends BuilderAbstract
                 $this->builderEloquent($result);
             }
         );
-
-
-
-        // // $results = $render->getData();
-        // foreach ($results as $indice=>$result){
-        //     }
-        //     $this->builderEloquent($result);
-        // }
-
-        dd($this->entity);
     }
 
     // protected function renderData()
     // {
-    //     $this->entity = new CodeEntity();
+    //     $this->entity = new SystemEntity();
     // }
     protected function builderClasser($modelParser)
     {
@@ -117,7 +117,7 @@ class CodeBuilder extends BuilderAbstract
             $modelParser->getTableName(),
             $modelParser->getClassName()
         );
-        $this->entity->models[$modelParser->getModelClass()] = $modelParser;
+        $this->entity->models[$modelParser->getClassName()] = $modelParser;
     }
 
 

@@ -50,6 +50,12 @@ abstract class RenderAbstract extends ManagerAbstract implements RenderInterface
         return new static($parameter, $output);
     }
 
+    public function __invoke()
+    {
+        return $this->data;
+        // return $this->getChildrens();
+    }
+
     /*
         Constructor
     */ 

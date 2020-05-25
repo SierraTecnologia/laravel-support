@@ -21,12 +21,6 @@ abstract class ManagerAbstract  implements Arrayable
         $this->run();
     }
 
-    public function __invoke()
-    {
-        return $this->data;
-        // return $this->getChildrens();
-    }
-
     public function getData()
     {
         return $this->data;

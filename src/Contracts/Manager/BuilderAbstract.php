@@ -17,17 +17,47 @@ abstract class BuilderAbstract extends ManagerAbstract
      */
     use GetSetTrait;
 
-    public static function make($output = false)
+    /**
+     * Identify
+     */
+    protected $parentEntity;
+
+
+    public static function make($parentEntity, $output = false)
     {
-        return new static($output);
+        return new static($parentEntity, $output);
+    }
+    /**
+     * Construct
+     */
+    public function __construct($parentEntity, $output)
+    {
+        $this->parentEntity = $parentEntity;
+        parent::__construct($output);
+    }
+
+    public function __invoke($coder = false)
+    {
+        if (!$coder) {
+            $this->entity = new static::$entityClasser;
+        } else {
+            $this->entity = new static::$entityClasser($coder);
+        }
+        $this->builder();
+        return $this->entity;
+        // return $this->getChildrens();
     }
 
 
     public function run()
     {
         $this->info('Rodando Builder: '.static::class);
-        
-        $this->builder();
+        $this->prepare();
         return true;
+    }
+
+    public function prepare()
+    {
+        
     }
 }
