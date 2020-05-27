@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Support\Exceptions\Coder\EloquentNotExistException;
 use Support\Exceptions\Coder\EloquentHasErrorException;
 
-class SystemService
+class ApplicationService
 {
     protected $modelsFindInAlias = false;
 

@@ -74,10 +74,10 @@ class MapperCommand extends Command
 
 
 
-        $render = new \Support\Patterns\Builder\SystemBuilder($this);
+        $entity = \Support\Patterns\Builder\ApplicationBuilder::make('', $this)();
 
 
-        foreach ($render->entity->models as $eloquentService) {
+        foreach ($entity->models as $eloquentService) {
             
             $modelDataType = $this->dataTypeForCode($eloquentService->getModelClass());
             if (!$modelDataType->exists) {

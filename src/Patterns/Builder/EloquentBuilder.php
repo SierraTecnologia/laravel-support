@@ -29,11 +29,11 @@ use Symfony\Component\Inflector\Inflector;
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-use Support\Patterns\Entity\CodeEloquentEntity;
+use Support\Patterns\Entity\EloquentEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 use Support\Contracts\Manager\BuilderAbstract;
 
-class CodeEloquentBuilder extends BuilderAbstract
+class EloquentBuilder extends BuilderAbstract
 {
     public static $entityClasser = EloquentEntity::class;
 
@@ -41,7 +41,7 @@ class CodeEloquentBuilder extends BuilderAbstract
     public function builder()
     {
 
-        $eloquentClassArray = $this->parentEntity->models[$this->className];
+        $eloquentClassArray = $this->parentEntity->models[$this->entity->code];
         $tableName = $eloquentClassArray["tableName"];
 
         $databaseTableArray = false;
@@ -54,7 +54,7 @@ class CodeEloquentBuilder extends BuilderAbstract
             $databaseTableArray = $this->parentEntity->tables[$foundTableRender[0]];
         }
         if (!$databaseTableArray) {
-            throw new EloquentTableNotExistException($this->className, $tableName);
+            throw new EloquentTableNotExistException($this->entity->code, $tableName);
         }
         $eloquentClassDataArray = $eloquentClassArray["tableData"];
 

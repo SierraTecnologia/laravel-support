@@ -30,7 +30,7 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 use Support\Traits\Coder\GetSetTrait;
 
-class CodeEloquentEntity
+class EloquentEntity extends EntityAbstract
 {
 
     /**
@@ -141,13 +141,7 @@ class CodeEloquentEntity
     public $dataForColumns; // Array
     public $columns; // Em instancias
 
-    /**
-     * Construct
-     */
-    public function __construct($modelClass = false)
-    {
-        $this->modelClass = $modelClass;
-    }
+
 
     /**
      * Colocar isso em um Trait

@@ -5,7 +5,7 @@ namespace Support\Services;
 use Support\Elements\Entities\EloquentEntity;
 
 
-class EloquentService
+class DataTypeService
 {
     protected $eloquentEntity;
 

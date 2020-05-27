@@ -25,28 +25,13 @@ use Support\Components\Coders\Parser\ComposerParser;
 use Support\Utils\Searchers\ArraySearcher;
 use Support\Elements\Entities\EloquentColumn;
 
-class CodeEloquentColumnBuilder
+
+use Support\Patterns\Entity\EloquentColumnEntity;
+use Support\Contracts\Manager\BuilderAbstract;
+
+class EloquentColumnBuilder extends BuilderAbstract
 {
-    /**
-     * Identify
-     */
-    protected $className;
-    protected $column;
-    protected $renderDatabaseData;
-
-    /**
-     * Construct
-     */
-    public function __construct($className, $column, $renderDatabase)
-    {
-        $this->className = $className;
-        $this->column = $column;
-        $this->renderDatabaseData = $renderDatabase;
-
-        // dd(
-        //     $className, $column, $renderDatabase
-        // );
-    }
+    public static $entityClasser = EloquentColumnEntity::class;
 
     /**
      * Caso seja ***able_type deve ser ignorado
@@ -60,13 +45,11 @@ class CodeEloquentColumnBuilder
         );
     }
 
-    public function getEntity()
+    public function builder()
     {
         if ($this->isToIgnoreColumn()) {
             return false;
         }
-
-        $columnEntity = new EloquentColumn();
 
         /**
          *   "type" => array:3 [▶]
@@ -85,24 +68,23 @@ class CodeEloquentColumnBuilder
          *   "extra" => "auto_increment"
          *   "composite" => false
          */
-        $columnEntity->setColumnName($this->getColumnName());
+        $this->entity->setColumnName($this->getColumnName());
 
-        $columnEntity->setColumnType($this->column['type']['name']);
+        $this->entity->setColumnType($this->column['type']['name']);
         if (!isset($this->column['type']['default']) || !isset($this->column['type']['default']['type'])) {
             // @todo Add Relacionamento Caso Exista
-            $columnEntity->setColumnType($this->getColumnDisplayType($this->column['type']['name']));
+            $this->entity->setColumnType($this->getColumnDisplayType($this->column['type']['name']));
         } else {
             // @todo Add Relacionamento Caso Exista
-            $columnEntity->setColumnType($this->getColumnDisplayType($this->column['type']['default']['type']));
+            $this->entity->setColumnType($this->getColumnDisplayType($this->column['type']['default']['type']));
         }
 
-        $columnEntity->setName($this->getName());
-        $columnEntity->setData($this->column);
+        $this->entity->setName($this->getName());
+        $this->entity->setData($this->column);
         if ($details = $this->mountDetails()) {
-            $columnEntity->setDetails($details);
+            $this->entity->setDetails($details);
         }
 
-        return $columnEntity;
     }
 
     public function getColumnName()

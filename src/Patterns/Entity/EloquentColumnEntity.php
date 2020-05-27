@@ -14,7 +14,8 @@ use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Services\EloquentService;
 use Support\Traits\Coder\GetSetTrait;
 
-class CodeEloquentColumnEntity
+
+class EloquentColumnEntity extends EntityAbstract
 {
 
     /**

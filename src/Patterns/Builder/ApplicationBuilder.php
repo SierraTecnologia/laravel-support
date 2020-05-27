@@ -12,11 +12,12 @@ use Support\Components\Database\Schema\Table;
 use Log;
 use Support\Contracts\Output\OutputableTrait;
 use Support\Contracts\Manager\BuilderAbstract;
-use Support\Patterns\Entity\AplicationEntity;
+use Support\Patterns\Entity\ApplicationEntity;
+use Illuminate\Database\Eloquent\Collection;
 
 class ApplicationBuilder extends BuilderAbstract
 {
-    public static $entityClasser = AplicationEntity::class;
+    public static $entityClasser = ApplicationEntity::class;
 
 
 
