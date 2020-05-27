@@ -17,6 +17,12 @@ class TableCrudMaker extends Command
      *
      * @var string
      */
+    protected $name = 'sigenerate:generate:table';
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
     protected $signature = 'sigenerate:generate:table {table}
         {--api : Creates an API Controller and Routes}
         {--ui= : Select one of bootstrap|semantic for the UI}

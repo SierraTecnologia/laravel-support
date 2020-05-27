@@ -17,7 +17,7 @@ class GenerateMigrationFromModel extends AbstractGeneratorCommand
      *
      * @var string
      */
-    protected $name = 'sigenerate:generate:migrationFromModel {name}';
+    protected $name = 'sigenerate:generate:migrationFromModel'; // {name}
 
     /**
      * The console command description.

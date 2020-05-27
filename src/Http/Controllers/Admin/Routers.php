@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Illuminate\Console\Application as ConsoleApplication;
 
 // Run tasks from the admin
-class Commands extends Base
+class Routers extends Base
 {
     /**
      * @var int
@@ -22,7 +22,7 @@ class Commands extends Base
     /**
      * @var string
      */
-    protected $title = 'Commands';
+    protected $title = 'Routers';
 
     /**
      * @var string
@@ -37,7 +37,7 @@ class Commands extends Base
     public function index()
     {
         return $this->populateView(
-            'facilitador::tools.commands.index', [
+            'support::tools.commands.index', [
             'commands' => Command::all(),
             ]
         );

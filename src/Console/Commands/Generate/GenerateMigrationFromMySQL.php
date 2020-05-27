@@ -14,7 +14,7 @@ class GenerateMigrationFromMySQL extends Command
      *
      * @var string
      */
-    protected $name = 'sigenerate:generate:migrationFromMysql {database_table}';
+    protected $name = 'sigenerate:generate:migrationFromMysql'; // {database_table}
 
     /**
      * The console command description.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Controllers\System\Manager;
+namespace Support\Http\Controllers\Manager;
 
 use Facilitador\Http\Controllers\System\Controller as BaseController;
 use Facilitador\Services\FacilitadorService;

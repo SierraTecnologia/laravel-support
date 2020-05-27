@@ -8,6 +8,13 @@ use Illuminate\Filesystem\Filesystem;
 class MakeEloquentFilter extends Command
 {
     /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $name = 'sigenerate:generate:filter';
+
+    /**
      * The name and signature of the console command.
      *
      * @var string

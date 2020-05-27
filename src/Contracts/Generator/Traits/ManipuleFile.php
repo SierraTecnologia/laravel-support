@@ -37,9 +37,13 @@ trait ManipuleFile
     protected function getComposerParser()
     {
         if (!$this->composerParser) {
-            $this->composerParser = new ComposerParser;
+            $this->composerParser = resolve(ComposerParser::class);
         }
         return $this->composerParser;
+    }
+    protected function getNamespaceFromFilePath($filePath)
+    {
+        return $this->getComposerParser()->getNamespaceFromFilePath($filePath);
     }
 
 

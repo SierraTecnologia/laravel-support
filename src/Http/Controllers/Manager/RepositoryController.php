@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Controllers\System\Manager;
+namespace Support\Http\Controllers\Manager;
 
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;

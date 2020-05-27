@@ -52,6 +52,16 @@ class ComposerParser
         }
     }
 
+    public function getClassFromPath($path)
+    {
+        foreach ($this->classes as $classer => $classPath) {
+            if ($path === $classPath) {
+                return $classer;
+            }
+        }
+        return false;
+    }
+
     public function getClasses()
     {
         return $this->classes;

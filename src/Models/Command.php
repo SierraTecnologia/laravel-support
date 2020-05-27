@@ -3,6 +3,7 @@
 namespace Support\Models;
 
 use App;
+use Support\Patterns\Parser\ComposerParser;
 
 /**
  * Adds some shared functionality to taks as well as informs the Decoy
@@ -10,6 +11,13 @@ use App;
  */
 class Command
 {
+
+    /**
+     * Admins should not be localized
+     *
+     * @var boolean
+     */
+    public static $localizable = false;
     /**
      * @var int
      */
@@ -27,7 +35,7 @@ class Command
     public static function all()
     {
         // Add custom ones
-        $commands = self::allCustom();
+        $commands = [];
 
         // Add Laravel ones
         App::register('Illuminate\Foundation\Providers\ConsoleSupportServiceProvider'); // Needed for compile and optimize
@@ -36,6 +44,26 @@ class Command
         $commands['Laravel']['Cache clear'] = App::make('command.cache.clear');
         $commands['Laravel']['Clear compiled classes'] = App::make('command.clear-compiled');
 
+        /**
+         * App Commands
+         */
+        $commands = self::allCustom($commands);
+
+        /**
+         * Commands from Config
+         */
+        $commandFolders = config('sitec.core.commandsFolders');
+        foreach ($commandFolders as $folder) {
+            $news = self::allCustom($commands, $folder);
+            foreach ($news as $indixe=>$new) {
+                if (!isset($commands[$indixe])) {
+                    $commands[$indixe] = $new;
+                } else {
+                    $commands[$indixe] = array_merge($commands[$indixe], $new);
+                }
+            }
+        }
+        // dd($commands);
         // Return matching commands
         return $commands;
     }
@@ -45,24 +73,45 @@ class Command
      *
      * @return array
      */
-    public static function allCustom()
+    public static function allCustom($commands = [], $pathForLoadCommands = false)
     {
-        // Response array
-        $commands = [];
 
         // Loop through PHP files
-        $dir = app_path('Console/Commands');
-        if (!is_dir($dir)) { return [];
+        if (!$pathForLoadCommands) {
+            $dir = app_path('Console/Commands');
+        } else {
+            $dir = base_path($pathForLoadCommands);
         }
+
+        // Return
+        return self::searchForCommands($commands, $dir);
+    }
+
+    // Get a specific command
+    // @param $command i.e. "Seed", "FeedCommand"
+    public static function searchForCommands($commands, $dir)
+    {
+        $composer = resolve(ComposerParser::class);
+        if (!is_dir($dir)) { 
+            return $commands;
+        }
+
         $files = scandir($dir);
         foreach ($files as $file) {
+            if (in_array($file, ['.', '..'])) {
+                continue;
+            }
+            $path = $dir.'/'.$file;
+            if (is_dir($path)) {
+                $commands = self::searchForCommands($commands, $path);
+            }
             if (!preg_match('#\w+\.php#', $file)) {
                 continue;
             }
 
             // Build an instance of a command using the service container
-            $path = $dir.'/'.$file;
-            $class = 'App\Console\Commands\\'.basename($path, '.php');
+            $class = $composer->getClassFromPath($path);
+            // $class = $composer->getNamespaceFromFilePath($dir).'Console\Commands\\'.basename($path, '.php');
             $command = app($class);
 
             // Validate command
@@ -73,7 +122,9 @@ class Command
             // Get namespace
             $name = $command->getName();
             if (strpos($name, ':')) {
-                list($namespace, $name) = explode(':', $name);
+                $explode = explode(':', $name);
+                $name = array_pop($explode);
+                $namespace = implode(' ', $explode);
             } else {
                 $namespace = 'misc';
             }
@@ -89,8 +140,6 @@ class Command
             }
             $commands[$namespace][$name] = $command;
         }
-
-        // Return
         return $commands;
     }
 

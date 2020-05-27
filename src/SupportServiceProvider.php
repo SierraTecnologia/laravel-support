@@ -39,10 +39,12 @@ class SupportServiceProvider extends ServiceProvider
     public static $menuItens = [
         'System|450' => [
             [
-                'text' => 'Debugger',
-                'icon' => 'fas fa-fw fa-bomb',
-                'icon_color' => "blue",
-                'label_color' => "success",
+                'text'        => 'Manager',
+                'route'       => 'facilitador.dashboard',
+                'icon'        => 'fas fa-fw fa-industry',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                // 'access' => \App\Models\Role::$ADMIN
             ],
             [
                 'text' => 'Manipule',
@@ -50,15 +52,11 @@ class SupportServiceProvider extends ServiceProvider
                 'icon_color' => "blue",
                 'label_color' => "success",
             ],
-            'Debugger' => [
-                [
-                    'text'        => 'View Errors',
-                    'route'       => 'facilitador.dashboard',
-                    'icon'        => 'fas fa-fw fa-industry',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    // 'access' => \App\Models\Role::$ADMIN
-                ],
+            [
+                'text' => 'Debugger',
+                'icon' => 'fas fa-fw fa-bomb',
+                'icon_color' => "blue",
+                'label_color' => "success",
             ],
             'Manipule' => [
                 [
@@ -72,6 +70,24 @@ class SupportServiceProvider extends ServiceProvider
                 [
                     'text'        => 'Database',
                     'route'       => 'facilitador.database.index',
+                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Commands',
+                    'route'       => 'facilitador.commands',
+                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+            'Debugger' => [
+                [
+                    'text'        => 'View Errors',
+                    'route'       => 'facilitador.dashboard',
                     'icon'        => 'fas fa-fw fa-industry',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -112,6 +128,22 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadTranslations();
+        $this->loadViews();
+        $this->publishMigrations();
+        $this->publishAssets();
+        $this->publishConfigs();
+
+        /**
+         * Support Routes
+         */
+        Route::group([
+            'namespace' => '\Support\Http\Controllers',
+        ], function (/**$router**/) {
+            require __DIR__.'/Routes/web.php';
+        });
+
+
         /**
         // if ($this->app->runningInConsole()) {
         //     $this->publishes(
@@ -208,17 +240,19 @@ class SupportServiceProvider extends ServiceProvider
     {
         $this->registerModelFactory();
 
+        $this->loadCommands();
         $this->loadMigrations();
+        $this->loadConfigs();
 
         $this->app->singleton(
-            \Support\Services\DatabaseService::class, function () {
-                return new \Support\Services\DatabaseService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Patterns\Parser\ComposerParser);
+            \Support\Patterns\Parser\ComposerParser::class, function () {
+                return new \Support\Patterns\Parser\ComposerParser();
             }
         );
 
         $this->app->singleton(
             \Support\Services\ApplicationService::class, function () {
-                return new \Support\Services\ApplicationService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Patterns\Parser\ComposerParser);
+                return new \Support\Services\ApplicationService();
             }
         );
         /**
@@ -313,13 +347,6 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadLocalExternalPackages();
 
 
-        // Outros
-        // Register commands
-        $this->registerCommandFolders(
-            [
-            base_path('vendor/sierratecnologia/laravel-support/src/Console/Commands') => '\Support\Console\Commands',
-            ]
-        );
 
     }
 
@@ -357,13 +384,6 @@ class SupportServiceProvider extends ServiceProvider
     {
         return [ModelFactory::class];
     }
-       
-    protected function loadMigrations()
-    {
-        // Register Migrations
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-       
-    }
 
 
 
@@ -395,8 +415,74 @@ class SupportServiceProvider extends ServiceProvider
     /****************************************************************************************************
      * ************************************************* NO BOOT *************************************
      ****************************************************************************************************/
+    
+    protected function loadTranslations()
+    {
+        // Publish lanaguage files
+        $this->publishes(
+            [
+            $this->getResourcesPath('lang') => resource_path('lang/vendor/support')
+            ], ['lang',  'sitec', 'sitec-lang', 'translations']
+        );
 
+        // Load translations
+        $this->loadTranslationsFrom($this->getResourcesPath('lang'), 'support');
+    }
 
+    protected function loadViews()
+    {
+        // View namespace
+        $viewsPath = $this->getResourcesPath('views');
+        $this->loadViewsFrom($viewsPath, 'support');
+        $this->publishes(
+            [
+            $viewsPath => base_path('resources/views/vendor/support'),
+            ], ['views',  'sitec', 'sitec-views']
+        );
+
+    }
+
+    protected function publishMigrations()
+    {
+        
+       
+    }
+       
+    protected function publishAssets()
+    {
+        
+        // Publish support css and js to public directory
+        $this->publishes(
+            [
+            $this->getDistPath('support') => public_path('assets/support')
+            ], ['public',  'sitec', 'sitec-public']
+        );
+
+    }
+
+    protected function publishConfigs()
+    {
+        
+        // // Publish config files
+        // $this->publishes(
+        //     [
+        //     // Paths
+        //     $this->getPublishesPath('config/sitec') => config_path('sitec'),
+        //     // Files
+        //     $this->getPublishesPath('config/crudmaker.php') => config_path('crudmaker.php'),
+        //     $this->getPublishesPath('config/debug-server.php') => config_path('debug-server.php'),
+        //     $this->getPublishesPath('config/debugbar.php') => config_path('debugbar.php'),
+        //     $this->getPublishesPath('config/eloquentfilter.php') => config_path('eloquentfilter.php'),
+        //     $this->getPublishesPath('config/excel.php') => config_path('excel.php'),
+        //     $this->getPublishesPath('config/form-maker.php') => config_path('form-maker.php'),
+        //     $this->getPublishesPath('config/gravatar.php') => config_path('gravatar.php'),
+        //     $this->getPublishesPath('config/tinker.php') => config_path('tinker.php'),
+        //     $this->getPublishesPath('config/facilitador-hooks.php') => config_path('facilitador-hooks.php'),
+        //     $this->getPublishesPath('config/facilitador.php') => config_path('facilitador.php')
+        //     ], ['config',  'sitec', 'sitec-config']
+        // );
+
+    }
 
     /**
      * Config Former
@@ -432,6 +518,52 @@ class SupportServiceProvider extends ServiceProvider
      * ************************************************* NO REGISTER *************************************
      ****************************************************************************************************/
 
+
+    protected function loadCommands()
+    {
+
+ 
+        // Outros
+        // Register commands
+        $this->registerCommandFolders(
+            [
+            base_path('vendor/sierratecnologia/laravel-support/src/Console/Commands') => '\Support\Console\Commands',
+            ]
+        );
+
+    }
+       
+       
+    protected function loadMigrations()
+    {
+        // Register Migrations
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+       
+    }
+    protected function loadConfigs()
+    {
+        
+        // // Merge own configs into user configs 
+        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/discover.php'), 'sitec.discover');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/generator.php'), 'sitec.generator');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/facilitador.php'), 'sitec.facilitador');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/site.php'), 'sitec.site');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/core.php'), 'sitec.core');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/encode.php'), 'sitec.encode');
+        // // @todo Remover mais pra frente esse aqui
+        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/attributes.php'), 'sitec.attributes');
+        
+        // $this->mergeConfigFrom($this->getPublishesPath('config/crudmaker.php'), 'crudmaker');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/debug-server.php'), 'debug-server');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/debugbar.php'), 'debugbar');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/eloquentfilter.php'), 'eloquentfilter');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/excel.php'), 'excel');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/form-maker.php'), 'form-maker');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/gravatar.php'), 'gravatar');
+        // $this->mergeConfigFrom($this->getPublishesPath('config/tinker.php'), 'tinker');
+        // // $this->mergeConfigFrom($this->getPublishesPath('config/facilitador-hooks.php'), 'facilitador-hooks');
+        // // $this->mergeConfigFrom($this->getPublishesPath('config/facilitador.php'), 'facilitador');
+    }
 
     /**
      * Load helpers.

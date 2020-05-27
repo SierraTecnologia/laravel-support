@@ -2,7 +2,7 @@
 
 namespace Support\Console\Commands\System;
 
-use Illuminate\Console\Command;
+use Facilitador\Models\Worker as Command;
 use Support\Components\Coders\Model\Factory;
 use Illuminate\Contracts\Config\Repository;
 use Support\Services\ApplicationService;

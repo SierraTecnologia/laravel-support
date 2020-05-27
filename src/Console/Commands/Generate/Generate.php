@@ -14,6 +14,13 @@ class Generate extends Command
      *
      * @var string
      */
+    protected $name = 'sigenerate:facilitador:generate';
+
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
     protected $signature = 'sigenerate:facilitador:generate
         {model : The class name of a model}';
 

@@ -14,15 +14,15 @@ class SystemMount
     public function getProviders()
     {
         return [
+            \Support\SupportServiceProvider::class,
             \Audit\AuditProvider::class,
             \Tracking\TrackingProvider::class,
 
             \Finder\FinderProvider::class,
-
             \Casa\CasaProvider::class,
-            \Trainner\TrainnerProvider::class,
 
-            \Gamer\GamerProvider::class,
+            // \Trainner\TrainnerProvider::class,
+            // \Gamer\GamerProvider::class,
             
             \Facilitador\FacilitadorProvider::class,
             \Siravel\SiravelProvider::class,
