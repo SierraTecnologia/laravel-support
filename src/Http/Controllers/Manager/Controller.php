@@ -4,7 +4,7 @@ namespace Support\Http\Controllers\System\Manager;
 
 use Facilitador\Http\Controllers\System\Controller as BaseController;
 use Facilitador\Services\FacilitadorService;
-use Facilitador\Services\RepositoryService;
+use Support\Services\RepositoryService;
 use Facilitador\Http\Controllers\Traits\BreadRelationshipParser;
 
 class Controller extends BaseController

@@ -4,7 +4,7 @@ namespace Support\Http\Controllers\System\Manager;
 
 use Illuminate\Http\Request;
 use Facilitador\Services\FacilitadorService;
-use Facilitador\Services\RepositoryService;
+use Support\Services\RepositoryService;
 use Facilitador\Http\Requests\ModelCreateRequest;
 use Facilitador\Http\Requests\ModelSearchRequest;
 

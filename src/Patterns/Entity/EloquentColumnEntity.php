@@ -6,7 +6,7 @@ use Support\Contracts\Manager\EntityAbstract;
 
 use Illuminate\Support\Collection;
 use Support\Services\ModelService;
-use Facilitador\Services\RepositoryService;
+use Support\Services\RepositoryService;
 use Support\Elements\Entities\DataType;
 use Illuminate\Database\Eloquent\Model;
 
