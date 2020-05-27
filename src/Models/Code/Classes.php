@@ -3,11 +3,11 @@
 namespace Support\Models\Code;
 
 use Illuminate\Database\Eloquent\Model;
-class Classes extends Model
+class Classer extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'support_code_classes';
+    protected $table = 'support_code_classers';
     protected $primaryKey = 'class_name';
     protected $keyType = 'string';
 

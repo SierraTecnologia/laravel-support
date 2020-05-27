@@ -16,16 +16,6 @@ class CreateSupportAppTable extends Migration
      */
     public function up()
     {
-        // Create table for storing roles
-        Schema::create(
-            'support_app_systems', function (Blueprint $table) {
-                $table->string('code')->primary()->unique();
-                $table->string('md5')->nullable();
-                $table->text('data')->nullable();
-
-                $table->timestamps();
-            }
-        );
     }
 
     /**
@@ -35,6 +25,6 @@ class CreateSupportAppTable extends Migration
      */
     public function down()
     {
-        Schema::drop('support_app_systems');
+        
     }
 }

@@ -14,7 +14,7 @@ class Error extends Model
 {
     public $timestamps = true;
 
-    protected $table = 'errors';
+    protected $table = 'support_code_errors';
     // protected $primaryKey = 'class_name';
     // protected $keyType = 'string';
 

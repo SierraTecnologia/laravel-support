@@ -3,14 +3,14 @@
  * Cache dos Entitys
  */
 
-namespace Support\Models\App;
+namespace Support\Models\Code;
 
 use Illuminate\Database\Eloquent\Model;
-class System extends Model
+class SupportEntity extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'support_app_systems';
+    protected $table = 'support_code_entitys';
     protected $primaryKey = 'code';
     protected $keyType = 'string';
 

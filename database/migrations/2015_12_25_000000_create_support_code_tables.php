@@ -27,12 +27,38 @@ class CreateSupportCodeTables extends Migration
 
         // Create table for storing roles
         Schema::create(
-            'support_code_classes', function (Blueprint $table) {
+            'support_code_classers', function (Blueprint $table) {
                 $table->string('class_name')->primary()->unique();
                 $table->string('filename')->unique();
                 $table->string('parent_class')->nullable();
                 $table->string('type')->nullable();
                 $table->text('data')->nullable();
+            }
+        );
+        // Create table for storing roles
+        Schema::create(
+            'support_code_entitys', function (Blueprint $table) {
+                $table->string('code')->primary()->unique();
+                $table->string('type')->nullable();
+                $table->string('parameter')->nullable();
+                $table->string('md5')->nullable();
+                $table->text('data')->nullable();
+                $table->string('support_code_entity_code')->nullable();
+
+                $table->timestamps();
+            }
+        );
+        // Create table for storing roles
+        Schema::create(
+            'support_code_errors', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->nullable();
+                $table->timestamps();
+
+                $table->string('target')->nullable();
+                $table->string('class_type')->nullable();
+                $table->text('data')->nullable();
+
             }
         );
     }
@@ -44,7 +70,8 @@ class CreateSupportCodeTables extends Migration
      */
     public function down()
     {
-        Schema::drop('data_rows');
-        Schema::drop('data_types');
+        Schema::drop('support_code_errors');
+        Schema::drop('support_code_entitys');
+        Schema::drop('support_code_classers');
     }
 }

@@ -3,15 +3,15 @@
 namespace Support\Repositories;
 
 use Carbon\Carbon;
-use Support\Models\App\System;
+use Support\Models\Code\SupportEntity;
 
-class SystemRepository
+class EntityRepository
 {
     public $model;
 
-    public function __construct(System $system)
+    public function __construct(SupportEntity $supportEntity)
     {
-        $this->model = $system;
+        $this->model = $supportEntity;
     }
 
     /**
@@ -50,7 +50,10 @@ class SystemRepository
 
         return $item->fill(
             [
-            'data'         => $entity->toArray(),
+                'data'         => $entity->toArray(),
+                'parameter'         => $entity->toArray(),
+                'type'         => $entity->toArray(),
+                'md5'         => md5(serialize($entity)),
             ]
         )->save();
     }
