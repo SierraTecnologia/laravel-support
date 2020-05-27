@@ -83,6 +83,14 @@ class SupportServiceProvider extends ServiceProvider
                     'label_color' => 'success',
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
+                [
+                    'text'        => 'Routers',
+                    'route'       => 'facilitador.routers',
+                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
             ],
             'Debugger' => [
                 [

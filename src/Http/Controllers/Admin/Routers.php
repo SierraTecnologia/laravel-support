@@ -6,7 +6,7 @@ namespace Support\Http\Controllers\Admin;
 use Artisan;
 use App;
 use Response;
-use Support\Models\Command;
+use Support\Models\Application\Router;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Illuminate\Console\Application as ConsoleApplication;
@@ -37,32 +37,10 @@ class Routers extends Base
     public function index()
     {
         return $this->populateView(
-            'support::tools.commands.index', [
-            'commands' => Command::all(),
+            'support::tools.routers.index', [
+            'routers' => Router::all(),
             ]
         );
-    }
-
-    /**
-     * Run one of the commands, designed to be called via AJAX
-     *
-     * @return Response
-     */
-    public function execute($command_name)
-    {
-        // Find it
-        if (!($command = Command::find($command_name))) {
-            App::abort(404);
-        }
-
-        // Run it, ignoring all output
-        set_time_limit(self::MAX_EXECUTION_TIME);
-        ob_start();
-        Artisan::call($command->getName());
-        ob_end_clean();
-
-        // Return response
-        return Response::json('ok');
     }
 
     /**

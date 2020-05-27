@@ -1,10 +1,9 @@
 <div id="routers">
-    <?php foreach($routers as $subrouters): ?>
         <div class='col-sm-6 col-lg-4'>
             <div class="standard-list fieldset">
-                <div class="legend sidebar-header"><?php echo $namespace?></div>
+                <div class="legend sidebar-header">Rotas</div>
                 <table>
-                    <?php foreach($subrouters as $name => $router): ?>
+                     <?php foreach($routers as $router): ?>
                         <tr data-js-view="task-method">
                             <tr>
                                 <td width='10%'><h4>HTTP Method</h4></td>
@@ -13,17 +12,17 @@
                             </tr>
                             <td>
                                 <?php 
-                                    echo $value->getMethods()[0];
+                                    echo $router->methods()[0];
                                 ?>
                             </td>
                             <td>
                                 <?php 
-                                    echo $value->getPath();
+                                    echo $router->getName();
                                 ?>
                             </td>
                             <td>
                                 <?php 
-                                    echo $value->getActionName();
+                                    echo $router->getActionName();
                                 ?>
                             </td>
                         </tr>
@@ -31,5 +30,4 @@
                 </table>
             </div>
         </div>
-    <?php endforeach ?>
 </div>
