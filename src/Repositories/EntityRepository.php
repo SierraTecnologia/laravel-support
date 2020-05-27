@@ -42,6 +42,7 @@ class EntityRepository
     {
         $type = get_class($entity);
         $codeInDatabase = $type;
+        $parameter = '';
         if (!empty($entity->code)) {
             if (is_array($entity->code)) {
                 if (isset($entity->code['name'])) {
@@ -52,16 +53,17 @@ class EntityRepository
             } else {
                 $codeInDatabase .= '|'.$entity->code;
             }
+            $parameter = explode('|', $codeInDatabase)[1];
         }
 
         $item = $this->model->firstOrNew(['code' => $codeInDatabase]);
 
         return $item->fill(
             [
-                'data'         => $entity->toArray(),
-                'parameter'    => $entity->code,
-                'type'         => $entity->code,
+                'parameter'    => $parameter,
+                'type'         => $type,
                 'md5'         => md5(serialize($entity->toArray())),
+                'data'         => $entity->toArray(),
             ]
         )->save();
     }

@@ -27,6 +27,9 @@ use Facilitador\Models\Builder;
 abstract class Ardent extends Model
 {
 
+
+    public static $classeBuilder = Builder::class;
+
     /**
      * The rules to be applied to the data.
      *
@@ -881,6 +884,10 @@ abstract class Ardent extends Model
             // If $ruleset is a pipe-separated string, switch it to array
             $ruleset = (is_string($ruleset))? explode('|', $ruleset) : $ruleset;
 
+            if (!is_array($ruleset)) {
+                continue;
+            }
+
             foreach ($ruleset as &$rule) {
                 if (strpos($rule, 'unique:') === 0) {
                     // Stop splitting at 4 so final param will hold optional where clause
@@ -989,7 +996,8 @@ abstract class Ardent extends Model
      */
     public function newQueryWithoutScopes()
     {
-        $builder = new Builder($this->newBaseQueryBuilder());
+        $classBuilder = static::$classeBuilder;
+        $builder = new $classBuilder($this->newBaseQueryBuilder());
         $builder->throwOnFind = static::$throwOnFind;
 
         return $builder->setModel($this)->with($this->with);
