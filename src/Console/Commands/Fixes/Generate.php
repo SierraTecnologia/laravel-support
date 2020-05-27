@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Console\Commands\Fixes;
+namespace Support\Console\Commands\Fixes;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;

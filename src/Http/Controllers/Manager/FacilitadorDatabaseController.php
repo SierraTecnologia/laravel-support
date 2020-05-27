@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Http\Controllers\System;
+namespace Support\Http\Controllers\System;
 
 use Exception;
 use Illuminate\Http\Request;

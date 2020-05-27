@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Console\Commands\Generate;
+namespace Support\Console\Commands\Generate;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

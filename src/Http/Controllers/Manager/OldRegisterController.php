@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Http\Controllers\System\Manager;
+namespace Support\Http\Controllers\System\Manager;
 
 use Illuminate\Http\Request;
 use Facilitador\Services\FacilitadorService;

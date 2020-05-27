@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Console\Commands;
+namespace Support\Console\Commands;
 
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use Symfony\Component\Console\Input\InputOption;

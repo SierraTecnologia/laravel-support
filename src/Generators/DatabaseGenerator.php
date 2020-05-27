@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Generators;
+namespace Support\Generators;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;

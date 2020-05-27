@@ -3,7 +3,7 @@
  * @todo falta fazer
  */
 
-namespace Facilitador\Console\Commands\Generate;
+namespace Support\Console\Commands\Generate;
 
 use DB;
 use Support\Contracts\Generator\AbstractGeneratorCommand;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Generators;
+namespace Support\Generators;
 
 use Facilitador\Services\RepositoryService;
 

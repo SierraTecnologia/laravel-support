@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Console\Commands\Generate;
+namespace Support\Console\Commands\Generate;
 
 use DB;
 use Illuminate\Console\Command;

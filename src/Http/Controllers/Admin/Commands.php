@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Http\Controllers\Admin;
+namespace Support\Http\Controllers\Admin;
 
 // Deps
 use Artisan;

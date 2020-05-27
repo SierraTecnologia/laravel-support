@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Console\Commands\Generate;
+namespace Support\Console\Commands\Generate;
 
 use DB;
 use Illuminate\Console\Command;
@@ -371,7 +371,7 @@ class GenerateModelFromMySQL extends Command
     {
         return '<?php
 
-namespace Facilitador;
+namespace Support;
 
 use Illuminate\Database\Eloquent\Model;
 #IMPORT_SOFT_DELETE#

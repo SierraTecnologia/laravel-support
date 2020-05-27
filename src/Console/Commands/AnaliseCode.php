@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Console\Commands\Manutencao;
+namespace Support\Console\Commands\Manutencao;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
