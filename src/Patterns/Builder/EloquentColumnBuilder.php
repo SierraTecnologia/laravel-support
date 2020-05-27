@@ -39,14 +39,22 @@ class EloquentColumnBuilder extends BuilderAbstract
     public function isToIgnoreColumn()
     {
         return ArraySearcher::arraySearchByAttribute(
-            $this->column['name'],
-            $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'],
+            $this->entity->code['name'],
+            $this->parentEntity->relations,
             'morph_type'
         );
     }
 
     public function builder()
     {
+
+        // dd(
+        //     $this->parentEntity->system,
+        //     $this->entity->code
+        // );
+
+
+
         if ($this->isToIgnoreColumn()) {
             return false;
         }
@@ -70,17 +78,17 @@ class EloquentColumnBuilder extends BuilderAbstract
          */
         $this->entity->setColumnName($this->getColumnName());
 
-        $this->entity->setColumnType($this->column['type']['name']);
-        if (!isset($this->column['type']['default']) || !isset($this->column['type']['default']['type'])) {
+        $this->entity->setColumnType($this->entity->code['type']['name']);
+        if (!isset($this->entity->code['type']['default']) || !isset($this->entity->code['type']['default']['type'])) {
             // @todo Add Relacionamento Caso Exista
-            $this->entity->setColumnType($this->getColumnDisplayType($this->column['type']['name']));
+            $this->entity->setColumnType($this->getColumnDisplayType($this->entity->code['type']['name']));
         } else {
             // @todo Add Relacionamento Caso Exista
-            $this->entity->setColumnType($this->getColumnDisplayType($this->column['type']['default']['type']));
+            $this->entity->setColumnType($this->getColumnDisplayType($this->entity->code['type']['default']['type']));
         }
 
         $this->entity->setName($this->getName());
-        $this->entity->setData($this->column);
+        $this->entity->setData($this->entity->code);
         if ($details = $this->mountDetails()) {
             $this->entity->setDetails($details);
         }
@@ -89,7 +97,7 @@ class EloquentColumnBuilder extends BuilderAbstract
 
     public function getColumnName()
     {
-        return $this->column['oldName'];
+        return $this->entity->code['oldName'];
     }
     /**
      * 
@@ -153,15 +161,16 @@ class EloquentColumnBuilder extends BuilderAbstract
         // ];
 
         if ($relation = $this->isBelongTo()) {
-            if (!isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+            if (!isset($this->parentEntity->system->mapperTableToClasses[$relation['name']])) {
                 return null; //@todo tratar erro de tabela que nao existe
             }
             // name, key, label
             $haveDetails = true;
 
-            if (is_array($relationClassName = $this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['name']])) {
+            if (is_array($relationClassName = $this->parentEntity->system->mapperTableToClasses[$relation['name']])) {
                 $relationClassName = $relationClassName[0];
             }
+            dd($relation);
 
             $array['model'] = $relationClassName;
             $array['table'] = $relation['name'];
@@ -172,14 +181,12 @@ class EloquentColumnBuilder extends BuilderAbstract
             $array['label'] = $relation['displayName'];
             $array['pivot_table'] = $relation['name'];
             $array['pivot'] = 0;
-        }
-
-        if ($relation = $this->isMorphTo()) {
+        }else if ($relation = $this->isMorphTo()) {
             // Filtra o Primeiro
             $relation = $relation[count($relation)-1];
 
             // @todo Ajeitar aqu dps 
-            // if (!isset($relation['table_target']) || !isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['table_target']])) {
+            // if (!isset($relation['table_target']) || !isset($this->parentEntity->system->mapperTableToClasses[$relation['table_target']])) {
             //     dd(
             //         'deu ruim aqui mountcolumn',
             //         $relation
@@ -344,8 +351,8 @@ class EloquentColumnBuilder extends BuilderAbstract
 
     protected function isBelongTo($type = false)
     {
-        if (isset($this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()])) {
-            return $this->renderDatabaseData['Leitoras']['displayTables'][$this->getColumnName()];
+        if (isset($this->parentEntity->system->tables[$this->getColumnName()])) {
+            return $this->parentEntity->system->tables[$this->getColumnName()]->toArray();
         }
 
         return false;
@@ -377,21 +384,21 @@ class EloquentColumnBuilder extends BuilderAbstract
     protected function isMorphTo($type = false)
     {
         // if ($this->className==\Population\Models\Market\Abouts\Info::class
-        // && $this->column['name']!=='id'&& $this->column['name']!=='text'
+        // && $this->entity->code['name']!=='id'&& $this->entity->code['name']!=='text'
         // ) {
         if ($searchForeachKey = ArraySearcher::arraySearchByAttribute(
-            $this->column['name'],
-            // $this->renderDatabaseData['Leitoras']['displayTables'],
-                $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'],
+            $this->entity->code['name'],
+            // $this->parentEntity->system->tables,
+                $this->parentEntity->relations,
             'foreignKey'
         )
         ) {
             $isMorph = false;
             $found = [];
             foreach ($searchForeachKey as $valorFound) {
-                if (in_array($this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'][$valorFound]['type'], ['MorphMany', 'MorphTo'])) {
+                if (in_array($this->parentEntity->relations[$valorFound]['type'], ['MorphMany', 'MorphTo'])) {
                     $isMorph = true;
-                    $found[] = $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'][$valorFound];
+                    $found[] = $this->parentEntity->relations[$valorFound];
                 }
             }
             // dd($found);
@@ -401,7 +408,7 @@ class EloquentColumnBuilder extends BuilderAbstract
         }
         //     dd(
         //         $this->className,
-        //         $this->column,
+        //         $this->entity->code,
         //         $this->renderDatabaseData
         //     );
         // }

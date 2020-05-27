@@ -60,7 +60,7 @@ class EloquentBuilder extends BuilderAbstract
 
         $this->entity->setTablename($parseModelClass->getTableName());
         $this->entity->setName($parseModelClassArray['name']);
-        $this->entity->setIcon(\Support\Template\Layout\Icons::getForNameAndCache($this->name, false));
+        $this->entity->setIcon(\Support\Template\Layout\Icons::getForNameAndCache($parseModelClassArray['name'], false));
         $this->entity->setPrimaryKey($parseModelClass->getPrimaryKey());
         $this->entity->setIndexes($databaseTableArray['indexes']);
 
@@ -71,25 +71,17 @@ class EloquentBuilder extends BuilderAbstract
         $this->entity->setGroupType($parseModelClassArray['groupType']);
         $this->entity->setHistoryType($parseModelClassArray['historyType']);
         $this->entity->setRegisterType($parseModelClassArray['registerType']);
-        dd($this->entity);
+
+
         $columnEntity = \Support\Patterns\Builder\EloquentColumnBuilder::make(
             $this->parentEntity,
             $this->output
         );
         foreach ($databaseTableArray['columns'] as $column) {
+            $column['table'] = $parseModelClass->getTableName();
             $this->entity->addColumn($columnEntity($column));
         }
     
-
-        // Debug
-        // if ($tableName=='persons') {
-        //     dd(
-        //         $databaseTableArray,
-        //         $eloquentEntity
-        //     );
-        // }
-
-        return $eloquentEntity;
     }
 
 }

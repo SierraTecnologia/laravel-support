@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Components\Database\Render;
+namespace Support\Patterns\Parser;
 
 use Support\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;

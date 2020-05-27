@@ -22,7 +22,7 @@ use App;
 use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Elements\Entities\EloquentColumn;
+use Support\Patterns\Entity\EloquentColumnEntity;
 use Support\Patterns\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
@@ -180,7 +180,7 @@ class EloquentEntity extends EntityAbstract
 
     /**
      */
-    public function addColumn(EloquentColumn $column)
+    public function addColumn(EloquentColumnEntity $column)
     {
         $this->columns[] = $column;
     }

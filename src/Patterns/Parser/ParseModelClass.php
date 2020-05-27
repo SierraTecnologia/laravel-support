@@ -361,15 +361,15 @@ class ParseModelClass extends ParseClass
     {
         try {
             if ($key) {
-                return (new RelationshipsRender($this->modelClass))($key);
+                return (new RelationshipsRender($this->getClassName()))($key);
             }
 
             if (!$this->relations) {
-                $this->relations = (new RelationshipsRender($this->modelClass))($key);
+                $this->relations = (new RelationshipsRender($this->getClassName()))($key);
                 // $this->setErrors($this->relations->getError()); @todo PEgar erro do relationsscripts
             }
             
-            // dd($key, (new RelationshipsRender($this->modelClass)),(new RelationshipsRender($this->modelClass))($key));
+            // dd($key, (new RelationshipsRender($this->getClassName())),(new RelationshipsRender($this->modelClass))($key));
             return $this->relations;
 
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
