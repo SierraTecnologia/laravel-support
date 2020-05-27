@@ -16,8 +16,8 @@ use Support\Patterns\Entity\ApplicationEntity;
 use Illuminate\Database\Eloquent\Collection;
 use Support\Elements\Entities\RelationshipEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
-use Support\Models\DataRow;
-use Support\Models\DataType;
+use Support\Models\Application\DataRow;
+use Support\Models\Application\DataType;
 
 class ApplicationBuilder extends BuilderAbstract
 {

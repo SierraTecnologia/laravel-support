@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
-use Support\Models\DataRelationship;
+use Support\Models\Application\DataRelationship;
 use Support\Traits\Coder\GetSetTrait;
 
 class RelationshipEntity

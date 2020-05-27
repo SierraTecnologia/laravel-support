@@ -6,8 +6,8 @@ use Illuminate\Console\Command;
 use Support\Components\Coders\Model\Factory;
 use Illuminate\Contracts\Config\Repository;
 use Support\Services\ApplicationService;
-use Support\Models\DataRow;
-use Support\Models\DataType;
+use Support\Models\Application\DataRow;
+use Support\Models\Application\DataType;
 
 class MapperCommand extends Command
 {
