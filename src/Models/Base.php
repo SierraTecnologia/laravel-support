@@ -49,8 +49,8 @@ abstract class Base extends Ardent
         SupportsUploads,
         \Support\Traits\Models\CanSerializeTransform,
         \Support\Traits\Models\Exportable,
-        Loggable
-    ;
+        Loggable;
+    
     /**
      * @todo bug Resolver pra tirar esse coment
      * [2020-02-02 08:18:39] local.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' (SQL: select count(*) as aggregate from `users` where `email` = rafacollares@hotmail.com and `2` <> 2) {"exception":"[object] (Illuminate\\Database\\QueryExcept
@@ -129,6 +129,21 @@ abstract class Base extends Ardent
      */
     protected $admin_mutators = [];
 
+
+
+    /**
+     * Should this model log it's changes.  Defaults to true if the change
+     * happened while handling an admin request or via the console but not
+     * during a non-http unit test.
+     *
+     * @param  string $action Like "deleted", "updated", etc
+     * @return boolean
+     */
+    public function shouldLogChange($action)
+    {
+        return Facilitador::handling()
+            || (App::runningInConsole() && request()->path() == '/');
+    }
 
     //---------------------------------------------------------------------------
     // Instantiation

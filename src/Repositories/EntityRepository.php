@@ -31,7 +31,7 @@ class EntityRepository
 
         if ($item) {
             $entity = new $type($code);
-            $entity->fromArray($type->data);
+            $entity->fromArray($item->data);
             return $entity;
         }
 

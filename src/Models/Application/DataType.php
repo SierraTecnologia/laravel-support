@@ -379,7 +379,7 @@ class DataType extends Model implements EloquentInterface
     public function getModelService()
     {
         if (!$this->modelService) {
-            $this->modelService = new ModelService($this->model_name);
+            $this->modelService = new ModelService($this);
         }
         return $this->modelService;
     }

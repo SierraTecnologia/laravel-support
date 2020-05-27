@@ -5,6 +5,7 @@ namespace Support\Repositories;
 use Carbon\Carbon;
 use App\Repositories\TranslationRepository;
 use Illuminate\Support\Facades\Schema;
+use Support\Models\Application\DataType;
 
 class DataTypeRepository
 {
@@ -14,9 +15,9 @@ class DataTypeRepository
 
     public $table;
 
-    public function __construct(TranslationRepository $translationRepo)
+    public function __construct(DataType $supportEntity)
     {
-        $this->translationRepo = $translationRepo;
+        $this->model = $supportEntity;
     }
 
     /**
@@ -27,6 +28,52 @@ class DataTypeRepository
     public function all()
     {
         return $this->model->orderBy('created_at', 'desc')->get()->all();
+    }
+
+    public function allWithCount()
+    {
+        $models = $this->all();
+        $array = [];
+
+        foreach ($models as $model) {
+            try {
+                $model = $model->getModelService();
+                $array[] = [
+                    'model' => $model,
+                    'url' => $model->getUrl(),
+                    'count' => $model->getRepository()->count(),
+                    'icon' => $model->getIcon(),
+                    'name' => $model->getName(),
+                    'group_package' => $model->getGroupPackage(),
+                    'group_type' => $model->getGroupType(),
+                    'history_type' => $model->getHistoryType(),
+                    'register_type' => $model->getRegisterType(),
+                ];
+
+            } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                $this->setErrors($e);
+                // dd(
+                //     'a',
+                //     $model->getEloquentEntity(),
+                //     $model,
+                //     $e
+                // );
+            } 
+        }
+        // dd('Modelos', $array);
+        return collect($array);
+    }
+
+    public function allModelsServices()
+    {
+        $models = $this->all();
+        $array = [];
+
+        foreach ($models as $model) {
+            $array[] = $model->getModelService();
+        }
+
+        return collect($array);
     }
 
     /**

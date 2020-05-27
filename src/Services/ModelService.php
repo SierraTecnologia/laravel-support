@@ -41,6 +41,23 @@ class ModelService implements EloquentInterface
     public function __construct($modelClass = false)
     {
         if ($this->modelClass = $modelClass) {
+            if (!is_string($modelClass) && !is_a($modelClass, DataType::class)) {
+                throw new Exception(
+                    "Essa classe deveria ser uma string ou uma instancia DataType: ".print_r($modelClass, true),
+                    400
+                );
+            }
+            if (empty($modelClass)) {
+                throw new Exception(
+                    "ModelService, nao deveria vir vazia a classeModel: ".print_r($modelClass, true),
+                    400
+                );
+            }
+
+            if (is_a($modelClass, DataType::class)) {
+                $this->modelDataType = $modelClass;
+                $this->modelClass = $modelClass->model_name;
+            }
             $this->getDiscoverService();
         }
     }
@@ -367,28 +384,28 @@ class ModelService implements EloquentInterface
     public function getGroupPackage()
     {
         if (!$this->getDiscoverService()) {
-            return '';
+            return 'Outro';
         }
         return $this->getDiscoverService()->getGroupPackage();
     }
     public function getGroupType()
     {
         if (!$this->getDiscoverService()) {
-            return '';
+            return 'Outro';
         }
         return $this->getDiscoverService()->getGroupType();
     }
     public function getHistoryType()
     {
         if (!$this->getDiscoverService()) {
-            return '';
+            return 'Outro';
         }
         return $this->getDiscoverService()->getHistoryType();
     }
     public function getRegisterType()
     {
         if (!$this->getDiscoverService()) {
-            return '';
+            return 'Outro';
         }
         return $this->getDiscoverService()->getRegisterType();
     }

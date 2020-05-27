@@ -33,12 +33,11 @@ class FacilitadorGenerator
           <span class="sr-only">Toggle Dropdown</span>
         </button>';
         $html .= '<ul class="dropdown-menu" role="menu">';
-
         foreach ($classes as $class) {
             $html .= '<li><a href="'.$class->getUrl('/create').'">'.$class->getName().'</a></li>';
         }
-          $html .= '</ul>';
-          $html .= '</div>';
+        $html .= '</ul>';
+        $html .= '</div>';
         return $html;
     }
 }
