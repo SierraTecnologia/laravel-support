@@ -10,8 +10,9 @@ use Facilitador\Facades\Facilitador;
 use Facilitador\Traits\Translatable;
 use Facilitador\Services\ModelService;
 use Support\Utils\Compare\StringCompare;
+use Support\Contracts\Services\EloquentInterface;
 
-class DataType extends Model
+class DataType extends Model implements EloquentInterface
 {
     use Translatable;
 
@@ -409,6 +410,10 @@ class DataType extends Model
     {
         return $this->register_type;
     }
+    public function getIndexes()
+    {
+        return $this->indexes;   
+    }
 
 
 
@@ -416,11 +421,11 @@ class DataType extends Model
     // /**
     //  * Helpers Generates
     //  */ 
-    public function hasColumn($column)
+    public function hasColumn($column): bool
     {
         return isset($this->dataForColumns[$column]);
     }
-    public function columnIsType($columnName, $typeClass)
+    public function columnIsType($columnName, $typeClass): bool
     {
         if (!isset($this->dataForColumns[$columnName])) {
             return false;

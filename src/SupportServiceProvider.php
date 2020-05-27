@@ -11,6 +11,20 @@ use Support\Console\Commands\CodeModelsCommand;
 use Support\Components\Coders\Model\Factory as ModelFactory;
 use Config;
 use Support\Traits\Providers\ConsoleTools;
+use Log;
+use App;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
+use SierraTecnologia\Crypto\Services\Crypto;
+
+use Support\Services\RegisterService;
+use Support\Services\RepositoryService;
+use Support\Services\ModelService;
+
+
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Barryvdh\Debugbar\ServiceProvider as DebugService;
+use Laravel\Dusk\DuskServiceProvider;
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -66,7 +80,31 @@ class SupportServiceProvider extends ServiceProvider
             ],
         ],
     ];
+    public static $aliasProviders = [
+        // Form field generation
+        'Former' => \Former\Facades\Former::class,
 
+    ];
+
+    // public static $providers = [
+    public static $providers = [
+        /**
+         * Layoults
+         */
+        \RicardoSierra\Minify\MinifyServiceProvider::class,
+        \Collective\Html\HtmlServiceProvider::class,
+        \Laracasts\Flash\FlashServiceProvider::class,
+
+        /**
+         * VEio pelo Decoy
+         **/
+        \Former\FormerServiceProvider::class,
+
+        /**
+         * Outros
+         */
+        \Laravel\Tinker\TinkerServiceProvider::class,
+    ];
     /**
      * Bootstrap the application services.
      *
@@ -157,6 +195,8 @@ class SupportServiceProvider extends ServiceProvider
         //         return "<?php echo InputMaker::create($expression); ?>";
         //     }
         // ); */
+        // Config Former
+        $this->configureFormer();
     }
 
     /**
@@ -262,6 +302,15 @@ class SupportServiceProvider extends ServiceProvider
         $loader->alias('HTML', \Collective\Html\HtmlFacade::class);
  */
 
+        $this->loadHelpers();
+
+        $this->loadServiceContainerSingletons();
+        $this->loadServiceContainerRouteBinds();
+        $this->loadServiceContainerBinds();
+        $this->loadServiceContainerReplaceClasses();
+
+        $this->loadExternalPackages();
+        $this->loadLocalExternalPackages();
 
 
         // Outros
@@ -341,5 +390,177 @@ class SupportServiceProvider extends ServiceProvider
             'level' => $level,
             ]
         );
+    }
+
+    /****************************************************************************************************
+     * ************************************************* NO BOOT *************************************
+     ****************************************************************************************************/
+
+
+
+    /**
+     * Config Former
+     *
+     * @return void
+     */
+    protected function configureFormer()
+    {
+        // Use Bootstrap 3
+        Config::set('former.framework', 'TwitterBootstrap3');
+
+        // Reduce the horizontal form's label width
+        Config::set('former.TwitterBootstrap3.labelWidths', []);
+
+        // Change Former's required field HTML
+        Config::set(
+            'former.required_text', ' <span class="glyphicon glyphicon-exclamation-sign js-tooltip required" title="' .
+            __('facilitador::login.form.required') . '"></span>'
+        );
+
+        // Make pushed checkboxes have an empty string as their value
+        Config::set('former.unchecked_value', '');
+
+        // Add Decoy's custom Fields to Former so they can be invoked using the "Former::"
+        // namespace and so we can take advantage of sublassing Former's Field class.
+        $this->app['former.dispatcher']->addRepository('Facilitador\\Fields\\');
+    }
+
+    
+
+    /****************************************************************************************************
+     * ************************************************* NO REGISTER *************************************
+     ****************************************************************************************************/
+
+
+    /**
+     * Load helpers.
+     */
+    protected function loadHelpers()
+    {
+        foreach (glob(__DIR__.'/Helpers/*.php') as $filename) {
+            include_once $filename;
+        }
+    }
+
+    protected function loadServiceContainerSingletons()
+    {
+
+    }
+    protected function loadServiceContainerRouteBinds()
+    {
+        
+        
+        /**
+         * @todo Ta passando duas vezes por aqui
+         */
+        Route::bind(
+            'modelClass', function ($value) {
+                Log::channel('sitec-providers')->debug('Route Bind ModelClass - '.Crypto::shareableDecrypt($value).' - '.$value);
+                return new ModelService(Crypto::shareableDecrypt($value));
+            }
+        );
+        Route::bind(
+            'identify', function ($value) {
+                Log::channel('sitec-providers')->debug('Route Bind Identify - '.Crypto::shareableDecrypt($value).' - '.$value);
+                // throw new Exception(
+                //     "Essa classe deveria ser uma string: ".print_r($modelClass, true),
+                //     400
+                // );
+                return new RegisterService(Crypto::shareableDecrypt($value));
+            }
+        );
+    }
+
+    protected function loadServiceContainerBinds()
+    {
+
+        // /**
+        //  * Cryptos
+        //  * @todo Verificar pq isso ta aqui
+        //  */
+        // $this->app->bind('CryptoService', function ($app) {
+        //     return new CryptoService();
+        // });
+
+
+
+        // Arrumar um jeito de fazer o Base do facilitador passar por cima do support
+        // use Support\Models\Base;
+        // @todo
+
+        $this->app->bind(
+            ModelService::class, function ($app) {
+                $modelClass = false;
+                if (isset($app['router']->current()->parameters['modelClass'])) {
+                    $modelClass = Crypto::shareableDecrypt($app['router']->current()->parameters['modelClass']);
+
+                    if (empty($modelClass)) {
+                        $modelClass = $app['router']->current()->parameters['modelClass'];
+                    }
+                }
+
+                // dd('@todo', 
+                //     $modelClass, $app['router']->current()->parameters['modelClass'], Crypto::shareableDecrypt($app['router']->current()->parameters['modelClass']),
+                //     auth()->id()
+                // );
+                // @todo Ver Como resolver isso aqui
+
+                Log::channel('sitec-providers')->debug('Bind Model Service - '.$modelClass);
+
+                return new ModelService($modelClass);
+            }
+        );
+
+        $this->app->bind(
+            RepositoryService::class, function ($app) {
+                Log::channel('sitec-providers')->debug('Bind Repository Service');
+                $modelService = $app->make(ModelService::class);
+                return new RepositoryService($modelService);
+            }
+        );
+
+        $this->app->bind(
+            RegisterService::class, function ($app) {
+                $identify = '';
+                if (isset($app['router']->current()->parameters['identify'])) {
+                    $identify = Crypto::shareableDecrypt($app['router']->current()->parameters['identify']);
+                }
+
+                Log::channel('sitec-providers')->debug('Bind Register Service - '.$identify);
+                return new RegisterService($identify);
+            }
+        );
+    }
+
+    protected function loadServiceContainerReplaceClasses()
+    {
+
+        
+        // $this->app->when(ModelService::class)
+        //     ->needs('$modelClass')
+        //   ->give(function ($modelClassValue) {
+        //       $request = $modelClassValue['request'];
+        //         dd($request->has('modelClassValue'));
+        //     //   dd();
+        //       return $modelClassValue;
+        //   });
+    }
+
+
+    protected function loadExternalPackages()
+    {
+        $this->setProviders();
+    }
+
+    protected function loadLocalExternalPackages()
+    {
+
+        if ($this->app->environment('local', 'testing')) {
+            $this->app->register(DuskServiceProvider::class);
+        }
+        if ($this->app->environment('local')) {
+            $this->app->register(DebugService::class);
+            // $this->app->register(IdeHelperServiceProvider::class);
+        }
     }
 }

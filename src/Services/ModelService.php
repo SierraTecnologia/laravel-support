@@ -24,11 +24,12 @@ use Support\Models\DataType;
 use Support\Services\DatabaseService;
 use Support\Elements\Entities\EloquentEntity;
 use Support\Models\Code\Classes;
+use Support\Contracts\Services\EloquentInterface;
 
 /**
  * ModelService helper to make table and object form mapping easy.
  */
-class ModelService
+class ModelService implements EloquentInterface
 {
     protected $repository = false;
     protected $modelDataType = false;
@@ -88,17 +89,7 @@ class ModelService
         }
         return $this->modelDataType;
     }
-
-    public function getPrimaryKey()
-    {
-        return $this->getDiscoverService()->getPrimaryKey();   
-    }
-
-    public function getIndexes()
-    {
-        return $this->getDiscoverService()->indexes;   
-    }
-
+    
     /**
      * Verificadores
      *
@@ -355,6 +346,26 @@ class ModelService
     /**
      * Getter and Setters
      */
+
+    public function getPrimaryKey()
+    {
+        return $this->getDiscoverService()->getPrimaryKey();   
+    }
+
+    public function getIndexes()
+    {
+        return $this->getDiscoverService()->getIndexes();   
+    }
+
+    public function hasColumn($column): bool
+    {
+        return $this->getDiscoverService()->hasColumn($column);   
+    }
+
+    public function columnIsType($columnName, $typeClass): bool
+    {
+        return $this->getDiscoverService()->columnIsType($columnName, $typeClass);   
+    }
     public function getName($plural = false)
     {
         if (!$this->getDiscoverService()) {
