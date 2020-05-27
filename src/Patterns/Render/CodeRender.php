@@ -14,7 +14,7 @@ class CodeRender extends RenderAbstract
     protected function renderChildrens()
     {
         $configModelsAlias = \Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []);
-        $composerParser = new \Support\Components\Coders\Parser\ComposerParser();
+        $composerParser = new \Support\Patterns\Parser\ComposerParser();
         
         $eloquentClasses = $composerParser->returnClassesByAlias($configModelsAlias);
 

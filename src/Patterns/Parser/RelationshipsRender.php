@@ -8,7 +8,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Log;
-use Support\Components\Coders\Parser\ParseClass;
+use Support\Patterns\Parser\ParseClass;
 
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\Debug\Exception\FatalErrorException;

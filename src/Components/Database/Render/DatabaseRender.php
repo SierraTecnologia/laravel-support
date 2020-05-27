@@ -17,7 +17,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Support\Services\EloquentService;
-use Support\Components\Coders\Parser\ComposerParser;
+use Support\Patterns\Parser\ComposerParser;
 use Illuminate\Support\Facades\Cache;
 use Support\Elements\Entities\RelationshipEntity;
 use Support\Components\Database\Types\Type;
@@ -29,7 +29,7 @@ use Support\Utils\Inclusores\ArrayInclusor;
 use Support\Utils\Modificators\StringModificator;
 use Support\Utils\Extratores\ClasserExtractor;
 
-use Support\Components\Coders\Parser\ParseClass;
+use Support\Patterns\Parser\ParseClass;
 
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;

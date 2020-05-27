@@ -4,7 +4,7 @@ namespace Support\Services;
 
 use Support\Components\Database\Mount\DatabaseMount;
 use Support\Elements\Entities\EloquentEntity;
-use Support\Components\Coders\Parser\ComposerParser;
+use Support\Patterns\Parser\ComposerParser;
 use Illuminate\Support\Collection;
 use Support\Exceptions\Coder\EloquentNotExistException;
 use Support\Exceptions\Coder\EloquentHasErrorException;

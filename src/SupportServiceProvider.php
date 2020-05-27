@@ -172,13 +172,13 @@ class SupportServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             \Support\Services\DatabaseService::class, function () {
-                return new \Support\Services\DatabaseService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
+                return new \Support\Services\DatabaseService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Patterns\Parser\ComposerParser);
             }
         );
 
         $this->app->singleton(
             \Support\Services\ApplicationService::class, function () {
-                return new \Support\Services\ApplicationService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Components\Coders\Parser\ComposerParser);
+                return new \Support\Services\ApplicationService(\Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []), new \Support\Patterns\Parser\ComposerParser);
             }
         );
         /**

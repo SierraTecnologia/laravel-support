@@ -19,9 +19,9 @@ use Support\Components\Database\Schema\Identifier;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
-use Support\Components\Coders\Parser\ParseModelClass;
+use Support\Patterns\Parser\ParseModelClass;
 
-use Support\Components\Coders\Parser\ComposerParser;
+use Support\Patterns\Parser\ComposerParser;
 use Support\Utils\Searchers\ArraySearcher;
 use Support\Elements\Entities\EloquentColumn;
 

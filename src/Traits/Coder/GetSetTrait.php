@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Support\Traits\Coder;
 
-use Support\Components\Coders\Parser\ClassReader;
+use Support\Patterns\Parser\ClassReader;
 use Support\Exceptions\SetterGetterException;
 
 /**

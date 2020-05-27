@@ -6,7 +6,7 @@ use Support\Contracts\Manager\RenderAbstract;
 use Support\Components\Database\Types\Type;
 use Support\Components\Database\Schema\SchemaManager;
 
-use Support\Components\Coders\Parser\ParseModelClass;
+use Support\Patterns\Parser\ParseModelClass;
 
 
 class CodeEloquentRender extends RenderAbstract

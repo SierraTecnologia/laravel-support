@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Support\Contracts\Generator\Traits;
 
-use Support\Components\Coders\Parser\ClassReader;
+use Support\Patterns\Parser\ClassReader;
 use Support\Exceptions\SetterGetterException;
-use Support\Components\Coders\Parser\ComposerParser;
+use Support\Patterns\Parser\ComposerParser;
 use Illuminate\Filesystem\Filesystem;
 
 
-use Support\Components\Coders\Parser\ParseModelClass;
+use Support\Patterns\Parser\ParseModelClass;
 
 /**
  * https://github.com/usmanhalalit/GetSetGo

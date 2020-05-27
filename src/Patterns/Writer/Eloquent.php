@@ -20,7 +20,7 @@ use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Elements\Entities\EloquentColumn;
-use Support\Components\Coders\Parser\ParseModelClass;
+use Support\Patterns\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;

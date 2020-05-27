@@ -23,7 +23,7 @@ use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Elements\Entities\EloquentColumn;
-use Support\Components\Coders\Parser\ParseModelClass;
+use Support\Patterns\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
@@ -34,7 +34,7 @@ use Support\Exceptions\Coder\EloquentTableNotExistException;
 
 
 
-use Support\Components\Coders\Parser\ParseClass;
+use Support\Patterns\Parser\ParseClass;
 use Support\Utils\Modificators\ArrayModificator;
 use Support\Utils\Inclusores\ArrayInclusor;
 use Support\Utils\Modificators\StringModificator;
