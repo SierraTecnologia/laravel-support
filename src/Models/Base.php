@@ -32,7 +32,7 @@ use Support\Utils\Inclusores\DbalInclusor;
 
 use Support\Traits\Models\Importable;
 
-abstract class Base extends Eloquent
+abstract class Base extends Ardent
 {
     /**
      * @todo bug Resolver pra tirar esse coment

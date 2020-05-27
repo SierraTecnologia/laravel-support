@@ -16,6 +16,8 @@ class System extends Model
 
     protected $fillable = [
         'code',
+        'type',
+        'parameter',
         'md5',
         'data',
     ];
