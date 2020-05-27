@@ -3,7 +3,7 @@
  * Serviço referente a linha no banco de dados
  */
 
-namespace Facilitador\Services;
+namespace Support\Services;
 
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Http\Request;
@@ -59,6 +59,10 @@ class ModelService
             $this->getDiscoverService();
         }
     }
+    public static function make($modelClass)
+    {
+        return new static($modelClass);
+    }
 
     /**
      * @todo isso repete deve ter um contrato compartilhado com repository
@@ -70,69 +74,17 @@ class ModelService
     public function getDiscoverService()
     {
         if (!$this->modelDataType) {
-            if (!$eloquentService = $this->getEloquentEntity()) {
-                // @todo tratar erro
-                // dd(
-                //     'IhhNaoTem',
-                //     $this->modelClass,
-                //     debug_backtrace()
-                // );
-                return false;
-            }
-            // $name = 
 
-            $this->modelDataType = $this->dataTypeForCode($eloquentService->getModelClass());
+            $this->modelDataType = $this->dataTypeForCode($this->modelClass);
             if (!$this->modelDataType->exists) {
-                // Name e Slug sao unicos
-                $this->modelDataType->fill(
-                    [
-                    'name'                  => $eloquentService->getModelClass(), //strtolower($eloquentService->getName(true)),
-                    'slug'                  => $eloquentService->getModelClass(), //strtolower($eloquentService->getName(true)),
-                    'display_name_singular' => $eloquentService->getName(false),
-                    'display_name_plural'   => $eloquentService->getName(true),
-                    'icon'                  => $eloquentService->getIcon(),
-                    'model_name'            => $eloquentService->getModelClass(),
-                    'controller'            => '',
-                    'generate_permissions'  => 1,
-                    'description'           => '',
-                    'table_name'              => $eloquentService->getTablename(),
-                    'key_name'                => $eloquentService->getData('getKeyName'),
-                    'key_type'                => $eloquentService->getData('getKeyType'),
-                    'foreign_key'             => $eloquentService->getData('getForeignKey'),
-                    'group_package'           => $eloquentService->getGroupPackage(),
-                    'group_type'              => $eloquentService->getGroupType(),
-                    'history_type'            => $eloquentService->getHistoryType(),
-                    'register_type'           => $eloquentService->getRegisterType(),
-                    ]
-                )->save();
+                \Support\Patterns\Builder\ApplicationBuilder::make('', $this)();
 
-                $order = 1;
-                foreach ($eloquentService->getColumns() as $column) {
-                    // dd(
-                    //     $eloquentService->getColumns(),
-                    //     $column,
-                    //     $column->getData('notnull')
-                    // );
-
-                    $dataRow = $this->dataRow($this->modelDataType, $column->getColumnName());
-                    if (!$dataRow->exists) {
-                        $dataRow->fill(
-                            [
-                            // 'type'         => 'select_dropdown',
-                            'type'         => $column->getColumnType(),
-                            'display_name' => $column->getName(),
-                            'required'     => $column->isRequired() ? 1 : 0,
-                            'browse'     => $column->isBrowse() ? 1 : 0,
-                            'read'     => $column->isRead() ? 1 : 0,
-                            'edit'     => $column->isEdit() ? 1 : 0,
-                            'add'     => $column->isAdd() ? 1 : 0,
-                            'delete'     => $column->isDelete() ? 1 : 0,
-                            'details'      => $column->getDetails(),
-                            'order' => $order,
-                            ]
-                        )->save();
-                        ++$order;
-                    }
+                $this->modelDataType = $this->dataTypeForCode($this->modelClass);
+                if (!$this->modelDataType->exists) {
+                    dd(
+                        'Erro para classe',
+                        $this->modelClass
+                    );
                 }
             }
         }
@@ -142,6 +94,11 @@ class ModelService
     public function getPrimaryKey()
     {
         return $this->getDiscoverService()->getPrimaryKey();   
+    }
+
+    public function getIndexes()
+    {
+        return $this->getDiscoverService()->getIndexes();   
     }
 
     /**

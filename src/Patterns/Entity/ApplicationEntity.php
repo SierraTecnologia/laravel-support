@@ -14,6 +14,7 @@ class ApplicationEntity extends EntityAbstract
      */
     public $system;
     public $models = [];
+    public $relations = [];
 
 
 }

@@ -9,6 +9,7 @@ use Support\Components\Database\Schema\SchemaManager;
 use Facilitador\Facades\Facilitador;
 use Facilitador\Traits\Translatable;
 use Facilitador\Services\ModelService;
+use Support\Utils\Compare\StringCompare;
 
 class DataType extends Model
 {
@@ -43,6 +44,7 @@ class DataType extends Model
         'key_name',
         'key_type',
         'foreign_key',
+        'indexes',
 
         'group_package',
         'group_type',
@@ -271,6 +273,16 @@ class DataType extends Model
         return json_decode(!empty($value) ? $value : '{}');
     }
 
+    public function setIndexesAttribute($value)
+    {
+        $this->attributes['indexes'] = json_encode($value);
+    }
+
+    public function getIndexesAttribute($value)
+    {
+        return json_decode(!empty($value) ? $value : '{}');
+    }
+
     public function getOrderColumnAttribute()
     {
         return $this->details->order_column ?? null;
@@ -396,6 +408,72 @@ class DataType extends Model
     public function getRegisterType()
     {
         return $this->register_type;
+    }
+
+
+
+
+    // /**
+    //  * Helpers Generates
+    //  */ 
+    public function hasColumn($column)
+    {
+        return isset($this->dataForColumns[$column]);
+    }
+    public function columnIsType($columnName, $typeClass)
+    {
+        if (!isset($this->dataForColumns[$columnName])) {
+            return false;
+        }
+
+        if (empty($typeClass)) {
+            return true;
+        }
+
+        if (\is_array($typeClass)) {
+            foreach ($typeClass as $type) {
+                if ($this->columnIsType($columnName, $type)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        if (\is_string($typeClass)) {
+            if (class_exists($typeClass)) {
+                // @todo verificar isso aqui. string da class: DoctrineStringType::class
+                if ($column->getType() instanceof $typeClass) {
+                    return true;
+                }
+                return false;
+            }
+
+            return StringCompare::isSimilar($typeClass, $this->dataForColumns[$columnName]['type']);
+        }
+
+        dd(
+            'EloquenntEntity: Nao deveria estar aqui',
+            $this->dataForColumns[$columnName],
+            $typeClass,
+            $typeClass->getName()
+        );
+
+        // $column = SchemaManager::getDoctrineColumn($this->getTableName(), $columnName);
+        
+        // if ($column->getType() instanceof $typeClass) {
+        //     return true;
+        // }
+        // return false;
+
+        // $columnArray = [
+        //     'name' => '',
+        //     'type' => ''
+        // ];
+        // $columnArray['name'] = $columnName;
+        // $column = \Support\Components\Database\Schema\Column::make($columnArray, $this->getTableName());
+        // dd($column);
+        // return $column->columnIsType($columnName, $typeClass);
     }
 
 }

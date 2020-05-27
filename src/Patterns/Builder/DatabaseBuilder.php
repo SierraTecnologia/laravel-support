@@ -70,48 +70,5 @@ class DatabaseBuilder extends BuilderAbstract
         return $this->data[$this->returnRelationPrimaryKey($table->getName(), $primary)] = $tableData;
     }
 
-    /**
-     * Nivel 3
-     */
-    private function returnRelationPrimaryKey(String $tableName, String $primary)
-    {
-        return StringModificator::singularizeAndLower($tableName).'_'.$primary;
-    }
-
-    private function returnPrimaryKeyFromIndexes(Array $indexes)
-    {
-        $primary = false;
-        if (!empty($indexes)) {
-            foreach ($indexes as $index) {
-                if ($index['type'] == 'PRIMARY') {
-                    return $index['columns'][0];
-                }
-            }
-        }
-
-        return $primary;
-    }
-
-    private function getDisplayName(Table $listTable, $columns = false)
-    {
-
-        // Qual coluna ira mostrar em uma Relacao ?
-        if ($listTable->hasColumn('name')) {
-            return 'name';
-        } 
-        if ($listTable->hasColumn('displayName')) {
-            return 'displayName';
-        }
-
-        if (!$columns) {
-            return false;
-        }
-        foreach ($columns as $column) {
-            if ($column['type']['name'] == 'varchar') {
-                return $column['name'];
-            }
-        }
-        return false;
-    }
 
 }

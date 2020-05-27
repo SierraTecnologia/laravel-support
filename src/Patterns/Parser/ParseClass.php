@@ -75,6 +75,7 @@ class ParseClass implements Arrayable
      * Attributes to Array Mapper @todo Nao usado ainda, era bom usar
      */
     public static $mapper = [
+        'name',
         'class',
         'filename',
         'parentClass',

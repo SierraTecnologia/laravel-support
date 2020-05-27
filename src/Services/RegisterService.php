@@ -3,7 +3,7 @@
  * Serviço referente a linha no banco de dados
  */
 
-namespace Facilitador\Services;
+namespace Support\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;

@@ -161,25 +161,25 @@ class EloquentColumnBuilder extends BuilderAbstract
         // ];
 
         if ($relation = $this->isBelongTo()) {
-            if (!isset($this->parentEntity->system->mapperTableToClasses[$relation['name']])) {
+            $relationData = $relation->toArray();
+            if (!isset($this->parentEntity->system->mapperTableToClasses[$relationData['name']])) {
                 return null; //@todo tratar erro de tabela que nao existe
             }
             // name, key, label
             $haveDetails = true;
 
-            if (is_array($relationClassName = $this->parentEntity->system->mapperTableToClasses[$relation['name']])) {
+            if (is_array($relationClassName = $this->parentEntity->system->mapperTableToClasses[$relationData['name']])) {
                 $relationClassName = $relationClassName[0];
             }
-            dd($relation);
 
             $array['model'] = $relationClassName;
-            $array['table'] = $relation['name'];
-            $array['method'] = $relation['name'];
+            $array['table'] = $relationData['name'];
+            $array['method'] = $relationData['name'];
             $array['type'] = 'belongsTo';
             $array['column'] = $this->getColumnName();
-            $array['key'] = $relation['key'];
-            $array['label'] = $relation['displayName'];
-            $array['pivot_table'] = $relation['name'];
+            $array['key'] = $relation->returnPrimaryKeyFromIndexes();
+            $array['label'] = $relation->getDisplayName();
+            $array['pivot_table'] = $relationData['name'];
             $array['pivot'] = 0;
         }else if ($relation = $this->isMorphTo()) {
             // Filtra o Primeiro
@@ -352,7 +352,7 @@ class EloquentColumnBuilder extends BuilderAbstract
     protected function isBelongTo($type = false)
     {
         if (isset($this->parentEntity->system->tables[$this->getColumnName()])) {
-            return $this->parentEntity->system->tables[$this->getColumnName()]->toArray();
+            return $this->parentEntity->system->tables[$this->getColumnName()];
         }
 
         return false;

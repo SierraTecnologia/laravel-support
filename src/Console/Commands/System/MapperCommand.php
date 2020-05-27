@@ -70,81 +70,17 @@ class MapperCommand extends Command
     {
 
 
-        // \Support\Models\Code\Classes::truncate();
-
-
-
+        \Support\Models\Code\Classes::truncate();
+        DataRow::truncate();
+        DataType::query()->delete();
 
         $entity = \Support\Patterns\Builder\ApplicationBuilder::make('', $this)();
 
-
-        foreach ($entity->models as $eloquentService) {
-            
-            $modelDataType = $this->dataTypeForCode($eloquentService->getModelClass());
-            if (!$modelDataType->exists) {
-                $this->info("Criando DataType");
-                // Name e Slug sao unicos
-                $modelDataType->fill(
-                    [
-                    'name'                  => $eloquentService->getModelClass(), //strtolower($eloquentService->getName(true)),
-                    'slug'                  => $eloquentService->getModelClass(), //strtolower($eloquentService->getName(true)),
-                    'display_name_singular' => $eloquentService->getName(false),
-                    'display_name_plural'   => $eloquentService->getName(true),
-                    'icon'                  => $eloquentService->getIcon(),
-                    'model_name'            => $eloquentService->getModelClass(),
-                    'controller'            => '',
-                    'generate_permissions'  => 1,
-                    'description'           => '',
-                    'table_name'              => $eloquentService->getTablename(),
-                    'key_name'                => $eloquentService->getData('getKeyName'),
-                    'key_type'                => $eloquentService->getData('getKeyType'),
-                    'foreign_key'             => $eloquentService->getData('getForeignKey'),
-                    'group_package'           => $eloquentService->getGroupPackage(),
-                    'group_type'              => $eloquentService->getGroupType(),
-                    'history_type'            => $eloquentService->getHistoryType(),
-                    'register_type'           => $eloquentService->getRegisterType(),
-                    ]
-                )->save();
-
-                $order = 1;
-                foreach ($eloquentService->getColumns() as $column) {
-                    // dd(
-                    //     $eloquentService->getColumns(),
-                    //     $column,
-                    //     $column->getData('notnull')
-                    // );
-
-                    $dataRow = $this->dataRow($this->modelDataType, $column->getColumnName());
-                    if (!$dataRow->exists) {
-                        $dataRow->fill(
-                            [
-                            // 'type'         => 'select_dropdown',
-                            'type'         => $column->getColumnType(),
-                            'display_name' => $column->getName(),
-                            'required'     => $column->isRequired() ? 1 : 0,
-                            'browse'     => $column->isBrowse() ? 1 : 0,
-                            'read'     => $column->isRead() ? 1 : 0,
-                            'edit'     => $column->isEdit() ? 1 : 0,
-                            'add'     => $column->isAdd() ? 1 : 0,
-                            'delete'     => $column->isDelete() ? 1 : 0,
-                            'details'      => $column->getDetails(),
-                            'order' => $order,
-                            ]
-                        )->save();
-                        ++$order;
-                    }
-                }
-            }
-        }
-
-
-
-
         // $render = new \Support\Patterns\Builder\DatabaseBuilder($this);
         // $render = new \Support\Patterns\Builder\ModelagemBuilder($this);
-        dd(
-            $render
-        );
+        // dd(
+        //     $render
+        // );
 
 
 
@@ -181,10 +117,10 @@ class MapperCommand extends Command
 
 
 
-        dd(
-            $this->systemService->render()
-            // $systemService->render()['persons']->toArray()
-        );
+        // dd(
+        //     $this->systemService->render()
+        //     // $systemService->render()['persons']->toArray()
+        // );
 
         // $connection = $this->getConnection();
         // $schema = $this->getSchema($connection);
@@ -204,46 +140,5 @@ class MapperCommand extends Command
     }
 
 
-    /**
-     * [dataRow description].
-     *
-     * @param [type] $type  [description]
-     * @param [type] $field [description]
-     *
-     * @return [type] [description]
-     */
-    protected function dataRow($type, $field)
-    {
-        return DataRow::firstOrNew(
-            [
-                'data_type_id' => $type->id,
-                'field'        => $field,
-            ]
-        );
-    }
-
-    /**
-     * [dataType description].
-     *
-     * @param [type] $field [description]
-     * @param [type] $for   [description]
-     *
-     * @return [type] [description]
-     */
-    protected function dataType($field, $for)
-    {
-        return DataType::firstOrNew([$field => $for]);
-    }
-    protected function dataTypeForCode($code)
-    {
-        if ($return = DataType::where('name', $code)->first()) {
-            return $return;
-        }
-        if ($return = DataType::where('slug', $code)->first()) {
-            return $return;
-        }
-
-        return $this->dataType('model_name', $code);
-    }
     
 }

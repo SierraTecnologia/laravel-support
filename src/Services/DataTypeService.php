@@ -12,7 +12,7 @@ class DataTypeService
     // public function __construct(DatabaseService $databaseService, $class)
     public function __construct(string $className)
     {
-        $this->eloquentEntity = resolve(DatabaseService::class)->forceGetEloquentEntityFromClassName($className);
+        $this->eloquentEntity = resolve(ApplicationService::class)->forceGetEloquentEntityFromClassName($className);
     }
 
     public function __invoke(): EloquentEntity

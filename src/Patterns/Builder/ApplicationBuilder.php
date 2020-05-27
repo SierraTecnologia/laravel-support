@@ -121,13 +121,116 @@ class ApplicationBuilder extends BuilderAbstract
                     $relation,
                     $relation['name'],
                     $relation['type']
-                    // StringModificator::singularizeAndLower($relation['name']).'_'.$relation['type'].'_'.StringModificator::singularizeAndLower($eloquentService->getTableName()),
-                    // StringModificator::singularizeAndLower($relation['name'])
-                    // $novoIndice
                 );
             }
         }
     }
 
 
+    public function registerDataType($result)
+    {
+
+
+        $modelDataType = $this->dataTypeForCode($result->code);
+        if (!$modelDataType->exists) {
+            $this->info("Criando DataType: ".$result->code);
+            // Name e Slug sao unicos
+            $modelDataType->fill(
+                [
+                'name'                  => $result->code, //strtolower($result->getName(true)),
+                'slug'                  => $result->code, //strtolower($result->getName(true)),
+                'display_name_singular' => $result->getName(),
+                'display_name_plural'   => $result->getName(),
+                'icon'                  => $result->getIcon(),
+                'model_name'            => $result->code,
+                'controller'            => '',
+                'generate_permissions'  => 1,
+                'description'           => '',
+                'table_name'              => $result->getTablename(),
+                'key_name'                => $result->getData('getKeyName'),
+                'key_type'                => $result->getData('getKeyType'),
+                'foreign_key'             => $result->getData('getForeignKey'),
+                'indexes'                 => $result->getIndexes(),
+                'group_package'           => $result->getGroupPackage(),
+                'group_type'              => $result->getGroupType(),
+                'history_type'            => $result->getHistoryType(),
+                'register_type'           => $result->getRegisterType(),
+                ]
+            )->save();
+
+            $order = 1;
+            foreach ($result->getColumns() as $column) {
+                $this->info("Criando DataRow: ".$column->getColumnName());
+
+
+                $dataRow = $this->dataRow($modelDataType, $column->getColumnName());
+                if (!$dataRow->exists) {
+                    // dd(
+                    //     // $result->getColumns(),
+                    //     $column,
+                    //     $dataRow
+                    //     // $column->getData('notnull')
+                    // );
+                    $dataRow->fill(
+                        [
+                        'field'         => $column->getColumnName(),
+                        'type'         => $column->getColumnType(),
+                        'display_name' => $column->getName(),
+                        'required'     => $column->isRequired() ? 1 : 0,
+                        'browse'     => $column->isBrowse() ? 1 : 0,
+                        'read'     => $column->isRead() ? 1 : 0,
+                        'edit'     => $column->isEdit() ? 1 : 0,
+                        'add'     => $column->isAdd() ? 1 : 0,
+                        'delete'     => $column->isDelete() ? 1 : 0,
+                        'details'      => $column->getDetails(),
+                        'order' => $order,
+                        ]
+                    )->save();
+                    ++$order;
+                }
+            }
+        }
+    }
+
+    /**
+     * [dataRow description].
+     *
+     * @param [type] $type  [description]
+     * @param [type] $field [description]
+     *
+     * @return [type] [description]
+     */
+    protected function dataRow($type, $field)
+    {
+        return DataRow::firstOrNew(
+            [
+                'data_type_id' => $type->id,
+                'field'        => $field,
+            ]
+        );
+    }
+
+    /**
+     * [dataType description].
+     *
+     * @param [type] $field [description]
+     * @param [type] $for   [description]
+     *
+     * @return [type] [description]
+     */
+    protected function dataType($field, $for)
+    {
+        return DataType::firstOrNew([$field => $for]);
+    }
+    protected function dataTypeForCode($code)
+    {
+        if ($return = DataType::where('name', $code)->first()) {
+            return $return;
+        }
+        if ($return = DataType::where('slug', $code)->first()) {
+            return $return;
+        }
+
+        return $this->dataType('model_name', $code);
+    }
 }

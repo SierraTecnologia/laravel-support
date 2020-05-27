@@ -23,7 +23,7 @@ use Log;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 use Illuminate\Support\Str;
 use Watson\Validating\ValidatingTrait;
-use Support\Services\EloquentService;
+use Support\Services\ModelService;
 
 use Support\Utils\Modificators\ArrayModificator;
 use Support\Utils\Extratores\DbalExtractor;
@@ -585,7 +585,7 @@ abstract class Base extends Eloquent
         $modelFind = false;
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
-        if (!$eloquentEntityForModel = EloquentService::getEloquentEntityFromClassName(static::class)) {
+        if (!$eloquentEntityForModel = ModelService::make(static::class)) {
             return static::firstOrCreate($data);
         }
 

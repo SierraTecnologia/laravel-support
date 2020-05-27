@@ -4,6 +4,8 @@ namespace Support\Components\Database\Schema;
 
 use Doctrine\DBAL\Schema\Comparator;
 use Doctrine\DBAL\Schema\Table as DoctrineTable;
+use Support\Utils\Modificators\ArrayModificator;
+use Support\Utils\Modificators\StringModificator;
 
 class Table extends DoctrineTable
 {
@@ -205,4 +207,54 @@ class Table extends DoctrineTable
     //     }
     //     return false;
     // }
+
+    /**
+     * Eu que fiz
+     */
+
+    /**
+     * Nivel 3
+     */
+    public function returnRelationPrimaryKey(String $tableName, String $primary)
+    {
+        return StringModificator::singularizeAndLower($tableName).'_'.$primary;
+    }
+
+    public function returnPrimaryKeyFromIndexes()
+    {
+        $indexes = $this->exportIndexesToArray();
+        $primary = false;
+        if (!empty($indexes)) {
+            foreach ($indexes as $index) {
+                if ($index['type'] == 'PRIMARY') {
+                    return $index['columns'][0];
+                }
+            }
+        }
+
+        return $primary;
+    }
+
+    public function getDisplayName()
+    {
+        $columns = ArrayModificator::includeKeyFromAtribute($this->exportColumnsToArray(), 'name');
+
+        // Qual coluna ira mostrar em uma Relacao ?
+        if ($this->hasColumn('name')) {
+            return 'name';
+        } 
+        if ($this->hasColumn('displayName')) {
+            return 'displayName';
+        }
+
+        if (!$columns) {
+            return false;
+        }
+        foreach ($columns as $column) {
+            if ($column['type']['name'] == 'varchar') {
+                return $column['name'];
+            }
+        }
+        return false;
+    }
 }
