@@ -6,10 +6,10 @@ use Config;
 use Exception;
 use Illuminate\Console\Command;
 use Support\Generators\CrudGenerator;
-use Facilitador\Services\CrudMaker\AppService;
-use Facilitador\Services\CrudMaker\ConfigService;
-use Facilitador\Services\CrudMaker\CrudService;
-use Facilitador\Services\CrudMaker\ValidatorService;
+use Support\Services\CrudMaker\AppService;
+use Support\Services\CrudMaker\ConfigService;
+use Support\Services\CrudMaker\CrudService;
+use Support\Services\CrudMaker\ValidatorService;
 
 class CrudMaker extends Command
 {

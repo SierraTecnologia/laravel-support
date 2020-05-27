@@ -3,10 +3,10 @@
 namespace Support\Generators;
 
 use Illuminate\Filesystem\Filesystem;
-use Facilitador\Services\CrudMaker\FileService;
-use Facilitador\Services\CrudMaker\ModelService;
-use Facilitador\Services\CrudMaker\TableService;
-use Facilitador\Services\CrudMaker\TestService;
+use Support\Services\CrudMaker\FileService;
+use Support\Services\CrudMaker\ModelService;
+use Support\Services\CrudMaker\TableService;
+use Support\Services\CrudMaker\TestService;
 
 /**
  * Generate the CRUD.
@@ -23,28 +23,28 @@ class CrudGenerator
     /**
      * FileService instance.
      *
-     * @var \Facilitador\Services\CrudMaker\FileService
+     * @var \Support\Services\CrudMaker\FileService
      */
     protected $fileService;
 
     /**
      * TableService instance.
      *
-     * @var \Facilitador\Services\CrudMaker\TableService
+     * @var \Support\Services\CrudMaker\TableService
      */
     protected $tableService;
 
     /**
      * TestService instance.
      *
-     * @var \Facilitador\Services\CrudMaker\TestService
+     * @var \Support\Services\CrudMaker\TestService
      */
     protected $testService;
 
     /**
      * ModelService instance.
      *
-     * @var \Facilitador\Services\CrudMaker\ModelService
+     * @var \Support\Services\CrudMaker\ModelService
      */
     protected $modelService;
 

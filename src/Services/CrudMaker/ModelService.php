@@ -2,7 +2,7 @@
 
 namespace Support\Services\CrudMaker;
 
-use Facilitador\Services\CrudMaker\TableService;
+use Support\Services\CrudMaker\TableService;
 
 class ModelService
 {

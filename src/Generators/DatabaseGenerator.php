@@ -4,7 +4,7 @@ namespace Support\Generators;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
-use Facilitador\Services\CrudMaker\FileService;
+use Support\Services\CrudMaker\FileService;
 use Support\Traits\Models\SchemaTrait;
 
 /**

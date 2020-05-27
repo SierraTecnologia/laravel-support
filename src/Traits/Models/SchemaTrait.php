@@ -2,7 +2,7 @@
 
 namespace Support\Traits\Models;
 
-use Facilitador\Services\CrudMaker\ValidatorService;
+use Support\Services\CrudMaker\ValidatorService;
 
 trait SchemaTrait
 {
