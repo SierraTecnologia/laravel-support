@@ -2,7 +2,7 @@
 
 namespace Support\Generators\FormMaker;
 
-use Facilitador\Services\FormMaker\InputCalibrator;
+use Support\Services\FormMaker\InputCalibrator;
 
 /**
  * Generate the CRUD.
