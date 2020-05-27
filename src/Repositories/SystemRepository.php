@@ -22,16 +22,37 @@ class SystemRepository
      *
      * @return Object|null
      */
-    public function findByType($type)
+    public function findByType($type, $code = '')
     {
+        if (!empty($code)) {
+            $type .= '|'.$code;
+        }
         $item = $this->model->where('code', $type)->first();
 
         if ($item) {
-            // if ($item && ($item->data->is_published == 1 || $item->data->is_published == 'on') && $item->data->published_at <= Carbon::now(\Illuminate\Support\Facades\Config::get('app.timezone'))->format('Y-m-d H:i:s')) {
-            return $item->data;
+            $entity = new $type($code);
+            $entity->fromArray($type->data);
+            return $entity;
         }
 
         return null;
+    }
+
+    public function save($entity)
+    {
+
+        $codeInDatabase = get_class($entity);
+        if (!empty($entity->code)) {
+            $codeInDatabase .= '|'.$entity->code;
+        }
+
+        $item = $this->model->firstOrNew(['code' => $codeInDatabase]);
+
+        return $item->fill(
+            [
+            'data'         => $entity->toArray(),
+            ]
+        )->save();
     }
 
 }

@@ -43,19 +43,25 @@ abstract class BuilderAbstract extends ManagerAbstract
         } else {
             $this->entity = new static::$entityClasser($coder);
         }
-        $this->builder();
-        return $this->entity;
-        // return $this->getChildrens();
+        $this->prepare();
+        if ($this->builder()) {
+            return $this->entity;
+        }
+        return null;
     }
 
 
     public function run()
     {
         $this->info('Rodando Builder: '.static::class);
-        $this->prepare();
+        $this->requeriments();
         return true;
     }
 
+    public function requeriments()
+    {
+        
+    }
     public function prepare()
     {
         

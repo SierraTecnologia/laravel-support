@@ -49,7 +49,7 @@ class SystemBuilder extends BuilderAbstract
     public $renderDatabase;
     public $renderCoder;
 
-    public function prepare()
+    public function requeriments()
     {
         $this->renderDatabase = \Support\Patterns\Render\DatabaseRender::make('', $this->output)();
         $this->renderCoder = \Support\Patterns\Render\CodeRender::make('', $this->output)();
@@ -70,6 +70,7 @@ class SystemBuilder extends BuilderAbstract
                     return true;
                 }
                 if ($result->hasError()) {
+                    $this->entity->mergeErrors($result->getErrors());
                     return true;
                 }
                 return false;
@@ -89,14 +90,45 @@ class SystemBuilder extends BuilderAbstract
                 if (!$result->getTableName()) {
                     return true;
                 }
+                if ($this->entity->isForIgnoreClass($result->getClassName())) {
+                    return true;
+                }
                 return false;
             }
         );
+
+        /**
+         * Grava referencia de tabelas para classes ja sem as classes com problema
+         */
         $results->map(
             function ($result) {
-                $this->builderEloquent($result);
+                $this->loadMapperTableToClasses(
+                    $result->getTableName(),
+                    $result->getClassName()
+                );
             }
         );
+
+        // dd(
+        //     $results["Informate\Models\Entytys\Fisicos\Weapon"]
+        // );
+        /**
+         * Remove quem nao tem tabela no banco de dados e armazena os entitys
+         */
+        $results->reject(
+            function ($result) {
+                return !$this->entity->haveTableInDatabase($result->getClassName());
+            }
+        )->map(
+            function ($result) {
+                $this->entity->models[$result->getClassName()] = $result;
+            }
+        );
+        // dd(
+        //     $this->entity
+        // );
+
+        return true;
     }
 
     // protected function renderData()
@@ -110,16 +142,6 @@ class SystemBuilder extends BuilderAbstract
             $modelParser->getParentClassName()
         );
     }
-
-    protected function builderEloquent($modelParser)
-    {
-        $this->loadMapperTableToClasses(
-            $modelParser->getTableName(),
-            $modelParser->getClassName()
-        );
-        $this->entity->models[$modelParser->getClassName()] = $modelParser;
-    }
-
 
     private function registerMapperClassParents($className, $classParent)
     {
@@ -149,7 +171,9 @@ class SystemBuilder extends BuilderAbstract
             );
 
             // @todo Ignorar classes que uma extend a outra
-            $this->entity->errors[] = 'Duas classes para a mesma tabela: '.$tableName;
+            $this->entity->setError(
+                'Duas classes para a mesma tabela: '.$tableName
+            );
             return ;
         }
         $this->entity->mapperTableToClasses[$tableName] = $tableClass;

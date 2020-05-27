@@ -20,19 +20,6 @@ use Support\Analysator\Information\HistoryType\AbstractHistoryType;
 use Support\Analysator\Information\RegisterTypes\AbstractRegisterType;
 
 
-use Doctrine\DBAL\Schema\SchemaException;
-use Doctrine\DBAL\DBALException;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Symfony\Component\Debug\Exception\FatalErrorException;
-use Exception;
-use ErrorException;
-use LogicException;
-use OutOfBoundsException;
-use RuntimeException;
-use TypeError;
-use Throwable;
-use Watson\Validating\ValidationException;
-use Illuminate\Contracts\Container\BindingResolutionException;
 
 class ParseClass implements Arrayable
 {
@@ -113,8 +100,7 @@ class ParseClass implements Arrayable
     {
 
 
-        try {
-                
+        $this->forceExecute(function() use ($classOrReflectionClass) {
             $this->className = $classOrReflectionClass;
             $this->type = $this->detectType();
             if (!$this->supportModelCodeClass = Classes::find($this->className)) {
@@ -143,32 +129,7 @@ class ParseClass implements Arrayable
             //     $this->reflectionClass->getProperty('table')
             // );
             // var_dump($this->reflectionClass->getFileName());
-
-        } catch(BindingResolutionException $e) {
-            // Erro Leve
-            $this->setErrors(
-                $e,
-                [
-                    'model' => $this->className
-                ]
-            );
-            
-        } catch(SchemaException|DBALException $e) {
-            // @todo Tratar, Tabela Nao existe
-            $this->setErrors(
-                $e,
-                [
-                    'model' => $this->className
-                ]
-            );
-        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-            $this->setErrors(
-                $e,
-                [
-                    'model' => $this->className
-                ]
-            );
-        } 
+        });
         
     }
     

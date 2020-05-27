@@ -74,18 +74,16 @@ class ModelService
     public function getDiscoverService()
     {
         if (!$this->modelDataType) {
+            $applicationEntity = resolve(ApplicationService::class)->getEntity();
+            $realModelClass = $applicationEntity->getReferenceForClass($this->modelClass);
 
-            $this->modelDataType = $this->dataTypeForCode($this->modelClass);
+            $this->modelDataType = $this->dataTypeForCode($realModelClass);
             if (!$this->modelDataType->exists) {
-                \Support\Patterns\Builder\ApplicationBuilder::make('', $this)();
-
-                $this->modelDataType = $this->dataTypeForCode($this->modelClass);
-                if (!$this->modelDataType->exists) {
-                    dd(
-                        'Erro para classe',
-                        $this->modelClass
-                    );
-                }
+                dd(
+                    'Erro para classe',
+                    $this->modelClass,
+                    $realModelClass
+                );
             }
         }
         return $this->modelDataType;
@@ -98,7 +96,7 @@ class ModelService
 
     public function getIndexes()
     {
-        return $this->getDiscoverService()->getIndexes();   
+        return $this->getDiscoverService()->indexes;   
     }
 
     /**

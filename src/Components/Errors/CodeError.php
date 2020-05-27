@@ -52,7 +52,7 @@ abstract class CodeError
      */
     public function getMessage()
     {
-        return $this->getName();
+        return $this->getDescription();
     }
 
     public function whereFind()

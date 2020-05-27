@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Collections;
+namespace Support\Collections;
 
 // Deps
 use App;

@@ -6,15 +6,20 @@
 namespace Support\Patterns\Entity;
 
 use Support\Contracts\Manager\EntityAbstract;
+use Support\Utils\Extratores\ClasserExtractor;
+use Support\Patterns\Parser\ParseClass;
+use Support\Traits\Debugger\HasErrors;
 
 class SystemEntity extends EntityAbstract
 {
+    use HasErrors;
+    
     /**
      * indice = 'PrimaryKeys
      */
     public $mapperParentClasses;
     public $mapperTableToClasses;
-    public $mapperClasserProcuracao;
+    public $mapperClassNameToDataTypeReference;
     public $models = [];
     public $tables = [];
 
@@ -72,7 +77,6 @@ class SystemEntity extends EntityAbstract
             $this->setError(
                 $error
             );
-            $this->tempErrorClasses[$className] = $error->getDescription();
         }
         return false;
     }
@@ -97,12 +101,11 @@ class SystemEntity extends EntityAbstract
      */
     public function loadMapperClasserProcuracao($eloquentEntity, $classForReplaced)
     {
-        Log::channel('sitec-support')->debug(
-            'Database Render (Rejeitando classe nao finais): Class: '.
-            $classForReplaced
-        );
-        $this->mapperClasserProcuracao[$classForReplaced] = $eloquentEntity;
-        $this->tempIgnoreClasses[] = $classForReplaced;
+        // Log::channel('sitec-support')->debug(
+        //     'Database Render (Rejeitando classe nao finais): Class: '.
+        //     $classForReplaced
+        // );
+        $this->mapperClassNameToDataTypeReference[$classForReplaced] = $eloquentEntity;
     }
     public function isForIgnoreClass($className)
     {
@@ -163,7 +166,7 @@ class SystemEntity extends EntityAbstract
             }
         }
 
-        return !$this->haveTableInDatabase($className);
+        return false;
     }
 
 

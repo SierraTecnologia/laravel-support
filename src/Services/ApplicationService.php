@@ -8,91 +8,29 @@ use Support\Patterns\Parser\ComposerParser;
 use Illuminate\Support\Collection;
 use Support\Exceptions\Coder\EloquentNotExistException;
 use Support\Exceptions\Coder\EloquentHasErrorException;
+use Support\Patterns\Builder\ApplicationBuilder;
+use Support\Patterns\Entity\ApplicationEntity;
 
 class ApplicationService
 {
-    protected $modelsFindInAlias = false;
+    protected $entity = false;
 
-    protected $composerParser = false;
-
-    protected $eloquentEntitysLoaders = [];
-
-
-    protected $databaseMount = false;
-
-    public function __construct($configModelsAlias, ComposerParser $composerParser)
+    public function __construct()
     {
-        $this->configModelsAlias = $configModelsAlias;
-        $this->composerParser = $composerParser;
-        // $this->getDatabaseMount(); // @todo Remover isso aqui e ver se funciona
-    }
-    public function render()
-    {
-        $systemRepository = resolve(\Support\Repositories\SystemRepository::class);
 
-        $result = $systemRepository->findByType(\Support\Patterns\Entity\DatabaseParser::class);
-
-        dd(
-            $result
-        );
-        // return $listTables = (new \Support\Patterns\Parser\DatabaseParser())();
-        return $listTables = (new \Support\Patterns\Parser\DatabaseParser())();
     }
 
-    public function getEntity($entityClass)
+    public function getEntity()
     {
-        $systemRepository = resolve(\Support\Repositories\SystemRepository::class);
-
-        return $systemRepository->findByType($entityClass);
-    }
-
-    /**
-     * @todo isso repete deve ter um contrato compartilhado com repository
-     */
-    public function mapper()
-    {
-        return $this;
-    }
-
-    public function fixes()
-    {
-        return $this;
-    }
-
-    protected function renderTables()
-    {
-        $listTables = (new \Support\Patterns\Parser\DatabaseParser())();
-        $tableBuilder = new \Support\Patterns\Builder\TablesBuilder($listTables);
-
-        $this->tempAppTablesWithNotPrimaryKey = $tableBuilder->getRelationTables();
-        $this->displayTables = $tableBuilder->getTables();
-    }
-
-
-    /**
-     * Privados
-     */
-
-    private function extractAllModelsFromComposerWithNamespaceAlias(): Collection
-    {
-        if (!$this->modelsFindInAlias) {
-            $this->modelsFindInAlias = $this->composerParser->returnClassesByAlias($this->configModelsAlias);
+        if (!$this->entity && !$this->entity = ApplicationEntity::recover()){
+            $this->forceBuilder();
         }
-        return $this->modelsFindInAlias;
+        return $this->entity;
     }
 
-
-    /**
-     * FROM MOUNTS
-     */
-    private function getDatabaseMount(): DatabaseMount
+    public function forceBuilder()
     {
-        if (!$this->databaseMount) {
-            $this->databaseMount = (new DatabaseMount(
-                collect($this->extractAllModelsFromComposerWithNamespaceAlias())
-            ));
-            $this->registerManyEloquentEntity($this->databaseMount->getAllEloquentsEntitys());
-        }
-        return $this->databaseMount;
+        return $this->entity = ApplicationBuilder::make('')();
     }
+
 }

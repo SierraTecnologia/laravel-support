@@ -31,6 +31,12 @@ class ArraySearcher
         if (empty($str) || is_null($str) || $str===false) {
             return false;
         }
+        if (!is_array($array)) {
+            dd(
+                $str, $array
+            );
+            return false;
+        }
         $found = array();
         foreach ($array as $k => $v) {
             if (is_array($v)) {

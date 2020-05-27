@@ -16,23 +16,42 @@ use Support\Patterns\Entity\ApplicationEntity;
 use Illuminate\Database\Eloquent\Collection;
 use Support\Elements\Entities\RelationshipEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
+use Support\Models\DataRow;
+use Support\Models\DataType;
 
 class ApplicationBuilder extends BuilderAbstract
 {
     public static $entityClasser = ApplicationEntity::class;
 
+    public $systemEntity;
 
-
-    public function prepare()
+    public function requeriments()
     {
         $this->systemEntity = \Support\Patterns\Builder\SystemBuilder::make('', $this->output)();
     }
 
+    public function afterBuild()
+    {
+        $systemRepository = resolve(\Support\Repositories\SystemRepository::class);
+
+        return $systemRepository->save(
+            $this->entity
+        );
+    }
+
+    public function prepare()
+    {
+        $this->entity->system = $this->systemEntity;
+        
+        $this->entity->mapperParentClasses = $this->systemEntity->mapperParentClasses;
+        $this->entity->mapperTableToClasses = $this->systemEntity->mapperTableToClasses;
+        $this->entity->mapperClassNameToDataTypeReference = $this->systemEntity->mapperClassNameToDataTypeReference;
+    }
+
     public function builder()
     {
+        $results = $this->entity->system->models;
 
-        $this->entity->system = $this->systemEntity;
-        $results = $this->systemEntity->models;
         $this->entity->relations = [];
         (new Collection($results))->map(
             function ($result) {
@@ -48,6 +67,10 @@ class ApplicationBuilder extends BuilderAbstract
             }
         );
 
+        // dd(
+        //     $this->entity->models["Informate\Models\Entytys\Fisicos\Weapon"]
+        // );
+        return true;
         
     }
 
@@ -59,8 +82,13 @@ class ApplicationBuilder extends BuilderAbstract
                 $this->entity,
                 $this->output
             )($result->getClassName());
+
+            // Register DataType/DataRow
+            $this->registerDataType($this->entity->models[$result->getClassName()]);
         } catch (EloquentTableNotExistException $th) {
-            //@todo tabela nao existe verificar
+            dd(
+                $th
+            );
         }
     }
 
@@ -165,12 +193,9 @@ class ApplicationBuilder extends BuilderAbstract
 
                 $dataRow = $this->dataRow($modelDataType, $column->getColumnName());
                 if (!$dataRow->exists) {
-                    // dd(
-                    //     // $result->getColumns(),
-                    //     $column,
-                    //     $dataRow
-                    //     // $column->getData('notnull')
-                    // );
+                    if (empty($column->getColumnName())){
+                        throw new \Exception('Problema na tabela '.$result->code.' coluna '.print_r($column, true));
+                    }
                     $dataRow->fill(
                         [
                         'field'         => $column->getColumnName(),

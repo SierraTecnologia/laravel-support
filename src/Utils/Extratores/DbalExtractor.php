@@ -29,10 +29,17 @@ class DbalExtractor
     {
         $wheresArray = [];
         foreach ($indices as $index) {
-            if ($index['type'] == 'PRIMARY' || $index['type'] == 'UNIQUE') {
+            if(is_object($index)) {
+                $type = $index->type;
+                $columns = $index->columns;
+            } else {
+                $type = $index['type'];
+                $columns = $index['columns'];
+            }
+            if ($type == 'PRIMARY' || $type == 'UNIQUE') {
                 // Caso não tenha nada a procurar, entao pula
                 if (!empty($generateWhere = DbalExtractor::generateWhere(
-                    $index['columns'],
+                    $columns,
                     $data
                 ))) {
                     $wheresArray[] = $generateWhere;

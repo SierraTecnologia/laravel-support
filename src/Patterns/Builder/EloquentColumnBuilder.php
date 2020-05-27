@@ -92,6 +92,7 @@ class EloquentColumnBuilder extends BuilderAbstract
         if ($details = $this->mountDetails()) {
             $this->entity->setDetails($details);
         }
+        return true;
 
     }
 

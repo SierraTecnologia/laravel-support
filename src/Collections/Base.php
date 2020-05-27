@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Collections;
+namespace Support\Collections;
 
 use Illuminate\Database\Eloquent\Collection;
 use Support\Traits\Models\SerializeWithImages;

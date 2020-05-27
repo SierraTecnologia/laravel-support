@@ -79,8 +79,11 @@ class EloquentBuilder extends BuilderAbstract
         );
         foreach ($databaseTableArray['columns'] as $column) {
             $column['table'] = $parseModelClass->getTableName();
-            $this->entity->addColumn($columnEntity($column));
+            if ($entityColumn = $columnEntity($column)) {
+                $this->entity->addColumn($entityColumn);
+            }
         }
+        return true;
     
     }
 

@@ -6,17 +6,31 @@ namespace Support\Traits\Debugger;
 
 use Support\Utils\Debugger\ErrorHelper;
 
+use Doctrine\DBAL\Schema\SchemaException;
+use Doctrine\DBAL\DBALException;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\Debug\Exception\FatalErrorException;
+use Exception;
+use ErrorException;
+use LogicException;
+use OutOfBoundsException;
+use RuntimeException;
+use TypeError;
+use Throwable;
+use Watson\Validating\ValidationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
+
 trait HasErrors
 {
 
     /**
      * Error
      */
-    protected $error = [];
+    protected $errors = [];
     protected $isError = false;
-    protected $warning = [];
+    protected $warnings = [];
     protected $isWarning = false;
-    protected $debug = [];
+    protected $debugs = [];
     protected $isDebug = false;
 
     public function markWithError()
@@ -35,7 +49,7 @@ trait HasErrors
      */
     public function getError()
     {
-        return $this->error;
+        return $this->errors;
     }
     public function getErrors()
     {
@@ -44,7 +58,7 @@ trait HasErrors
 
     public function getWarning()
     {
-        return $this->warning;
+        return $this->warnings;
     }
     public function getWarnings()
     {
@@ -53,7 +67,7 @@ trait HasErrors
 
     public function getDebug()
     {
-        return $this->debug;
+        return $this->debugs;
     }
     public function getDebugs()
     {
@@ -101,7 +115,7 @@ trait HasErrors
         }
         $reference['locateClassFromError'] = get_class($this);
 
-        $this->error[] = ErrorHelper::registerAndReturnMessage($error, $reference, 'error');
+        $this->errors[] = ErrorHelper::registerAndReturnMessage($error, $reference, 'error');
         $this->isError = true;
 
         if (ErrorHelper::isToDebug($reference)) {
@@ -147,7 +161,7 @@ trait HasErrors
         }
         $reference['locateClassFromWarning'] = get_class($this);
 
-        $this->warning[] = ErrorHelper::registerAndReturnMessage($warning, $reference, 'warning');
+        $this->warnings[] = ErrorHelper::registerAndReturnMessage($warning, $reference, 'warning');
         $this->isWarning = true;
 
         if (ErrorHelper::isToDebug($reference)) {
@@ -192,7 +206,7 @@ trait HasErrors
         }
         $reference['locateClassFromDebug'] = get_class($this);
 
-        $this->debug[] = ErrorHelper::registerAndReturnMessage($debug, $reference, 'debug');
+        $this->debugs[] = ErrorHelper::registerAndReturnMessage($debug, $reference, 'debug');
         $this->isDebug = true;
 
         if (ErrorHelper::isToDebug($reference)) {
@@ -208,14 +222,50 @@ trait HasErrors
     }
 
     /**
-     * Update the table.
+     * Merge Errors
      *
      * @return void
      */
     public function mergeErrors($errors)
     {  
-        $this->error = \array_merge(
-            $this->error, $errors
+        $this->errors = \array_merge(
+            $this->errors, $errors
         );
+    }
+
+    /**
+     * Run a function or getError
+     *
+     * @return void
+     */
+    public function forceExecute($function)
+    {  
+        try {
+            $function();
+        } catch(BindingResolutionException $e) {
+            // Erro Leve
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->className
+                ]
+            );
+            
+        } catch(SchemaException|DBALException $e) {
+            // @todo Tratar, Tabela Nao existe
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->className
+                ]
+            );
+        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+            $this->setErrors(
+                $e,
+                [
+                    'model' => $this->className
+                ]
+            );
+        } 
     }
 }

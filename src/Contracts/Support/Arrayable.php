@@ -12,4 +12,11 @@ interface Arrayable extends BaseArrayable
      * @return array
      */
     public function toArray();
+
+    /**
+     * Set the instance as an array.
+     *
+     * @return array
+     */
+    public function fromArray(Array $array);
 }

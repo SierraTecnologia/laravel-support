@@ -592,7 +592,7 @@ abstract class Base extends Eloquent
         $data = DbalInclusor::includeDataFromEloquentEntity($eloquentEntityForModel, $data, $keyName);
 
         /**
-         * Search from Indexes
+         * Procura somente usando os indices
          */
         $results = DbalExtractor::generateWhereFromData(
             $data,
@@ -600,6 +600,7 @@ abstract class Base extends Eloquent
         )->map(
             function ($query) use ($data) {
                 if ($modelFind = static::where($query)->first()) {
+                    // @todo mesclar parametros e salvar
                     Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($query, true).' e Data: '.print_r($data, true));
                     return DbalMergeator::mergeWithAttributes($modelFind, $data);
                 }
@@ -614,9 +615,11 @@ abstract class Base extends Eloquent
             return $results->first();
         }
 
-        // // Cado nada de certo retorna o primeiro ou cria
-        // // @debug Resolver essa gambiarra @todo
-        // $eloquentEntityForModel->sendToDebug([$data, $keyName, $dataOrPrimaryCode, $eloquentEntityForModel]);
+        // PRocura por todos os parametros
+        if ($modelFind = static::where($data)->first()) {
+            return $modelFind;
+        }
+
         return static::firstOrCreate($data);
 
     }
