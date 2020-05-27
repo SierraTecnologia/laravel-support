@@ -2,7 +2,7 @@
 
 namespace Support\Generators;
 
-use Facilitador\Services\ModelService;
+use Support\Services\ModelService;
 
 /**
  * Generate the CRUD.

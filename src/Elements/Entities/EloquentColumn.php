@@ -3,7 +3,7 @@
 namespace Support\Elements\Entities;
 
 use Illuminate\Support\Collection;
-use Facilitador\Services\ModelService;
+use Support\Services\ModelService;
 use Facilitador\Services\RepositoryService;
 use Support\Elements\Entities\DataType;
 use Illuminate\Database\Eloquent\Model;

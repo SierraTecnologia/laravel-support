@@ -5,7 +5,7 @@ namespace Support\Patterns\Entity;
 use Support\Contracts\Manager\EntityAbstract;
 
 use Illuminate\Support\Collection;
-use Facilitador\Services\ModelService;
+use Support\Services\ModelService;
 use Facilitador\Services\RepositoryService;
 use Support\Elements\Entities\DataType;
 use Illuminate\Database\Eloquent\Model;

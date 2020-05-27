@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Support\Exceptions\Coder\EloquentNotExistException;
 use Support\Exceptions\Coder\EloquentHasErrorException;
 use Illuminate\Http\Request;
-use Facilitador\Services\ModelService;
+use Support\Services\ModelService;
 use Support\Models\Application\DataType;
 use Support\Traits\Coder\GetSetTrait;
 use App;
