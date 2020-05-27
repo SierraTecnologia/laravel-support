@@ -76,6 +76,11 @@ class EloquentColumnEntity extends EntityAbstract
     public $fillable;
     protected $data;
 
+    public static $mapper = [
+        'name',
+        'columnName',
+        'data',
+    ];
 
 
     /**

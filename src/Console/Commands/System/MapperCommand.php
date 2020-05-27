@@ -70,7 +70,7 @@ class MapperCommand extends Command
     {
 
 
-        \Support\Models\Code\Classes::truncate();
+        \Support\Models\Code\Classer::truncate();
         DataRow::truncate();
         DataType::query()->delete();
 

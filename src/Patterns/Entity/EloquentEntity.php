@@ -141,6 +141,11 @@ class EloquentEntity extends EntityAbstract
     public $dataForColumns; // Array
     public $columns; // Em instancias
 
+    public static $mapper = [
+        'icon',
+        'dataForColumns',
+        'data',
+    ];
 
 
     /**

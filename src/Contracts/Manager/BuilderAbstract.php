@@ -7,6 +7,7 @@ use Support\Traits\Debugger\HasErrors;
 use Support\Traits\Coder\GetSetTrait;
 use Support\Contracts\Output\OutputableTrait;
 use Illuminate\Database\Eloquent\Collection;
+use Support\Repositories\EntityRepository;
 
 abstract class BuilderAbstract extends ManagerAbstract
 {
@@ -45,9 +46,19 @@ abstract class BuilderAbstract extends ManagerAbstract
         }
         $this->prepare();
         if ($this->builder()) {
+            $this->afterBuild();
             return $this->entity;
         }
         return null;
+    }
+
+    public function afterBuild()
+    {
+        $systemRepository = resolve(EntityRepository::class);
+
+        return $systemRepository->save(
+            $this->entity
+        );
     }
 
 

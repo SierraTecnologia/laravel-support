@@ -7,7 +7,7 @@ namespace Support\Patterns\Parser;
 
 use App;
 use Log;
-use Support\Models\Code\Classes;
+use Support\Models\Code\Classer;
 use Support\Traits\Debugger\HasErrors;
 
 use Support\Contracts\Support\Arrayable;
@@ -103,8 +103,8 @@ class ParseClass implements Arrayable
         $this->forceExecute(function() use ($classOrReflectionClass) {
             $this->className = $classOrReflectionClass;
             $this->type = $this->detectType();
-            if (!$this->supportModelCodeClass = Classes::find($this->className)) {
-                $this->supportModelCodeClass = new Classes;
+            if (!$this->supportModelCodeClass = Classer::find($this->className)) {
+                $this->supportModelCodeClass = new Classer;
                 $this->supportModelCodeClass->class_name = $this->getClassName();
                 $this->supportModelCodeClass->filename = $this->getFilename();
                 $this->supportModelCodeClass->parent_class = $this->getParentClassName();

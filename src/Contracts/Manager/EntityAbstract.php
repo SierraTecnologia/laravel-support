@@ -7,6 +7,7 @@ use Support\Traits\Debugger\HasErrors;
 use Support\Traits\Coder\GetSetTrait;
 use Support\Contracts\Output\OutputableTrait;
 use Illuminate\Database\Eloquent\Collection;
+use Support\Repositories\EntityRepository;
 
 abstract class EntityAbstract implements Arrayable
 {
@@ -21,7 +22,7 @@ abstract class EntityAbstract implements Arrayable
     
     public static function recover($code = '')
     {
-        $systemRepository = resolve(\Support\Repositories\SystemRepository::class);
+        $systemRepository = resolve(EntityRepository::class);
 
         return $systemRepository->findByType(
             static::class,

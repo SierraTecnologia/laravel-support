@@ -40,10 +40,18 @@ class EntityRepository
 
     public function save($entity)
     {
-
-        $codeInDatabase = get_class($entity);
+        $type = get_class($entity);
+        $codeInDatabase = $type;
         if (!empty($entity->code)) {
-            $codeInDatabase .= '|'.$entity->code;
+            if (is_array($entity->code)) {
+                if (isset($entity->code['name'])) {
+                    $codeInDatabase .= '|'.$entity->code['name'];
+                } else {
+                    $codeInDatabase .= '|'.serialize($entity->code);
+                }
+            } else {
+                $codeInDatabase .= '|'.$entity->code;
+            }
         }
 
         $item = $this->model->firstOrNew(['code' => $codeInDatabase]);
@@ -51,9 +59,9 @@ class EntityRepository
         return $item->fill(
             [
                 'data'         => $entity->toArray(),
-                'parameter'         => $entity->toArray(),
-                'type'         => $entity->toArray(),
-                'md5'         => md5(serialize($entity)),
+                'parameter'    => $entity->code,
+                'type'         => $entity->code,
+                'md5'         => md5(serialize($entity->toArray())),
             ]
         )->save();
     }

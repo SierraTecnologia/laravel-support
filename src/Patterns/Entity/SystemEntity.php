@@ -24,6 +24,12 @@ class SystemEntity extends EntityAbstract
     public $tables = [];
 
 
+    public static $mapper = [
+        'mapperParentClasses',
+        'mapperTableToClasses',
+        'mapperClassNameToDataTypeReference',
+    ];
+
 
     public function haveParent($classChild)
     {
@@ -68,14 +74,13 @@ class SystemEntity extends EntityAbstract
                 );
             }
             
-            $error = \Support\Components\Errors\TableNotExistError::make(
-                $tableName,
-                [
-                    'file' => $className
-                ]
-            );
             $this->setError(
-                $error
+                \Support\Components\Errors\TableNotExistError::make(
+                    $tableName,
+                    [
+                        'file' => $className
+                    ]
+                )
             );
         }
         return false;

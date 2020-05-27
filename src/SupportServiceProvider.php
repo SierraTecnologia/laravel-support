@@ -411,11 +411,12 @@ class SupportServiceProvider extends ServiceProvider
         // Reduce the horizontal form's label width
         Config::set('former.TwitterBootstrap3.labelWidths', []);
 
-        // Change Former's required field HTML
-        Config::set(
-            'former.required_text', ' <span class="glyphicon glyphicon-exclamation-sign js-tooltip required" title="' .
-            __('facilitador::login.form.required') . '"></span>'
-        );
+        // @todo desfazer pq da erro qnd falta tabela model_translactions
+        // // Change Former's required field HTML
+        // Config::set(
+        //     'former.required_text', ' <span class="glyphicon glyphicon-exclamation-sign js-tooltip required" title="' .
+        //     __('facilitador::login.form.required') . '"></span>'
+        // );
 
         // Make pushed checkboxes have an empty string as their value
         Config::set('former.unchecked_value', '');

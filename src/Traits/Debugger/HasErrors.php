@@ -238,33 +238,44 @@ trait HasErrors
      *
      * @return void
      */
-    public function forceExecute($function)
+    public function forceExecute($function, $param = false, $data = [])
     {  
         try {
             $function();
         } catch(BindingResolutionException $e) {
+            if (!$param) {
+                $this->setErrors(
+                    $e
+                );
+                return true;
+            }
             // Erro Leve
             $this->setErrors(
-                $e,
-                [
-                    'model' => $this->className
-                ]
+                $e
             );
             
         } catch(SchemaException|DBALException $e) {
-            // @todo Tratar, Tabela Nao existe
-            $this->setErrors(
-                $e,
-                [
-                    'model' => $this->className
-                ]
+            if (!$param) {
+                $this->setErrors(
+                    $e
+                );
+                return true;
+            }
+            $this->setError(
+                \Support\Components\Errors\TableNotExistError::make(
+                    $param,
+                    $data
+                )
             );
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+            if (!$param) {
+                $this->setErrors(
+                    $e
+                );
+                return true;
+            }
             $this->setErrors(
-                $e,
-                [
-                    'model' => $this->className
-                ]
+                $e
             );
         } 
     }

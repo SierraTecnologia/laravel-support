@@ -77,7 +77,7 @@ abstract class CodeError
             $this->supportModelCodeClass->class_type = static::class;
             $this->supportModelCodeClass->target = $this->getTarget();
             $this->supportModelCodeClass->name = $this->getDescription();
-            // $this->supportModelCodeClass->data = $this->toArray();
+            $this->supportModelCodeClass->data = $customData;
             $this->supportModelCodeClass->save();
         }
     }

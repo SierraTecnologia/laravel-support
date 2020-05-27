@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Models;
+namespace Support\Models\Application;
 
 use Illuminate\Database\Eloquent\Model;
 use Facilitador\Traits\Translatable;

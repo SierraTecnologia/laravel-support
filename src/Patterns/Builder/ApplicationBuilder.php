@@ -30,15 +30,6 @@ class ApplicationBuilder extends BuilderAbstract
         $this->systemEntity = \Support\Patterns\Builder\SystemBuilder::make('', $this->output)();
     }
 
-    public function afterBuild()
-    {
-        $systemRepository = resolve(\Support\Repositories\SystemRepository::class);
-
-        return $systemRepository->save(
-            $this->entity
-        );
-    }
-
     public function prepare()
     {
         $this->entity->system = $this->systemEntity;

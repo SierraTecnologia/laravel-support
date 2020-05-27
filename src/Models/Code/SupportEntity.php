@@ -6,6 +6,7 @@
 namespace Support\Models\Code;
 
 use Illuminate\Database\Eloquent\Model;
+
 class SupportEntity extends Model
 {
     public $timestamps = false;

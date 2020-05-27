@@ -44,7 +44,7 @@ trait ArrayableTrait
         $multiDimensional = false;
 
         $dataToReturn = [];
-        $mapper = self::$mapper;
+        $mapper = static::$mapper;
         foreach ($mapper as $indice=>$dataArray) {
             if (is_array($dataArray)) {
                 $multiDimensional = true;
@@ -57,11 +57,13 @@ trait ArrayableTrait
             }
         }
 
-        if ($multiDimensional) {
-            $dataToReturn['Errors'] = [];
-            $dataToReturn['Errors']['errors'] = $this->getErrors();
-        } else {
-            $dataToReturn['errors'] = $this->getErrors();
+        if(method_exists($this, 'getErrors')){
+            if ($multiDimensional) {
+                $dataToReturn['Errors'] = [];
+                $dataToReturn['Errors']['errors'] = $this->getErrors();
+            } else {
+                $dataToReturn['errors'] = $this->getErrors();
+            }
         }
 
         return $dataToReturn;
@@ -76,7 +78,7 @@ trait ArrayableTrait
     public function setArray($datas)
     {
         $multiDimensional = false;
-        $mapper = self::$mapper;
+        $mapper = static::$mapper;
         foreach ($mapper as $indice=>$mapperValue) {
             if (is_array($mapperValue)) {
                 $multiDimensional = true;
@@ -92,15 +94,17 @@ trait ArrayableTrait
             }
         }
 
-        if ($multiDimensional) {
-            if (isset($datas['Errors'])) {
-                if (isset($datas['Errors']['errors'])) {
-                    $this->mergeErrors($datas['Errors']['errors']);
+        if(method_exists($this, 'mergeErrors')){
+            if ($multiDimensional) {
+                if (isset($datas['Errors'])) {
+                    if (isset($datas['Errors']['errors'])) {
+                        $this->mergeErrors($datas['Errors']['errors']);
+                    }
                 }
-            }
-        } else {
-            if (isset($datas['errors'])) {
-                $this->mergeErrors($datas['errors']);
+            } else {
+                if (isset($datas['errors'])) {
+                    $this->mergeErrors($datas['errors']);
+                }
             }
         }
     }
@@ -128,7 +132,7 @@ trait ArrayableTrait
     private function arrayIsMultiDimensional()
     {
         $multiDimensional = false;
-        $mapper = self::$mapper;
+        $mapper = static::$mapper;
         foreach ($mapper as $indice=>$mapperValue) {
             if (is_array($mapperValue)) {
                 $multiDimensional = true;

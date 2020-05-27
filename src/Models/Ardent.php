@@ -19,6 +19,7 @@ use Illuminate\Validation\DatabasePresenceVerifier;
 use Illuminate\Validation\Factory as ValidationFactory;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
+use Facilitador\Models\Builder;
 
 /**
  * Ardent - Self-validating Eloquent model base class
@@ -249,7 +250,7 @@ abstract class Ardent extends Model
      * @see    \Illuminate\Database\Eloquent\Model::boot()
      * @return void
      */
-    public static function boot()
+    protected static function boot()
     {
         parent::boot();
 

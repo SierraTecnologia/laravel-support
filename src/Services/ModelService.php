@@ -23,7 +23,7 @@ use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
 use Support\Services\DatabaseService;
 use Support\Elements\Entities\EloquentEntity;
-use Support\Models\Code\Classes;
+use Support\Models\Code\Classer;
 use Support\Contracts\Services\EloquentInterface;
 
 /**
@@ -41,22 +41,6 @@ class ModelService implements EloquentInterface
     public function __construct($modelClass = false)
     {
         if ($this->modelClass = $modelClass) {
-            if (!is_string($modelClass) && !is_a($modelClass, EloquentEntity::class)) {
-                throw new Exception(
-                    "Essa classe deveria ser uma string ou uma instancia eloquentEntity: ".print_r($modelClass, true),
-                    400
-                );
-            }
-            if (empty($modelClass)) {
-                throw new Exception(
-                    "ModelService, nao deveria vir vazia a classeModel: ".print_r($modelClass, true),
-                    400
-                );
-            }
-
-            if (is_a($modelClass, EloquentEntity::class)) {
-                $this->setEloquentEntity($modelClass);
-            }
             $this->getDiscoverService();
         }
     }
@@ -139,8 +123,8 @@ class ModelService implements EloquentInterface
             throw new Exception('Criptografia inválida ' . $this->modelClass);
         }
 
-        // return Classes::getFinalClass($this->modelClass);
-        // return Classes::getClassWithProcuracao($this->modelClass);
+        // return Classer::getFinalClass($this->modelClass);
+        // return Classer::getClassWithProcuracao($this->modelClass);
         return $this->modelClass;
     }
 
