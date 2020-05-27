@@ -44,6 +44,16 @@ class ParseClass implements Arrayable
     use GetSetTrait;
 
     /**
+     * Nomenclatura da Class
+     * Nome Correspondente
+     *
+     * @var string
+     * @getter true
+     * @setter true
+     */
+    protected $name;
+
+    /**
      * Nome da Classe
      *
      * @var string
@@ -138,7 +148,7 @@ class ParseClass implements Arrayable
             $this->setErrors(
                 $e,
                 [
-                    'model' => $this->parameter
+                    'model' => $this->className
                 ]
             );
             
@@ -147,14 +157,14 @@ class ParseClass implements Arrayable
             $this->setErrors(
                 $e,
                 [
-                    'model' => $this->parameter
+                    'model' => $this->className
                 ]
             );
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
             $this->setErrors(
                 $e,
                 [
-                    'model' => $this->parameter
+                    'model' => $this->className
                 ]
             );
         } 
@@ -188,6 +198,7 @@ class ParseClass implements Arrayable
 
         return [
 
+            'name' => $this->generateName(),
             'class' => $this->getClassName(),
             'filename' => $this->getFilename(),
             'parentClass' => $this->getParentClassName(),
@@ -203,6 +214,9 @@ class ParseClass implements Arrayable
 
     public function fromArray(Array $array)
     {
+        if (isset($array['name'])) {
+            $this->setName($array['name']);
+        }
         if (isset($array['class'])) {
             $this->setClassName($array['class']);
         }
@@ -282,6 +296,21 @@ class ParseClass implements Arrayable
         }
 
         return 'other';
+    }
+
+    /**
+     * Trabalhos Leves
+     */
+    public function generateName($plural = false)
+    {
+        $reflection = $this->getReflectionClassForUse();
+        $name = $reflection->getShortName();
+
+        if ($plural) {
+            return StringModificator::pluralize($name);
+        }
+
+        return $name;
     }
 
     /**

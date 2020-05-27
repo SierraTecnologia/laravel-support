@@ -74,7 +74,11 @@ class ArraySearcher
 
         $found = array();
         foreach ($array as $k => $v) {
-            if (isset($v[$attribute])) {
+            if (is_object($v)) {
+                if ($v->$attribute === $str) {
+                    $found[] = $k;
+                }
+            } else if (isset($v[$attribute])) {
                 if (is_array($v[$attribute])) {
                     // Caso o Attributo seja um array entao procura normalmente,
                     // sem levar em conta o parametro

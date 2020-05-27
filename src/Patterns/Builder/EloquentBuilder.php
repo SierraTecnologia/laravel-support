@@ -40,49 +40,38 @@ class EloquentBuilder extends BuilderAbstract
 
     public function builder()
     {
+        $parseModelClass = $this->parentEntity->system->models[$this->entity->code];
 
-        $eloquentClassArray = $this->parentEntity->models[$this->entity->code];
-        $tableName = $eloquentClassArray["tableName"];
-
-        $databaseTableArray = false;
+        $databaseTableObject = false;
         if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
-            $tableName,
-            $this->parentEntity->tables,
+            $parseModelClass->getTableName(),
+            $this->parentEntity->system->tables,
             'name'
         )
         ) {
-            $databaseTableArray = $this->parentEntity->tables[$foundTableRender[0]];
+            $databaseTableObject = $this->parentEntity->system->tables[$foundTableRender[0]];
         }
-        if (!$databaseTableArray) {
-            throw new EloquentTableNotExistException($this->entity->code, $tableName);
+        if (!$databaseTableObject) {
+            throw new EloquentTableNotExistException($this->entity->code, $parseModelClass->getTableName());
         }
-        $eloquentClassDataArray = $eloquentClassArray["tableData"];
 
-        $name = $eloquentClassArray["name"];
-        $icon = $eloquentClassArray["icon"];
-        $primaryKey = $eloquentClassDataArray["getKeyName"];
+        $databaseTableArray = $databaseTableObject->toArray();
+        $parseModelClassArray = $parseModelClass->toArray();
 
-        $indexes = $databaseTableArray[
-            'indexes'
-        ];
-        // dd(
-        //         $eloquentClassArray,
-        //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
-        // );
-        $this->entity->setTablename($tableName);
-        $this->entity->setName($name);
-        $this->entity->setIcon($icon);
-        $this->entity->setPrimaryKey($primaryKey);
-        $this->entity->setIndexes($indexes);
+        $this->entity->setTablename($parseModelClass->getTableName());
+        $this->entity->setName($parseModelClassArray['name']);
+        $this->entity->setIcon(\Support\Template\Layout\Icons::getForNameAndCache($this->name, false));
+        $this->entity->setPrimaryKey($parseModelClass->getPrimaryKey());
+        $this->entity->setIndexes($databaseTableArray['indexes']);
 
-        $this->entity->setData($eloquentClassDataArray);
+        $this->entity->setData($parseModelClassArray);
         $this->entity->setDataForColumns($databaseTableArray['columns']);
 
-        $this->entity->setGroupPackage($eloquentClassDataArray['groupPackage']);
-        $this->entity->setGroupType($eloquentClassDataArray['groupType']);
-        $this->entity->setHistoryType($eloquentClassDataArray['historyType']);
-        $this->entity->setRegisterType($eloquentClassDataArray['registerType']);
-        
+        $this->entity->setGroupPackage($parseModelClassArray['groupPackage']);
+        $this->entity->setGroupType($parseModelClassArray['groupType']);
+        $this->entity->setHistoryType($parseModelClassArray['historyType']);
+        $this->entity->setRegisterType($parseModelClassArray['registerType']);
+        dd($this->entity);
         $columnEntity = \Support\Patterns\Builder\EloquentColumnBuilder::make(
             $this->parentEntity,
             $this->output

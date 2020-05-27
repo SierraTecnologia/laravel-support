@@ -209,52 +209,10 @@ class EloquentReader implements Arrayable
         } 
         return true;
     }
-
-    /**
-     * Trabalhos Leves
-     */
-    public function generateName($plural = false)
-    {
-        $reflection = new ReflectionClass($this->modelClass);
-        $name = $reflection->getShortName();
-
-        if ($plural) {
-            return StringModificator::pluralize($name);
-        }
-
-        return $name;
-    }
-
     public function generateIcon()
     {
-        return \Support\Template\Layout\Icons::getForNameAndCache($this->name, false);
+        return ;
     }
 
-
-    /**
-     * Trabalhos Pesados
-     */
-    public function generateRelations($key = false)
-    {
-        try {
-            if ($key) {
-                return (new RelationshipsRender($this->modelClass))($key);
-            }
-
-            if (!$this->relations) {
-                $this->relations = (new RelationshipsRender($this->modelClass))($key);
-                // $this->setErrors($this->relations->getError()); @todo PEgar erro do relationsscripts
-            }
-            
-            // dd($key, (new RelationshipsRender($this->modelClass)),(new RelationshipsRender($this->modelClass))($key));
-            return $this->relations;
-
-        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-            $this->setErrors($e);
-            // dd($this->model, $method, $e);
-            dd($e);
-            // @todo Tratar aqui
-        }
-    }
 
 }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 abstract class EntityAbstract
 {
-    protected $code;
+    public $code;
     
     public function __construct($code = '')
     {

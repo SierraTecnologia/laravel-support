@@ -41,6 +41,7 @@ class ParseModelClass extends ParseClass
     public $getKeyType = false;
     public $getIncrementing = false;
     public $getForeignKey = false;
+    public $relations = false;
 
 
 
@@ -108,6 +109,7 @@ class ParseModelClass extends ParseClass
             'getKeyType' => $this->getInstanceClassForUse()->getKeyType(), // ^ "string"
             'getIncrementing' => $this->getInstanceClassForUse()->getIncrementing(), // false or true
             'getForeignKey' => $this->getInstanceClassForUse()->getForeignKey(), // Ex: person_code
+            'relations' => $this->getRelations(),
 
         ];
 
@@ -160,6 +162,9 @@ class ParseModelClass extends ParseClass
         }
         if (isset($array['getForeignKey'])) {
             $this->setForeignKey($array['getForeignKey']);
+        }
+        if (isset($array['relations'])) {
+            $this->setRelations($array['relations']);
         }
         parent::fromArray($array);
     }
@@ -347,5 +352,36 @@ class ParseModelClass extends ParseClass
         $this->getForeignKey = $getForeignKey;
     }
 
+
+
+    /**
+     * Trabalhos Pesados
+     */
+    public function getRelations($key = false)
+    {
+        try {
+            if ($key) {
+                return (new RelationshipsRender($this->modelClass))($key);
+            }
+
+            if (!$this->relations) {
+                $this->relations = (new RelationshipsRender($this->modelClass))($key);
+                // $this->setErrors($this->relations->getError()); @todo PEgar erro do relationsscripts
+            }
+            
+            // dd($key, (new RelationshipsRender($this->modelClass)),(new RelationshipsRender($this->modelClass))($key));
+            return $this->relations;
+
+        } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+            $this->setErrors($e);
+            // dd($this->model, $method, $e);
+            dd($e);
+            // @todo Tratar aqui
+        }
+    }
+    public function setRelations($relations)
+    {
+        $this->relations = $relations;
+    }
 
 }

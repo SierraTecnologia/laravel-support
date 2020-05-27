@@ -5,7 +5,7 @@ namespace Support\Console\Commands\System;
 use Illuminate\Console\Command;
 use Support\Components\Coders\Model\Factory;
 use Illuminate\Contracts\Config\Repository;
-use Support\Services\SystemService;
+use Support\Services\ApplicationService;
 use Support\Models\DataRow;
 use Support\Models\DataType;
 
@@ -26,9 +26,9 @@ class MapperCommand extends Command
     protected $description = 'Mapper models';
 
     /**
-     * @var \Support\Components\Coders\Model\SystemService
+     * @var \Support\Services\ApplicationService
      */
-    protected $systemService;
+    protected $applicationService;
 
     /**
      * @var \Support\Components\Coders\Model\Factory
@@ -46,12 +46,12 @@ class MapperCommand extends Command
      * @param \Support\Components\Coders\Model\Factory $models
      * @param \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(SystemService $systemService)
+    public function __construct(ApplicationService $applicationService)
     // public function __construct(Factory $models, Repository $config)
     {
         parent::__construct();
 
-        $this->systemService = $systemService;
+        $this->applicationService = $applicationService;
         // $this->models = $models;
         // $this->config = $config;
 
@@ -70,6 +70,7 @@ class MapperCommand extends Command
     {
 
 
+        \Support\Models\Code\Classes::truncate();
 
 
 
