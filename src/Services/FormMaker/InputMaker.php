@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Services\FormMaker;
+namespace Support\Services\FormMaker;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;

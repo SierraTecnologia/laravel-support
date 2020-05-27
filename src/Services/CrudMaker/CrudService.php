@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Services\CrudMaker;
+namespace Support\Services\CrudMaker;
 
 use Support\Generators\CrudGenerator;
 use Support\Generators\DatabaseGenerator;
