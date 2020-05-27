@@ -5,7 +5,7 @@ namespace Support\Console\Commands\Generate;
 use Config;
 use Exception;
 use Illuminate\Console\Command;
-use Facilitador\Generators\CrudGenerator;
+use Support\Generators\CrudGenerator;
 use Facilitador\Services\CrudMaker\AppService;
 use Facilitador\Services\CrudMaker\ConfigService;
 use Facilitador\Services\CrudMaker\CrudService;

@@ -30,7 +30,7 @@ class OldRegisterController extends Controller
         $modelRelationsResults = $service->getRelationsResults();
         $register = $this->registerService->getInstance();
 
-        $htmlGenerator = new \Facilitador\Generators\RegisterGenerator($service);
+        $htmlGenerator = new \Support\Generators\RegisterGenerator($service);
 
         // dd(
         //     $service,
