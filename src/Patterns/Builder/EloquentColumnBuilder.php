@@ -384,6 +384,14 @@ class EloquentColumnBuilder extends BuilderAbstract
      */
     protected function isMorphTo($type = false)
     {
+
+        if ($this->getColumnName() == 'infoable_id') {
+            dd(
+                
+            );
+        }
+
+
         // if ($this->className==\Population\Models\Market\Abouts\Info::class
         // && $this->entity->code['name']!=='id'&& $this->entity->code['name']!=='text'
         // ) {

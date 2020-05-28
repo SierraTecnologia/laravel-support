@@ -52,6 +52,12 @@ class ApplicationBuilder extends BuilderAbstract
                 );
             }
         );
+
+        dd(
+            $this->entity->system->tables,
+            // $this->entity->relations
+        );
+
         (new Collection($results))->map(
             function ($result) {
                 $this->builderChildren($result);

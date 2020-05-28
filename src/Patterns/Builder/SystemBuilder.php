@@ -58,12 +58,16 @@ class SystemBuilder extends BuilderAbstract
 
     public function builder()
     {
-        $this->entity->tables = $this->renderDatabase;
+        $this->entity->tables = (new Collection($this->renderDatabase))->mapWithKeys(function ($table) {
+            $primary = $this->returnRelationPrimaryKey($table);
+            return [
+                $primary => $table
+            ];
+        });
+        dd($this->entity->tables);
+
+
         $results = $this->renderCoder;
-
-        // dd($results);
-
-
         $results = (new Collection($results))->reject(
             function ($result) {
                 if (!$result) {
@@ -179,5 +183,30 @@ class SystemBuilder extends BuilderAbstract
         $this->entity->mapperTableToClasses[$tableName] = $tableClass;
     }
 
+    /**
+     * Para Tabelas
+     */
 
+    private function returnRelationPrimaryKey($table)
+    {
+        if (!$primary = $this->returnPrimaryKeyFromIndexes($table->exportIndexesToArray())) {
+            return $table->getName();
+        }
+
+        return StringModificator::singularizeAndLower($table->getName()).'_'.$primary;
+    }
+
+    private function returnPrimaryKeyFromIndexes(Array $indexes)
+    {
+        $primary = false;
+        if (!empty($indexes)) {
+            foreach ($indexes as $index) {
+                if ($index['type'] == 'PRIMARY') {
+                    return $index['columns'][0];
+                }
+            }
+        }
+
+        return $primary;
+    }
 }
