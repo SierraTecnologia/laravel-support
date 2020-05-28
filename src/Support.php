@@ -1,6 +1,6 @@
 <?php
 
-namespace TCG\Voyager;
+namespace Support;
 
 use Arrilot\Widgets\Facade as Widget;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,26 +10,26 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use TCG\Voyager\Actions\DeleteAction;
-use TCG\Voyager\Actions\EditAction;
-use TCG\Voyager\Actions\RestoreAction;
-use TCG\Voyager\Actions\ViewAction;
-use TCG\Voyager\Events\AlertsCollection;
-use TCG\Voyager\FormFields\After\HandlerInterface as AfterHandlerInterface;
-use TCG\Voyager\FormFields\HandlerInterface;
-use TCG\Voyager\Models\Category;
-use TCG\Voyager\Models\DataRow;
-use TCG\Voyager\Models\DataType;
-use TCG\Voyager\Models\Menu;
-use TCG\Voyager\Models\MenuItem;
-use TCG\Voyager\Models\Page;
-use TCG\Voyager\Models\Permission;
-use TCG\Voyager\Models\Post;
-use TCG\Voyager\Models\Role;
-use TCG\Voyager\Models\Setting;
-use TCG\Voyager\Models\Translation;
-use TCG\Voyager\Models\User;
-use TCG\Voyager\Traits\Translatable;
+use Support\Actions\DeleteAction;
+use Support\Actions\EditAction;
+use Support\Actions\RestoreAction;
+use Support\Actions\ViewAction;
+use Support\Events\AlertsCollection;
+use Support\FormFields\After\HandlerInterface as AfterHandlerInterface;
+use Support\FormFields\HandlerInterface;
+use Support\Models\Category;
+use Support\Models\DataRow;
+use Support\Models\DataType;
+use Support\Models\Menu;
+use Support\Models\MenuItem;
+use Support\Models\Page;
+use Support\Models\Permission;
+use Support\Models\Post;
+use Support\Models\Role;
+use Support\Models\Setting;
+use Support\Models\Translation;
+use Support\Models\User;
+use Support\Traits\Translatable;
 
 class Voyager
 {
