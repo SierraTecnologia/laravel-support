@@ -24,7 +24,7 @@ use Support\Patterns\Parser\ParseModelClass;
 use Support\Patterns\Parser\ComposerParser;
 use Support\Utils\Searchers\ArraySearcher;
 use Support\Elements\Entities\EloquentColumn;
-
+use Log;
 
 use Support\Patterns\Entity\EloquentColumnEntity;
 use Support\Contracts\Manager\BuilderAbstract;
@@ -389,19 +389,6 @@ class EloquentColumnBuilder extends BuilderAbstract
             return $this->entity->relationsMorphs[$this->getColumnName()];
         }
 
-        if (strpos($this->getColumnName(), 'able') !== false) {
-            dd(
-                $this->getColumnName(),
-                'debug1'
-            );
-        }
-        if ($this->getColumnName() == 'infoable_id') {
-            dd(
-                $this->getColumnName(),
-                'debug2'
-            );
-        }
-
         /**
          * Old Verifica pelo Atributo
          */
@@ -434,6 +421,16 @@ class EloquentColumnBuilder extends BuilderAbstract
         //         $this->renderDatabaseData
         //     );
         // }
+
+        if (strpos($this->getColumnName(), 'able') !== false) {
+            Log::channel('sitec-providers')->warning(
+                'Problema no morph para coluna '.$this->getColumnName()
+            );
+            // dd(
+            //     $this->getColumnName(),
+            //     'debug1'
+            // );
+        }
         
         return false;
     }

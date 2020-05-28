@@ -83,11 +83,12 @@ class EloquentBuilder extends BuilderAbstract
                 $this->entity->addColumn($entityColumn);
             }
         }
-        if ($this->entity->code == \Population\Models\Market\Abouts\Info::class) {
-            dd(
-                $this->entity
-            );
-        }
+        // // Debug
+        // if ($this->entity->code == \Population\Models\Market\Abouts\Info::class) {
+        //     dd(
+        //         $this->entity
+        //     );
+        // }
         return true;
     
     }
