@@ -1,10 +1,10 @@
 @extends('facilitador::master')
 
-@section('page_title', __('facilitador::generic.viewing').' '.__('voyager::generic.bread'))
+@section('page_title', __('facilitador::generic.viewing').' '.__('facilitador::generic.bread'))
 
 @section('page_header')
     <h1 class="page-title">
-        <i class="facilitador-bread"></i> {{ __('voyager::generic.bread') }}
+        <i class="facilitador-bread"></i> {{ __('facilitador::generic.bread') }}
     </h1>
 @stop
 
@@ -41,20 +41,20 @@
                             @if($table->dataTypeId)
                                 <a href="{{ route('facilitador.' . $table->slug . '.index') }}"
                                    class="btn btn-warning btn-sm browse_bread" style="margin-right: 0;">
-                                    <i class="facilitador-plus"></i> {{ __('voyager::generic.browse') }}
+                                    <i class="facilitador-plus"></i> {{ __('facilitador::generic.browse') }}
                                 </a>
                                 <a href="{{ route('facilitador.bread.edit', $table->name) }}"
                                    class="btn btn-primary btn-sm edit">
-                                    <i class="facilitador-edit"></i> {{ __('voyager::generic.edit') }}
+                                    <i class="facilitador-edit"></i> {{ __('facilitador::generic.edit') }}
                                 </a>
                                 <a href="#delete-bread" data-id="{{ $table->dataTypeId }}" data-name="{{ $table->name }}"
                                      class="btn btn-danger btn-sm delete">
-                                    <i class="facilitador-trash"></i> {{ __('voyager::generic.delete') }}
+                                    <i class="facilitador-trash"></i> {{ __('facilitador::generic.delete') }}
                                 </a>
                             @else
                                 <a href="{{ route('facilitador.bread.create', $table->name) }}"
                                    class="_btn btn-default btn-sm pull-right">
-                                    <i class="facilitador-plus"></i> {{ __('voyager::bread.add_bread') }}
+                                    <i class="facilitador-plus"></i> {{ __('facilitador::bread.add_bread') }}
                                 </a>
                             @endif
                         </td>
@@ -71,7 +71,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('facilitador::generic.close') }}"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="facilitador-trash"></i>  {!! __('voyager::bread.delete_bread_quest', ['table' => '<span id="delete_builder_name"></span>']) !!}</h4>
+                    <h4 class="modal-title"><i class="facilitador-trash"></i>  {!! __('facilitador::bread.delete_bread_quest', ['table' => '<span id="delete_builder_name"></span>']) !!}</h4>
                 </div>
                 <div class="modal-footer">
                     <form action="#" id="delete_builder_form" method="POST">

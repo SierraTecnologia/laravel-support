@@ -31,7 +31,7 @@
 @section('breadcrumbs')
 <ol class="breadcrumb hidden-xs">
     <li class="active">
-        <a href="{{ route('facilitador.dashboard')}}"><i class="voyager-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
+        <a href="{{ route('facilitador.dashboard')}}"><i class="facilitador-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
     </li>
     <li class="active">
         <a href="{{ route('facilitador.bread.index') }}">
@@ -50,7 +50,7 @@
         @endif
     </li>
     <li>
-        {{ isset($dataType->id) ? __('facilitador::generic.edit') : __('voyager::generic.add') }}
+        {{ isset($dataType->id) ? __('facilitador::generic.edit') : __('facilitador::generic.add') }}
     </li>
 </ol>
 @endsection
@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form action="@if(isset($dataType->id)){{ route('facilitador.bread.update', $dataType->id) }}@else{{ route('voyager.bread.store') }}@endif"
+                <form action="@if(isset($dataType->id)){{ route('facilitador.bread.update', $dataType->id) }}@else{{ route('facilitador.bread.store') }}@endif"
                       method="POST" role="form">
                 @if(isset($dataType->id))
                     <input type="hidden" value="{{ $dataType->id }}" name="id">
@@ -72,7 +72,7 @@
                     <div class="panel panel-primary panel-bordered">
 
                         <div class="panel-heading">
-                            <h3 class="panel-title panel-icon"><i class="facilitador-bread"></i> {{ ucfirst($table) }} {{ __('voyager::bread.bread_info') }}</h3>
+                            <h3 class="panel-title panel-icon"><i class="facilitador-bread"></i> {{ ucfirst($table) }} {{ __('facilitador::bread.bread_info') }}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
@@ -276,7 +276,7 @@
 
                     <div class="panel panel-primary panel-bordered">
                         <div class="panel-heading">
-                            <h3 class="panel-title panel-icon"><i class="facilitador-window-list"></i> {{ __('voyager::bread.edit_rows', ['table' => $table]) }}:</h3>
+                            <h3 class="panel-title panel-icon"><i class="facilitador-window-list"></i> {{ __('facilitador::bread.edit_rows', ['table' => $table]) }}:</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
@@ -514,7 +514,7 @@
                         for (var i = window.invalidEditors.length - 1; i >= 0; i--) {
                             $('#'+window.invalidEditors[i]).siblings('.validation-error').show();
                         }
-                        toastr.error('{{ __('facilitador::json.invalid_message') }}', '{{ __('voyager::json.validation_errors') }}', {"preventDuplicates": true, "preventOpenDuplicates": true});
+                        toastr.error('{{ __('facilitador::json.invalid_message') }}', '{{ __('facilitador::json.validation_errors') }}', {"preventDuplicates": true, "preventOpenDuplicates": true});
                     } else {
                         if (_session.getValue()) {
                             // uglify JSON object and update textarea for submit purposes

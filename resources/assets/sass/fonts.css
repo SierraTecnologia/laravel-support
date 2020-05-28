@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: "facilitador";
-  src:url("facilitador-assets?path=fonts/voyager.eot");
-  src:url("facilitador-assets?path=fonts/voyager.eot?#iefix") format("embedded-opentype"),
-    url("facilitador-assets?path=fonts/voyager.woff") format("woff"),
-    url("facilitador-assets?path=fonts/voyager.ttf") format("truetype"),
-    url("facilitador-assets?path=fonts/voyager.svg#voyager") format("svg");
+  src:url("facilitador-assets?path=fonts/facilitador.eot");
+  src:url("facilitador-assets?path=fonts/facilitador.eot?#iefix") format("embedded-opentype"),
+    url("facilitador-assets?path=fonts/facilitador.woff") format("woff"),
+    url("facilitador-assets?path=fonts/facilitador.ttf") format("truetype"),
+    url("facilitador-assets?path=fonts/facilitador.svg#voyager") format("svg");
   font-weight: normal;
   font-style: normal;
 

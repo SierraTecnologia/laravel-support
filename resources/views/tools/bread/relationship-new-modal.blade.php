@@ -31,7 +31,7 @@
 				            </div>
 				            <div class="col-md-12 relationship_details relationshipField">
 				            	<div class="belongsTo">
-				            		<label>{{ __('facilitador::database.relationship.which_column_from') }} <span>{{ \Illuminate\Support\Str::singular(ucfirst($table)) }}</span> {{ __('voyager::database.relationship.is_used_to_reference') }} <span class="label_table_name"></span>?</label>
+				            		<label>{{ __('facilitador::database.relationship.which_column_from') }} <span>{{ \Illuminate\Support\Str::singular(ucfirst($table)) }}</span> {{ __('facilitador::database.relationship.is_used_to_reference') }} <span class="label_table_name"></span>?</label>
 				            		<select name="relationship_column_belongs_to" class="new_relationship_field select2">
 				                    	@foreach($fieldOptions as $data)
 				                        	<option value="{{ $data['field'] }}">{{ $data['field'] }}</option>
@@ -39,7 +39,7 @@
 				               		</select>
 				               	</div>
 				               	<div class="hasOneMany flexed">
-				            		<label>{{ __('facilitador::database.relationship.which_column_from') }} <span class="label_table_name"></span> {{ __('voyager::database.relationship.is_used_to_reference') }} <span>{{ \Illuminate\Support\Str::singular(ucfirst($table)) }}</span>?</label>
+				            		<label>{{ __('facilitador::database.relationship.which_column_from') }} <span class="label_table_name"></span> {{ __('facilitador::database.relationship.is_used_to_reference') }} <span>{{ \Illuminate\Support\Str::singular(ucfirst($table)) }}</span>?</label>
 					                <select name="relationship_column" class="new_relationship_field select2 rowDrop" data-table="{{ $tables[0] }}" data-selected="">
 					                </select>
 					            </div>
@@ -65,13 +65,13 @@
 									</p>
 
 									<p class="relationship_taggable"><strong>{{ __('facilitador::database.relationship.allow_tagging') }}:</strong> <br>
-										<input type="checkbox" name="relationship_taggable" class="toggleswitch" data-on="{{ __('facilitador::generic.yes') }}" data-off="{{ __('voyager::generic.no') }}">
+										<input type="checkbox" name="relationship_taggable" class="toggleswitch" data-on="{{ __('facilitador::generic.yes') }}" data-off="{{ __('facilitador::generic.no') }}">
 				                    </p>
 				                </div>
 							</div>
 				        @else
 				        	<div class="col-md-12">
-				        		<h5><i class="facilitador-rum-1"></i> {{ __('voyager::database.relationship.easy_there') }}</h5>
+				        		<h5><i class="facilitador-rum-1"></i> {{ __('facilitador::database.relationship.easy_there') }}</h5>
 				        		<p class="relationship-warn">{!! __('facilitador::database.relationship.before_create') !!}</p>
 				        	</div>
 				        @endif
@@ -82,7 +82,7 @@
 			    	<div class="relationship-btn-container">
 			    		<button type="button" class="btn btn-default" data-dismiss="modal">{{ __('facilitador::database.relationship.cancel') }}</button>
 	                    @if(isset($dataType->id))
-	                    	<button class="btn btn-danger btn-relationship"><i class="facilitador-plus"></i> <span>{{ __('voyager::database.relationship.add_new') }}</span></button>
+	                    	<button class="btn btn-danger btn-relationship"><i class="facilitador-plus"></i> <span>{{ __('facilitador::database.relationship.add_new') }}</span></button>
 	                	@endif
 	                </div>
 			    </div>

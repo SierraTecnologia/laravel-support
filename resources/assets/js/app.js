@@ -22,7 +22,7 @@ require('./slugify');
 window.TinyMCE = window.tinymce = require('tinymce');
 require('./multilingual');
 require('./facilitador_tinymce');
-window.facilitadorTinyMCE = require('./voyager_tinymce_config');
+window.facilitadorTinyMCE = require('./facilitador_tinymce_config');
 require('./facilitador_ace_editor');
 window.helpers = require('./helpers.js');
 
@@ -161,11 +161,11 @@ $(document).ready(function () {
         if (!$this.hasClass('panel-collapsed')) {
             $this.parents('.panel').find('.panel-body').slideUp();
             $this.addClass('panel-collapsed');
-            $this.removeClass('facilitador-angle-up').addClass('voyager-angle-down');
+            $this.removeClass('facilitador-angle-up').addClass('facilitador-angle-down');
         } else {
             $this.parents('.panel').find('.panel-body').slideDown();
             $this.removeClass('panel-collapsed');
-            $this.removeClass('facilitador-angle-down').addClass('voyager-angle-up');
+            $this.removeClass('facilitador-angle-down').addClass('facilitador-angle-up');
         }
     });
 
@@ -174,9 +174,9 @@ $(document).ready(function () {
         e.preventDefault();
         var $this = $(this);
         if (!$this.hasClass('facilitador-resize-full')) {
-            $this.removeClass('facilitador-resize-small').addClass('voyager-resize-full');
+            $this.removeClass('facilitador-resize-small').addClass('facilitador-resize-full');
         } else {
-            $this.removeClass('facilitador-resize-full').addClass('voyager-resize-small');
+            $this.removeClass('facilitador-resize-full').addClass('facilitador-resize-small');
         }
         $this.closest('.panel').toggleClass('is-fullscreen');
     });

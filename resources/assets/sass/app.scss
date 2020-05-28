@@ -697,7 +697,7 @@ a:hover {
   height: 40px;
   line-height: 40px;
   vertical-align: middle; }
-.facilitador .btn-add-new, .voyager #bulk_delete_btn{
+.facilitador .btn-add-new, .facilitador #bulk_delete_btn{
   margin-top:2px;
 }
 @media (max-width: 768px) {
@@ -4675,7 +4675,7 @@ overflow-x: hidden;
 }
 
 
-.facilitador .navbar .navbar-nav .dropdown-menu, .voyager .navbar.navbar-default .navbar-nav .dropdown-menu{
+.facilitador .navbar .navbar-nav .dropdown-menu, .facilitador .navbar.navbar-default .navbar-nav .dropdown-menu{
   background-color:#fff;
 }
 
@@ -4853,7 +4853,7 @@ float: left;
   border-bottom:0px;
 }
 
-.facilitador .panel.panel-primary .panel-info, .voyager .panel.panel-info .panel-heading{
+.facilitador .panel.panel-primary .panel-info, .facilitador .panel.panel-info .panel-heading{
   background-color:#57C7D4;
   border-bottom:0px;
 }
@@ -4876,11 +4876,11 @@ float: left;
 
 }
 
-.facilitador .panel.panel-warning, .voyager .panel.panel-primary, .voyager .panel.panel-info{
+.facilitador .panel.panel-warning, .facilitador .panel.panel-primary, .voyager .panel.panel-info{
   border:0px;
 }
 
-.facilitador .pagination .active > a, .voyager .pagination .active > a:focus, .voyager .pagination .active > a:hover, .voyager .pagination .active span, .voyager .pagination .active > span:focus, .voyager .pagination .active > span:hover {
+.facilitador .pagination .active > a, .facilitador .pagination .active > a:focus, .voyager .pagination .active > a:hover, .voyager .pagination .active span, .voyager .pagination .active > span:focus, .voyager .pagination .active > span:hover {
     z-index: 3;
     color: #fff;
     cursor: default;
@@ -4937,12 +4937,12 @@ float: left;
   opacity:1;
 }
 
-.facilitador .btn.btn-sm, .voyager .btn.btn-sm:hover{
+.facilitador .btn.btn-sm, .facilitador .btn.btn-sm:hover{
   border-width:1px;
   border-color:rgba(255, 255, 255, 0);
   color:#fff;
 }
-.facilitador .btn.btn-default.btn-sm, .voyager .btn.btn-default.btn-sm:hover{
+.facilitador .btn.btn-default.btn-sm, .facilitador .btn.btn-default.btn-sm:hover{
   color:inherit;
 }
 
@@ -5363,7 +5363,7 @@ float: left;
   transition:all 0.3s ease-in-out;
 }
 
-.facilitador input[type="file"]:hover, .voyager input[type="file"]:active{
+.facilitador input[type="file"]:hover, .facilitador input[type="file"]:active{
   background: #fcfcfc;
 }
 
@@ -8465,7 +8465,7 @@ limitations under the License.
 
 /********** Overriding Data Tables Icons **********/
 
-.facilitador table.dataTable thead th.sorting:after, .voyager table.dataTable thead th.sorting_asc:after, .voyager table.dataTable thead th.sorting_desc:after, div.dataTables_paginate li.last a:after, div.dataTables_paginate li.next a:after, div.dataTables_paginate li.first a:before, div.dataTables_paginate li.previous a:before{
+.facilitador table.dataTable thead th.sorting:after, .facilitador table.dataTable thead th.sorting_asc:after, .voyager table.dataTable thead th.sorting_desc:after, div.dataTables_paginate li.last a:after, div.dataTables_paginate li.next a:after, div.dataTables_paginate li.first a:before, div.dataTables_paginate li.previous a:before{
   font-family:Facilitador;
 }
 

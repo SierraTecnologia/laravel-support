@@ -19,7 +19,7 @@
 @section('breadcrumbs')
 <ol class="breadcrumb hidden-xs">
     <li>
-        <a href="{{ route('facilitador.dashboard')}}"><i class="voyager-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
+        <a href="{{ route('facilitador.dashboard')}}"><i class="facilitador-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
     </li>
     <li>
         <a href="{{ route('facilitador.database.index') }}">

@@ -16,14 +16,14 @@
             <div class="col-md-3 col-sm-4 col-xs-6">
                 <label for="create_model">{{ __('facilitador::database.create_model_table') }}</label><br>
                 <input type="checkbox" name="create_model" data-toggle="toggle"
-                       data-on="{{ __('facilitador::generic.yes_please') }}" data-off="{{ __('voyager::generic.no_thanks') }}">
+                       data-on="{{ __('facilitador::generic.yes_please') }}" data-off="{{ __('facilitador::generic.no_thanks') }}">
             </div>
             {{--
                 Hide migration button until feature is available.
                  <div class="col-md-3 col-sm-4 col-xs-6">
                     <label for="create_migration">{{ __('facilitador::database.create_migration') }}</label><br>
                     <input disabled type="checkbox" name="create_migration" data-toggle="toggle"
-                           data-on="{{ __('facilitador::generic.yes_please') }}" data-off="{{ __('voyager::generic.no_thanks') }}">
+                           data-on="{{ __('facilitador::generic.yes_please') }}" data-off="{{ __('facilitador::generic.no_thanks') }}">
                 </div>
             --}}
         @endif
@@ -81,7 +81,7 @@
 
     <div class="panel-footer">
         <input type="submit" class="btn btn-primary pull-right"
-               value="@if($db->action == 'update'){{ __('facilitador::database.update_table') }}@else{{ __('voyager::database.create_new_table') }}@endif"
+               value="@if($db->action == 'update'){{ __('facilitador::database.update_table') }}@else{{ __('facilitador::database.create_new_table') }}@endif"
                :disabled="!tableHasColumns">
         <div style="clear:both"></div>
     </div>
@@ -135,7 +135,7 @@
                 column.name = column.name.trim();
 
                 if (column.name && this.hasColumn(column.name)) {
-                    return toastr.error("{{ __('facilitador::database.column') }} " + column.name + " {{ __('voyager::database.already_exists') }}");
+                    return toastr.error("{{ __('facilitador::database.column') }} " + column.name + " {{ __('facilitador::database.already_exists') }}");
                 }
 
                 this.table.columns.push(
@@ -158,7 +158,7 @@
 
                 let existingColumn;
                 if ((existingColumn = this.getColumn(newName)) && (existingColumn !== column)) {
-                    return toastr.error("{{ __('facilitador::database.column') }} " + newName + " {{ __('voyager::database.already_exists') }}");
+                    return toastr.error("{{ __('facilitador::database.column') }} " + newName + " {{ __('facilitador::database.already_exists') }}");
                 }
 
                 let index = this.getColumnsIndex(column.name);
