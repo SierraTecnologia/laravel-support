@@ -15,7 +15,7 @@ Route::group(
     ], function () {
         $loadingRoutes = [
         'manager',
-        'voyager'
+        'facilitador'
         ];
         event(new Routing());
         foreach ($loadingRoutes as $loadingRoute) {

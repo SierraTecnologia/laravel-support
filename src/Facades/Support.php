@@ -13,6 +13,6 @@ class Facilitador extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'voyager';
+        return 'facilitador';
     }
 }

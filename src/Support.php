@@ -191,10 +191,10 @@ class Facilitador
      */
     public function dimmers()
     {
-        $widgetClasses = config('voyager.dashboard.widgets');
+        $widgetClasses = config('facilitador.dashboard.widgets');
         $dimmerGroups = [];
         $dimmerCount = 0;
-        $dimmers = Widget::group("voyager::dimmers-{$dimmerCount}");
+        $dimmers = Widget::group("facilitador::dimmers-{$dimmerCount}");
 
         foreach ($widgetClasses as $widgetClass) {
             $widget = app($widgetClass);
@@ -206,7 +206,7 @@ class Facilitador
                 if ($dimmerCount % 3 === 0 && $dimmerCount !== 0) {
                     $dimmerGroups[] = $dimmers;
                     $dimmerGroupTag = ceil($dimmerCount / 3);
-                    $dimmers = Widget::group("voyager::dimmers-{$dimmerGroupTag}");
+                    $dimmers = Widget::group("facilitador::dimmers-{$dimmerGroupTag}");
                 }
 
                 $dimmers->addWidget($widgetClass);
@@ -221,7 +221,7 @@ class Facilitador
 
     public function setting($key, $default = null)
     {
-        $globalCache = config('voyager.settings.cache', false);
+        $globalCache = config('facilitador.settings.cache', false);
 
         if ($globalCache && Cache::tags('settings')->has($key)) {
             return Cache::tags('settings')->get($key);
@@ -257,7 +257,7 @@ class Facilitador
     public function image($file, $default = '')
     {
         if (!empty($file)) {
-            return str_replace('\\', '/', Storage::disk(config('voyager.storage.disk'))->url($file));
+            return str_replace('\\', '/', Storage::disk(config('facilitador.storage.disk'))->url($file));
         }
 
         return $default;
@@ -265,7 +265,7 @@ class Facilitador
 
     public function routes()
     {
-        require __DIR__.'/../routes/voyager.php';
+        require __DIR__.'/../routes/facilitador.php';
     }
 
     public function getVersion()
@@ -301,9 +301,9 @@ class Facilitador
                 $this->filesystem->get(base_path('composer.lock'))
             );
 
-            // Loop through all the packages and get the version of voyager
+            // Loop through all the packages and get the version of facilitador
             foreach ($file->packages as $package) {
-                if ($package->name == 'tcg/voyager') {
+                if ($package->name == 'tcg/facilitador') {
                     $this->version = $package->version;
                     break;
                 }
@@ -318,7 +318,7 @@ class Facilitador
      */
     public function translatable($model)
     {
-        if (!config('voyager.multilingual.enabled')) {
+        if (!config('facilitador.multilingual.enabled')) {
             return false;
         }
 
@@ -342,8 +342,8 @@ class Facilitador
     public function getLocales()
     {
         $appLocales = [];
-        if ($this->filesystem->exists(resource_path('lang/vendor/voyager'))) {
-            $appLocales = array_diff(scandir(resource_path('lang/vendor/voyager')), ['..', '.']);
+        if ($this->filesystem->exists(resource_path('lang/vendor/facilitador'))) {
+            $appLocales = array_diff(scandir(resource_path('lang/vendor/facilitador')), ['..', '.']);
         }
 
         $vendorLocales = array_diff(scandir(realpath(__DIR__.'/../publishable/lang')), ['..', '.']);
