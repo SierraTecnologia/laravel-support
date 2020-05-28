@@ -31,7 +31,7 @@ use Support\Models\Translation;
 use Support\Models\User;
 use Support\Traits\Translatable;
 
-class Facilitador
+class Support
 {
     protected $version;
     protected $filesystem;
@@ -346,7 +346,7 @@ class Facilitador
             $appLocales = array_diff(scandir(resource_path('lang/vendor/facilitador')), ['..', '.']);
         }
 
-        $vendorLocales = array_diff(scandir(realpath(__DIR__.'/../publishable/lang')), ['..', '.']);
+        $vendorLocales = array_diff(scandir(realpath(__DIR__.'/../publishes/lang')), ['..', '.']);
         $allLocales = array_merge($vendorLocales, $appLocales);
 
         asort($allLocales);

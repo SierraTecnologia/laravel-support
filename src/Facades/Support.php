@@ -4,7 +4,7 @@ namespace Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Facilitador extends Facade
+class Support extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Facilitador extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'facilitador';
+        return 'support';
     }
 }
