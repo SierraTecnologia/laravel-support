@@ -33,4 +33,16 @@ class SupportEntity extends Model
     {
         return json_decode(!empty($value) ? $value : '{}', true);
     }
+    
+    public function posts()
+    {
+        return $this->hasMany(Voyager::modelClass('Post'))
+            ->published()
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function parentId()
+    {
+        return $this->belongsTo(self::class);
+    }
 }

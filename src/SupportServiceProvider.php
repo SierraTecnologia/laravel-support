@@ -41,28 +41,28 @@ class SupportServiceProvider extends ServiceProvider
             [
                 'text'        => 'Manager',
                 'route'       => 'facilitador.dashboard',
-                'icon'        => 'fas fa-fw fa-industry',
+                'icon'        => 'fas fa-fw fa-edit', //television
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 // 'access' => \App\Models\Role::$ADMIN
             ],
             [
                 'text' => 'Manipule',
-                'icon' => 'fas fa-fw fa-bomb',
+                'icon' => 'fas fa-fw fa-eye',
                 'icon_color' => "blue",
                 'label_color' => "success",
             ],
             [
                 'text' => 'Debugger',
-                'icon' => 'fas fa-fw fa-bomb',
+                'icon' => 'fas fa-fw fa-bug', //shield
                 'icon_color' => "blue",
                 'label_color' => "success",
             ],
             'Manipule' => [
                 [
-                    'text'        => 'Bread',
+                    'text'        => 'Crud Builder',
                     'route'       => 'facilitador.bread.index',
-                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon'        => 'fas fa-fw fa-eye',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     // 'access' => \App\Models\Role::$ADMIN
@@ -70,7 +70,7 @@ class SupportServiceProvider extends ServiceProvider
                 [
                     'text'        => 'Database',
                     'route'       => 'facilitador.database.index',
-                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon'        => 'fas fa-fw fa-database',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     // 'access' => \App\Models\Role::$ADMIN
@@ -78,7 +78,7 @@ class SupportServiceProvider extends ServiceProvider
                 [
                     'text'        => 'Commands',
                     'route'       => 'facilitador.commands',
-                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon'        => 'fas fa-fw fa-asterisk',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     // 'access' => \App\Models\Role::$ADMIN
@@ -86,7 +86,7 @@ class SupportServiceProvider extends ServiceProvider
                 [
                     'text'        => 'Routers',
                     'route'       => 'facilitador.routers',
-                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon'        => 'fas fa-fw fa-folder',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     // 'access' => \App\Models\Role::$ADMIN
@@ -96,7 +96,7 @@ class SupportServiceProvider extends ServiceProvider
                 [
                     'text'        => 'View Errors',
                     'route'       => 'facilitador.dashboard',
-                    'icon'        => 'fas fa-fw fa-industry',
+                    'icon'        => 'fas fa-fw fa-bug', //times, warning
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     // 'access' => \App\Models\Role::$ADMIN
