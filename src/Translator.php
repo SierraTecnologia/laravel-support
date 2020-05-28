@@ -5,7 +5,7 @@ namespace Support;
 use ArrayAccess;
 use Illuminate\Database\Eloquent\Model;
 use JsonSerializable;
-use Support\Facades\Voyager as VoyagerFacade;
+use Support\Facades\Facilitador as VoyagerFacade;
 
 class Translator implements ArrayAccess, JsonSerializable
 {
@@ -60,7 +60,7 @@ class Translator implements ArrayAccess, JsonSerializable
             if ($attribute['exists']) {
                 $translation = $this->getTranslationModel($key);
             } else {
-                $translation = VoyagerFacade::model('Translation')->where('table_name', $this->model->getTable())
+                $translation = FacilitadorFacade::model('Translation')->where('table_name', $this->model->getTable())
                     ->where('column_name', $key)
                     ->where('foreign_key', $this->model->getKey())
                     ->where('locale', $this->locale)
@@ -68,7 +68,7 @@ class Translator implements ArrayAccess, JsonSerializable
             }
 
             if (is_null($translation)) {
-                $translation = VoyagerFacade::model('Translation');
+                $translation = FacilitadorFacade::model('Translation');
             }
 
             $translation->fill([
@@ -235,7 +235,7 @@ class Translator implements ArrayAccess, JsonSerializable
             return false;
         }
 
-        $translation = VoyagerFacade::model('Translation');
+        $translation = FacilitadorFacade::model('Translation');
         $translation->fill([
             'table_name'  => $this->model->getTable(),
             'column_name' => $key,
@@ -276,7 +276,7 @@ class Translator implements ArrayAccess, JsonSerializable
         $translations = $this->model->getRelation('translations');
         $locale = $this->locale;
 
-        VoyagerFacade::model('Translation')->where('table_name', $this->model->getTable())
+        FacilitadorFacade::model('Translation')->where('table_name', $this->model->getTable())
             ->where('column_name', $key)
             ->where('foreign_key', $this->model->getKey())
             ->where('locale', $locale)

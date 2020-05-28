@@ -4,7 +4,7 @@ namespace Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Voyager extends Facade
+class Facilitador extends Facade
 {
     /**
      * Get the registered name of the component.

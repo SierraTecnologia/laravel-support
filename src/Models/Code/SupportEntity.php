@@ -36,7 +36,7 @@ class SupportEntity extends Model
     
     public function posts()
     {
-        return $this->hasMany(Voyager::modelClass('Post'))
+        return $this->hasMany(Facilitador::modelClass('Post'))
             ->published()
             ->orderBy('created_at', 'DESC');
     }

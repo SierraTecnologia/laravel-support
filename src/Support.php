@@ -31,7 +31,7 @@ use Support\Models\Translation;
 use Support\Models\User;
 use Support\Traits\Translatable;
 
-class Voyager
+class Facilitador
 {
     protected $version;
     protected $filesystem;
