@@ -5,7 +5,7 @@
         @else
             {!! __('voyager::theme.footer_copyright') !!} <a href="http://thecontrolgroup.com" target="_blank">The Control Group</a>
         @endif
-        @php $version = Voyager::getVersion(); @endphp
+        @php $version = Facilitador::getVersion(); @endphp
         @if (!empty($version))
             - {{ $version }}
         @endif
