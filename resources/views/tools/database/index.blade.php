@@ -26,7 +26,7 @@
                     </thead>
 
                 @foreach($tables as $table)
-                    @continue(in_array($table->name, config('facilitador.database.tables.hidden', [])))
+                    @continue(in_array($table->name, config('sitec.facilitador.database.tables.hidden', [])))
                     <tr>
                         <td>
                             <p class="name">

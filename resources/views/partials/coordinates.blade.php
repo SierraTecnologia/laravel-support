@@ -10,10 +10,10 @@
         @forelse($dataTypeContent->getCoordinates() as $point)
             var center = {lat: {{ $point['lat'] }}, lng: {{ $point['lng'] }}};
         @empty
-            var center = {lat: {{ config('facilitador.googlemaps.center.lat') }}, lng: {{ config('voyager.googlemaps.center.lng') }}};
+            var center = {lat: {{ config('sitec.facilitador.googlemaps.center.lat') }}, lng: {{ config('voyager.googlemaps.center.lng') }}};
         @endforelse
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: {{ config('facilitador.googlemaps.zoom') }},
+            zoom: {{ config('sitec.facilitador.googlemaps.zoom') }},
             center: center
         });
         var markers = [];
@@ -27,4 +27,4 @@
     }
 </script>
 <div id="map"/>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('facilitador.googlemaps.key') }}&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('sitec.facilitador.googlemaps.key') }}&callback=initMap"></script>

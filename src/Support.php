@@ -191,7 +191,7 @@ class Support
      */
     public function dimmers()
     {
-        $widgetClasses = config('facilitador.dashboard.widgets');
+        $widgetClasses = config('sitec.facilitador.dashboard.widgets');
         $dimmerGroups = [];
         $dimmerCount = 0;
         $dimmers = Widget::group("facilitador::dimmers-{$dimmerCount}");
@@ -221,7 +221,7 @@ class Support
 
     public function setting($key, $default = null)
     {
-        $globalCache = config('facilitador.settings.cache', false);
+        $globalCache = config('sitec.facilitador.settings.cache', false);
 
         if ($globalCache && Cache::tags('settings')->has($key)) {
             return Cache::tags('settings')->get($key);
@@ -257,7 +257,7 @@ class Support
     public function image($file, $default = '')
     {
         if (!empty($file)) {
-            return str_replace('\\', '/', Storage::disk(config('facilitador.storage.disk'))->url($file));
+            return str_replace('\\', '/', Storage::disk(config('sitec.facilitador.storage.disk'))->url($file));
         }
 
         return $default;
@@ -318,7 +318,7 @@ class Support
      */
     public function translatable($model)
     {
-        if (!config('facilitador.multilingual.enabled')) {
+        if (!config('sitec.facilitador.multilingual.enabled')) {
             return false;
         }
 
