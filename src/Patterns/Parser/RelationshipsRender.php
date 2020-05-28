@@ -122,6 +122,24 @@ class RelationshipsRender
                         if ($tmpReturnReflectionClass->hasMethod('getRelatedKeyName')) {
                             $dataRelationship['related_foreignKey'] = $return->getRelatedKeyName();
                         }
+
+                        /**
+                         * @todo Dando ruim aqui
+                         *   1 => array:12 [
+                         *     "origin_table_class" => "Population\Models\Components\Wiki\Page"
+                         *     "origin_foreignKey" => "all_id"
+                         *     "related_table_class" => "App\Models\Category"
+                         *     "is_inverse" => false
+                         *     "pivot" => false
+                         *     "name" => "category"
+                         *     "type" => "BelongsTo"
+                         *     "model" => "App\Models\Category"
+                         *     "ownerKey" => "id"
+                         *     "foreignKey" => "all_id"
+                         *     "related_table_name" => "all"
+                         *     "related_foreignKey" => "id"
+                         *   ]
+                         */
                         if ($tmpReturnReflectionClass->hasMethod('getRelationName')) {
                             $dataRelationship['related_table_name'] = $return->getRelationName();
                         }

@@ -184,7 +184,6 @@ class EloquentColumnBuilder extends BuilderAbstract
             $array['pivot'] = 0;
         }else if ($relation = $this->isMorphTo()) {
             // Filtra o Primeiro
-            $relation = $relation[count($relation)-1];
 
             // @todo Ajeitar aqu dps 
             // if (!isset($relation['table_target']) || !isset($this->parentEntity->system->mapperTableToClasses[$relation['table_target']])) {
@@ -385,13 +384,27 @@ class EloquentColumnBuilder extends BuilderAbstract
     protected function isMorphTo($type = false)
     {
 
+
+        if (isset($this->entity->relationsMorphs[$this->getColumnName()])) {
+            return $this->entity->relationsMorphs[$this->getColumnName()];
+        }
+
+        if (strpos($this->getColumnName(), 'able') !== false) {
+            dd(
+                $this->getColumnName(),
+                'debug1'
+            );
+        }
         if ($this->getColumnName() == 'infoable_id') {
             dd(
-                
+                $this->getColumnName(),
+                'debug2'
             );
         }
 
-
+        /**
+         * Old Verifica pelo Atributo
+         */
         // if ($this->className==\Population\Models\Market\Abouts\Info::class
         // && $this->entity->code['name']!=='id'&& $this->entity->code['name']!=='text'
         // ) {
@@ -412,7 +425,7 @@ class EloquentColumnBuilder extends BuilderAbstract
             }
             // dd($found);
             if ($isMorph) {
-                return $found;
+                return $found[count($found)-1];
             }
         }
         //     dd(

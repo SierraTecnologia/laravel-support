@@ -64,7 +64,7 @@ class SystemBuilder extends BuilderAbstract
                 $primary => $table
             ];
         });
-        dd($this->entity->tables);
+        // dd($this->entity->tables);
 
 
         $results = $this->renderCoder;

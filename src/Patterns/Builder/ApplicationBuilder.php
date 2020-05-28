@@ -53,10 +53,12 @@ class ApplicationBuilder extends BuilderAbstract
             }
         );
 
-        dd(
-            $this->entity->system->tables,
-            // $this->entity->relations
-        );
+        // dd(
+        //     // $this->entity->system->tables,
+        //     // $this->entity->relations,
+        //     $this->entity->relationsMorphs
+        //     // $this->entity->relations['trainner_MorphedByMany_account']['relations']
+        // );
 
         (new Collection($results))->map(
             function ($result) {
@@ -128,6 +130,36 @@ class ApplicationBuilder extends BuilderAbstract
                     ];
                 }
                 $this->entity->relations[$novoIndice]['relations'][] = $relation;
+
+                /**
+                 *  Agora pega só os morph
+                 */
+                if (strpos($relation['type'], 'Morph') !== false) {
+                    // /**
+                    //  * @todo quando tem pivod da merda
+                    //  */
+                    // if (isset($this->entity->relationsMorphs[$relation['foreignKey']])) {
+                    //     dd(
+                    //         $this->entity->system->tables['taskables'],
+                    //         $this->entity->relationsMorphs[$relation['foreignKey']],
+                    //         $relation
+                    //     );
+                    // }
+                    $this->entity->relationsMorphs[$relation['foreignKey']] = $relation; //['morph_type'];
+                    // echo 'true';
+                }
+                
+
+
+
+                // @todo Debugar aqui
+                // if (count($this->entity->relations[$novoIndice]['relations'])>1) {
+                //     dd(
+                //         $novoIndice,
+                //         $this->entity->relations[$novoIndice]['relations'],
+                //         'AplicatipBuilderRElatiosm'
+                //     );
+                // }
             } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
                 $reference = false;
                 if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {

@@ -22,6 +22,7 @@ class ApplicationEntity extends EntityAbstract
     public $system;
     public $models = [];
     public $relations = [];
+    public $relationsMorphs = [];
     public $mapperParentClasses = [];
     public $mapperTableToClasses = [];
     public $mapperClassNameToDataTypeReference = [];
