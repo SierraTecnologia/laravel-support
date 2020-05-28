@@ -11,7 +11,7 @@
 
             $.extend(additionalConfig, {!! json_encode($options->tinymceOptions ?? '{}') !!})
 
-            tinymce.init(window.voyagerTinyMCE.getConfig(additionalConfig));
+            tinymce.init(window.facilitadorTinyMCE.getConfig(additionalConfig));
         });
     </script>
 @endpush

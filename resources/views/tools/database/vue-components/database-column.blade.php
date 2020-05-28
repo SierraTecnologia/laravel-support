@@ -33,11 +33,11 @@
                 :disabled="column.type.notSupportIndex"
                 class="form-control">
             <option value=""></option>
-            <option value="INDEX">{{ __('voyager::database.index') }}</option>
-            <option value="UNIQUE">{{ __('voyager::database.unique') }}</option>
-            <option value="PRIMARY">{{ __('voyager::database.primary') }}</option>
+            <option value="INDEX">{{ __('facilitador::database.index') }}</option>
+            <option value="UNIQUE">{{ __('facilitador::database.unique') }}</option>
+            <option value="PRIMARY">{{ __('facilitador::database.primary') }}</option>
         </select>
-        <small v-if="column.composite" v-once>{{ __('voyager::database.composite_warning') }}</small>
+        <small v-if="column.composite" v-once>{{ __('facilitador::database.composite_warning') }}</small>
     </td>
 
     <td>
@@ -45,15 +45,15 @@
     </td>
 
     <td>
-        <div class="btn btn-danger delete-row" @click="deleteColumn"><i class="voyager-trash"></i></div>
+        <div class="btn btn-danger delete-row" @click="deleteColumn"><i class="facilitador-trash"></i></div>
     </td>
 
 </tr>
 
 @endsection
 
-@include('voyager::tools.database.vue-components.database-types')
-@include('voyager::tools.database.vue-components.database-column-default')
+@include('facilitador::tools.database.vue-components.database-types')
+@include('facilitador::tools.database.vue-components.database-column-default')
 
 <script>
     Vue.component('database-column', {
@@ -101,7 +101,7 @@
             },
             onIndexTypeChange(event) {
                 if (this.column.name == '') {
-                    return toastr.error("{{ __('voyager::database.name_warning') }}");
+                    return toastr.error("{{ __('facilitador::database.name_warning') }}");
                 }
 
                 return this.$emit('indexChanged', {

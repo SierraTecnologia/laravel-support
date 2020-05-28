@@ -1,4 +1,4 @@
-@extends('facilitador::layouts.voyager.master')
+@extends('facilitador::layouts.facilitador.master')
 
 @if (isset($dataType->id))
     @section('page_title', __('facilitador::cruds.bread.edit_bread_for_table', ['table' => $dataType->name]))

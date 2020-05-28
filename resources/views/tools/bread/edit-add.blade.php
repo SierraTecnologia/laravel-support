@@ -1,22 +1,22 @@
-@extends('voyager::master')
+@extends('facilitador::master')
 
 @if (isset($dataType->id))
-    @section('page_title', __('voyager::bread.edit_bread_for_table', ['table' => $dataType->name]))
+    @section('page_title', __('facilitador::bread.edit_bread_for_table', ['table' => $dataType->name]))
     @php
         $display_name = $dataType->getTranslatedAttribute('display_name_singular');
         $display_name_plural = $dataType->getTranslatedAttribute('display_name_plural');
     @endphp
 @else
-    @section('page_title', __('voyager::bread.create_bread_for_table', ['table' => $table]))
+    @section('page_title', __('facilitador::bread.create_bread_for_table', ['table' => $table]))
 @endif
 
 @section('page_header')
     <div class="page-title">
-        <i class="voyager-data"></i>
+        <i class="facilitador-data"></i>
         @if (isset($dataType->id))
-            {{ __('voyager::bread.edit_bread_for_table', ['table' => $dataType->name]) }}
+            {{ __('facilitador::bread.edit_bread_for_table', ['table' => $dataType->name]) }}
         @else
-            {{ __('voyager::bread.create_bread_for_table', ['table' => $table]) }}
+            {{ __('facilitador::bread.create_bread_for_table', ['table' => $table]) }}
         @endif
     </div>
     @php
@@ -25,42 +25,42 @@
             $table = $dataType->name;
         }
     @endphp
-    @include('voyager::multilingual.language-selector')
+    @include('facilitador::multilingual.language-selector')
 @stop
 
 @section('breadcrumbs')
 <ol class="breadcrumb hidden-xs">
     <li class="active">
-        <a href="{{ route('voyager.dashboard')}}"><i class="voyager-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
+        <a href="{{ route('facilitador.dashboard')}}"><i class="voyager-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
     </li>
     <li class="active">
-        <a href="{{ route('voyager.bread.index') }}">
-            {{ __('voyager::generic.bread') }}
+        <a href="{{ route('facilitador.bread.index') }}">
+            {{ __('facilitador::generic.bread') }}
         </a>
     </li>
     <li class="active">
         @if(isset($dataType->id))
-        <a href="{{ route('voyager.bread.edit', $table) }}">
+        <a href="{{ route('facilitador.bread.edit', $table) }}">
             {{ $display_name }}
         </a>
         @else
-        <a href="{{ route('voyager.bread.create', $table) }}">
+        <a href="{{ route('facilitador.bread.create', $table) }}">
             {{ $display_name }}
         </a>
         @endif
     </li>
     <li>
-        {{ isset($dataType->id) ? __('voyager::generic.edit') : __('voyager::generic.add') }}
+        {{ isset($dataType->id) ? __('facilitador::generic.edit') : __('voyager::generic.add') }}
     </li>
 </ol>
 @endsection
 
 @section('content')
-    <div class="page-content container-fluid" id="voyagerBreadEditAdd">
+    <div class="page-content container-fluid" id="facilitadorBreadEditAdd">
         <div class="row">
             <div class="col-md-12">
 
-                <form action="@if(isset($dataType->id)){{ route('voyager.bread.update', $dataType->id) }}@else{{ route('voyager.bread.store') }}@endif"
+                <form action="@if(isset($dataType->id)){{ route('facilitador.bread.update', $dataType->id) }}@else{{ route('voyager.bread.store') }}@endif"
                       method="POST" role="form">
                 @if(isset($dataType->id))
                     <input type="hidden" value="{{ $dataType->id }}" name="id">
@@ -72,25 +72,25 @@
                     <div class="panel panel-primary panel-bordered">
 
                         <div class="panel-heading">
-                            <h3 class="panel-title panel-icon"><i class="voyager-bread"></i> {{ ucfirst($table) }} {{ __('voyager::bread.bread_info') }}</h3>
+                            <h3 class="panel-title panel-icon"><i class="facilitador-bread"></i> {{ ucfirst($table) }} {{ __('voyager::bread.bread_info') }}</h3>
                             <div class="panel-actions">
-                                <a class="panel-action voyager-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
+                                <a class="panel-action facilitador-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
                         </div>
 
                         <div class="panel-body">
                             <div class="row clearfix">
                                 <div class="col-md-6 form-group">
-                                    <label for="name">{{ __('voyager::database.table_name') }}</label>
+                                    <label for="name">{{ __('facilitador::database.table_name') }}</label>
                                     <input type="text" class="form-control" readonly name="name" placeholder="{{ __('generic_name') }}"
                                            value="{{ $dataType->name ?? $table }}">
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-6 form-group">
-                                    <label for="display_name_singular">{{ __('voyager::bread.display_name_singular') }}</label>
+                                    <label for="display_name_singular">{{ __('facilitador::bread.display_name_singular') }}</label>
                                     @if($isModelTranslatable)
-                                        @include('voyager::multilingual.input-hidden', [
+                                        @include('facilitador::multilingual.input-hidden', [
                                             'isModelTranslatable' => true,
                                             '_field_name'         => 'display_name_singular',
                                             '_field_trans' => get_field_translations($dataType, 'display_name_singular')
@@ -99,13 +99,13 @@
                                     <input type="text" class="form-control"
                                            name="display_name_singular"
                                            id="display_name_singular"
-                                           placeholder="{{ __('voyager::bread.display_name_singular') }}"
+                                           placeholder="{{ __('facilitador::bread.display_name_singular') }}"
                                            value="{{ $display_name }}">
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="display_name_plural">{{ __('voyager::bread.display_name_plural') }}</label>
+                                    <label for="display_name_plural">{{ __('facilitador::bread.display_name_plural') }}</label>
                                     @if($isModelTranslatable)
-                                        @include('voyager::multilingual.input-hidden', [
+                                        @include('facilitador::multilingual.input-hidden', [
                                             'isModelTranslatable' => true,
                                             '_field_name'         => 'display_name_plural',
                                             '_field_trans' => get_field_translations($dataType, 'display_name_plural')
@@ -114,89 +114,89 @@
                                     <input type="text" class="form-control"
                                            name="display_name_plural"
                                            id="display_name_plural"
-                                           placeholder="{{ __('voyager::bread.display_name_plural') }}"
+                                           placeholder="{{ __('facilitador::bread.display_name_plural') }}"
                                            value="{{ $display_name_plural }}">
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-6 form-group">
-                                    <label for="slug">{{ __('voyager::bread.url_slug') }}</label>
-                                    <input type="text" class="form-control" name="slug" placeholder="{{ __('voyager::bread.url_slug_ph') }}"
+                                    <label for="slug">{{ __('facilitador::bread.url_slug') }}</label>
+                                    <input type="text" class="form-control" name="slug" placeholder="{{ __('facilitador::bread.url_slug_ph') }}"
                                            value="{{ $dataType->slug ?? $slug }}">
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="icon">{{ __('voyager::bread.icon_hint') }} <a
-                                                href="{{ route('voyager.compass.index', [], false) }}#fonts"
-                                                target="_blank">{{ __('voyager::bread.icon_hint2') }}</a></label>
+                                    <label for="icon">{{ __('facilitador::bread.icon_hint') }} <a
+                                                href="{{ route('facilitador.compass.index', [], false) }}#fonts"
+                                                target="_blank">{{ __('facilitador::bread.icon_hint2') }}</a></label>
                                     <input type="text" class="form-control" name="icon"
-                                           placeholder="{{ __('voyager::bread.icon_class') }}"
+                                           placeholder="{{ __('facilitador::bread.icon_class') }}"
                                            value="{{ $dataType->icon ?? '' }}">
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-6 form-group">
-                                    <label for="model_name">{{ __('voyager::bread.model_name') }}</label>
-                                    <span class="voyager-question"
+                                    <label for="model_name">{{ __('facilitador::bread.model_name') }}</label>
+                                    <span class="facilitador-question"
                                         aria-hidden="true"
                                         data-toggle="tooltip"
                                         data-placement="right"
-                                        title="{{ __('voyager::bread.model_name_ph') }}"></span>
-                                    <input type="text" class="form-control" name="model_name" placeholder="{{ __('voyager::bread.model_class') }}"
+                                        title="{{ __('facilitador::bread.model_name_ph') }}"></span>
+                                    <input type="text" class="form-control" name="model_name" placeholder="{{ __('facilitador::bread.model_class') }}"
                                            value="{{ $dataType->model_name ?? $model_name }}">
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="controller">{{ __('voyager::bread.controller_name') }}</label>
-                                    <span class="voyager-question"
+                                    <label for="controller">{{ __('facilitador::bread.controller_name') }}</label>
+                                    <span class="facilitador-question"
                                         aria-hidden="true"
                                         data-toggle="tooltip"
                                         data-placement="right"
-                                        title="{{ __('voyager::bread.controller_name_hint') }}"></span>
-                                    <input type="text" class="form-control" name="controller" placeholder="{{ __('voyager::bread.controller_name') }}"
+                                        title="{{ __('facilitador::bread.controller_name_hint') }}"></span>
+                                    <input type="text" class="form-control" name="controller" placeholder="{{ __('facilitador::bread.controller_name') }}"
                                            value="{{ $dataType->controller ?? '' }}">
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-6 form-group">
-                                    <label for="policy_name">{{ __('voyager::bread.policy_name') }}</label>
-                                    <span class="voyager-question"
+                                    <label for="policy_name">{{ __('facilitador::bread.policy_name') }}</label>
+                                    <span class="facilitador-question"
                                           aria-hidden="true"
                                           data-toggle="tooltip"
                                           data-placement="right"
-                                          title="{{ __('voyager::bread.policy_name_ph') }}"></span>
-                                    <input type="text" class="form-control" name="policy_name" placeholder="{{ __('voyager::bread.policy_class') }}"
+                                          title="{{ __('facilitador::bread.policy_name_ph') }}"></span>
+                                    <input type="text" class="form-control" name="policy_name" placeholder="{{ __('facilitador::bread.policy_class') }}"
                                            value="{{ $dataType->policy_name ?? '' }}">
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="generate_permissions">{{ __('voyager::bread.generate_permissions') }}</label><br>
+                                    <label for="generate_permissions">{{ __('facilitador::bread.generate_permissions') }}</label><br>
                                     <?php $checked = (isset($dataType->generate_permissions) && $dataType->generate_permissions == 1) || (isset($generate_permissions) && $generate_permissions); ?>
                                     <input type="checkbox"
                                            name="generate_permissions"
                                            class="toggleswitch"
-                                           data-on="{{ __('voyager::generic.yes') }}"
-                                           data-off="{{ __('voyager::generic.no') }}"
+                                           data-on="{{ __('facilitador::generic.yes') }}"
+                                           data-off="{{ __('facilitador::generic.no') }}"
                                            @if($checked) checked @endif >
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="server_side">{{ __('voyager::bread.server_pagination') }}</label><br>
+                                    <label for="server_side">{{ __('facilitador::bread.server_pagination') }}</label><br>
                                     <?php $checked = (isset($dataType->server_side) && $dataType->server_side == 1) || (isset($server_side) && $server_side); ?>
                                     <input type="checkbox"
                                            name="server_side"
                                            class="toggleswitch"
-                                           data-on="{{ __('voyager::generic.yes') }}"
-                                           data-off="{{ __('voyager::generic.no') }}"
+                                           data-on="{{ __('facilitador::generic.yes') }}"
+                                           data-off="{{ __('facilitador::generic.no') }}"
                                            @if($checked) checked @endif >
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-3 form-group">
-                                    <label for="order_column">{{ __('voyager::bread.order_column') }}</label>
-                                    <span class="voyager-question"
+                                    <label for="order_column">{{ __('facilitador::bread.order_column') }}</label>
+                                    <span class="facilitador-question"
                                           aria-hidden="true"
                                           data-toggle="tooltip"
                                           data-placement="right"
-                                          title="{{ __('voyager::bread.order_column_ph') }}"></span>
+                                          title="{{ __('facilitador::bread.order_column_ph') }}"></span>
                                     <select name="order_column" class="select2 form-control">
-                                        <option value="">-- {{ __('voyager::generic.none') }} --</option>
+                                        <option value="">-- {{ __('facilitador::generic.none') }} --</option>
                                         @foreach($fieldOptions as $tbl)
                                         <option value="{{ $tbl['field'] }}"
                                                 @if(isset($dataType) && $dataType->order_column == $tbl['field']) selected @endif
@@ -205,14 +205,14 @@
                                       </select>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="order_display_column">{{ __('voyager::bread.order_ident_column') }}</label>
-                                    <span class="voyager-question"
+                                    <label for="order_display_column">{{ __('facilitador::bread.order_ident_column') }}</label>
+                                    <span class="facilitador-question"
                                           aria-hidden="true"
                                           data-toggle="tooltip"
                                           data-placement="right"
-                                          title="{{ __('voyager::bread.order_ident_column_ph') }}"></span>
+                                          title="{{ __('facilitador::bread.order_ident_column_ph') }}"></span>
                                     <select name="order_display_column" class="select2 form-control">
-                                        <option value="">-- {{ __('voyager::generic.none') }} --</option>
+                                        <option value="">-- {{ __('facilitador::generic.none') }} --</option>
                                         @foreach($fieldOptions as $tbl)
                                         <option value="{{ $tbl['field'] }}"
                                                 @if(isset($dataType) && $dataType->order_display_column == $tbl['field']) selected @endif
@@ -221,25 +221,25 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="order_direction">{{ __('voyager::bread.order_direction') }}</label>
+                                    <label for="order_direction">{{ __('facilitador::bread.order_direction') }}</label>
                                     <select name="order_direction" class="select2 form-control">
                                         <option value="asc" @if(isset($dataType) && $dataType->order_direction == 'asc') selected @endif>
-                                            {{ __('voyager::generic.ascending') }}
+                                            {{ __('facilitador::generic.ascending') }}
                                         </option>
                                         <option value="desc" @if(isset($dataType) && $dataType->order_direction == 'desc') selected @endif>
-                                            {{ __('voyager::generic.descending') }}
+                                            {{ __('facilitador::generic.descending') }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="default_search_key">{{ __('voyager::bread.default_search_key') }}</label>
-                                    <span class="voyager-question"
+                                    <label for="default_search_key">{{ __('facilitador::bread.default_search_key') }}</label>
+                                    <span class="facilitador-question"
                                           aria-hidden="true"
                                           data-toggle="tooltip"
                                           data-placement="right"
-                                          title="{{ __('voyager::bread.default_search_key_ph') }}"></span>
+                                          title="{{ __('facilitador::bread.default_search_key_ph') }}"></span>
                                     <select name="default_search_key" class="select2 form-control">
-                                        <option value="">-- {{ __('voyager::generic.none') }} --</option>
+                                        <option value="">-- {{ __('facilitador::generic.none') }} --</option>
                                         @foreach($fieldOptions as $tbl)
                                         <option value="{{ $tbl['field'] }}"
                                                 @if(isset($dataType) && $dataType->default_search_key == $tbl['field']) selected @endif
@@ -251,9 +251,9 @@
                             <div class="row clearfix">
                                 @if (isset($scopes) && isset($dataType))
                                     <div class="col-md-3 form-group">
-                                        <label for="scope">{{ __('voyager::bread.scope') }}</label>
+                                        <label for="scope">{{ __('facilitador::bread.scope') }}</label>
                                         <select name="scope" class="select2 form-control">
-                                            <option value="">-- {{ __('voyager::generic.none') }} --</option>
+                                            <option value="">-- {{ __('facilitador::generic.none') }} --</option>
                                             @foreach($scopes as $scope)
                                             <option value="{{ $scope }}"
                                                     @if($dataType->scope == $scope) selected @endif
@@ -263,10 +263,10 @@
                                     </div>
                                 @endif
                                 <div class="col-md-9 form-group">
-                                    <label for="description">{{ __('voyager::bread.description') }}</label>
+                                    <label for="description">{{ __('facilitador::bread.description') }}</label>
                                     <textarea class="form-control"
                                               name="description"
-                                              placeholder="{{ __('voyager::bread.description') }}"
+                                              placeholder="{{ __('facilitador::bread.description') }}"
                                     >{{ $dataType->description ?? '' }}</textarea>
                                 </div>
                             </div>
@@ -276,19 +276,19 @@
 
                     <div class="panel panel-primary panel-bordered">
                         <div class="panel-heading">
-                            <h3 class="panel-title panel-icon"><i class="voyager-window-list"></i> {{ __('voyager::bread.edit_rows', ['table' => $table]) }}:</h3>
+                            <h3 class="panel-title panel-icon"><i class="facilitador-window-list"></i> {{ __('voyager::bread.edit_rows', ['table' => $table]) }}:</h3>
                             <div class="panel-actions">
-                                <a class="panel-action voyager-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
+                                <a class="panel-action facilitador-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
                         </div>
 
                         <div class="panel-body">
                             <div class="row fake-table-hd">
-                                <div class="col-xs-2">{{ __('voyager::database.field') }}</div>
-                                <div class="col-xs-2">{{ __('voyager::database.visibility') }}</div>
-                                <div class="col-xs-2">{{ __('voyager::database.input_type') }}</div>
-                                <div class="col-xs-2">{{ __('voyager::bread.display_name') }}</div>
-                                <div class="col-xs-4">{{ __('voyager::database.optional_details') }}</div>
+                                <div class="col-xs-2">{{ __('facilitador::database.field') }}</div>
+                                <div class="col-xs-2">{{ __('facilitador::database.visibility') }}</div>
+                                <div class="col-xs-2">{{ __('facilitador::database.input_type') }}</div>
+                                <div class="col-xs-2">{{ __('facilitador::bread.display_name') }}</div>
+                                <div class="col-xs-4">{{ __('facilitador::database.optional_details') }}</div>
                             </div>
 
                             <div id="bread-items">
@@ -307,17 +307,17 @@
                                 <div class="row row-dd">
                                     <div class="col-xs-2">
                                         <h4><strong>{{ $data['field'] }}</strong></h4>
-                                        <strong>{{ __('voyager::database.type') }}:</strong> <span>{{ $data['type'] }}</span><br/>
-                                        <strong>{{ __('voyager::database.key') }}:</strong> <span>{{ $data['key'] }}</span><br/>
-                                        <strong>{{ __('voyager::generic.required') }}:</strong>
+                                        <strong>{{ __('facilitador::database.type') }}:</strong> <span>{{ $data['type'] }}</span><br/>
+                                        <strong>{{ __('facilitador::database.key') }}:</strong> <span>{{ $data['key'] }}</span><br/>
+                                        <strong>{{ __('facilitador::generic.required') }}:</strong>
                                         @if($data['null'] == "NO")
-                                            <span>{{ __('voyager::generic.yes') }}</span>
+                                            <span>{{ __('facilitador::generic.yes') }}</span>
                                             <input type="hidden" value="1" name="field_required_{{ $data['field'] }}" checked="checked">
                                         @else
-                                            <span>{{ __('voyager::generic.no') }}</span>
+                                            <span>{{ __('facilitador::generic.no') }}</span>
                                             <input type="hidden" value="0" name="field_required_{{ $data['field'] }}">
                                         @endif
-                                        <div class="handler voyager-handle"></div>
+                                        <div class="handler facilitador-handle"></div>
                                         <input class="row_order" type="hidden" value="{{ $dataRow->order ?? $r_order }}" name="field_order_{{ $data['field'] }}">
                                     </div>
                                     <div class="col-xs-2">
@@ -331,28 +331,28 @@
                                                @elseif(!isset($dataRow->browse))
                                                    checked="checked"
                                                @endif>
-                                        <label for="field_browse_{{ $data['field'] }}">{{ __('voyager::generic.browse') }}</label><br/>
+                                        <label for="field_browse_{{ $data['field'] }}">{{ __('facilitador::generic.browse') }}</label><br/>
                                         <input type="checkbox"
                                                id="field_read_{{ $data['field'] }}"
                                                name="field_read_{{ $data['field'] }}" @if(isset($dataRow->read) && $dataRow->read) checked="checked" @elseif($data['key'] == 'PRI')@elseif($data['type'] == 'timestamp' && $data['field'] == 'updated_at')@elseif(!isset($dataRow->read)) checked="checked" @endif>
-                                        <label for="field_read_{{ $data['field'] }}">{{ __('voyager::generic.read') }}</label><br/>
+                                        <label for="field_read_{{ $data['field'] }}">{{ __('facilitador::generic.read') }}</label><br/>
                                         <input type="checkbox"
                                                id="field_edit_{{ $data['field'] }}"
                                                name="field_edit_{{ $data['field'] }}" @if(isset($dataRow->edit) && $dataRow->edit) checked="checked" @elseif($data['key'] == 'PRI')@elseif($data['type'] == 'timestamp' && $data['field'] == 'updated_at')@elseif(!isset($dataRow->edit)) checked="checked" @endif>
-                                        <label for="field_edit_{{ $data['field'] }}">{{ __('voyager::generic.edit') }}</label><br/>
+                                        <label for="field_edit_{{ $data['field'] }}">{{ __('facilitador::generic.edit') }}</label><br/>
                                         <input type="checkbox"
                                                id="field_add_{{ $data['field'] }}"
                                                name="field_add_{{ $data['field'] }}" @if(isset($dataRow->add) && $dataRow->add) checked="checked" @elseif($data['key'] == 'PRI')@elseif($data['type'] == 'timestamp' && $data['field'] == 'created_at')@elseif($data['type'] == 'timestamp' && $data['field'] == 'updated_at')@elseif(!isset($dataRow->add)) checked="checked" @endif>
-                                            <label for="field_add_{{ $data['field'] }}">{{ __('voyager::generic.add') }}</label><br/>
+                                            <label for="field_add_{{ $data['field'] }}">{{ __('facilitador::generic.add') }}</label><br/>
                                         <input type="checkbox"
                                                id="field_delete_{{ $data['field'] }}"
                                                name="field_delete_{{ $data['field'] }}" @if(isset($dataRow->delete) && $dataRow->delete) checked="checked" @elseif($data['key'] == 'PRI')@elseif($data['type'] == 'timestamp' && $data['field'] == 'updated_at')@elseif(!isset($dataRow->delete)) checked="checked" @endif>
-                                                <label for="field_delete_{{ $data['field'] }}">{{ __('voyager::generic.delete') }}</label><br/>
+                                                <label for="field_delete_{{ $data['field'] }}">{{ __('facilitador::generic.delete') }}</label><br/>
                                     </div>
                                     <div class="col-xs-2">
                                         <input type="hidden" name="field_{{ $data['field'] }}" value="{{ $data['field'] }}">
                                         @if($data['type'] == 'timestamp')
-                                            <p>{{ __('voyager::generic.timestamp') }}</p>
+                                            <p>{{ __('facilitador::generic.timestamp') }}</p>
                                             <input type="hidden" value="timestamp"
                                                    name="field_input_type_{{ $data['field'] }}">
                                         @else
@@ -370,10 +370,10 @@
                                     </div>
                                     <div class="col-xs-2">
                                         @if($isModelTranslatable)
-                                            @include('voyager::multilingual.input-hidden', [
+                                            @include('facilitador::multilingual.input-hidden', [
                                                 'isModelTranslatable' => true,
                                                 '_field_name'         => 'field_display_name_' . $data['field'],
-                                                '_field_trans' => $dataRow ? get_field_translations($dataRow, 'display_name') : json_encode([config('voyager.multilingual.default') => ucwords(str_replace('_', ' ', $data['field']))]),
+                                                '_field_trans' => $dataRow ? get_field_translations($dataRow, 'display_name') : json_encode([config('facilitador.multilingual.default') => ucwords(str_replace('_', ' ', $data['field']))]),
                                             ])
                                         @endif
                                         <input type="text" class="form-control"
@@ -382,7 +382,7 @@
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="alert alert-danger validation-error">
-                                            {{ __('voyager::json.invalid') }}
+                                            {{ __('facilitador::json.invalid') }}
                                         </div>
                                         <textarea id="json-input-{{ json_encode($data['field']) }}"
                                                   class="resizable-editor"
@@ -399,7 +399,7 @@
 
                             @if(isset($dataTypeRelationships))
                                 @foreach($dataTypeRelationships as $relationship)
-                                    @include('voyager::tools.bread.relationship-partial', $relationship)
+                                    @include('facilitador::tools.bread.relationship-partial', $relationship)
                                 @endforeach
                             @endif
 
@@ -407,19 +407,19 @@
 
                         </div><!-- .panel-body -->
                         <div class="panel-footer">
-                             <div class="btn btn-new-relationship"><i class="voyager-heart"></i> <span>
-                             {{ __('voyager::database.relationship.create') }}</span></div>
+                             <div class="btn btn-new-relationship"><i class="facilitador-heart"></i> <span>
+                             {{ __('facilitador::database.relationship.create') }}</span></div>
                         </div>
                     </div><!-- .panel -->
 
-                    <button type="submit" class="btn pull-right btn-primary">{{ __('voyager::generic.submit') }}</button>
+                    <button type="submit" class="btn pull-right btn-primary">{{ __('facilitador::generic.submit') }}</button>
 
                 </form>
             </div><!-- .col-md-12 -->
         </div><!-- .row -->
     </div><!-- .page-content -->
 
-@include('voyager::tools.bread.relationship-new-modal')
+@include('facilitador::tools.bread.relationship-new-modal')
 
 @stop
 
@@ -514,7 +514,7 @@
                         for (var i = window.invalidEditors.length - 1; i >= 0; i--) {
                             $('#'+window.invalidEditors[i]).siblings('.validation-error').show();
                         }
-                        toastr.error('{{ __('voyager::json.invalid_message') }}', '{{ __('voyager::json.validation_errors') }}', {"preventDuplicates": true, "preventOpenDuplicates": true});
+                        toastr.error('{{ __('facilitador::json.invalid_message') }}', '{{ __('voyager::json.validation_errors') }}', {"preventDuplicates": true, "preventOpenDuplicates": true});
                     } else {
                         if (_session.getValue()) {
                             // uglify JSON object and update textarea for submit purposes
@@ -592,13 +592,13 @@
                 populateRowsFromTable($(this));
             });
 
-            $('.voyager-relationship-details-btn').click(function(){
+            $('.facilitador-relationship-details-btn').click(function(){
                 $(this).toggleClass('open');
                 if($(this).hasClass('open')){
-                    $(this).parent().parent().find('.voyager-relationship-details').slideDown();
+                    $(this).parent().parent().find('.facilitador-relationship-details').slideDown();
                     populateRowsFromTable($(this).parent().parent().find('select.relationship_table'));
                 } else {
-                    $(this).parent().parent().find('.voyager-relationship-details').slideUp();
+                    $(this).parent().parent().find('.facilitador-relationship-details').slideUp();
                 }
             });
 
@@ -607,7 +607,7 @@
         function populateRowsFromTable(dropdown){
             var tbl = dropdown.val();
 
-            $.get('{{ route('voyager.database.index') }}/' + tbl, function(data){
+            $.get('{{ route('facilitador.database.index') }}/' + tbl, function(data){
                 var tbl_selected = $(dropdown).val();
 
                 $(dropdown).parent().parent().find('.rowDrop').each(function(){

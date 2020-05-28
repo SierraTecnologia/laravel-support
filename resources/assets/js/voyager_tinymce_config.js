@@ -9,7 +9,7 @@ var getConfig = function(options) {
     var baseTinymceConfig = {
         menubar: false,
         selector: 'textarea.richTextBox',
-        skin_url: $('meta[name="assets-path"]').attr('content')+'?path=js/skins/voyager',
+        skin_url: $('meta[name="assets-path"]').attr('content')+'?path=js/skins/facilitador',
         min_height: 600,
         resize: 'vertical',
         plugins: 'link, image, code, table, textcolor, lists',
