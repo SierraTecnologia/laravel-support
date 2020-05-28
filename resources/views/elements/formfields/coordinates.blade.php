@@ -17,7 +17,7 @@
         inline-template
         ref="coordinates"
         api-key="{{ config('sitec.facilitador.googlemaps.key') }}"
-        :points='@json($dataTypeContent->getCoordinates() && count($dataTypeContent->getCoordinates()) ? $dataTypeContent->getCoordinates() : [[ 'lat' => config('sitec.facilitador.googlemaps.center.lat'), 'lng' => config('voyager.googlemaps.center.lng') ]])'
+        :points='@json($dataTypeContent->getCoordinates() && count($dataTypeContent->getCoordinates()) ? $dataTypeContent->getCoordinates() : [[ 'lat' => config('sitec.facilitador.googlemaps.center.lat'), 'lng' => config('sitec.facilitador.googlemaps.center.lng') ]])'
         :show-autocomplete="{{ $showAutocomplete }}"
         :show-lat-lng="{{ $showLatLng }}"
         :zoom={{ config('sitec.facilitador.googlemaps.zoom') }}
