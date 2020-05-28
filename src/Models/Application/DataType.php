@@ -224,6 +224,25 @@ class DataType extends Model implements EloquentInterface
 
         return $requestData;
     }
+    
+    public function dataRelactionships()
+    {
+        return $this->hasMany(
+            Facilitador::modelClass('DataRelationship'),
+            'origin_table_name',
+            'table_name'
+        );
+    }
+    public function allDataRelactionships()
+    {
+        return $this->dataRelactionships()->union(
+            $this->hasMany(
+                Facilitador::modelClass('DataRelationship'),
+                'related_table_name',
+                'table_name'
+            )
+        );
+    }
 
     public function fieldOptions()
     {
@@ -332,25 +351,6 @@ class DataType extends Model implements EloquentInterface
     public function setScopeAttribute($value)
     {
         $this->attributes['details'] = collect($this->details)->merge(['scope' => $value]);
-    }
-    
-    public function dataRelactionships()
-    {
-        return $this->hasMany(
-            Facilitador::modelClass('DataRelationship'),
-            'origin_table_name',
-            'table_name'
-        );
-    }
-    public function allDataRelactionships()
-    {
-        return $this->dataRelactionships()->union(
-            $this->hasMany(
-                Facilitador::modelClass('DataRelationship'),
-                'related_table_name',
-                'table_name'
-            )
-        );
     }
 
     /**

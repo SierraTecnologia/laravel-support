@@ -30,6 +30,17 @@ class Routers extends Base
     public $description = "Trigger any command for this site.  Note: these may take awhile to execute.";
 
     /**
+     * Populate protected properties on init
+     */
+    public function __construct()
+    {
+        $this->title = __('facilitador::routers.controller.title');
+        $this->description = __('facilitador::routers.controller.description');
+
+        parent::__construct();
+    }
+
+    /**
      * List all the tasks in the admin
      *
      * @return Response
@@ -37,20 +48,9 @@ class Routers extends Base
     public function index()
     {
         return $this->populateView(
-            'support::tools.routers.index', [
+            'support::application.routers.index', [
             'routers' => Router::all(),
             ]
         );
-    }
-
-    /**
-     * Populate protected properties on init
-     */
-    public function __construct()
-    {
-        $this->title = __('facilitador::commands.controller.title');
-        $this->description = __('facilitador::commands.controller.description');
-
-        parent::__construct();
     }
 }

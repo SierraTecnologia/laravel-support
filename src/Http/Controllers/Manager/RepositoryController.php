@@ -62,7 +62,7 @@ class RepositoryController extends Controller
             $usesSoftDeletes,
             $showSoftDeleted,
             $showCheckboxColumn,
-        ) = $this->repositoryIndex($dataType);
+        ) = $this->repositoryIndex($dataType, $request);
 
 
         $view = 'facilitador::cruds.bread.browse';

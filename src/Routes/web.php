@@ -14,8 +14,8 @@ Route::group(
     'middleware' => 'web',
     ], function () {
         $loadingRoutes = [
-        'manager',
-        'facilitador'
+            'manager',
+            'voyager'
         ];
         event(new Routing());
         foreach ($loadingRoutes as $loadingRoute) {
