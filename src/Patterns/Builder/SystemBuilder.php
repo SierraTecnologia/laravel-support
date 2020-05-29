@@ -23,7 +23,6 @@ use Log;
 use Artisan;
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Elements\Entities\EloquentColumn;
-use Support\Patterns\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
@@ -32,15 +31,17 @@ use Doctrine\DBAL\DBALException;
 use Support\Elements\Entities\EloquentEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 
-
+use Support\Utils\Extratores\ArrayExtractor;
 
 use Support\Patterns\Parser\ParseClass;
+use Support\Patterns\Parser\ParseModelClass;
 use Support\Utils\Modificators\ArrayModificator;
 use Support\Utils\Inclusores\ArrayInclusor;
 use Support\Utils\Modificators\StringModificator;
 use Support\Utils\Extratores\ClasserExtractor;
 use Support\Contracts\Manager\BuilderAbstract;
 use Support\Patterns\Entity\SystemEntity;
+use Support\Elements\Entities\RelationshipEntity;
 
 class SystemBuilder extends BuilderAbstract
 {
@@ -49,22 +50,27 @@ class SystemBuilder extends BuilderAbstract
     public $renderDatabase;
     public $renderCoder;
 
-    public function requeriments()
+    public function requeriments(): void
     {
         $this->renderDatabase = \Support\Patterns\Render\DatabaseRender::make('', $this->output)();
         $this->renderCoder = \Support\Patterns\Render\CodeRender::make('', $this->output)();
     }
     
 
-    public function builder()
+    public function prepare(): void
     {
-        $this->entity->tables = (new Collection($this->renderDatabase))->mapWithKeys(function ($table) {
+        $this->entity->tables = (new Collection($this->renderDatabase))->mapWithKeys(function (Table $table) {
             $primary = $this->returnRelationPrimaryKey($table);
             return [
                 $primary => $table
             ];
         });
         // dd($this->entity->tables);
+    }
+    
+
+    public function builder(): bool
+    {
 
 
         $results = $this->renderCoder;
@@ -87,7 +93,7 @@ class SystemBuilder extends BuilderAbstract
         );
 
         $results = $results->reject(
-            function ($result) {
+            function (ParseModelClass $result): bool {
                 if (!$result->typeIs('model')) {
                     return true;
                 }
@@ -105,7 +111,7 @@ class SystemBuilder extends BuilderAbstract
          * Grava referencia de tabelas para classes ja sem as classes com problema
          */
         $results->map(
-            function ($result) {
+            function (ParseModelClass $result): void {
                 $this->loadMapperTableToClasses(
                     $result->getTableName(),
                     $result->getClassName()
@@ -120,12 +126,25 @@ class SystemBuilder extends BuilderAbstract
          * Remove quem nao tem tabela no banco de dados e armazena os entitys
          */
         $results->reject(
-            function ($result) {
+            function (ParseModelClass $result): bool {
                 return !$this->entity->haveTableInDatabase($result->getClassName());
             }
         )->map(
-            function ($result) {
+            function (ParseModelClass $result): void {
                 $this->entity->models[$result->getClassName()] = $result;
+            }
+        );
+
+
+
+
+
+        (new Collection($this->entity->models))->map(
+            function (ParseModelClass $result): void {
+                $this->builderAllRelations(
+                    $result->getTableName(),
+                    $result->toArray()['relations']
+                );
             }
         );
         // dd(
@@ -187,7 +206,7 @@ class SystemBuilder extends BuilderAbstract
      * Para Tabelas
      */
 
-    private function returnRelationPrimaryKey($table)
+    private function returnRelationPrimaryKey(Table $table): string
     {
         if (!$primary = $this->returnPrimaryKeyFromIndexes($table->exportIndexesToArray())) {
             return $table->getName();
@@ -208,5 +227,118 @@ class SystemBuilder extends BuilderAbstract
         }
 
         return $primary;
+    }
+
+    private function builderAllRelations(string $tableName, $relations): void
+    {
+        // Pega Relacoes
+        if (empty($relations)) {
+            return ;
+        }
+
+    
+        foreach ($relations as $relation) {
+            try {
+                $tableTarget = $relation['name'];
+                $tableOrigin = $tableName;
+
+                $singulariRelationName = StringModificator::singularizeAndLower($relation['name']);
+                $tableNameSingulari = StringModificator::singularizeAndLower($tableName);
+
+                $type = $relation['type'];
+                if (RelationshipEntity::isInvertedRelation($relation['type'])) {
+                    $type = RelationshipEntity::getInvertedRelation($type);
+                    $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
+                } else {
+                    $temp = $tableOrigin;
+                    $tableOrigin = $tableTarget;
+                    $tableTarget = $temp;
+                    $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
+                }
+                if (!isset($this->entity->relations[$novoIndice])) {
+                    $this->entity->relations[$novoIndice] = [
+                        'code' => $novoIndice,
+                        // Nome da Funcao
+                        'name' => $tableTarget,
+                        'table_origin' => $tableOrigin,
+                        'table_target' => $tableTarget,
+                        'pivot' => 0,
+                        'type' => $type,
+                        'relations' => []
+                    ];
+                }
+
+                $this->entity->relations[$novoIndice]['relations'][] = $relation;
+
+                /**
+                 * Builder Relationship
+                 */
+                if (!isset($relation['origin_table_name']) || empty($relation['origin_table_name'])) {
+                    $relation['origin_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
+                        $relation['origin_table_class'],
+                        $this->entity->models,
+                        '[{{index}}]->getTableName()'
+                    );
+                }
+                if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
+                    $relation['related_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
+                        $relation['related_table_class'],
+                        $this->entity->models,
+                        '[{{index}}]->getTableName()'
+                    );
+                }
+                new RelationshipEntity($relation);
+
+                // /**
+                //  *  Agora pega só os morph
+                //  */
+                // if (strpos($relation['type'], 'Morph') !== false) {
+                //     // /**
+                //     //  * @todo quando tem pivod da merda
+                //     //  */
+                //     // if (isset($this->entity->relationsMorphs[$relation['foreignKey']])) {
+                //     //     dd(
+                //     //         $this->entity->system->tables['taskables'],
+                //     //         $this->entity->relationsMorphs[$relation['foreignKey']],
+                //     //         $relation
+                //     //     );
+                //     // }
+                //     $this->entity->relationsMorphs[$relation['foreignKey']] = $relation; //['morph_type'];
+                //     // echo 'true';
+                // }
+                
+
+
+
+                // @todo Debugar aqui
+                // if (count($this->entity->relations[$novoIndice]['relations'])>1) {
+                //     dd(
+                //         $novoIndice,
+                //         $this->entity->relations[$novoIndice]['relations'],
+                //         'AplicatipBuilderRElatiosm'
+                //     );
+                // }
+            } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
+                $reference = false;
+                if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
+                    $reference = [
+                        'model' => $classUniversal
+                    ];
+                } 
+                $this->setErrors(
+                    $e,
+                    $reference
+                );
+                // } catch (\Exception $e) {
+                dd(
+                    'LaravelSupport>Database>> Não era pra Cair Erro aqui',
+                    $e,
+                    $relation,
+                    $relation['name'],
+                    $relation['type']
+                );
+            }
+        }
+
     }
 }

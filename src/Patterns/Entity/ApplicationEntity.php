@@ -21,13 +21,11 @@ class ApplicationEntity extends EntityAbstract
      */
     public $system;
     public $models = [];
-    public $relations = [];
-    public $relationsMorphs = [];
     public $mapperParentClasses = [];
     public $mapperTableToClasses = [];
     public $mapperClassNameToDataTypeReference = [];
 
-    public function getReferenceForClass($className)
+    public function getReferenceForClass(string $className): string
     {
         if (isset($this->mapperClassNameToDataTypeReference[$className])) {
             return $this->mapperClassNameToDataTypeReference[$className];

@@ -51,7 +51,7 @@ abstract class SchemaManager
      *
      * @return \Support\Components\Database\Schema\Table
      */
-    public static function listTableDetails($tableName)
+    public static function listTableDetails($tableName): Table
     {
         $columns = static::manager()->listTableColumns($tableName);
 

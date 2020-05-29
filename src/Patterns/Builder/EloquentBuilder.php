@@ -30,7 +30,6 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
 use Support\Patterns\Entity\EloquentEntity;
-use Support\Exceptions\Coder\EloquentTableNotExistException;
 use Support\Contracts\Manager\BuilderAbstract;
 
 class EloquentBuilder extends BuilderAbstract
@@ -38,28 +37,18 @@ class EloquentBuilder extends BuilderAbstract
     public static $entityClasser = EloquentEntity::class;
 
 
-    public function builder()
+    public function builder(): bool
     {
         $parseModelClass = $this->parentEntity->system->models[$this->entity->code];
 
-        $databaseTableObject = false;
-        if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
-            $parseModelClass->getTableName(),
-            $this->parentEntity->system->tables,
-            'name'
-        )
-        ) {
-            $databaseTableObject = $this->parentEntity->system->tables[$foundTableRender[0]];
-        }
-        if (!$databaseTableObject) {
-            throw new EloquentTableNotExistException($this->entity->code, $parseModelClass->getTableName());
-        }
+        $databaseTableObject = $this->parentEntity->system->returnTableForName($parseModelClass->getTableName());
 
         $databaseTableArray = $databaseTableObject->toArray();
         $parseModelClassArray = $parseModelClass->toArray();
 
         $this->entity->setTablename($parseModelClass->getTableName());
         $this->entity->setName($parseModelClassArray['name']);
+        $this->entity->setDisplayName($this->getDisplayName($databaseTableObject, $databaseTableArray['columns'], $parseModelClass->getPrimaryKey()));
         $this->entity->setIcon(\Support\Template\Layout\Icons::getForNameAndCache($parseModelClassArray['name'], false));
         $this->entity->setPrimaryKey($parseModelClass->getPrimaryKey());
         $this->entity->setIndexes($databaseTableArray['indexes']);
@@ -93,4 +82,24 @@ class EloquentBuilder extends BuilderAbstract
     
     }
 
+
+
+    private function getDisplayName(Table $listTable, array $columns, string $primaryKey): string
+    {
+
+        // Qual coluna ira mostrar em uma Relacao ?
+        if ($listTable->hasColumn('name')) {
+            return 'name';
+        } 
+        if ($listTable->hasColumn('displayName')) {
+            return 'displayName';
+        }
+
+        foreach ($columns as $column) {
+            if ($column['type']['name'] == 'varchar') {
+                return $column['name'];
+            }
+        }
+        return $primaryKey;
+    }
 }

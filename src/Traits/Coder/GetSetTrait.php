@@ -116,28 +116,38 @@ trait GetSetTrait
         switch ($type) {
         case 'string':
             if (!is_string($value)) {
-                throw new SetterGetterException('String type expected', 3);
+                throw new SetterGetterException($type.' type expected given '.gettype($value), 3);
             }
             break;
 
         case 'number':
+        case 'double':
+        case 'integer':
+        case 'float':
             if (!is_numeric($value)) {
-                throw new SetterGetterException('Number type expected', 4);
+                throw new SetterGetterException($type.' type expected given '.gettype($value), 4);
             }
             break;
 
         case 'array':
             if (!is_array($value)) {
-                throw new SetterGetterException('Array type expected', 5);
+                throw new SetterGetterException($type.' type expected given '.gettype($value), 5);
             }
             break;
 
         case 'object':
             if (!is_object($value)) {
-                throw new SetterGetterException('Object type expected.', 6);
+                throw new SetterGetterException($type.' type expected given '.gettype($value), 6);
             }
             break;
 
+        case 'bool':
+            case 'boolean':
+            if (!is_bool($value)) {
+                throw new SetterGetterException($type.' type expected given '.gettype($value), 7);
+            }
+            break;
+            
         default:
             // If a @var type is given in annotation and we haven't received
             // proper type.

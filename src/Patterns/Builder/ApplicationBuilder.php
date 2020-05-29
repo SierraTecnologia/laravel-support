@@ -18,6 +18,7 @@ use Support\Elements\Entities\RelationshipEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
+use Support\Utils\Extratores\ArrayExtractor;
 
 class ApplicationBuilder extends BuilderAbstract
 {
@@ -25,33 +26,23 @@ class ApplicationBuilder extends BuilderAbstract
 
     public $systemEntity;
 
-    public function requeriments()
+    public function requeriments(): void
     {
         $this->systemEntity = \Support\Patterns\Builder\SystemBuilder::make('', $this->output)();
     }
 
-    public function prepare()
+    public function prepare(): void
     {
         $this->entity->system = $this->systemEntity;
         
         $this->entity->mapperParentClasses = $this->systemEntity->mapperParentClasses;
         $this->entity->mapperTableToClasses = $this->systemEntity->mapperTableToClasses;
         $this->entity->mapperClassNameToDataTypeReference = $this->systemEntity->mapperClassNameToDataTypeReference;
+
     }
 
-    public function builder()
+    public function builder(): bool
     {
-        $results = $this->entity->system->models;
-
-        $this->entity->relations = [];
-        (new Collection($results))->map(
-            function ($result) {
-                $this->loadMapperBdRelations(
-                    $result->getTableName(),
-                    $result->toArray()['relations']
-                );
-            }
-        );
 
         // dd(
         //     // $this->entity->system->tables,
@@ -59,12 +50,12 @@ class ApplicationBuilder extends BuilderAbstract
         //     $this->entity->relationsMorphs
         //     // $this->entity->relations['trainner_MorphedByMany_account']['relations']
         // );
+        $this->builderEloquentModels();
 
-        (new Collection($results))->map(
-            function ($result) {
-                $this->builderChildren($result);
-            }
-        );
+        /**
+         * Constroi Relations
+         */
+        $this->builderRelations();
 
         // dd(
         //     $this->entity->models["Informate\Models\Entytys\Fisicos\Weapon"]
@@ -73,114 +64,59 @@ class ApplicationBuilder extends BuilderAbstract
         
     }
 
-    public function builderChildren($result)
+    public function builderEloquentModels()
     {
+        (new Collection($this->entity->system->models))->map(
+            function ($result) {
 
-        try {
-            $this->entity->models[$result->getClassName()] = \Support\Patterns\Builder\EloquentBuilder::make(
-                $this->entity,
-                $this->output
-            )($result->getClassName());
+                try {
+                    $this->entity->models[$result->getClassName()] = \Support\Patterns\Builder\EloquentBuilder::make(
+                        $this->entity,
+                        $this->output
+                    )($result->getClassName());
 
-            // Register DataType/DataRow
-            $this->registerDataType($this->entity->models[$result->getClassName()]);
-        } catch (EloquentTableNotExistException $th) {
-            dd(
-                $th
-            );
-        }
+                    // Register DataType/DataRow
+                    $this->registerDataType($this->entity->models[$result->getClassName()]);
+                } catch (EloquentTableNotExistException $th) {
+                    dd(
+                        $th
+                    );
+                }
+            }
+        );
     }
 
-    private function loadMapperBdRelations(string $tableName, $relations)
+    /**
+     * @todo fazer entityrelation esta no systembuilder
+     */
+    private function builderRelations()
     {
-        // Pega Relacoes
-        if (empty($relations)) {
-            return ;
-        }
+        // $this->relationships = (new Collection($this->entity->system->relations))->map(
+        //     function ($result) {
+        //         $this->builderRelations(
+        //             $result
+        //         );
+        //     }
+        // );
 
-    
-        foreach ($relations as $relation) {
-            try {
-                $tableTarget = $relation['name'];
-                $tableOrigin = $tableName;
+        // $eloquentRenders->map(
+        //     function ($eloquentData, $className) use ($renderDatabaseArray) {
 
-                $singulariRelationName = StringModificator::singularizeAndLower($relation['name']);
-                $tableNameSingulari = StringModificator::singularizeAndLower($tableName);
-
-                $type = $relation['type'];
-                if (RelationshipEntity::isInvertedRelation($relation['type'])) {
-                    $type = RelationshipEntity::getInvertedRelation($type);
-                    $novoIndice = $tableNameSingulari.'_'.$type.'_'.$singulariRelationName;
-                } else {
-                    $temp = $tableOrigin;
-                    $tableOrigin = $tableTarget;
-                    $tableTarget = $temp;
-                    $novoIndice = $singulariRelationName.'_'.$type.'_'.$tableNameSingulari;
-                }
-                if (!isset($this->entity->relations[$novoIndice])) {
-                    $this->entity->relations[$novoIndice] = [
-                        'code' => $novoIndice,
-                        // Nome da Funcao
-                        'name' => $tableTarget,
-                        'table_origin' => $tableOrigin,
-                        'table_target' => $tableTarget,
-                        'pivot' => 0,
-                        'type' => $type,
-                        'relations' => []
-                    ];
-                }
-                $this->entity->relations[$novoIndice]['relations'][] = $relation;
-
-                /**
-                 *  Agora pega só os morph
-                 */
-                if (strpos($relation['type'], 'Morph') !== false) {
-                    // /**
-                    //  * @todo quando tem pivod da merda
-                    //  */
-                    // if (isset($this->entity->relationsMorphs[$relation['foreignKey']])) {
-                    //     dd(
-                    //         $this->entity->system->tables['taskables'],
-                    //         $this->entity->relationsMorphs[$relation['foreignKey']],
-                    //         $relation
-                    //     );
-                    // }
-                    $this->entity->relationsMorphs[$relation['foreignKey']] = $relation; //['morph_type'];
-                    // echo 'true';
-                }
-                
-
-
-
-                // @todo Debugar aqui
-                // if (count($this->entity->relations[$novoIndice]['relations'])>1) {
-                //     dd(
-                //         $novoIndice,
-                //         $this->entity->relations[$novoIndice]['relations'],
-                //         'AplicatipBuilderRElatiosm'
-                //     );
-                // }
-            } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-                $reference = false;
-                if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                    $reference = [
-                        'model' => $classUniversal
-                    ];
-                } 
-                $this->setErrors(
-                    $e,
-                    $reference
-                );
-                // } catch (\Exception $e) {
-                dd(
-                    'LaravelSupport>Database>> Não era pra Cair Erro aqui',
-                    $e,
-                    $relation,
-                    $relation['name'],
-                    $relation['type']
-                );
-            }
-        }
+        //         foreach ($eloquentData['relations'] as $relation) {
+        //             if (!isset($relation['origin_table_name']) || empty($relation['origin_table_name'])) {
+        //                 $relation['origin_table_name'] = $renderDatabaseArray["Leitoras"]["displayClasses"][$relation['origin_table_class']]["tableName"];
+        //             }
+        //             if (!isset($relation['related_table_name']) || empty($relation['related_table_name'])) {
+        //                 $relation['related_table_name'] = ArrayExtractor::returnNameIfNotExistInArray(
+        //                     $relation['related_table_class'],
+        //                     $renderDatabaseArray,
+        //                     '["Leitoras"]["displayClasses"][{{index}}]["tableName"]'
+        //                 );
+        //             }
+        //             $this->relationships[] = new RelationshipEntity($relation);
+        //         }
+        //     }
+        // );
     }
 
 

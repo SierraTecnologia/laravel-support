@@ -36,16 +36,24 @@ class EloquentColumnBuilder extends BuilderAbstract
     /**
      * Caso seja ***able_type deve ser ignorado
      */
-    public function isToIgnoreColumn()
+    public function isToIgnoreColumn(): bool
     {
-        return ArraySearcher::arraySearchByAttribute(
+        if ($this->entity->code['name'] === 'deleted_at') {
+            return true;
+        }
+
+
+        if (ArraySearcher::arraySearchByAttribute(
             $this->entity->code['name'],
-            $this->parentEntity->relations,
+            $this->parentEntity->system->relations,
             'morph_type'
-        );
+        )) {
+            return true;
+        }
+        return false;
     }
 
-    public function builder()
+    public function builder(): bool
     {
 
         // dd(
@@ -58,6 +66,13 @@ class EloquentColumnBuilder extends BuilderAbstract
         if ($this->isToIgnoreColumn()) {
             return false;
         }
+
+
+
+        // dd(
+        //     $this->entity->code
+        //     // $this->parentEntity->system->returnTableForName($this->entity->code['table']),
+        // );
 
         /**
          *   "type" => array:3 [▶]
@@ -77,15 +92,18 @@ class EloquentColumnBuilder extends BuilderAbstract
          *   "composite" => false
          */
         $this->entity->setColumnName($this->getColumnName());
-
-        $this->entity->setColumnType($this->entity->code['type']['name']);
-        if (!isset($this->entity->code['type']['default']) || !isset($this->entity->code['type']['default']['type'])) {
-            // @todo Add Relacionamento Caso Exista
-            $this->entity->setColumnType($this->getColumnDisplayType($this->entity->code['type']['name']));
-        } else {
-            // @todo Add Relacionamento Caso Exista
-            $this->entity->setColumnType($this->getColumnDisplayType($this->entity->code['type']['default']['type']));
-        }
+        $this->entity->setColumnType($this->getColumnType());
+        
+        $modelClass = $this->parentEntity->system->returnClassForTableName($this->entity->code['table']);
+        $this->entity->setIsUpdatedDate(
+            $this->getColumnName() ===
+            $this->parentEntity->system->models[$modelClass]->getData('getUpdatedAtColumn')
+        );
+        $this->entity->setIsCreatedDate(
+            $this->getColumnName() ===
+            $this->parentEntity->system->models[$modelClass]->getData('createdAtColumn')
+        );
+        
 
         $this->entity->setName($this->getName());
         $this->entity->setData($this->entity->code);
@@ -96,16 +114,22 @@ class EloquentColumnBuilder extends BuilderAbstract
 
     }
 
-    public function getColumnName()
+    public function getColumnName(): string
     {
         return $this->entity->code['oldName'];
     }
     /**
      * 
      */
-    public function getName()
+    public function getName(): string
     {
         $explode = explode('_', $this->getColumnName());
+
+
+        if ($this->isRelationshipType()) {
+            array_pop($explode);
+        }
+
         $name = '';
         foreach ($explode as $value) {
             if (!empty($name)) {
@@ -234,6 +258,13 @@ class EloquentColumnBuilder extends BuilderAbstract
         //     $array['taggable'] = 0; // @todo
         // }
 
+
+        
+        if (in_array($this->getColumnType(), ['date', 'datetime', 'timestamp'])) {
+            $haveDetails = true;
+            $array['format'] = 'Y-m-d G:i:s';
+        }
+
         if (!$haveDetails) {
             return null;
         }
@@ -336,20 +367,48 @@ class EloquentColumnBuilder extends BuilderAbstract
      * 
      * timestamp
      */
-    public function getColumnDisplayType($type)
+    public function getColumnDisplayType(string $type): string
     {
-        if ($this->isRelationship($type)) {
+        if ($this->isRelationshipType()) {
             return 'relationship';
         }
 
-        if ($type == 'varchar') {
-            return 'text';
+        if (in_array($type, ['text'])) {
+            return 'text_area';
         }
-        
-        return $type;
+
+        if (in_array($type, ['integer', 'float', 'bigint', 'number'])) {
+            return 'number';
+        }
+
+        if (in_array($type, ['timestamp'])) {
+            return 'timestamp';
+        }
+
+        if (in_array($type, ['date', 'datetime'])) {
+            return 'date';
+        }
+
+        if ($type !== 'varchar') {
+            Log::channel('sitec-support')->error(
+                'EloquentBuilder: Não tratando tipo '.$type
+            );
+        }
+        return 'text';
+    }
+    public function getColumnType(): string
+    {
+        if (isset($this->entity->code['type']['default']) && isset($this->entity->code['type']['default']['type'])) {
+            return $this->getColumnDisplayType($this->entity->code['type']['default']['type']);
+        }
+        return $this->getColumnDisplayType($this->entity->code['type']['name']);
+    }
+    public function isRelationshipType(): bool
+    {
+        return $this->isBelongTo() || $this->isMorphTo();
     }
 
-    protected function isBelongTo($type = false)
+    protected function isBelongTo()
     {
         if (isset($this->parentEntity->system->tables[$this->getColumnName()])) {
             return $this->parentEntity->system->tables[$this->getColumnName()];
@@ -381,13 +440,13 @@ class EloquentColumnBuilder extends BuilderAbstract
       ]
 
      */
-    protected function isMorphTo($type = false)
+    protected function isMorphTo()
     {
 
 
-        if (isset($this->entity->relationsMorphs[$this->getColumnName()])) {
-            return $this->entity->relationsMorphs[$this->getColumnName()];
-        }
+        // if (isset($this->parentEntity->system->relationsMorphs[$this->getColumnName()])) {
+        //     return $this->parentEntity->system->relationsMorphs[$this->getColumnName()];
+        // }
 
         /**
          * Old Verifica pelo Atributo
@@ -398,16 +457,16 @@ class EloquentColumnBuilder extends BuilderAbstract
         if ($searchForeachKey = ArraySearcher::arraySearchByAttribute(
             $this->entity->code['name'],
             // $this->parentEntity->system->tables,
-                $this->parentEntity->relations,
+                $this->parentEntity->system->relations,
             'foreignKey'
         )
         ) {
             $isMorph = false;
             $found = [];
             foreach ($searchForeachKey as $valorFound) {
-                if (in_array($this->parentEntity->relations[$valorFound]['type'], ['MorphMany', 'MorphTo'])) {
+                if (in_array($this->parentEntity->system->relations[$valorFound]['type'], ['MorphMany', 'MorphTo'])) {
                     $isMorph = true;
-                    $found[] = $this->parentEntity->relations[$valorFound];
+                    $found[] = $this->parentEntity->system->relations[$valorFound];
                 }
             }
             // dd($found);
@@ -423,7 +482,7 @@ class EloquentColumnBuilder extends BuilderAbstract
         // }
 
         if (strpos($this->getColumnName(), 'able') !== false) {
-            Log::channel('sitec-providers')->warning(
+            Log::channel('sitec-support')->warning(
                 'Problema no morph para coluna '.$this->getColumnName()
             );
             // dd(
@@ -435,22 +494,4 @@ class EloquentColumnBuilder extends BuilderAbstract
         return false;
     }
 
-    /**
-     * number
-     * text
-     * text_area
-     * rich_text_box
-     * 
-     * select_dropdown
-     * 
-     * timestamp
-     */
-    protected function isRelationship($type)
-    {
-        if ($this->isBelongTo($type)) {
-            return true;
-        }
-
-        return false;
-    }
 }

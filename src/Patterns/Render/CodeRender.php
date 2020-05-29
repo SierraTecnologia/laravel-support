@@ -5,13 +5,14 @@ namespace Support\Patterns\Render;
 use Support\Contracts\Manager\RenderAbstract;
 use Support\Components\Database\Types\Type;
 use Support\Components\Database\Schema\SchemaManager;
+use Illuminate\Support\Collection;
 
 class CodeRender extends RenderAbstract
 {
 
     public static $renderForChildrens = CodeEloquentRender::class;
 
-    protected function renderChildrens()
+    protected function renderChildrens(): Collection
     {
         $configModelsAlias = \Illuminate\Support\Facades\Config::get('sitec.discover.models_alias', []);
         $composerParser = resolve(\Support\Patterns\Parser\ComposerParser::class);
@@ -27,7 +28,7 @@ class CodeRender extends RenderAbstract
     }
 
 
-    protected function renderData()
+    protected function renderData(): array
     {
         $data = [];
 

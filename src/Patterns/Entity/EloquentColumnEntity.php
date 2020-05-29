@@ -69,6 +69,24 @@ class EloquentColumnEntity extends EntityAbstract
      */
     protected $details;
 
+    /**
+     * Se é campo de update date
+     *
+     * @var    bool
+     * @getter true
+     * @setter true
+     */
+    public $isUpdatedDate = false;
+
+    /**
+     * Se é campo de update date
+     *
+     * @var    bool
+     * @getter true
+     * @setter true
+     */
+    public $isCreatedDate = false;
+
 
 
     public $displayName = false;
@@ -120,6 +138,10 @@ class EloquentColumnEntity extends EntityAbstract
      */
     public function isRequired()
     {
+        if ($this->isCreatedDate || $this->isUpdatedDate) {
+            return false;
+        }
+
         if ($this->getData('notnull') && is_null($this->getData('default'))) {
             return true;
         }
@@ -131,7 +153,7 @@ class EloquentColumnEntity extends EntityAbstract
      */
     public function isBrowse()
     {
-        if ($this->getColumnType() == 'timestamp') {
+        if ($this->isUpdatedDate) {
             return false;
         }
         return true;
@@ -141,9 +163,6 @@ class EloquentColumnEntity extends EntityAbstract
      */
     public function isRead()
     {
-        if ($this->getColumnType() == 'timestamp') {
-            return false;
-        }
         return true;
     }
     /**
@@ -151,7 +170,7 @@ class EloquentColumnEntity extends EntityAbstract
      */
     public function isEdit()
     {
-        if ($this->getColumnType() == 'timestamp') {
+        if ($this->isCreatedDate || $this->isUpdatedDate) {
             return false;
         }
         return true;
@@ -161,7 +180,7 @@ class EloquentColumnEntity extends EntityAbstract
      */
     public function isAdd()
     {
-        if ($this->getColumnType() == 'timestamp') {
+        if ($this->isCreatedDate || $this->isUpdatedDate) {
             return false;
         }
         return true;
@@ -171,7 +190,7 @@ class EloquentColumnEntity extends EntityAbstract
      */
     public function isDelete()
     {
-        if ($this->getColumnType() == 'timestamp') {
+        if ($this->isCreatedDate || $this->isUpdatedDate) {
             return false;
         }
         return true;

@@ -65,6 +65,15 @@ class EloquentEntity extends EntityAbstract
      */
     protected $name;
 
+    /**
+     * Coluna a Ser Exibida em Relacionamentos
+     *
+     * @var    string
+     * @getter true
+     * @setter true
+     */
+    protected $displayName;
+
 
     /**
      * tablename
@@ -300,7 +309,6 @@ class EloquentEntity extends EntityAbstract
     //     }
     //     return $this->schemaManagerTable;
     // }
-
 
 
 

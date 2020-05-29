@@ -92,7 +92,7 @@ class RelationshipEntity
         'ownerKey',
     ];
 
-    public function __construct($relationship = [])
+    public function __construct(array $relationship = [])
     {
         if ($relationship) {
             foreach ($this->filliables as $filliable) {
@@ -128,7 +128,7 @@ class RelationshipEntity
         }
     }
 
-    public function persist()
+    public function persist(): DataRelationship
     {
         if (!$model = DataRelationship::find($this->getCodeName())) {
             $model = new DataRelationship();
@@ -143,7 +143,7 @@ class RelationshipEntity
         return $model;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         $relationship = [];
 
@@ -192,7 +192,7 @@ class RelationshipEntity
      * hasOne one to one
      * hasMany one to Many
      */
-    public static function isInvertedRelation($relation)
+    public static function isInvertedRelation($relation): bool
     {
         if ($relation == 'BelongsTo') {
             return true;
@@ -206,7 +206,7 @@ class RelationshipEntity
 
         return false;
     }
-    public static function getInvertedRelation($relation)
+    public static function getInvertedRelation(string $relation): string
     {
         if ($relation == 'BelongsTo') {
             return 'HasMany';
@@ -222,7 +222,7 @@ class RelationshipEntity
     }
 
 
-    protected function getCodeName()
+    protected function getCodeName(): string
     {
         return implode(
             '_',

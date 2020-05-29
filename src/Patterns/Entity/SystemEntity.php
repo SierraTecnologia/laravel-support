@@ -9,20 +9,28 @@ use Support\Contracts\Manager\EntityAbstract;
 use Support\Utils\Extratores\ClasserExtractor;
 use Support\Patterns\Parser\ParseClass;
 use Support\Traits\Debugger\HasErrors;
+use Support\Patterns\Parser\ParseModelClass;
+use Support\Exceptions\Coder\EloquentTableNotExistException;
+use Support\Utils\Searchers\ArraySearcher;
+use Support\Components\Errors\TableNotExistError;
+use Support\Components\Database\Schema\Table;
 
 class SystemEntity extends EntityAbstract
 {
     use HasErrors;
     
+    public $models = [];
+    public $tables = [];
+
     /**
      * indice = 'PrimaryKeys
      */
     public $mapperParentClasses;
     public $mapperTableToClasses;
     public $mapperClassNameToDataTypeReference;
-    public $models = [];
-    public $tables = [];
 
+    public $relations = [];
+    public $relationsMorphs = [];
 
     public static $mapper = [
         'mapperParentClasses',
@@ -45,20 +53,20 @@ class SystemEntity extends EntityAbstract
             return false;
         }
 
-        return \Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperParentClasses);
+        return ArraySearcher::arrayIsearch($className, $this->mapperParentClasses);
     }
-    public function haveTableInDatabase($className)
+    public function haveTableInDatabase($className): bool
     {
         if (is_null($className) || empty($className)) {
             return false;
         }
         
         // // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
-        // if (\Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
+        // if (ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
         //     return true;
         // }
         if ($tableName = $this->returnTableForClass($className)) {
-            if (\Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+            if (ArraySearcher::arraySearchByAttribute(
                 $tableName,
                 $this->tables,
                 'name'
@@ -75,7 +83,7 @@ class SystemEntity extends EntityAbstract
             }
             
             $this->setError(
-                \Support\Components\Errors\TableNotExistError::make(
+                TableNotExistError::make(
                     $tableName,
                     [
                         'file' => $className
@@ -85,26 +93,10 @@ class SystemEntity extends EntityAbstract
         }
         return false;
     }
-    public function returnTableForClass($className)
-    {
-        if (is_null($className) || empty($className)) {
-            return false;
-        }
-
-        // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
-        if (!$find = \Support\Utils\Searchers\ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
-            return false;
-        }
-
-        if (is_array($find)) {
-            return $find[0];
-        }
-        return $find;
-    }
     /**
      * Add uma classe rejeitada para ser trocada
      */
-    public function loadMapperClasserProcuracao($eloquentEntity, $classForReplaced)
+    public function loadMapperClasserProcuracao(string $eloquentEntity, string $classForReplaced): void
     {
         // Log::channel('sitec-support')->debug(
         //     'Database Render (Rejeitando classe nao finais): Class: '.
@@ -112,7 +104,11 @@ class SystemEntity extends EntityAbstract
         // );
         $this->mapperClassNameToDataTypeReference[$classForReplaced] = $eloquentEntity;
     }
-    public function isForIgnoreClass($className)
+
+    /**
+     * Acho que deve ta no builder @todo
+     */
+    public function isForIgnoreClass(string $className): bool
     {
         if (is_null($className) || empty($className)) {
             return true;
@@ -174,6 +170,46 @@ class SystemEntity extends EntityAbstract
         return false;
     }
 
+    public function returnTableForClass($className)
+    {
+        if (is_null($className) || empty($className)) {
+            return false;
+        }
 
+        // Nao funciona pois todas as tabelas (mesmo nao existentes estao aqui)
+        if (!$find = ArraySearcher::arrayIsearch($className, $this->mapperTableToClasses)) {
+            return false;
+        }
+
+        if (is_array($find)) {
+            return $find[0];
+        }
+        return $find;
+    }
+
+    public function returnClassForTableName(string $tableName): string
+    {
+        if (is_array($modelClass = $this->mapperTableToClasses[$tableName])) {
+            $modelClass = $modelClass[0];
+        }
+        return $modelClass;
+    }
+
+    public function returnTableForName(string $tableName): Table
+    {
+        $databaseTableObject = false;
+        if ($foundTableRender = ArraySearcher::arraySearchByAttribute(
+            $tableName,
+            $this->tables,
+            'name'
+        )
+        ) {
+            $databaseTableObject = $this->tables[$foundTableRender[0]];
+        }
+        if (!$databaseTableObject) {
+            throw new EloquentTableNotExistException($this->entity->code, $tableName);
+        }
+        return $databaseTableObject;
+    }
 
 }
