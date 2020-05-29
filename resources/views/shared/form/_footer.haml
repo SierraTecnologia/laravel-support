@@ -1,0 +1,56 @@
+:php
+	use Facilitador\Breadcrumbs;
+	use Support\Interactions\Input\Search;
+
+-# Push over for horizontal forms
+.form-actions
+
+	-# Save
+	.btn-group
+		-if (app('facilitador.user')->can('update', $controller))
+			%button.btn.btn-success.save(name="_save" value="save" type="submit")
+				%span.glyphicon.glyphicon-file.glyphicon
+				!= __('facilitador::form.actions.save')
+		-if (app('facilitador.user')->can('update', $controller) && app('facilitador.user')->can('create', $controller))
+			%button.btn.btn-success.js-tooltip.save-new(name="_save" value="new" type="submit" title=__('facilitador::form.actions.save_new'))!= __('facilitador::form.actions.new')
+		-if (app('facilitador.user')->can('update', $controller))
+			%button.btn.btn-success.js-tooltip.save-back(name="_save" value="back" type="submit" title=__('facilitador::form.actions.save_back'))!= __('facilitador::form.actions.back')
+
+	-# Additional buttons
+	-if (isset($actions)) echo $actions
+
+	-# Delete
+	-if (!empty($item) && app('facilitador.user')->can('destroy', $controller))
+		-if (method_exists($item, 'trashed') && $item->trashed())
+			%span.btn.btn-danger.delete(disabled)
+				%span.glyphicon.glyphicon-trash.glyphicon
+				!= __('facilitador::form.actions.delete')
+		-else
+			%a.btn.btn-danger.delete(href=FacilitadorURL::relative('destroy', $item->id))
+				%span.glyphicon.glyphicon-trash.glyphicon
+				!= __('facilitador::form.actions.delete')
+
+	-# Cancel
+	%a.btn.btn-default.back(href=app('facilitador.breadcrumbs')->smartBack())!= __('facilitador::form.actions.cancel')
+
+	.pull-right
+		.btn-group
+			-if (isset($item) && app('facilitador.user')->can('create', $controller) && !empty($item->cloneable))
+				%a.btn.btn-default.js-tooltip(title=__('facilitador::form.secondary_actions.duplicate') href=FacilitadorURL::relative('duplicate', $item->id))
+					%span.glyphicon.glyphicon-duplicate
+			-if (isset($item) && app('facilitador.user')->can('read', 'changes'))
+				-$url = FacilitadorURL::action('changes').'?'.Search::query([ 'model' => get_class($item), 'key' => $item->getKey()])
+				%a.btn.btn-default.js-tooltip(title=__('facilitador::form.secondary_actions.changes') href=$url)
+					%span.glyphicon.glyphicon-list-alt
+			-if (isset($item) && ($uri = $item->getUriAttribute()))
+				%a.btn.btn-default.js-tooltip(title=__('facilitador::form.secondary_actions.public_view') href=$uri target="_blank")
+					%span.glyphicon.glyphicon-bookmark
+
+-# Close the form
+!= Former::close()
+
+-# Close first column, show sidebar, and then close the row
+-if(isset($sidebar) && !$sidebar->isEmpty())
+	!='</div><div class="col-md-5 related">'
+	!=$sidebar->render()
+	!='</div></div>'

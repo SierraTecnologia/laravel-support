@@ -36,3 +36,4 @@ return [
         // 'Facilitador\Models',
         // 'Support\Models',
     ],
+];

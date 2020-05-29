@@ -1,0 +1,72 @@
+-# Require a model to act on
+-if($item)
+	%fieldset.form-vertical.localize
+		.legend!= __('facilitador::relationships.localize.title')
+
+		-# Show the compare interface
+		-$localizations = $localize->other()
+		-if(!$localizations->isEmpty())
+			.form-group.compare
+				%label.control-label!= __('facilitador::relationships.localize.compare')
+				.radio
+					%label
+						%input(type="radio" name="compare" value='' checked)
+						!= __('facilitador::relationships.localize.none')
+				-foreach($localizations as $model)
+					.radio
+						%label
+							%input(type="radio" name="compare" value=$model->locale data-model=json_encode($model->attributes_for_localization_comparison))
+							%strong.locale=Config::get('sitec.site.locales')[$model->locale]
+							=' - '
+							%a(href=FacilitadorURL::relative('edit', $model->getKey()))!=$model->admin_title
+				%p.help-block!= __('facilitador::relationships.localize.compare_help', ['title' => $title])
+		-# Create a new localization menu if there are un-assigned locales
+		-$locales = $localize->localizableLocales()
+		-if(count($locales))
+			!=Former::vertical_open(FacilitadorURL::relative('duplicate', $item->getKey()))
+			.form-group.create
+				%label.control-label!= __('facilitador::relationships.localize.create')
+
+				-# Show a locale select menu or an un-editable text menu if there is only one
+				-if (count($locales) > 1)
+					%select.form-control(name='locale')
+						-foreach($locales as $locale => $label)
+							%option(value=$locale)!= __('facilitador::relationships.localize.create_lang', ['label' => $label])
+							.check
+				-else
+					-$label = reset($locales)
+					-$locale = key($locales)
+					%input(type='hidden' name='locale' value=$locale)
+					.form-control!= __('facilitador::relationships.localize.create_lang', ['label' => $label])
+
+				-# Additional options
+					%input(type="hidden" name='options')
+					.checkbox
+						%label
+							%input(type="checkbox" name='options[]' value='text' checked)
+							Include text and settings
+					-if(count($item->file_attributes))
+						.checkbox
+							%label
+								%input(type="checkbox" name='options[]' value='files' checked)
+								Include images and files
+
+				-# Help
+				%p.help-block!= __('facilitador::relationships.localize.create_help', ['title' => $title])
+
+				-# Submit
+				%button.btn.btn-default
+					%span.glyphicon.glyphicon-plus.glyphicon
+					!= __('facilitador::relationships.localize.create')
+			!=Former::close()
+
+		-else
+			-# Not possible to localize
+			.form-group.create.disabled
+				%label.control-label!= __('facilitador::relationships.localize.create')
+				%p.help-block!= __('facilitador::relationships.localize.cannot_create', ['title' => $title])
+
+-else
+	%fieldset.disabled
+		.legend!= __('facilitador::relationships.localize.title')
+		%p!= __('facilitador::relationships.localize.not_saved', ['title' => $title])

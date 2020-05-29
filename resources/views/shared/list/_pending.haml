@@ -1,0 +1,4 @@
+%fieldset.disabled
+	.legend
+		%span(class="js-tooltip" title=$description)!=$title
+	%p!=trans('facilitador::form.listing.pending_save', ['model' => $title, 'description' => $description])
