@@ -470,25 +470,20 @@ class SupportServiceProvider extends ServiceProvider
 
     protected function publishConfigs()
     {
-        
-        // // Publish config files
-        // $this->publishes(
-        //     [
-        //     // Paths
-        //     $this->getPublishesPath('config/sitec') => config_path('sitec'),
-        //     // Files
-        //     $this->getPublishesPath('config/crudmaker.php') => config_path('crudmaker.php'),
-        //     $this->getPublishesPath('config/debug-server.php') => config_path('debug-server.php'),
-        //     $this->getPublishesPath('config/debugbar.php') => config_path('debugbar.php'),
-        //     $this->getPublishesPath('config/eloquentfilter.php') => config_path('eloquentfilter.php'),
-        //     $this->getPublishesPath('config/excel.php') => config_path('excel.php'),
-        //     $this->getPublishesPath('config/form-maker.php') => config_path('form-maker.php'),
-        //     $this->getPublishesPath('config/gravatar.php') => config_path('gravatar.php'),
-        //     $this->getPublishesPath('config/tinker.php') => config_path('tinker.php'),
-        //     $this->getPublishesPath('config/facilitador-hooks.php') => config_path('facilitador-hooks.php'),
-        //     $this->getPublishesPath('config/facilitador.php') => config_path('facilitador.php')
-        //     ], ['config',  'sitec', 'sitec-config']
-        // );
+        // Publish config files
+        $this->publishes(
+            [
+                // Paths
+                $this->getPublishesPath('config/elements') => config_path('elements'),
+                $this->getPublishesPath('config/generators') => config_path('generators'),
+                $this->getPublishesPath('config/housekeepers') => config_path('housekeepers'),
+                // Files
+                $this->getPublishesPath('config/debug-server.php') => config_path('debug-server.php'),
+                $this->getPublishesPath('config/debugbar.php') => config_path('debugbar.php'),
+                $this->getPublishesPath('config/excel.php') => config_path('excel.php'),
+                $this->getPublishesPath('config/tinker.php') => config_path('tinker.php'),
+            ], ['config',  'sitec', 'sitec-config']
+        );
 
     }
 
@@ -552,25 +547,15 @@ class SupportServiceProvider extends ServiceProvider
     {
         
         // // Merge own configs into user configs 
-        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/discover.php'), 'sitec.discover');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/generator.php'), 'sitec.generator');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/facilitador.php'), 'sitec.facilitador');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/site.php'), 'sitec.site');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/core.php'), 'sitec.core');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/encode.php'), 'sitec.encode');
-        // // @todo Remover mais pra frente esse aqui
-        // $this->mergeConfigFrom($this->getPublishesPath('config/sitec/attributes.php'), 'sitec.attributes');
-        
-        // $this->mergeConfigFrom($this->getPublishesPath('config/crudmaker.php'), 'crudmaker');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/debug-server.php'), 'debug-server');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/debugbar.php'), 'debugbar');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/eloquentfilter.php'), 'eloquentfilter');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/excel.php'), 'excel');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/form-maker.php'), 'form-maker');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/gravatar.php'), 'gravatar');
-        // $this->mergeConfigFrom($this->getPublishesPath('config/tinker.php'), 'tinker');
-        // // $this->mergeConfigFrom($this->getPublishesPath('config/facilitador-hooks.php'), 'facilitador-hooks');
-        // // $this->mergeConfigFrom($this->getPublishesPath('config/facilitador.php'), 'facilitador');
+        $this->mergeConfigFrom($this->getPublishesPath('config/elements/fields.php'), 'elements.fields');
+        $this->mergeConfigFrom($this->getPublishesPath('config/generators/loader.php'), 'generators.loader');
+        $this->mergeConfigFrom($this->getPublishesPath('config/generators/model.php'), 'generators.model');
+        $this->mergeConfigFrom($this->getPublishesPath('config/housekeepers/components.php'), 'housekeepers.components');
+        $this->mergeConfigFrom($this->getPublishesPath('config/housekeepers/encode.php'), 'housekeepers.encode');
+        $this->mergeConfigFrom($this->getPublishesPath('config/debug-server.php'), 'debug-server');
+        $this->mergeConfigFrom($this->getPublishesPath('config/debugbar.php'), 'debugbar');
+        $this->mergeConfigFrom($this->getPublishesPath('config/excel.php'), 'excel');
+        $this->mergeConfigFrom($this->getPublishesPath('config/tinker.php'), 'tinker');
     }
 
     /**

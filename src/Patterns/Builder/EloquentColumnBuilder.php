@@ -262,7 +262,24 @@ class EloquentColumnBuilder extends BuilderAbstract
         
         if (in_array($this->getColumnType(), ['date', 'datetime', 'timestamp'])) {
             $haveDetails = true;
-            $array['format'] = 'Y-m-d G:i:s';
+            // $array['format'] = '%A %d %B %Y'; //formatLocalized for Carbon
+            // $array['format'] = 'Y-m-d G:i:s';
+        }
+        
+        if (in_array($this->getColumnType(), ['checkbox'])) {
+            $haveDetails = true;
+            $array['on'] = true;
+            $array['off'] = true;
+        }
+        
+        if (in_array($this->getColumnType(), ['select_dropdown', 'select_multiple'])) {
+            $haveDetails = true;
+            $array['options'] = true;
+        }
+        
+        if (in_array($this->getColumnType(), ['media_picker'])) {
+            $haveDetails = true;
+            $array['show_as_images'] = true;
         }
 
         if (!$haveDetails) {
