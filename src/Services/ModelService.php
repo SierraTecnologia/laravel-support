@@ -73,6 +73,10 @@ class ModelService implements EloquentInterface
     {
         return $this;
     }
+    public function getModelDataType()
+    {
+        return $this->modelDataType;
+    }
     public function getDiscoverService()
     {
         if (!$this->modelDataType) {
