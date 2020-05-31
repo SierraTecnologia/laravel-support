@@ -31,4 +31,26 @@ trait OutputableTrait
         }
     }
 
+    public function addOutput($output)
+    {
+        $this->output = $output;
+    }
+
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    public static function make(...$parameters)
+    {
+        return new static(...$parameters);
+    }
+
+    public static function makeWithOutput($output, ...$parameters)
+    {
+        $instance = static::make(...$parameters);
+        $instance->addOutput($output);
+        return $instance;
+    }
+
 }
