@@ -10,7 +10,7 @@ use Facilitador\Facades\Facilitador;
 // Public routes
 Route::group(
     [
-    'prefix' => \Illuminate\Support\Facades\Config::get('sitec.core.dir', 'admin'),
+    'prefix' => \Illuminate\Support\Facades\Config::get('painel.adminer.dir', 'admin'),
     'middleware' => 'web',
     ], function () {
         $loadingRoutes = [

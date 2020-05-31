@@ -157,7 +157,7 @@ class ManyToManyChecklist extends Checkbox
         $html = '<span class="title">'.$row->getAdminTitleHtmlAttribute().'</span>';
 
         // Add link to edit
-        $url = '/'.Config::get('facilitador.core.dir').'/'.Str::snake($this->name, '-')
+        $url = '/'.Config::get('painel.adminer.dir').'/'.Str::snake($this->name, '-')
             .'/'.$row->getKey().'/edit';
         if (app('facilitador.user')->can('update', $url)) {
             $html .= '<a href="'.$url.'"><span class="glyphicon glyphicon-pencil edit"></span></a>';
