@@ -16,11 +16,8 @@ use Facilitador\Events\BreadImagesDeleted;
 use Facilitador\Facades\Facilitador;
 
 
-use Facilitador\Traits\Controllers\RepositoryTrait;
-
 class RepositoryController extends Controller
 {
-    use RepositoryTrait;
 
     //***************************************
     //               ____
@@ -62,7 +59,7 @@ class RepositoryController extends Controller
             $usesSoftDeletes,
             $showSoftDeleted,
             $showCheckboxColumn,
-        ) = $this->repositoryIndex($dataType, $request);
+        ) = $this->repositoryService->repositoryIndex($dataType, $request);
 
 
         $view = 'facilitador::cruds.bread.browse';
