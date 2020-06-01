@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6478be0c6e700370831977c4254b9393",
+    "content-hash": "fc0ad59ba5a8606b9c9402abce3af6b9",
     "packages": [
         {
             "name": "anahkiasen/html-object",
@@ -4489,6 +4489,72 @@
             "time": "2019-06-27T09:34:05+00:00"
         },
         {
+            "name": "ricardosierra/phpwhois",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ricardosierra/phpWhois.git",
+                "reference": "d09e88d6f0c6730149048c043205d3f0eee62cf9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ricardosierra/phpWhois/zipball/d09e88d6f0c6730149048c043205d3f0eee62cf9",
+                "reference": "d09e88d6f0c6730149048c043205d3f0eee62cf9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.0.0",
+                "true/punycode": "~2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "suggest": {
+                "lib-openssl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "phpWhois\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Jeftovic",
+                    "email": "markjr@easydns.com"
+                },
+                {
+                    "name": "David Saez Padros",
+                    "email": "david@ols.es"
+                },
+                {
+                    "name": "Ross Golder",
+                    "email": "ross@golder.org"
+                },
+                {
+                    "name": "Dmitry Lukashin",
+                    "email": "dmitry@lukashin.ru"
+                },
+                {
+                    "name": "Ricardo Sierra",
+                    "email": "ricardo@sierratecnologia.com.br"
+                }
+            ],
+            "description": "phpWhois - library for querying whois services and parsing results. Based on phpwhois.org",
+            "homepage": "http://phpwhois.pw",
+            "keywords": [
+                "php",
+                "phpwhois",
+                "whois"
+            ],
+            "time": "2019-05-01T07:14:34+00:00"
+        },
+        {
             "name": "ricardosierra/translation",
             "version": "dev-master",
             "source": {
@@ -7175,6 +7241,52 @@
             "time": "2019-10-24T08:53:34+00:00"
         },
         {
+            "name": "true/punycode",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/true/php-punycode.git",
+                "reference": "a4d0c11a36dd7f4e7cd7096076cab6d3378a071e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/true/php-punycode/zipball/a4d0c11a36dd7f4e7cd7096076cab6d3378a071e",
+                "reference": "a4d0c11a36dd7f4e7cd7096076cab6d3378a071e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/polyfill-mbstring": "^1.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.7",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TrueBV\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Renan Gonçalves",
+                    "email": "renan.saddam@gmail.com"
+                }
+            ],
+            "description": "A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)",
+            "homepage": "https://github.com/true/php-punycode",
+            "keywords": [
+                "idna",
+                "punycode"
+            ],
+            "time": "2016-11-16T10:37:54+00:00"
+        },
+        {
             "name": "venturecraft/revisionable",
             "version": "1.34.0",
             "source": {
@@ -9510,7 +9622,8 @@
     "stability-flags": {
         "sierratecnologia/crudmaker": 20,
         "sierratecnologia/crypto": 20,
-        "ricardosierra/translation": 20
+        "ricardosierra/translation": 20,
+        "ricardosierra/phpwhois": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
