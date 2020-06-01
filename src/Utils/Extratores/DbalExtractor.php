@@ -22,6 +22,7 @@ class DbalExtractor
                 // $where[$column] = static::cleanCodeSlug($data[$column]);
             }
         }
+        // dd($where);
         return $where;
     }
 
@@ -37,6 +38,7 @@ class DbalExtractor
                 $columns = $index['columns'];
             }
             if ($type == 'PRIMARY' || $type == 'UNIQUE') {
+                // dd($data, $columns);
                 // Caso não tenha nada a procurar, entao pula
                 if (!empty($generateWhere = DbalExtractor::generateWhere(
                     $columns,
@@ -46,7 +48,6 @@ class DbalExtractor
                 }
             }
         }
-
         return collect($wheresArray);
     }
 

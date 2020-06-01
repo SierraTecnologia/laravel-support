@@ -605,7 +605,9 @@ abstract class Base extends Ardent
         $modelFind = false;
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
+
         if (!$eloquentEntityForModel = ModelService::make(static::class)) {
+            dd('Nao deeria cair aqui debug');
             $entity = static::firstOrCreate($data);
             if ($associate) {
                 static::associate($entity, $associate);
@@ -619,12 +621,12 @@ abstract class Base extends Ardent
         /**
          * Procura somente usando os indices
          */
-        $results = DbalExtractor::generateWhereFromData(
+        $results = (DbalExtractor::generateWhereFromData(
             $data,
             $eloquentEntityForModel->getIndexes()
-        )->map(
+        ))->map(
             function ($query) use ($data) {
-                if ($modelFind = static::where($query)->first()) {
+                if (is_array($query) && !empty($query) && $modelFind = static::where($query)->first()) {
                     // @todo mesclar parametros e salvar
                     Log::debug('[Support] ModelBase -> Encontrado com tributos: '.print_r($query, true).' e Data: '.print_r($data, true));
                     return DbalMergeator::mergeWithAttributes($modelFind, $data);
@@ -657,7 +659,7 @@ abstract class Base extends Ardent
         if ($associate) {
             static::associate($entity, $associate);
         }
-        return static::firstOrCreate($data);
+        return $entity;
 
     }
 
