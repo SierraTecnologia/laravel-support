@@ -54,6 +54,14 @@ class SystemBuilder extends BuilderAbstract
     {
         $this->renderDatabase = \Support\Patterns\Render\DatabaseRender::makeWithOutput($this->output, '')();
         $this->renderCoder = \Support\Patterns\Render\CodeRender::makeWithOutput($this->output, '')();
+        dd(
+            $this->renderDatabase,
+            $this->renderCoder
+        );
+        dd(
+            $this->renderDatabase['weapons'],
+            $this->renderCoder['Informate\Models\Entytys\Fisicos\Weapon']
+        );
     }
     
 
