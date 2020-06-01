@@ -24,21 +24,25 @@
                                     Route::get('/relation', 'RepositoryController@relation')->name('relation');
 
                                     Route::get('/', 'RepositoryController@index')->name('index');
-                                    Route::post('/create', 'RepositoryController@create')->name('create');
+                                    Route::get('/create', 'RepositoryController@create')->name('create');
                                     Route::post('/store', 'RepositoryController@store')->name('store');
 
                                     /**
                                      * Register Controller
                                      */
-                                    Route::prefix('{identify}')->group(
+                                    Route::prefix('r')->group(
                                         function () {
-                                            Route::get('/', 'RegisterController@index')->name('show');
-                                            Route::get('/show', 'RegisterController@index')->name('show');
-                                            Route::get('/edit', 'RegisterController@edit')->name('edit');
-                                            Route::put('/', 'RegisterController@update')->name('update');
-                                            Route::delete('/', 'RegisterController@destroy')->name('destroy');
-                                            Route::post('/remove', 'RegisterController@remove_media')->name('media.remove');
-                                            Route::get('/restore', 'RegisterController@restore')->name('restore');
+                                            Route::prefix('{identify}')->group(
+                                                function () {
+                                                    Route::get('/', 'RegisterController@index')->name('show');
+                                                    Route::get('/show', 'RegisterController@index')->name('show');
+                                                    Route::get('/edit', 'RegisterController@edit')->name('edit');
+                                                    Route::put('/', 'RegisterController@update')->name('update');
+                                                    Route::delete('/', 'RegisterController@destroy')->name('destroy');
+                                                    Route::post('/remove', 'RegisterController@remove_media')->name('media.remove');
+                                                    Route::get('/restore', 'RegisterController@restore')->name('restore');
+                                                }
+                                            );
                                         }
                                     );
 

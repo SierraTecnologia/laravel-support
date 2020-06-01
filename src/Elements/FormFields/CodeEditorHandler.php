@@ -9,7 +9,7 @@ class CodeEditorHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.code_editor', [
+            'support::components.forms.fields.code_editor', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

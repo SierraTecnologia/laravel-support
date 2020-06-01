@@ -9,7 +9,7 @@ class RichTextBoxHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.rich_text_box', [
+            'support::components.forms.fields.rich_text_box', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

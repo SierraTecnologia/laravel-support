@@ -9,7 +9,7 @@ class FileHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.file', [
+            'support::components.forms.fields.file', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

@@ -186,6 +186,16 @@ class DatatableService
         $this->request = App::make(Request::class);
     }
 
+    public function getModelService()
+    {
+        return $this->modelService;
+    }
+
+    public function getModelDataType()
+    {
+        return $this->dataType;
+    }
+
     public static function make($collection)
     {
         return self::makeFromCollection($collection);
@@ -200,7 +210,40 @@ class DatatableService
     }
 
     /**
-     * Return default User Role.
+     * 
+     */
+    public function repositoryCreate($request = false)
+    {
+
+        $dataType = $this->getModelDataType();
+
+        // Check permission
+        // $this->authorize('add', app($dataType->model_name));
+
+        $dataTypeContent = (strlen($dataType->model_name) != 0)
+                            ? new $dataType->model_name()
+                            : false;
+
+        foreach ($dataType->addRows as $key => $row) {
+            $dataType->addRows[$key]['col_width'] = $row->details->width ?? 100;
+        }
+
+        // If a column has a relationship associated with it, we do not want to show that field
+        $this->removeRelationshipField($dataType, 'add');
+
+        // Check if BREAD is Translatable
+        $isModelTranslatable = is_bread_translatable($dataTypeContent);
+
+
+        return [
+            $dataType,
+            $dataTypeContent,
+            $isModelTranslatable
+        ];
+    }
+
+    /**
+     * 
      */
     public function repositoryIndex()
     {
@@ -224,8 +267,9 @@ class DatatableService
         $showSoftDeleted = false;
     
         // Replace relationships' keys for labels and create READ links if a slug is provided.
-        $this->results = $this->getDataTypeContent();
-
+        if (!$this->results) {
+            $this->results = $this->getDataTypeContent();
+        }
 
         // Check if BREAD is Translatable
         if (($isModelTranslatable = is_bread_translatable($this->model))) {

@@ -41,6 +41,7 @@ class RegisterController extends Controller
         list(
             $dataType,
             $dataTypeContent,
+            $modelRelationsResults,
             $isModelTranslatable,
             $isSoftDeleted
         ) = $this->registerService->registerShowIndex($request);
@@ -54,8 +55,10 @@ class RegisterController extends Controller
         return Facilitador::view(
             $view,
             compact(
+                'service',
                 'dataType',
                 'dataTypeContent',
+                'modelRelationsResults',
                 'isModelTranslatable',
                 'isSoftDeleted'
             )

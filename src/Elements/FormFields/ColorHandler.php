@@ -9,7 +9,7 @@ class ColorHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.color', [
+            'support::components.forms.fields.color', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

@@ -9,7 +9,7 @@ class TextAreaHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.text_area', [
+            'support::components.forms.fields.text_area', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

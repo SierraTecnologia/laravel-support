@@ -6,7 +6,6 @@ namespace Support;
 use Support\Utils\Debugger\Classify;
 use Support\Components\Coders\Model\Config as GenerateConfig;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\ServiceProvider;
 use Support\Console\Commands\CodeModelsCommand;
 use Support\Components\Coders\Model\Factory as ModelFactory;
 use Config;
@@ -21,6 +20,9 @@ use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
 use Support\Services\ModelService;
 
+use Illuminate\Foundation\Application;
+use Illuminate\Routing\Events\RouteMatched;
+use Illuminate\Support\ServiceProvider;
 
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Barryvdh\Debugbar\ServiceProvider as DebugService;
@@ -105,6 +107,8 @@ class SupportServiceProvider extends ServiceProvider
         ],
     ];
     public static $aliasProviders = [
+        'Active' => \Support\Facades\Active::class,
+
         // Form field generation
         'Former' => \Former\Facades\Former::class,
 
@@ -150,6 +154,18 @@ class SupportServiceProvider extends ServiceProvider
         ], function (/**$router**/) {
             require __DIR__.'/Routes/web.php';
         });
+
+
+        /**
+         * Load Active https://github.com/letrunghieu/active
+         */
+        // Update the instances each time a request is resolved and a route is matched
+        $instance = app('active');
+        app('router')->matched(
+            function (RouteMatched $event) use ($instance) {
+                $instance->updateInstances($event->route, $event->request);
+            }
+        );
 
 
         /**
@@ -263,6 +279,22 @@ class SupportServiceProvider extends ServiceProvider
                 return new \Support\Services\ApplicationService();
             }
         );
+
+
+        /**
+         * Load Active https://github.com/letrunghieu/active
+         */
+        $this->app->singleton(
+            'active',
+            function ($app) {
+
+                $instance = new Active($app['router']->getCurrentRequest());
+
+                return $instance;
+            }
+        );
+
+
         /**
         //ExtendedBreadFormFieldsServiceProvider
 
@@ -581,18 +613,24 @@ class SupportServiceProvider extends ServiceProvider
          */
         Route::bind(
             'modelClass', function ($value) {
-                Log::channel('sitec-providers')->debug('Route Bind ModelClass - '.Crypto::shareableDecrypt($value).' - '.$value);
-                return new ModelService(Crypto::shareableDecrypt($value));
+                if (Crypto::isCrypto($value)) {
+                    $value = Crypto::shareableDecrypt($value);
+                }
+                Log::channel('sitec-providers')->debug('Route Bind ModelClass - '.$value);
+                return new ModelService($value);
             }
         );
         Route::bind(
             'identify', function ($value) {
-                Log::channel('sitec-providers')->debug('Route Bind Identify - '.Crypto::shareableDecrypt($value).' - '.$value);
+                if (Crypto::isCrypto($value)) {
+                    $value = Crypto::shareableDecrypt($value);
+                }
+                Log::channel('sitec-providers')->debug('Route Bind Identify - '.$value);
                 // throw new Exception(
                 //     "Essa classe deveria ser uma string: ".print_r($modelClass, true),
                 //     400
                 // );
-                return new RegisterService(Crypto::shareableDecrypt($value));
+                return new RegisterService($value);
             }
         );
     }
@@ -617,7 +655,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->app->bind(
             ModelService::class, function ($app) {
                 $modelClass = false;
-                if (isset($app['router']->current()->parameters['modelClass'])) {
+                if (isset($app['router']->current()->parameters['modelClass']) && Crypto::isCrypto($app['router']->current()->parameters['modelClass'])) {
                     $modelClass = Crypto::shareableDecrypt($app['router']->current()->parameters['modelClass']);
 
                     if (empty($modelClass)) {
@@ -648,8 +686,11 @@ class SupportServiceProvider extends ServiceProvider
         $this->app->bind(
             RegisterService::class, function ($app) {
                 $identify = '';
-                if (isset($app['router']->current()->parameters['identify'])) {
+                if (isset($app['router']->current()->parameters['identify']) && Crypto::isCrypto($app['router']->current()->parameters['identify'])) {
                     $identify = Crypto::shareableDecrypt($app['router']->current()->parameters['identify']);
+                    if (empty($identify)) {
+                        $identify = $app['router']->current()->parameters['identify'];
+                    }
                 }
 
                 Log::channel('sitec-providers')->debug('Bind Register Service - '.$identify);

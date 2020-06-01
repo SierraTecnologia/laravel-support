@@ -233,14 +233,19 @@ class DataType extends Model implements EloquentInterface
             'table_name'
         );
     }
+    
+    public function inversedDataRelactionships()
+    {
+        return $this->hasMany(
+            Facilitador::modelClass('DataRelationship'),
+            'related_table_name',
+            'table_name'
+        );
+    }
     public function allDataRelactionships()
     {
         return $this->dataRelactionships()->union(
-            $this->hasMany(
-                Facilitador::modelClass('DataRelationship'),
-                'related_table_name',
-                'table_name'
-            )
+            $this->inversedDataRelactionships()
         );
     }
 

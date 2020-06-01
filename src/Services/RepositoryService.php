@@ -106,4 +106,16 @@ class RepositoryService
         return $this->datatableService->repositoryIndex($request);
     }
 
+
+    /**
+     * Return default User Role.
+     */
+    public function repositoryCreate($request = false)
+    {
+        if (!$this->datatableService) {
+            $this->datatableService = new DatatableService($this->getModelService());
+        }
+        return $this->datatableService->repositoryCreate($request);
+    }
+
 }

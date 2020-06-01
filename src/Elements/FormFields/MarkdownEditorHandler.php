@@ -9,7 +9,7 @@ class MarkdownEditorHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.markdown_editor', [
+            'support::components.forms.fields.markdown_editor', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

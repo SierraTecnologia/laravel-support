@@ -122,33 +122,51 @@ class RegisterService
 
     public function getRelationsResults($returnEmptys = false)
     {
-        $results = new Collection(
-            $this->getDiscoverService()->getRelations()
+        $dataType = $this->getModelDataType();
+        
+        $relationsFromModel = new Collection(
+            // $dataType->allDataRelactionships()->get()
+            $dataType->dataRelactionships()->get()
         );
+
+        // $results = new Collection(
+        //     $this->getDiscoverService()->getRelations()
+        // );
+
         // // @todo nao funfando fazer aqui
         // dd(
         //     $this->getDiscoverService()->getRelations(),
         //     $this->getDiscoverService()->dataRelactionships,
         //     'RegisterService Relations'
         // );
-        $results->map(
-            function ($value) use ($results, $returnEmptys) {
-                $tmpRelationResults = $this->getInstance()->{$value->name}()->get();
+
+        return $relationsFromModel->mapWithKeys(
+            function ($value) use ($returnEmptys) {
+                $tempName = $value->name;
+                $tmpRelationResults = $this->getInstance()->{$tempName}()->get();
             
                 if ($returnEmptys || count($tmpRelationResults)>0) {
-                    $results[$value->name] = new RelationshipResult($value, $tmpRelationResults);
+                    return [
+                        $tempName => new RelationshipResult($this->getModelDataType(), $value, $tmpRelationResults)
+                    ];
                 }
-            }
-        );
 
-        return $results;
+                return [
+                    $tempName => false
+                ];
+            }
+        )->reject(
+            function ($result) use ($returnEmptys) {
+                if (!$result && !$returnEmptys) {
+                    return true;
+                }
+                return false;
+            }
+        );;
     }
 
     public function registerShowIndex($request)
     {
-
-        $modelRelationsResults = $this->getRelationsResults();
-        
         $dataType = $this->getModelDataType();
         $id = $this->getId();
         $isSoftDeleted = false;
@@ -188,6 +206,7 @@ class RegisterService
         return [
             $dataType,
             $dataTypeContent,
+            $modelRelationsResults = $this->getRelationsResults(),
             $isModelTranslatable,
             $isSoftDeleted
         ];

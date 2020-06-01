@@ -14,7 +14,7 @@ class CoordinatesHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.coordinates', [
+            'support::components.forms.fields.coordinates', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

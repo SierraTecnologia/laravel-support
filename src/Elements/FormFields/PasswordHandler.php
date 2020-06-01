@@ -9,7 +9,7 @@ class PasswordHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'facilitador::components.formfields.password', [
+            'support::components.forms.fields.password', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

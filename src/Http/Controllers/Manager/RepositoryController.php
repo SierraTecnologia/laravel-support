@@ -105,32 +105,23 @@ class RepositoryController extends Controller
     {
         $slug = $this->repositoryService->getSlug();
 
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
-
-        // Check permission
-        // $this->authorize('add', app($dataType->model_name));
-
-        $dataTypeContent = (strlen($dataType->model_name) != 0)
-                            ? new $dataType->model_name()
-                            : false;
-
-        foreach ($dataType->addRows as $key => $row) {
-            $dataType->addRows[$key]['col_width'] = $row->details->width ?? 100;
-        }
-
-        // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'add');
-
-        // Check if BREAD is Translatable
-        $isModelTranslatable = is_bread_translatable($dataTypeContent);
+        list(
+            $dataType,
+            $dataTypeContent,
+            $isModelTranslatable
+        ) = $this->repositoryService->repositoryCreate($request);
 
         $view = 'facilitador::cruds.bread.edit-add';
-
         if (view()->exists("facilitador::cruds.$slug.edit-add")) {
             $view = "facilitador::cruds.$slug.edit-add";
         }
-
-        return Facilitador::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
+        return Facilitador::view(
+            $view, compact(
+                'dataType',
+                'dataTypeContent',
+                'isModelTranslatable'
+            )
+        );
     }
 
     /**
