@@ -87,7 +87,8 @@
         "spatie/laravel-translatable": "^4.2",
         "symfony/inflector": "^5.0",
         "venturecraft/revisionable": "^1.30",
-        "watson/validating": "^3.3.0"
+        "watson/validating": "^3.3.0",
+        "ricardosierra/phpwhois": "dev-dev"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "*",
@@ -105,13 +106,12 @@
         "files": [
             "utils/funcs/load-laravel.php",
             "utils/funcs/helpers.php",
-            "src/Helpers/form_maker.php",
-            "src/Helpers/helpers.php",
-            "src/Helpers/helpersi18n.php",
-            "src/Helpers/helperSlugify.php",
-            "src/Helpers/helperTranslations.php",
-            "src/Helpers/input_maker.php",
-            "src/Helpers/Reflection.php"
+            "utils/funcs/form_maker.php",
+            "utils/funcs/helpersi18n.php",
+            "utils/funcs/helperSlugify.php",
+            "utils/funcs/helperTranslations.php",
+            "utils/funcs/input_maker.php",
+            "utils/funcs/Reflection.php"
         ]
     },
     "autoload-dev": {
