@@ -5,11 +5,8 @@ namespace Support\Http\Controllers\Manager;
 use Facilitador\Http\Controllers\System\Controller as BaseController;
 use Facilitador\Services\FacilitadorService;
 use Support\Services\RepositoryService;
-use Facilitador\Http\Controllers\Traits\BreadRelationshipParser;
-
 class Controller extends BaseController
 {
-    use BreadRelationshipParser;
     
     /**
      * The user repository instance.

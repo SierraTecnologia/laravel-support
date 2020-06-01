@@ -24,11 +24,11 @@ use Facilitador\Events\BreadDataRestored;
 use Facilitador\Events\BreadDataUpdated;
 use Facilitador\Events\BreadImagesDeleted;
 use Facilitador\Facades\Facilitador;
-use Facilitador\Http\Controllers\Traits\BreadRelationshipParser;
+use Support\Contracts\Manager\RelationshipableTrait;
 
 class DatatableService
 {
-    use BreadRelationshipParser;
+    use RelationshipableTrait;
 
     /**
      * Atributos

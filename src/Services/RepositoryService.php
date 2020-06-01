@@ -16,6 +16,8 @@ class RepositoryService
 
     protected $modelService;
 
+    protected $datatableService = false;
+
     public function __construct(ModelService $modelClass)
     {
         $this->modelService = $modelClass;
@@ -91,6 +93,17 @@ class RepositoryService
             );
 
         return $query->get();
+    }
+
+    /**
+     * Return default User Role.
+     */
+    public function repositoryIndex($request = false)
+    {
+        if (!$this->datatableService) {
+            $this->datatableService = new DatatableService($this->getModelService());
+        }
+        return $this->datatableService->repositoryIndex($request);
     }
 
 }

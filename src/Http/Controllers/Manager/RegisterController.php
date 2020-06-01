@@ -37,42 +37,13 @@ class RegisterController extends Controller
     {
         $slug = $this->repositoryService->getSlug();
         $service = $this->registerService;
-        $modelRelationsResults = $service->getRelationsResults();
-        
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
-        $id = $this->registerService->getId();
-        $isSoftDeleted = false;
 
-        if (strlen($dataType->model_name) != 0) {
-            $model = app($dataType->model_name);
-
-            // Use withTrashed() if model uses SoftDeletes and if toggle is selected
-            if ($model && in_array(SoftDeletes::class, class_uses($model))) {
-                $model = $model->withTrashed();
-            }
-            if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope'.ucfirst($dataType->scope))) {
-                $model = $model->{$dataType->scope}();
-            }
-            $dataTypeContent = call_user_func([$model, 'findOrFail'], $id);
-            if ($dataTypeContent->deleted_at) {
-                $isSoftDeleted = true;
-            }
-        } else {
-            // If Model doest exist, get data from table name
-            $dataTypeContent = DB::table($dataType->name)->where($this->registerService->getPrimaryKey(), $id)->first();
-        }
-
-        // Replace relationships' keys for labels and create READ links if a slug is provided.
-        $dataTypeContent = $this->resolveRelations($dataTypeContent, $dataType, true);
-
-        // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'read');
-
-        // Check permission
-        // $this->authorize('read', $dataTypeContent);
-
-        // Check if BREAD is Translatable
-        $isModelTranslatable = is_bread_translatable($dataTypeContent);
+        list(
+            $dataType,
+            $dataTypeContent,
+            $isModelTranslatable,
+            $isSoftDeleted
+        ) = $this->registerService->registerShowIndex($request);
 
         $view = 'facilitador::cruds.bread.read';
 
@@ -80,14 +51,15 @@ class RegisterController extends Controller
             $view = "facilitador::cruds.$slug.read";
         }
 
-        // dd(
-        //     $dataType,
-        //     $dataTypeContent,
-        //     $isModelTranslatable,
-        //     $isSoftDeleted,
-        // );
-
-        return Facilitador::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'isSoftDeleted'));
+        return Facilitador::view(
+            $view,
+            compact(
+                'dataType',
+                'dataTypeContent',
+                'isModelTranslatable',
+                'isSoftDeleted'
+            )
+        );
     }
 
     //***************************************

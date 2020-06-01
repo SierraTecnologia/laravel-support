@@ -14,11 +14,9 @@ use Facilitador\Events\BreadDataRestored;
 use Facilitador\Events\BreadDataUpdated;
 use Facilitador\Events\BreadImagesDeleted;
 use Facilitador\Facades\Facilitador;
-use Facilitador\Http\Controllers\Traits\BreadRelationshipParser;
 
 class FacilitadorBaseController extends Controller
 {
-    use BreadRelationshipParser;
 
     //***************************************
     //               ____
