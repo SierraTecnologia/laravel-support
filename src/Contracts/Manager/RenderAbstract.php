@@ -45,11 +45,6 @@ abstract class RenderAbstract extends ManagerAbstract implements RenderInterface
      */
     protected $childrenRenders = [];
 
-    public static function make($parameter, $output = false)
-    {
-        return new static($parameter, $output);
-    }
-
     public function __invoke()
     {
         return $this->data;

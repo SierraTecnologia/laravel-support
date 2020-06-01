@@ -75,7 +75,7 @@ class MapperCommand extends Command
         DataRow::truncate();
         DataType::query()->delete();
 
-        $entity = \Support\Patterns\Builder\ApplicationBuilder::make('', $this)();
+        $entity = \Support\Patterns\Builder\ApplicationBuilder::makeWithOutput($this, '')();
 
         // $render = new \Support\Patterns\Builder\DatabaseBuilder($this);
         // $render = new \Support\Patterns\Builder\ModelagemBuilder($this);
@@ -109,7 +109,7 @@ class MapperCommand extends Command
         // if (!$this->systemService->getEntity(
         //     \Support\Patterns\Entity\DatabaseEntity::class
         // )) {
-        //     $render = \Support\Patterns\Render\DatabaseRender::make('', $this)();
+        //     $render = \Support\Patterns\Render\DatabaseRender::makeWithOutput($this, '')();
         //     dd(
         //         $render
         //     );

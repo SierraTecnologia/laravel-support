@@ -52,8 +52,8 @@ class SystemBuilder extends BuilderAbstract
 
     public function requeriments(): void
     {
-        $this->renderDatabase = \Support\Patterns\Render\DatabaseRender::make('', $this->output)();
-        $this->renderCoder = \Support\Patterns\Render\CodeRender::make('', $this->output)();
+        $this->renderDatabase = \Support\Patterns\Render\DatabaseRender::makeWithOutput($this->output, '')();
+        $this->renderCoder = \Support\Patterns\Render\CodeRender::makeWithOutput($this->output, '')();
     }
     
 

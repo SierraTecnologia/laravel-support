@@ -28,7 +28,7 @@ class ApplicationBuilder extends BuilderAbstract
 
     public function requeriments(): void
     {
-        $this->systemEntity = \Support\Patterns\Builder\SystemBuilder::make('', $this->output)();
+        $this->systemEntity = \Support\Patterns\Builder\SystemBuilder::makeWithOutput($this->output, '')();
     }
 
     public function prepare(): void
