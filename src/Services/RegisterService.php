@@ -29,6 +29,13 @@ class RegisterService
 
     public function __construct(string $identify)
     {
+        // if (empty($identify)) {
+        //     throw new \Exception('Nao era aqui');
+        //     dd(
+        //         'Nao era aqui',
+        //         $identify
+        //     );
+        // }
         $this->identify = $identify;
     }
 

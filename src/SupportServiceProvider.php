@@ -616,7 +616,7 @@ class SupportServiceProvider extends ServiceProvider
                 if (Crypto::isCrypto($value)) {
                     $value = Crypto::shareableDecrypt($value);
                 }
-                Log::channel('sitec-providers')->debug('Route Bind ModelClass - '.$value);
+                Log::debug('Route Bind ModelClass - '.$value);
                 return new ModelService($value);
             }
         );
@@ -625,7 +625,7 @@ class SupportServiceProvider extends ServiceProvider
                 if (Crypto::isCrypto($value)) {
                     $value = Crypto::shareableDecrypt($value);
                 }
-                Log::channel('sitec-providers')->debug('Route Bind Identify - '.$value);
+                Log::debug('Route Bind Identify - '.$value);
                 // throw new Exception(
                 //     "Essa classe deveria ser uma string: ".print_r($modelClass, true),
                 //     400
@@ -655,13 +655,21 @@ class SupportServiceProvider extends ServiceProvider
         $this->app->bind(
             ModelService::class, function ($app) {
                 $modelClass = false;
-                if (isset($app['router']->current()->parameters['modelClass']) && Crypto::isCrypto($app['router']->current()->parameters['modelClass'])) {
-                    $modelClass = Crypto::shareableDecrypt($app['router']->current()->parameters['modelClass']);
-
-                    if (empty($modelClass)) {
-                        $modelClass = $app['router']->current()->parameters['modelClass'];
+                if (isset($app['router']->current()->parameters['modelClass'])) {
+                    $modelClass = $app['router']->current()->parameters['modelClass'];
+                    if (Crypto::isCrypto($app['router']->current()->parameters['modelClass'])) {
+                        $modelClass = Crypto::shareableDecrypt($app['router']->current()->parameters['modelClass']);
+                        if (empty($modelClass)) {
+                            $modelClass = $app['router']->current()->parameters['modelClass'];
+                        }
                     }
                 }
+
+                // dd(
+                //     $app['router']->current()->parameters['modelClass'],
+                //     Crypto::isCrypto($app['router']->current()->parameters['modelClass']),
+                //     $modelClass
+                // );
 
                 // dd('@todo', 
                 //     $modelClass, $app['router']->current()->parameters['modelClass'], Crypto::shareableDecrypt($app['router']->current()->parameters['modelClass']),
@@ -669,7 +677,7 @@ class SupportServiceProvider extends ServiceProvider
                 // );
                 // @todo Ver Como resolver isso aqui
 
-                Log::channel('sitec-providers')->debug('Bind Model Service - '.$modelClass);
+                Log::debug('Bind Model Service - '.$modelClass);
 
                 return new ModelService($modelClass);
             }
@@ -677,7 +685,7 @@ class SupportServiceProvider extends ServiceProvider
 
         $this->app->bind(
             RepositoryService::class, function ($app) {
-                Log::channel('sitec-providers')->debug('Bind Repository Service');
+                Log::debug('Bind Repository Service');
                 $modelService = $app->make(ModelService::class);
                 return new RepositoryService($modelService);
             }
@@ -686,14 +694,25 @@ class SupportServiceProvider extends ServiceProvider
         $this->app->bind(
             RegisterService::class, function ($app) {
                 $identify = '';
-                if (isset($app['router']->current()->parameters['identify']) && Crypto::isCrypto($app['router']->current()->parameters['identify'])) {
-                    $identify = Crypto::shareableDecrypt($app['router']->current()->parameters['identify']);
-                    if (empty($identify)) {
-                        $identify = $app['router']->current()->parameters['identify'];
+                if (isset($app['router']->current()->parameters['identify'])) {
+                    $identify = $app['router']->current()->parameters['identify'];
+                    if (Crypto::isCrypto($app['router']->current()->parameters['identify'])) {
+                        $identify = Crypto::shareableDecrypt($app['router']->current()->parameters['identify']);
+                        if (empty($identify)) {
+                            $identify = $app['router']->current()->parameters['identify'];
+                        }
                     }
                 }
 
-                Log::channel('sitec-providers')->debug('Bind Register Service - '.$identify);
+                // if (empty($identify)) {
+                //     dd(
+                //         $identify,
+                //         $app['router']->current()->parameters,
+                //         Crypto::isCrypto($app['router']->current()->parameters['identify'])
+                //     );
+                // }
+
+                Log::debug('Bind Register Service - '.$identify);
                 return new RegisterService($identify);
             }
         );

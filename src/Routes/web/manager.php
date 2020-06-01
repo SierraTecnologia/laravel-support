@@ -30,8 +30,8 @@
                                     /**
                                      * Register Controller
                                      */
-                                    Route::prefix('r')->group(
-                                        function () {
+                                    // Route::prefix('r')->group(
+                                    //     function () {
                                             Route::prefix('{identify}')->group(
                                                 function () {
                                                     Route::get('/', 'RegisterController@index')->name('show');
@@ -43,8 +43,8 @@
                                                     Route::get('/restore', 'RegisterController@restore')->name('restore');
                                                 }
                                             );
-                                        }
-                                    );
+                                    //     }
+                                    // );
 
 
                                     // /**
