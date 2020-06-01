@@ -23,18 +23,13 @@ abstract class BuilderAbstract extends ManagerAbstract
      */
     protected $parentEntity;
 
-
-    public static function make($parentEntity, $output = false)
-    {
-        return new static($parentEntity, $output);
-    }
     /**
      * Construct
      */
-    public function __construct($parentEntity, $output)
+    public function __construct($parentEntity)
     {
         $this->parentEntity = $parentEntity;
-        parent::__construct($output);
+        parent::__construct();
     }
 
     public function __invoke($coder = false)

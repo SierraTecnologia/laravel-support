@@ -10,7 +10,7 @@ use Facilitador\Facades\Facilitador;
 // Public routes
 Route::group(
     [
-    'prefix' => \Illuminate\Support\Facades\Config::get('painel.adminer.dir', 'admin'),
+    'prefix' => \Illuminate\Support\Facades\Config::get('generators.core.dir', 'siravel'),
     'middleware' => 'web',
     ], function () {
         $loadingRoutes = [

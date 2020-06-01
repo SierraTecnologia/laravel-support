@@ -9,6 +9,7 @@ use Facilitador;
 use Event;
 use Config;
 use Session;
+use Facilitador\Services\FacilitadorService;
 use FacilitadorURL;
 use Bkwld\Cloner\Cloneable;
 use Bkwld\Upchuck\SupportsUploads;
@@ -597,12 +598,21 @@ abstract class Base extends Ardent
      */
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
+        $associate = false;
+        // @todo migrar isso pra ca pro support
+        $associate = Facilitador::getInfluencia();
+
         $modelFind = false;
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);
         if (!$eloquentEntityForModel = ModelService::make(static::class)) {
-            return static::firstOrCreate($data);
+            $entity = static::firstOrCreate($data);
+            if ($associate) {
+                static::associate($entity, $associate);
+            }
+            return $entity;
         }
+        
 
         $data = DbalInclusor::includeDataFromEloquentEntity($eloquentEntityForModel, $data, $keyName);
 
@@ -627,14 +637,26 @@ abstract class Base extends Ardent
             }
         );
         if ($results->isNotEmpty()) {
-            return $results->first();
+            $entity = $results->first();
+            if ($associate) {
+                static::associate($entity, $associate);
+            }
+            return $entity;
         }
 
         // PRocura por todos os parametros
         if ($modelFind = static::where($data)->first()) {
-            return $modelFind;
+            $entity = $modelFind;
+            if ($associate) {
+                static::associate($entity, $associate);
+            }
+            return $entity;
         }
 
+        $entity = static::firstOrCreate($data);
+        if ($associate) {
+            static::associate($entity, $associate);
+        }
         return static::firstOrCreate($data);
 
     }

@@ -55,10 +55,10 @@ abstract class RenderAbstract extends ManagerAbstract implements RenderInterface
         Constructor
     */ 
 
-    public function __construct($parameter = '', $output = false)
+    public function __construct($parameter = '')
     {
         $this->parameter = $parameter;
-        parent::__construct($output);
+        parent::__construct();
     }
 
     // abstract function render();

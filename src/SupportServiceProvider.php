@@ -580,6 +580,7 @@ class SupportServiceProvider extends ServiceProvider
         
         // // Merge own configs into user configs 
         $this->mergeConfigFrom($this->getPublishesPath('config/elements/fields.php'), 'elements.fields');
+        $this->mergeConfigFrom($this->getPublishesPath('config/generators/core.php'), 'generators.core');
         $this->mergeConfigFrom($this->getPublishesPath('config/generators/loader.php'), 'generators.loader');
         $this->mergeConfigFrom($this->getPublishesPath('config/generators/model.php'), 'generators.model');
         $this->mergeConfigFrom($this->getPublishesPath('config/housekeepers/components.php'), 'housekeepers.components');
