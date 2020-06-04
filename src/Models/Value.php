@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Facilitador\Models;
+namespace Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Support\Recursos\Cacheable\CacheableEloquent;

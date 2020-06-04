@@ -287,7 +287,7 @@ class Search
                 $search['locale'] = [
                     'type' => 'select',
                     'label' => 'Locale',
-                    'options' => Config::get('facilitador.site.locales'),
+                    'options' => Config::get('site.site.locales'),
                 ];
 
                 // Not associative assume it's a text field

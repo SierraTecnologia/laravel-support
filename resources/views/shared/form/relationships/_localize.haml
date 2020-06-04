@@ -16,7 +16,7 @@
 					.radio
 						%label
 							%input(type="radio" name="compare" value=$model->locale data-model=json_encode($model->attributes_for_localization_comparison))
-							%strong.locale=Config::get('sitec.site.locales')[$model->locale]
+							%strong.locale=Config::get('site.site.locales')[$model->locale]
 							=' - '
 							%a(href=FacilitadorURL::relative('edit', $model->getKey()))!=$model->admin_title
 				%p.help-block!= __('facilitador::relationships.localize.compare_help', ['title' => $title])

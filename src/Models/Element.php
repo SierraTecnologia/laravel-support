@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Models;
+namespace Support\Models;
 
 // Dependencies
 use Support\Traits\Models\Encodable;

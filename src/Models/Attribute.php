@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Facilitador\Models;
+namespace Support\Models;
 
 use Informate\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;

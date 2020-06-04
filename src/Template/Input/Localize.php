@@ -88,7 +88,7 @@ class Localize
         $class = $this->model; // Must be a local var to test
 
         // There aren't multiple locales specified
-        if (count(\Illuminate\Support\Facades\Config::get('sitec.site.locales')) <= 1 ) { return true;
+        if (count(\Illuminate\Support\Facades\Config::get('site.site.locales')) <= 1 ) { return true;
         }
 
         // We're editing a model with no locale attribute
@@ -100,14 +100,14 @@ class Localize
         }
 
         // Auto localize is turned on and we're on a child model
-        if (\Illuminate\Support\Facades\Config::get('sitec.site.auto_localize_root_models')
+        if (\Illuminate\Support\Facades\Config::get('painel.core.auto_localize_root_models')
             && app('facilitador.wildcard')->detectParent()
         ) { return true;
         }
 
         // If auto-localizeable is turned off and this model doesn't have it
         // turned on
-        if (!\Illuminate\Support\Facades\Config::get('sitec.site.auto_localize_root_models')
+        if (!\Illuminate\Support\Facades\Config::get('painel.core.auto_localize_root_models')
             && !$class::$localizable
         ) { return true;
         }
@@ -125,7 +125,7 @@ class Localize
     {
         // Keep only locales that don't exist in ...
         return array_diff_key(
-            Config::get('facilitador.site.locales'),
+            Config::get('site.site.locales'),
             // ... the locales of other localizations ...
             $this->other()->pluck('locale')->flip()->toArray(),
             // ... and the model's locale
@@ -155,7 +155,7 @@ class Localize
     public function __toString()
     {
         return View::make(
-            'facilitador::shared.form.relationships._localize', [
+            'support::shared.form.relationships._localize', [
             'model' => $this->model,
             'item' => $this->item,
             'title' => $this->title,

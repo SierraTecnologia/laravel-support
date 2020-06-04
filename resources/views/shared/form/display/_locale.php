@@ -5,7 +5,7 @@ if (!$localize || $localize->hidden()) { return;
 }
 
 // Create radios config
-$config = Bkwld\Library\Laravel\Former::radioArray(Config::get('sitec.site.locales'));
+$config = Bkwld\Library\Laravel\Former::radioArray(Config::get('site.site.locales'));
 
 // Look for other localizations of this record
 if ($item && ($localizations = $localize->other())) {

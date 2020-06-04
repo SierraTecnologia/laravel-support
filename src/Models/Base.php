@@ -73,7 +73,7 @@ abstract class Base extends Ardent
      * @var array
      */
     // public $rules = [];
-    public $rules = [
+    public static $rules = [
         
     ];
     

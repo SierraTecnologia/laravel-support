@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Models;
+namespace Support\Models;
 
 use DB;
 use Config;
@@ -29,7 +29,7 @@ class RedirectRule extends Base
      *
      * @var array
      */
-    public $rules = [
+    public static $rules = [
         'from' => 'required|unique:redirect_rules,from',
         'to' => 'required',
     ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Tests\Stubs\Widgets;
+namespace Support\Tests\Stubs\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
 
