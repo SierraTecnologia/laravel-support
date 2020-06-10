@@ -230,7 +230,7 @@ abstract class Base extends Ardent
      */
     protected function needsSlugging()
     {
-        return array_key_exists('slug', $this->rules);
+        return array_key_exists('slug', static::$rules);
     }
 
     public function getApresentationName()
@@ -354,7 +354,7 @@ abstract class Base extends Ardent
         // Get all the file validation rule keys
         $attributes = array_keys(
             array_filter(
-                $this->rules, function ($rules) {
+                static::$rules, function ($rules) {
                     return preg_match('#file|image|mimes|video|dimensions#i', $rules);
                 }
             )

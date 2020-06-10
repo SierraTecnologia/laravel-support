@@ -595,7 +595,7 @@ abstract class Ardent extends Model
         }
 
         // check for overrides, then remove any empty rules
-        $rules = (empty($rules))? $this->rules : $rules;
+        $rules = (empty($rules))? static::$rules : $rules;
         foreach ($rules as $field => $rls) {
             if ($rls == '') {
                 unset($rules[$field]);
@@ -877,7 +877,7 @@ abstract class Ardent extends Model
     {
       
         if (!count($rules)) {
-            $rules = $this->rules;
+            $rules = static::$rules;
         }
 
         foreach ($rules as $field => &$ruleset) {

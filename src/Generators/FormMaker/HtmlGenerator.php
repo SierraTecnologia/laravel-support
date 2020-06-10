@@ -265,6 +265,10 @@ class HtmlGenerator
                 $config['objectValue'] = $config['objectValue']->format($format);
             }
 
+            if (is_array($config['objectValue'])) {
+                dd('nao cair aqui, array', $config['objectValue']);
+            }
+
             return 'value="'.htmlspecialchars($config['objectValue']).'"';
         }
 

@@ -26,27 +26,17 @@
             "name": "SierraTecnologia LLC",
             "homepage": "https://sierratecnologia.com",
             "email": "help@sierratecnologia.com"
-        },
-        {
-            "name": "Abdelrahman Omran",
-            "homepage": "https://omranic.com",
-            "email": "me@omranic.com",
-            "role": "Project Lead"
-        },
-        {
-            "name": "The Generous Laravel Community",
-            "homepage": "https://github.com/sierratecnologia/laravel-support/contributors"
         }
     ],
     "require": {
         "php": ">=7.2.0",
         "cviebrock/eloquent-sluggable": "~4.0",
         "doctrine/orm": ">=2.5",
-        "illuminate/auth": "^5.8|^6.0|^7.0",
-        "illuminate/bus": "^5.8|^6.0|^7.0",
-        "illuminate/contracts": "^5.8|^6.0|^7.0",
-        "illuminate/http": "^5.8|^6.0|^7.0",
-        "illuminate/routing": "^5.8|^6.0|^7.0",
+        "illuminate/auth": "^5.8|^6.0|^7.0|^8.0",
+        "illuminate/bus": "^5.8|^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^5.8|^6.0|^7.0|^8.0",
+        "illuminate/http": "^5.8|^6.0|^7.0|^8.0",
+        "illuminate/routing": "^5.8|^6.0|^7.0|^8.0",
         "doctrine/dbal": ">=2.5",
         "intervention/image": "^2.4",
         "larapack/doctrine-support": "~0.1.4",
@@ -61,8 +51,8 @@
         "symfony/yaml": "~2.5 || ^3.0 || ^4.0",
         "jenssegers/agent": "~2.1",
         "zencoder/zencoder-php": "~2.2",
-        "illuminate/support": "^5.8|^6.0|^7.0",
-        "illuminate/validation": "^5.8|^6.0|^7.0",
+        "illuminate/support": "^5.8|^6.0|^7.0|^8.0",
+        "illuminate/validation": "^5.8|^6.0|^7.0|^8.0",
         "larapack/hooks": ">=1.0.5",
         "laravel/helpers": ">=1.1.0",
         "laravel/tinker": "*",
@@ -106,9 +96,7 @@
             "utils/funcs/load-laravel.php",
             "utils/funcs/helpers.php",
             "utils/funcs/form_maker.php",
-            "utils/funcs/helpersi18n.php",
             "utils/funcs/helperSlugify.php",
-            "utils/funcs/helperTranslations.php",
             "utils/funcs/input_maker.php",
             "utils/funcs/Reflection.php"
         ]
