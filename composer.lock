@@ -50,16 +50,16 @@
         },
         {
             "name": "bkwld/cloner",
-            "version": "3.7.0",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BKWLD/cloner.git",
-                "reference": "bfb2db6e4e42cf2710b5d507074d0e1c1af04da3"
+                "reference": "43735167a56bae106daad1f944593e2c80d33774"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BKWLD/cloner/zipball/bfb2db6e4e42cf2710b5d507074d0e1c1af04da3",
-                "reference": "bfb2db6e4e42cf2710b5d507074d0e1c1af04da3",
+                "url": "https://api.github.com/repos/BKWLD/cloner/zipball/43735167a56bae106daad1f944593e2c80d33774",
+                "reference": "43735167a56bae106daad1f944593e2c80d33774",
                 "shasum": ""
             },
             "require": {
@@ -101,7 +101,7 @@
                 }
             ],
             "description": "A trait for Laravel Eloquent models that lets you clone of a model and it's relationships, including files.",
-            "time": "2020-05-07T16:08:16+00:00"
+            "time": "2020-06-16T16:04:06+00:00"
         },
         {
             "name": "bkwld/croppa",
@@ -4601,7 +4601,7 @@
             "dist": {
                 "type": "path",
                 "url": "../entrust",
-                "reference": "a2177acd806f03449b9ea8f81358c4b9bb96443c"
+                "reference": "65b100f5f46572b6a82feb60fa77d3cb81b67bc7"
             },
             "require": {
                 "illuminate/cache": "~5.0|^6.0|^7.0|^8.0",
@@ -5125,7 +5125,7 @@
             "dist": {
                 "type": "path",
                 "url": "../CrudMaker",
-                "reference": "886afc7a27d2301af90bf2484aff0c759f6999d0"
+                "reference": "bc1623f61c9264084018620c959dffe2ead966e3"
             },
             "require": {
                 "doctrine/dbal": "^2.5",
@@ -5185,10 +5185,10 @@
             "dist": {
                 "type": "path",
                 "url": "../Crypto",
-                "reference": "56bec353d40fded9d65d3491d0bbf956ca8e6cd4"
+                "reference": "42ae36a8de33d104c6b6e82e5fab79bfd6882944"
             },
             "require": {
-                "illuminate/support": "5.*|6.*|7.*",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
                 "php": ">=5.6.4",
                 "ramsey/uuid": ">=3.8"
             },
@@ -5244,7 +5244,7 @@
             "dist": {
                 "type": "path",
                 "url": "../former",
-                "reference": "192a8cc1a20c80959b8486743ba5922ff004eb12"
+                "reference": "7d19ac79a0597b9645f7e30c3e1c69f3397b6035"
             },
             "require": {
                 "anahkiasen/html-object": ">=1.4",
