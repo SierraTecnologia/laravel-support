@@ -3,14 +3,12 @@
 namespace Support\Console\Commands\Generate;
 
 use Exception;
-use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Support\Services\CrudMaker\TableService;
 
 class TableCrudMaker extends Command
 {
-    use DetectsApplicationNamespace;
 
     /**
      * The console command name.

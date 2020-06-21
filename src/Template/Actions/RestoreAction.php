@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Interactions\Actions;
+namespace Support\Template\Actions;
 
 class RestoreAction extends AbstractAction
 {

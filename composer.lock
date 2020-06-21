@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41588ca87cabacdb65f65b1194cc6867",
+    "content-hash": "4463c0df7eb938da03267ac451d97952",
     "packages": [
         {
             "name": "anahkiasen/html-object",
@@ -50,16 +50,16 @@
         },
         {
             "name": "bkwld/cloner",
-            "version": "3.8.0",
+            "version": "3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BKWLD/cloner.git",
-                "reference": "43735167a56bae106daad1f944593e2c80d33774"
+                "reference": "34e6dc52ae2ead6fd34d56eb0cb2890f17f68cfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BKWLD/cloner/zipball/43735167a56bae106daad1f944593e2c80d33774",
-                "reference": "43735167a56bae106daad1f944593e2c80d33774",
+                "url": "https://api.github.com/repos/BKWLD/cloner/zipball/34e6dc52ae2ead6fd34d56eb0cb2890f17f68cfa",
+                "reference": "34e6dc52ae2ead6fd34d56eb0cb2890f17f68cfa",
                 "shasum": ""
             },
             "require": {
@@ -101,7 +101,7 @@
                 }
             ],
             "description": "A trait for Laravel Eloquent models that lets you clone of a model and it's relationships, including files.",
-            "time": "2020-06-16T16:04:06+00:00"
+            "time": "2020-06-18T21:59:14+00:00"
         },
         {
             "name": "bkwld/croppa",
@@ -1846,16 +1846,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.17",
+            "version": "2.1.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "ade6887fd9bd74177769645ab5c474824f8a418a"
+                "reference": "cfa3d44471c7f5bfb684ac2b0da7114283d78441"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ade6887fd9bd74177769645ab5c474824f8a418a",
-                "reference": "ade6887fd9bd74177769645ab5c474824f8a418a",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/cfa3d44471c7f5bfb684ac2b0da7114283d78441",
+                "reference": "cfa3d44471c7f5bfb684ac2b0da7114283d78441",
                 "shasum": ""
             },
             "require": {
@@ -1879,7 +1879,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Egulias\\EmailValidator\\": "EmailValidator"
+                    "Egulias\\EmailValidator\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1900,7 +1900,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2020-02-13T22:36:52+00:00"
+            "time": "2020-06-16T20:11:17+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -3862,16 +3862,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.5.4",
+            "version": "3.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "1d0deef692f66dae5d70663caee2867d0971306b"
+                "reference": "dec9fc5ecfca93f45cd6121f8e6f14457dff372c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/1d0deef692f66dae5d70663caee2867d0971306b",
-                "reference": "1d0deef692f66dae5d70663caee2867d0971306b",
+                "url": "https://api.github.com/repos/opis/closure/zipball/dec9fc5ecfca93f45cd6121f8e6f14457dff372c",
+                "reference": "dec9fc5ecfca93f45cd6121f8e6f14457dff372c",
                 "shasum": ""
             },
             "require": {
@@ -3919,7 +3919,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2020-06-07T11:41:29+00:00"
+            "time": "2020-06-17T14:59:55+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -4766,8 +4766,8 @@
                 "reference": "35c47e5db54a6c5a98f68ae5598c974250760c6c"
             },
             "require": {
-                "illuminate/filesystem": "~5.0|^6|^7",
-                "illuminate/support": "~5.0|^6|^7",
+                "illuminate/filesystem": "^5.0|^6.0|^7.0|^8.0",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
                 "natxet/cssmin": "3.*",
                 "php": ">=5.4.0",
                 "tedivm/jshrink": "~1.0"
@@ -5125,11 +5125,11 @@
             "dist": {
                 "type": "path",
                 "url": "../CrudMaker",
-                "reference": "bc1623f61c9264084018620c959dffe2ead966e3"
+                "reference": "a28d0846fbc05096090d0dc72f1513c5e0f0adca"
             },
             "require": {
                 "doctrine/dbal": "^2.5",
-                "illuminate/support": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
                 "php": ">=7.2",
                 "sierratecnologia/formmaker": "dev-master"
             },
@@ -5244,32 +5244,32 @@
             "dist": {
                 "type": "path",
                 "url": "../former",
-                "reference": "7d19ac79a0597b9645f7e30c3e1c69f3397b6035"
+                "reference": "22d0f51a0861427b1c90a0e470a0c523a301b0f5"
             },
             "require": {
                 "anahkiasen/html-object": ">=1.4",
-                "illuminate/config": "~5.0|^6.0|^7.0|^8.0",
-                "illuminate/container": "~5.0|^6.0|^7.0|^8.0",
-                "illuminate/http": "~5.0|^6.0|^7.0|^8.0",
-                "illuminate/routing": "~5.0|^6.0|^7.0|^8.0",
-                "illuminate/session": "~5.0|^6.0|^7.0|^8.0",
-                "illuminate/support": "~5.0|^6.0|^7.0|^8.0",
-                "illuminate/translation": "~5.0|^6.0|^7.0|^8.0",
-                "php": ">=5.4.0"
+                "illuminate/config": "^6.0|^7.0|^8.0",
+                "illuminate/container": "^6.0|^7.0|^8.0",
+                "illuminate/http": "^6.0|^7.0|^8.0",
+                "illuminate/routing": "^6.0|^7.0|^8.0",
+                "illuminate/session": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/translation": "^6.0|^7.0|^8.0",
+                "php": ">=7.0"
             },
             "replace": {
                 "anahkiasen/former": "*",
                 "weotch/former": "*"
             },
             "require-dev": {
-                "illuminate/database": "~5.0|^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.0|^7.0|^8.0",
                 "mockery/mockery": ">=0.9.1",
                 "phpunit/phpunit": ">=4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0-dev"
+                    "dev-master": "5.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -5317,13 +5317,13 @@
             "dist": {
                 "type": "path",
                 "url": "../FormMaker",
-                "reference": "74c673c4dc75099ed0d180491eb94df6c68485c9"
+                "reference": "73e519e5c7fb084735b7e21f5b83639d1014ccb5"
             },
             "require": {
                 "doctrine/dbal": "^2.5",
-                "illuminate/support": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
                 "php": ">=7.2",
-                "sierratecnologia/former": "dev-master"
+                "sierratecnologia/former": "^5.0.4"
             },
             "require-dev": {
                 "mikey179/vfsstream": ">=1.6",
@@ -5386,7 +5386,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Locaravel",
-                "reference": "4bd139979daa664ffe8f30538f23633c2a243edb"
+                "reference": "0a49d08836c7276347da755dea01d246a5c667fb"
             },
             "require": {
                 "doctrine/dbal": "^2.0",
@@ -9369,16 +9369,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "7462d5f123dfc080dfdf26897032a6513644fc95"
+                "reference": "30441f2752e493c639526b215ed81d54f369d693"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/7462d5f123dfc080dfdf26897032a6513644fc95",
-                "reference": "7462d5f123dfc080dfdf26897032a6513644fc95",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/30441f2752e493c639526b215ed81d54f369d693",
+                "reference": "30441f2752e493c639526b215ed81d54f369d693",
                 "shasum": ""
             },
             "require": {
@@ -9392,7 +9392,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-1.x": "1.x-dev"
                 }
             },
             "autoload": {
@@ -9411,7 +9411,7 @@
                 }
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
-            "time": "2020-02-18T18:59:58+00:00"
+            "time": "2020-06-19T20:22:09+00:00"
         },
         {
             "name": "phpspec/prophecy",

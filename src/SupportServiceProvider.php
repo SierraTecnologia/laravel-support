@@ -368,8 +368,8 @@ class SupportServiceProvider extends ServiceProvider
 
         $loader = AliasLoader::getInstance();
 
-        $loader->alias('FormMaker', \Facilitador\FormMaker\Facades\FormMaker::class);
-        $loader->alias('InputMaker', \Facilitador\FormMaker\Facades\InputMaker::class);
+        $loader->alias('FormMaker', \SierraTecnologia\FormMaker\Facades\FormMaker::class);
+        $loader->alias('InputMaker', \SierraTecnologia\FormMaker\Facades\InputMaker::class);
 
         // Thrid party
         $loader->alias('Form', \Collective\Html\FormFacade::class);

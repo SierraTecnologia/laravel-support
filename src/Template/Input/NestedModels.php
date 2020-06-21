@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Interactions\Input;
+namespace Support\Template\Input;
 
 use Decoy;
 use Facilitador\Models\Image;

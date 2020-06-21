@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Interactions\Input;
+namespace Support\Template\Input;
 
 /**
  * Utilities that the Decoy base controller can use to generate

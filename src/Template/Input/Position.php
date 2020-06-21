@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Interactions\Input;
+namespace Support\Template\Input;
 
 use Request;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
