@@ -105,7 +105,7 @@ class RegisterController extends Controller
         }
 
         // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'edit');
+        $this->registerService->removeRelationshipField($dataType, 'edit');
 
         // Check permission
         // $this->authorize('edit', $dataTypeContent);

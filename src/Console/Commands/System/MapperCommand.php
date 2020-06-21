@@ -2,7 +2,7 @@
 
 namespace Support\Console\Commands\System;
 
-// use Facilitador\Models\Worker as Command; // @todo Estudar esse worker
+// use Support\Models\Worker as Command; // @todo Estudar esse worker
 use Illuminate\Console\Command;
 use Support\Components\Coders\Model\Factory;
 use Illuminate\Contracts\Config\Repository;

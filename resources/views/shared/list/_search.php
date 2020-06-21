@@ -2,7 +2,7 @@
 <?php
 if (empty($search)) { return;
 }
-$search = (new Support\Interactions\Input\Search)->longhand($search);
+$search = (new Support\Template\Input\Search)->longhand($search);
 ?>
 
 <form class="form-inline search" data-js-view="search" data-schema='<?php echo json_encode($search)?>' data-title='<?php echo strtolower($title)?>' >

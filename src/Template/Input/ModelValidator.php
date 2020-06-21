@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Interactions\Input;
+namespace Support\Template\Input;
 
 use Validator;
 use Illuminate\Support\Arr;

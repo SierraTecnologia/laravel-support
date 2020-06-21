@@ -3,10 +3,10 @@
 namespace Support\Repositories;
 
 use Carbon\Carbon;
-use App\Repositories\TranslationRepository;
+use RicardoSierra\Translation\Repositories\TranslationRepository;
 use Illuminate\Support\Facades\Schema;
 
-class CmsRepository
+class BaseRepository
 {
     public $translationRepo;
 

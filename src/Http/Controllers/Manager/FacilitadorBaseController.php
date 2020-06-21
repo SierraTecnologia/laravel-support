@@ -81,7 +81,7 @@ class FacilitadorBaseController extends Controller
             }
 
             // If a column has a relationship associated with it, we do not want to show that field
-            $this->removeRelationshipField($dataType, 'browse');
+            $this->registerService->removeRelationshipField($dataType, 'browse');
 
             if ($search->value != '' && $search->key && $search->filter) {
                 $search_filter = ($search->filter == 'equals') ? '=' : 'LIKE';
@@ -228,7 +228,7 @@ class FacilitadorBaseController extends Controller
         $dataTypeContent = $this->resolveRelations($dataTypeContent, $dataType, true);
 
         // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'read');
+        $this->registerService->removeRelationshipField($dataType, 'read');
 
         // Check permission
         // $this->authorize('read', $dataTypeContent);
@@ -284,7 +284,7 @@ class FacilitadorBaseController extends Controller
         }
 
         // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'edit');
+        $this->registerService->removeRelationshipField($dataType, 'edit');
 
         // Check permission
         // $this->authorize('edit', $dataTypeContent);
@@ -375,7 +375,7 @@ class FacilitadorBaseController extends Controller
         }
 
         // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'add');
+        $this->registerService->removeRelationshipField($dataType, 'add');
 
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($dataTypeContent);

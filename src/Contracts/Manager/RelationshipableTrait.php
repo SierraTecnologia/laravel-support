@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 trait RelationshipableTrait
 {
 
-    protected function removeRelationshipField(DataType $dataType, $bread_type = 'browse')
+    public function removeRelationshipField(DataType $dataType, $bread_type = 'browse')
     {
         $forget_keys = [];
         foreach ($dataType->{$bread_type.'Rows'} as $key => $row) {

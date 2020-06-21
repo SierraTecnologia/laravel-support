@@ -25,7 +25,6 @@ use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
-use Barryvdh\Debugbar\ServiceProvider as DebugService;
 use Laravel\Dusk\DuskServiceProvider;
 
 // class CodersServiceProvider extends ServiceProvider
@@ -127,6 +126,7 @@ class SupportServiceProvider extends ServiceProvider
          * VEio pelo Decoy
          **/
         \Former\FormerServiceProvider::class,
+        \Bkwld\Upchuck\ServiceProvider::class,
 
         /**
          * Outros
@@ -167,6 +167,8 @@ class SupportServiceProvider extends ServiceProvider
             }
         );
 
+        $this->loadLogger();
+
 
         /**
         // if ($this->app->runningInConsole()) {
@@ -182,8 +184,6 @@ class SupportServiceProvider extends ServiceProvider
         //         ]
         //     );
         // }
-
-        // $this->loadLogger();
 
         // //ExtendedBreadFormFieldsServiceProvider
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'extended-fields');
@@ -368,8 +368,8 @@ class SupportServiceProvider extends ServiceProvider
 
         $loader = AliasLoader::getInstance();
 
-        $loader->alias('FormMaker', \Facilitador\FormMaker\Facades\FormMaker::class);
-        $loader->alias('InputMaker', \Facilitador\FormMaker\Facades\InputMaker::class);
+        $loader->alias('FormMaker', \SierraTecnologia\FormMaker\Facades\FormMaker::class);
+        $loader->alias('InputMaker', \SierraTecnologia\FormMaker\Facades\InputMaker::class);
 
         // Thrid party
         $loader->alias('Form', \Collective\Html\FormFacade::class);
@@ -747,9 +747,13 @@ class SupportServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
-        if ($this->app->environment('local')) {
-            $this->app->register(DebugService::class);
-            // $this->app->register(IdeHelperServiceProvider::class);
+        if ($this->app->environment('local')) { 
+            if (class_exists(DebugService::class)) {
+                $this->app->register(DebugService::class);
+            }
+            if (class_exists(IdeHelperServiceProvider::class)) {
+                $this->app->register(IdeHelperServiceProvider::class);
+            }
         }
     }
 }

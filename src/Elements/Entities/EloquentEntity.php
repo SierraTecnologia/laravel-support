@@ -212,7 +212,7 @@ class EloquentEntity
             }
         );
 
-        dd($fillables);
+        dd('filliables',$fillables);
 
         return $fillables;
     }

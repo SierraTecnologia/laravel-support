@@ -33,6 +33,7 @@ class ArraySearcher
         }
         if (!is_array($array)) {
             dd(
+                'ErroAquiPut',
                 $str, $array
             );
             return false;

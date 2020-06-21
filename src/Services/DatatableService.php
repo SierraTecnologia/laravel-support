@@ -229,7 +229,7 @@ class DatatableService
         }
 
         // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'add');
+        $this->registerService->removeRelationshipField($dataType, 'add');
 
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($dataTypeContent);
@@ -366,7 +366,7 @@ class DatatableService
             // }
 
             // If a column has a relationship associated with it, we do not want to show that field
-            $this->removeRelationshipField($this->dataType, 'browse');
+            $this->registerService->removeRelationshipField($this->dataType, 'browse');
 
             if ($this->search->value != '' && $this->search->key && $this->search->filter) {
                 $this->search_filter = ($this->search->filter == 'equals') ? '=' : 'LIKE';

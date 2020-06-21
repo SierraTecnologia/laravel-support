@@ -52,14 +52,16 @@ class Command
         /**
          * Commands from Config
          */
-        $commandFolders = config('sitec.core.commandsFolders');
-        foreach ($commandFolders as $folder) {
-            $news = self::allCustom($commands, $folder);
-            foreach ($news as $indixe=>$new) {
-                if (!isset($commands[$indixe])) {
-                    $commands[$indixe] = $new;
-                } else {
-                    $commands[$indixe] = array_merge($commands[$indixe], $new);
+        $commandFolders = config('housekeepers.components.commandsFolders');
+        if (is_array($commandFolders)) {
+            foreach ($commandFolders as $folder) {
+                $news = self::allCustom($commands, $folder);
+                foreach ($news as $indixe=>$new) {
+                    if (!isset($commands[$indixe])) {
+                        $commands[$indixe] = $new;
+                    } else {
+                        $commands[$indixe] = array_merge($commands[$indixe], $new);
+                    }
                 }
             }
         }

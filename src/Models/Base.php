@@ -34,8 +34,9 @@ use Support\Utils\Inclusores\DbalInclusor;
 use Support\Traits\Models\Importable;
 use Support\Collections\Base as BaseCollection;
 use Audit\Traits\Loggable;
+use Illuminate\Database\Eloquent\Model;
 
-abstract class Base extends Ardent
+abstract class Base extends Model //Ardent
 {
     /**
      * Esses primeiros veio do facilitador
@@ -47,7 +48,7 @@ abstract class Base extends Ardent
     use Cloneable,
         Sluggable,
         SluggableScopeHelpers,
-        SupportsUploads,
+        // SupportsUploads,
         \Support\Traits\Models\CanSerializeTransform,
         \Support\Traits\Models\Exportable,
         Loggable;
@@ -571,7 +572,6 @@ abstract class Base extends Ardent
     {
         parent::save($options);
     }
-    
 
     /**
      * 

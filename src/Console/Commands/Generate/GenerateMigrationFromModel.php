@@ -87,8 +87,8 @@ class GenerateMigrationFromModel extends AbstractGeneratorCommand
             $keyName,
             $ketYpe,
             $increment,
-            $foreignKey
-            
+            $foreignKey,
+            'dispath'
         );
 
         $this->info('Migration: database/migrations/<date>_create_' . $this->camelCase1($tableName) . '_table.php');

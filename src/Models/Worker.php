@@ -241,7 +241,7 @@ class Worker extends \Illuminate\Console\Command
         $namespaced = Command::all();
         foreach ($namespaced as $namespace => $commands) {
             foreach ($commands as $title => $command) {
-                if (is_a($command, 'Facilitador\Models\Worker')) {
+                if (is_a($command, 'Support\Models\Worker')) {
                     $output[] = $command;
                 }
             }

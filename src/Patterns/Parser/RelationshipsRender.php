@@ -162,12 +162,6 @@ class RelationshipsRender
                         if ($tmpReturnReflectionClass->hasMethod('getPivotColumns')) {
                             $dataRelationship['pivot'] = true;
                             $dataRelationship['pivotColumns'] = $return->getPivotColumns();
-                            dd(
-                                $dataRelationship,
-                                $return->getPivotAccessor(),
-                                $return->getPivotColumns(),
-                                $return->getPivotClass()
-                            );
                         }
 
                         if (!isset($dataRelationship['origin_foreignKey']) || empty($dataRelationship['origin_foreignKey'])) {
