@@ -7,14 +7,14 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Support\Components\Database\Schema\SchemaManager;
 use Facilitador\Facades\Facilitador;
-use Facilitador\Traits\Translatable;
+use RicardoSierra\Translation\Traits\HasTranslations;
 use Support\Services\ModelService;
 use Support\Utils\Compare\StringCompare;
 use Support\Contracts\Services\EloquentInterface;
 
 class DataType extends Model implements EloquentInterface
 {
-    use Translatable;
+    use HasTranslations;
 
     protected $translatable = ['display_name_singular', 'display_name_plural'];
 

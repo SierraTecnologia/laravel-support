@@ -27,9 +27,9 @@ use Support\Models\Permission;
 use Support\Models\Post;
 use Support\Models\Role;
 use Support\Models\Setting;
-use Support\Models\Translation;
+use RicardoSierra\Translation\Models\Translation;
 use Support\Models\User;
-use Support\Traits\Translatable;
+use RicardoSierra\Translation\Traits\HasTranslations;
 
 class Support
 {

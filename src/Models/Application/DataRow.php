@@ -7,7 +7,7 @@ use Facilitador\Traits\Translatable;
 
 class DataRow extends Model
 {
-    use Translatable;
+    use HasTranslations;
 
     protected $table = 'data_rows';
 

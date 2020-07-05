@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Support\Components\Database\Schema\SchemaManager;
-use Facilitador\Facades\Facilitador;
-use Facilitador\Traits\Translatable;
 use Support\Services\ModelService;
 
 class Error extends Model
