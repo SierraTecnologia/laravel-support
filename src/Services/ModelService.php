@@ -26,11 +26,14 @@ use Support\Elements\Entities\EloquentEntity;
 use Support\Models\Code\Classer;
 use Support\Contracts\Services\EloquentInterface;
 
+use Support\Contracts\Output\OutputableTrait;
 /**
  * ModelService helper to make table and object form mapping easy.
  */
 class ModelService implements EloquentInterface
 {
+    use OutputableTrait;
+    
     protected $repository = false;
     protected $modelDataType = false;
     protected $modelClass;

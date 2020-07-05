@@ -4,6 +4,10 @@ namespace Support\Contracts\Runners;
 
 use League\Pipeline\FingersCrossedProcessor as FingersCrossedProcessorBase;
 
+use Support\Contracts\Support\ArrayableTrait;
+use Support\Traits\Debugger\HasErrors;
+use Support\Contracts\Output\OutputableTrait;
+
 class FingersCrossedProcessor extends FingersCrossedProcessorBase
 {
     use HasErrors, ArrayableTrait, OutputableTrait;

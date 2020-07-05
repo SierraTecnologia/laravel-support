@@ -10,7 +10,6 @@ use Support\Utils\Modificators\StringModificator;
 use Support\Traits\Coder\GetSetTrait;
 use Support\Components\Database\Schema\Table;
 use Log;
-use Support\Contracts\Output\OutputableTrait;
 use Support\Contracts\Manager\BuilderAbstract;
 use Support\Patterns\Entity\ApplicationEntity;
 use Illuminate\Database\Eloquent\Collection;
