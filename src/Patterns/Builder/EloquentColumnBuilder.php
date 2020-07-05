@@ -375,14 +375,29 @@ class EloquentColumnBuilder extends BuilderAbstract
      */
 
     /**
-     * number
-     * text
-     * text_area
-     * rich_text_box
      * 
-     * select_dropdown
-     * 
-     * timestamp
+     * 'checkbox',
+     * 'multiple_checkbox',
+     * 'color',
+     * 'date',
+     * 'file',
+     * 'image',
+     * 'multiple_images',
+     * 'media_picker',
+     * 'number',
+     * 'password',
+     * 'radio_btn',
+     * 'rich_text_box',
+     * 'code_editor',
+     * 'markdown_editor',
+     * 'select_dropdown',
+     * 'select_multiple',
+     * 'text',
+     * 'text_area',
+     * 'time',
+     * 'timestamp',
+     * 'hidden',
+     * 'coordinates',
      */
     public function getColumnDisplayType(string $type): string
     {
@@ -390,8 +405,19 @@ class EloquentColumnBuilder extends BuilderAbstract
             return 'relationship';
         }
 
-        if (in_array($type, ['text'])) {
+        if (in_array($type, ['text', 'json'])) {
             return 'text_area';
+        }
+
+        if (in_array($type, ['longtext'])) {
+            return 'rich_text_box';
+        }
+
+        if (in_array($type, ['point'])) {
+            return 'coordinates';
+        }
+        if (in_array($type, ['enum'])) {
+            return 'select_dropdown';
         }
 
         if (in_array($type, ['integer', 'float', 'bigint', 'number'])) {
