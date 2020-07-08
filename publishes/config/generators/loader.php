@@ -28,7 +28,7 @@ return [
         'Population\Models',
         'Gamer\Models',
         'Casa\Models',
-        'Artista\Models',
+        'Stalker\Models',
         'Finder\Models',
         'Trainner\Models',
         // 'Siravel\Models',
