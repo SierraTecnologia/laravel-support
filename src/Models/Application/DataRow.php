@@ -3,7 +3,7 @@
 namespace Support\Models\Application;
 
 use Illuminate\Database\Eloquent\Model;
-use RicardoSierra\Translation\Traits\HasTranslations;
+use Translation\Traits\HasTranslations;
 
 class DataRow extends Model
 {

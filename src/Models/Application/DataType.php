@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Support\Components\Database\Schema\SchemaManager;
 use Facilitador\Facades\Facilitador;
-use RicardoSierra\Translation\Traits\HasTranslations;
+use Translation\Traits\HasTranslations;
 use Support\Services\ModelService;
 use Support\Utils\Compare\StringCompare;
 use Support\Contracts\Services\EloquentInterface;

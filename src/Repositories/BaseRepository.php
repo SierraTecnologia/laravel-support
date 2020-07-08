@@ -3,7 +3,7 @@
 namespace Support\Repositories;
 
 use Carbon\Carbon;
-use RicardoSierra\Translation\Repositories\TranslationRepository;
+use Translation\Repositories\TranslationRepository;
 use Illuminate\Support\Facades\Schema;
 
 class BaseRepository
