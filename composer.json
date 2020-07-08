@@ -75,7 +75,6 @@
         "spatie/eloquent-sortable": ">=3.7",
         "spatie/laravel-schemaless-attributes": ">=1.6.0",
         "spatie/laravel-sluggable": ">=2.2",
-        "spatie/laravel-translatable": ">=4.2",
         "symfony/inflector": ">=5.0",
         "venturecraft/revisionable": ">=1.30",
         "watson/validating": ">=3.3.0",

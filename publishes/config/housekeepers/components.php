@@ -9,7 +9,7 @@ return [
      * Os comandos do App\Console sao carregados automagicamente
      */
     'commandsFolders' => [
-        'vendor/sierratecnologia/tools/siravel/Console/Commands',
+        'vendor/sierratecnologia/siravel/src/Console/Commands',
         'vendor/sierratecnologia/facilitador/src/Console/Commands',
         'vendor/sierratecnologia/finder/src/Console/Commands',
         'vendor/sierratecnologia/laravel-support/src/Console/Commands'
