@@ -88,11 +88,16 @@ class ModelService implements EloquentInterface
 
             $this->modelDataType = $this->dataTypeForCode($realModelClass);
             if (!$this->modelDataType->exists) {
-                dd(\Support\Patterns\Builder\ApplicationBuilder::makeWithOutput($this, '')());
+                \Support\Patterns\Builder\ApplicationBuilder::makeWithOutput($this, '')();
+                // dd(
+                //     \Support\Patterns\Builder\ApplicationBuilder::makeWithOutput($this, '')()
+                //     , $this->modelClass, $realModelClass
+                // );
                 $this->modelDataType = $this->dataTypeForCode($realModelClass);
                 if (!$this->modelDataType->exists) {
                     dd(
                         'Classe não encontrada',
+                        $this->modelDataType,
                         $this->modelClass,
                         $realModelClass
                     );

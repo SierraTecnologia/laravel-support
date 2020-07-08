@@ -14,9 +14,9 @@ use Support\Contracts\Services\EloquentInterface;
 
 class DataType extends Model implements EloquentInterface
 {
-    use HasTranslations;
+    // use HasTranslations;
 
-    protected $translatable = ['display_name_singular', 'display_name_plural'];
+    // protected $translatable = ['display_name_singular', 'display_name_plural'];
 
     protected $table = 'data_types';
 

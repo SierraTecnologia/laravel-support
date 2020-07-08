@@ -153,8 +153,16 @@ class SystemBuilder extends BuilderAbstract
                     $result->getTableName(),
                     $result->toArray()['relations']
                 );
+                // if ($result->getTableName()=='tasks') {
+                //     dd(
+                //         $result,
+                //         $this->entity->relations,
+                //         $result->relations
+                //     );
+                // }
             }
         );
+
         // dd(
         //     $this->entity
         // );
@@ -203,7 +211,7 @@ class SystemBuilder extends BuilderAbstract
 
             // @todo Ignorar classes que uma extend a outra
             $this->entity->setError(
-                'Duas classes para a mesma tabela: '.$tableName
+                'Duas classes para a mesma tabela: '.$tableName.' -> '.print_r($this->entity->mapperTableToClasses[$tableName], true)
             );
             return ;
         }

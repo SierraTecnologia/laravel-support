@@ -7,15 +7,15 @@ use RicardoSierra\Translation\Traits\HasTranslations;
 
 class DataRow extends Model
 {
-    use HasTranslations;
+    // use HasTranslations;
+
+    // protected $translatable = ['display_name'];
 
     protected $table = 'data_rows';
 
     protected $guarded = [];
 
     public $timestamps = false;
-
-    protected $translatable = ['display_name'];
 
     public function rowBefore()
     {

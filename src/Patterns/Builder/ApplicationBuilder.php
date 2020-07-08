@@ -125,6 +125,7 @@ class ApplicationBuilder extends BuilderAbstract
 
         $modelDataType = $this->dataTypeForCode($result->code);
         if (!$modelDataType->exists) {
+
             $this->info("Criando DataType: ".$result->code);
             // Name e Slug sao unicos
             $modelDataType->fill(
