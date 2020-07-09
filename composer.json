@@ -70,6 +70,8 @@
         "sierratecnologia/muleta": "dev-master",
         "ricardosierra/changelog": "^1.4",
         "ricardosierra/minify": "dev-master",
+        "elasticquent/elasticquent": "*",
+        "predis/predis": ">=1.1",
         "sierratecnologia/locaravel": "dev-master",
         "ricardosierra/validate": "^0.2",
         "spatie/eloquent-sortable": ">=3.7",
