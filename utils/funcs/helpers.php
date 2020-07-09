@@ -13,7 +13,7 @@ if (! function_exists('extract_title')) {
      */
     function extract_title(HtmlString $breadcrumbs, string $separator = ' » ')
     {
-        return strip_tags(str_replace_last($separator, '', str_replace('</li>', $separator, $breadcrumbs)));
+        return preg_replace('/[\n\r\s]+/', ' ', strip_tags(Str::replaceLast($separator, '', str_replace('</li>', $separator, $breadcrumbs))));
     }
 }
 
@@ -25,7 +25,7 @@ if (! function_exists('domain')) {
      */
     function domain()
     {
-        return parse_url(\Illuminate\Support\Facades\Config::get('app.url'))['host'];
+        return parse_url(config('app.url'))['host'];
     }
 }
 
@@ -40,7 +40,7 @@ if (! function_exists('intend')) {
      */
     function intend(array $arguments, int $status = 302)
     {
-        $redirect = redirect(array_pull($arguments, 'url'), $status);
+        $redirect = redirect(Arr::pull($arguments, 'url'), $status);
 
         if (request()->expectsJson()) {
             $response = collect($arguments['withErrors'] ?? $arguments['with']);
@@ -53,34 +53,6 @@ if (! function_exists('intend')) {
         }
 
         return $redirect;
-    }
-}
-
-if (! function_exists('lower_case')) {
-    /**
-     * Convert the given string to lower-case.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    function lower_case($value)
-    {
-        return Str::lower($value);
-    }
-}
-
-if (! function_exists('upper_case')) {
-    /**
-     * Convert the given string to upper-case.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    function upper_case($value)
-    {
-        return Str::upper($value);
     }
 }
 
@@ -172,11 +144,9 @@ if (! function_exists('array_filter_recursive')) {
             }
         }
 
-        return ! $strOnly ? array_filter($values) : array_filter(
-            $values, function ($item) {
-                return ! is_null($item) && ! ((is_string($item) || is_array($item)) && empty($item));
-            }
-        );
+        return ! $strOnly ? array_filter($values) : array_filter($values, function ($item) {
+            return ! is_null($item) && ! ((is_string($item) || is_array($item)) && empty($item));
+        });
     }
 }
 

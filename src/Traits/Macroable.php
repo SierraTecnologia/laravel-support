@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Support\Traits;
+namespace SierraTecnologia\Support\Traits;
 
 use Error;
 use Exception;
