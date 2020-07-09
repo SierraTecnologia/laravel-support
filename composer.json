@@ -79,13 +79,14 @@
         "spatie/laravel-sluggable": ">=2.2",
         "symfony/inflector": ">=5.0",
         "venturecraft/revisionable": ">=1.30",
-        "watson/validating": ">=3.3.0",
+        "felixkiss/uniquewith-validator": "^3.4.0",
+        "watson/validating": "^5.0.0",
         "ricardosierra/phpwhois": "dev-dev"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "*",
         "barryvdh/laravel-ide-helper": ">=2.7",
-        "codedungeon/phpunit-result-printer": ">=0.26.0",
+        "codedungeon/phpunit-result-printer": ">=0.27.0",
         "phpunit/phpunit": ">=8.3.0"
     },
     "autoload": {
@@ -122,6 +123,13 @@
         "sort-packages": true,
         "preferred-install": "dist",
         "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SierraTecnologia\\Support\\Providers\\SupportServiceProvider"
+            ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
