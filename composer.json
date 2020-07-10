@@ -127,7 +127,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "SierraTecnologia\\Support\\Providers\\SupportServiceProvider"
+                "Support\\SupportServiceProvider"
             ]
         }
     },

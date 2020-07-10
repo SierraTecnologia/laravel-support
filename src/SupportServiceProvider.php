@@ -26,6 +26,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -169,6 +170,10 @@ class SupportServiceProvider extends ServiceProvider
 
         $this->loadLogger();
 
+        // Add strip_tags validation rule
+        Validator::extend('strip_tags', function ($attribute, $value) {
+            return strip_tags($value) === $value;
+        }, trans('validation.invalid_strip_tags'));
 
         /**
         // if ($this->app->runningInConsole()) {

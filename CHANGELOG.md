@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](CONTRIBUTING.md).
+# Release Notes
+
+## 9th Aug 2017 - First Release
+
+#### New Features
+- Route Explorer with listing of all routes
+- Optional support for tracking api calls count
 
 
 ## [v4.2.1] - 2020-06-20
