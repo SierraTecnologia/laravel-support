@@ -46,7 +46,7 @@ class SupportServiceProvider extends ServiceProvider
                 'icon'        => 'fas fa-fw fa-edit', //television
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
-                // 'access' => \App\Models\Role::$ADMIN
+                //  'access' => \App\Models\Role::$ADMIN
             ],
             [
                 'text' => 'Manipule',
@@ -67,7 +67,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-eye',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
-                    // 'access' => \App\Models\Role::$ADMIN
+                    //  'access' => \App\Models\Role::$ADMIN
                 ],
                 [
                     'text'        => 'Database',
@@ -75,7 +75,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-database',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
-                    // 'access' => \App\Models\Role::$ADMIN
+                    //  'access' => \App\Models\Role::$ADMIN
                 ],
                 [
                     'text'        => 'Commands',
@@ -83,7 +83,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-asterisk',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
-                    // 'access' => \App\Models\Role::$ADMIN
+                    //  'access' => \App\Models\Role::$ADMIN
                 ],
                 [
                     'text'        => 'Routers',
@@ -91,7 +91,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-folder',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
-                    // 'access' => \App\Models\Role::$ADMIN
+                    //  'access' => \App\Models\Role::$ADMIN
                 ],
             ],
             'Debugger' => [
@@ -101,7 +101,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-bug', //times, warning
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
-                    // 'access' => \App\Models\Role::$ADMIN
+                    //  'access' => \App\Models\Role::$ADMIN
                 ],
             ],
         ],
