@@ -192,70 +192,7 @@ class SupportServiceProvider extends ServiceProvider
 
         // //ExtendedBreadFormFieldsServiceProvider
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'extended-fields');
-
-
-        // // CrudMaker
-
-
-        // $this->publishes(
-        //     [
-        //     __DIR__.'/Templates/Laravel' => base_path('resources/crudmaker'),
-        //     __DIR__.'/../publishes/config/crudmaker.php' => base_path('config/crudmaker.php'),
-        //     ]
-        // );
-
-        // // FormMaker
-
-        // $this->publishes(
-        //     [
-        //     __DIR__.'/../publishes/config/form-maker.php' => base_path('config/form-maker.php'),
-        //     ]
-        // );
-        
-
-        // /*
-        // |--------------------------------------------------------------------------
-        // | Blade Directives
-        // |--------------------------------------------------------------------------
-        // *//**
-
-        // // Form Maker
-        // Blade::directive(
-        //     'form_maker_table', function ($expression) {
-        //         return "<?php echo FormMaker::fromTable($expression); ?>";
-        //     }
-        // );
-
-        // Blade::directive(
-        //     'form_maker_array', function ($expression) {
-        //         return "<?php echo FormMaker::fromArray($expression); ?>";
-        //     }
-        // );
-
-        // Blade::directive(
-        //     'form_maker_object', function ($expression) {
-        //         return "<?php echo FormMaker::fromObject($expression); ?>";
-        //     }
-        // );
-
-        // Blade::directive(
-        //     'form_maker_columns', function ($expression) {
-        //         return "<?php echo FormMaker::getTableColumns($expression); ?>";
-        //     }
-        // );
-
-        // // Label Maker
-        // Blade::directive(
-        //     'input_maker_label', function ($expression) {
-        //         return "<?php echo InputMaker::label($expression); ?>";
-        //     }
-        // );
-
-        // Blade::directive(
-        //     'input_maker_create', function ($expression) {
-        //         return "<?php echo InputMaker::create($expression); ?>";
-        //     }
-        // ); */
+            */
         // Config Former
         $this->configureFormer();
     }
@@ -317,69 +254,7 @@ class SupportServiceProvider extends ServiceProvider
         );
 
 
-        // CRUDMaker
-
-        /*
-        |--------------------------------------------------------------------------
-        | Providers
-        |--------------------------------------------------------------------------
-        *//**
-
-        if (class_exists('Illuminate\Foundation\AliasLoader')) {
-            $this->app->register(FormMakerProvider::class);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Register the Commands
-        |--------------------------------------------------------------------------
-        *//**
-
-        $this->commands(
-            [
-            \Siravel\Console\Commands\CrudMaker\CrudMaker::class,
-            \Siravel\Console\Commands\CrudMaker\TableCrudMaker::class,
-            ]
-        );
-
-
-        // FormMaker
-
-        /*
-        |--------------------------------------------------------------------------
-        | Providers
-        |--------------------------------------------------------------------------
-        *//**
-
-        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Register the Utilities
-        |--------------------------------------------------------------------------
-        *//**
-
-        $this->app->singleton(
-            'FormMaker', function () {
-                return new FormMaker();
-            }
-        );
-
-        $this->app->singleton(
-            'InputMaker', function () {
-                return new InputMaker();
-            }
-        );
-
-        $loader = AliasLoader::getInstance();
-
-        $loader->alias('FormMaker', \SierraTecnologia\FormMaker\Facades\FormMaker::class);
-        $loader->alias('InputMaker', \SierraTecnologia\FormMaker\Facades\InputMaker::class);
-
-        // Thrid party
-        $loader->alias('Form', \Collective\Html\FormFacade::class);
-        $loader->alias('HTML', \Collective\Html\HtmlFacade::class);
- */
+*/
 
         $this->loadHelpers();
 
@@ -549,7 +424,7 @@ class SupportServiceProvider extends ServiceProvider
 
         // Add Decoy's custom Fields to Former so they can be invoked using the "Former::"
         // namespace and so we can take advantage of sublassing Former's Field class.
-        $this->app['former.dispatcher']->addRepository('Facilitador\\Fields\\');
+        $this->app['former.dispatcher']->addRepository('Support\\Elements\\Fields\\');
     }
 
     

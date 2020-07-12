@@ -109,9 +109,7 @@
         "files": [
             "utils/funcs/load-laravel.php",
             "utils/funcs/helpers.php",
-            "utils/funcs/form_maker.php",
             "utils/funcs/helperSlugify.php",
-            "utils/funcs/input_maker.php",
             "utils/funcs/Reflection.php"
         ]
     },
