@@ -222,8 +222,6 @@ class EloquentEntity extends EntityAbstract
             }
         );
 
-        dd($fillables);
-
         return $fillables;
     }
     // public function getColumnsArray()

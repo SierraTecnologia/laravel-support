@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Middleware;
+namespace Support\Http\Middleware;
 
 use Closure;
 use Support\DataCollectors\ApiCallsCountCollector;

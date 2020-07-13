@@ -7,9 +7,9 @@ use Translation\Traits\HasTranslations;
 
 class DataRow extends Model
 {
-    // use HasTranslations;
+    use HasTranslations;
 
-    // protected $translatable = ['display_name'];
+    protected $translatable = ['display_name'];
 
     protected $table = 'data_rows';
 

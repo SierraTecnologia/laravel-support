@@ -101,7 +101,7 @@ class RepositoryService
     public function repositoryIndex($request = false)
     {
         if (!$this->datatableService) {
-            $this->datatableService = new DatatableService($this->getModelService());
+            $this->datatableService = new DatatableService($this);
         }
         return $this->datatableService->repositoryIndex($request);
     }
@@ -113,7 +113,7 @@ class RepositoryService
     public function repositoryCreate($request = false)
     {
         if (!$this->datatableService) {
-            $this->datatableService = new DatatableService($this->getModelService());
+            $this->datatableService = new DatatableService($this);
         }
         return $this->datatableService->repositoryCreate($request);
     }

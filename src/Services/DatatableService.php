@@ -176,19 +176,19 @@ class DatatableService
     protected $showCheckboxColum;
     protected $request;
     protected $getter;
-    protected $modelService;
+    protected $repositoryService;
     protected $model;
 
-    public function __construct(ModelService $modelService)
+    public function __construct(RepositoryService $repositoryService)
     {
-        $this->modelService = $modelService;
-        $this->dataType = $modelService->getModelDataType();
+        $this->repositoryService = $repositoryService;
+        $this->dataType = $repositoryService->getModelService()->getModelDataType();
         $this->request = App::make(Request::class);
     }
 
     public function getModelService()
     {
-        return $this->modelService;
+        return $this->repositoryService->getModelService();
     }
 
     public function getModelDataType()
@@ -229,7 +229,7 @@ class DatatableService
         }
 
         // If a column has a relationship associated with it, we do not want to show that field
-        $this->registerService->removeRelationshipField($dataType, 'add');
+        $this->removeRelationshipField($dataType, 'add');
 
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($dataTypeContent);
@@ -366,7 +366,7 @@ class DatatableService
             // }
 
             // If a column has a relationship associated with it, we do not want to show that field
-            $this->registerService->removeRelationshipField($this->dataType, 'browse');
+            $this->removeRelationshipField($this->dataType, 'browse');
 
             if ($this->search->value != '' && $this->search->key && $this->search->filter) {
                 $this->search_filter = ($this->search->filter == 'equals') ? '=' : 'LIKE';

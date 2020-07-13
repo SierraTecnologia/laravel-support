@@ -44,9 +44,9 @@ class ApplicationBuilder extends BuilderAbstract
     {
 
         // dd(
+        //     $this->entity
         //     // $this->entity->system->tables,
         //     // $this->entity->relations,
-        //     $this->entity->relationsMorphs
         //     // $this->entity->relations['trainner_MorphedByMany_account']['relations']
         // );
         $this->builderEloquentModels();

@@ -18,6 +18,8 @@ class SystemMount
             \Audit\AuditProvider::class,
             \Tracking\TrackingProvider::class,
 
+            \Informate\InformateProvider::class,
+            \Populate\PopulateProvider::class,
             \Finder\FinderProvider::class,
             \Casa\CasaProvider::class,
 
@@ -25,6 +27,7 @@ class SystemMount
             // \Gamer\GamerProvider::class,
             
             \Facilitador\FacilitadorProvider::class,
+            \Boravel\BoravelProvider::class,
             \Siravel\SiravelProvider::class,
         ];
     }
@@ -58,6 +61,10 @@ class SystemMount
         return MenuRepository::createFromMultiplosArray(
             collect(
                 $this->getProviders()
+            )->reject(
+                function ($class) {
+                    return !class_exists($class);
+                }
             )->map(
                 function ($class) {
                     return $class::$menuItens;

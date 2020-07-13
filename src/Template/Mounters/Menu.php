@@ -22,6 +22,7 @@ class Menu
     protected $icon = null;
     protected $icon_color = null;
     protected $label_color = null;
+    protected $level = null;
     protected $nivel = null;
 
     protected $url = null;
@@ -152,6 +153,7 @@ class Menu
             'icon_color',
 
             'nivel',
+            'level',
             'order',
         ];
     }
@@ -255,6 +257,15 @@ class Menu
     public function setNivel($value)
     {
         $this->nivel = $value;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+    public function setLevel($value)
+    {
+        $this->level = $value;
     }
 
     public function getOrder()
