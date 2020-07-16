@@ -76,8 +76,8 @@ if (!is_object(Auth::user())) {
 <div class="app-container">
     <div class="fadetoblack visible-xs"></div>
     <div class="row content-container">
-        @include('facilitador::components.dashboard.navbar')
-        @include('facilitador::components.dashboard.sidebar')
+        @include('support::layouts.voyager.dashboard.navbar')
+        @include('support::layouts.voyager.dashboard.sidebar')
         <script>
             (function(){
                     var appContainer = document.querySelector('.app-container'),
