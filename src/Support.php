@@ -26,7 +26,7 @@ use Support\Models\Page;
 use Support\Models\Permission;
 use Support\Models\Post;
 use Support\Models\Role;
-use Support\Models\Setting;
+use Facilitador\Models\Setting;
 use Translation\Models\Translation;
 use Support\Models\User;
 use Translation\Traits\HasTranslations;
@@ -682,11 +682,24 @@ class Support
             $model,
             $is_support
         );
+        $model = str_replace(
+            'App\Http\Controllers\Admin',
+            'App\Models',
+            $model,
+            $is_support
+        );
 
         // Replace non-facilitador controller's with the standard model namespace
-        if (!$is_facilitador) {
+        if (!$is_facilitador && !$is_support && !$is_admin) {
             $namespace = ucfirst(Config::get('application.routes.main'));
             $model = str_replace('App\Http\Controllers\\'.$namespace.'\\', 'App\\', $model);
+        } else {
+            $model = str_replace(
+                'Controller',
+                '',
+                $model,
+                $is_admin
+            );
         }
 
         // Make it singular

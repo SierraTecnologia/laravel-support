@@ -2,7 +2,7 @@
 
 namespace Support\Listeners;
 
-use Facilitador\Events\BreadAdded;
+use Support\Events\BreadAdded;
 use Facilitador\Facades\Facilitador;
 
 class AddBreadPermission

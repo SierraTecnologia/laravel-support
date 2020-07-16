@@ -1,0 +1,18 @@
+-# Holder for the ajax bar, logout, and view public site
+.bottom-nav
+	-# Add AJAX progress indicator
+	!= View::make('support::layouts.decoy.sidebar._progress')->render()
+
+	.controls
+		.left
+			%a.logout(href=route('facilitador.account@logout'))
+				%span.glyphicon.glyphicon-log-out
+				!= __('facilitador::sidebar.bottom.logout')
+			.subtitle
+				%span.glyphicon.glyphicon-heart
+				%a(href="http://facilitador.sierratecnologia.com" target="_blank") Sitec 5.10
+				by
+				%a(href="http://www.sierratecnologia.com" target="_blank") SierraTecnologia
+		%a.right(href="/")
+			.glyphicon.glyphicon-globe
+			.subtitle!= __('facilitador::sidebar.bottom.open_site')

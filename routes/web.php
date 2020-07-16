@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Str;
-use Facilitador\Events\Routing;
-use Facilitador\Events\RoutingAdmin;
-use Facilitador\Events\RoutingAdminAfter;
-use Facilitador\Events\RoutingAfter;
+use Support\Events\Routing;
+use Support\Events\RoutingAdmin;
+use Support\Events\RoutingAdminAfter;
+use Support\Events\RoutingAfter;
 use Facilitador\Facades\Facilitador;
 
 // Public routes

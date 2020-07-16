@@ -6,7 +6,7 @@ return [
     'dir' => 'siravel',
 
     // The layout to use
-    'layout' => 'facilitador::layouts.decoy.default',
+    'layout' => 'support::layouts.decoy.default',
 
 
     // // Auth guard and policy to use

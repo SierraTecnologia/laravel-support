@@ -96,7 +96,8 @@ class Localize
         }
 
         // The model was explicitly disabled
-        if ($class::$localizable === false ) { return true;
+        if (!property_exists($class, 'localizable') || $class::$localizable === false ) {
+            return true;
         }
 
         // Auto localize is turned on and we're on a child model
@@ -108,7 +109,7 @@ class Localize
         // If auto-localizeable is turned off and this model doesn't have it
         // turned on
         if (!\Illuminate\Support\Facades\Config::get('painel.core.auto_localize_root_models')
-            && !$class::$localizable
+            && property_exists($class, 'localizable') && !$class::$localizable
         ) { return true;
         }
 

@@ -13,9 +13,9 @@ use Support\Components\Database\Schema\Identifier;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
-use Facilitador\Events\TableAdded;
-use Facilitador\Events\TableDeleted;
-use Facilitador\Events\TableUpdated;
+use Support\Events\TableAdded;
+use Support\Events\TableDeleted;
+use Support\Events\TableUpdated;
 use Facilitador\Facades\Facilitador;
 
 class FacilitadorDatabaseController extends Controller

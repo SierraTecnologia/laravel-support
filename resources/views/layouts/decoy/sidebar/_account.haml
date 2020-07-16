@@ -1,0 +1,11 @@
+-$auth = app('facilitador.user')
+.top
+	%a.dashboard(href=$auth->getUserUrl())
+		%img.gravatar(src=$auth->getUserPhoto())
+		%span.name
+			-if(($name = $auth->getShortName()) == "Default")
+				!= __('facilitador::sidebar.account.welcome')
+			-else
+				!= __('facilitador::sidebar.account.welcome_admin', ['name' => $name])
+	%a.btn.outline.close-nav
+		%span.glyphicon.close.glyphicon-remove

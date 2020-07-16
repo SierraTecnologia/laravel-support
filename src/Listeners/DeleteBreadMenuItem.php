@@ -2,7 +2,7 @@
 
 namespace Support\Listeners;
 
-use Facilitador\Events\BreadDeleted;
+use Support\Events\BreadDeleted;
 use Facilitador\Facades\Facilitador;
 
 class DeleteBreadMenuItem

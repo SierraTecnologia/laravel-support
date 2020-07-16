@@ -1,0 +1,40 @@
+!!!
+%html
+	%head
+
+		-# Title
+		!= Facilitador::title()
+
+		-# Boilerplate meta tags
+		%meta(charset='utf-8')
+		%meta(http-equiv='x-ua-compatible' content='ie=edge')
+		%meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		-# Don't index the admin
+		%meta(name='robots' content='noindex')
+
+		-# CSRF token for lifting out by JS for AJAX requests
+		%meta(name='csrf-token' content=csrf_token())
+
+		-# Stylesheets
+		%link(rel="stylesheet" href=config('site.core.stylesheet') type="text/css")
+
+		-# Passthrough javascript translations
+		- $localization = json_encode(__('facilitador::javascript'), JSON_HEX_APOS)
+		!= "<script>var LOCALIZATIONS = JSON.parse('$localization');</script>";
+
+	%body(class=Facilitador::bodyClass())
+
+		-# Sidebar
+		!= view('support::layouts.decoy.sidebar._sidebar')
+
+		-# Header
+		!= view('support::layouts.decoy._header', $__data)
+		!= view('support::layouts.decoy._breadcrumbs', $__data)
+		!= view('support::layouts.decoy._notifications', $__data)
+
+		-# The main page content
+		#main!= $content
+
+		-# JS
+		%script(src=config('site.core.script') type="text/javascript")

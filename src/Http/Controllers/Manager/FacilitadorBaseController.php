@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Support\Components\Database\Schema\SchemaManager;
-use Facilitador\Events\BreadDataAdded;
-use Facilitador\Events\BreadDataDeleted;
-use Facilitador\Events\BreadDataRestored;
-use Facilitador\Events\BreadDataUpdated;
-use Facilitador\Events\BreadImagesDeleted;
+use Support\Events\BreadDataAdded;
+use Support\Events\BreadDataDeleted;
+use Support\Events\BreadDataRestored;
+use Support\Events\BreadDataUpdated;
+use Support\Events\BreadImagesDeleted;
 use Facilitador\Facades\Facilitador;
 
 class FacilitadorBaseController extends Controller

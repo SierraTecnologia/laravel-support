@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Validator;
 use Support\Facades\Support as SupportFacade;
 use Support\Elements\FormFields\MultipleImagesWithAttrsFormField;
 use Support\Elements\FormFields\KeyValueJsonFormField;
-use Facilitador\Events\FormFieldsRegistered;
+use Support\Events\FormFieldsRegistered;
 use Support\Elements\FormFields\After\DescriptionHandler;
 use Support\Support;
 
@@ -176,14 +176,6 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishAssets();
         $this->publishConfigs();
 
-        /**
-         * Support Routes
-         */
-        Route::group([
-            'namespace' => '\Support\Http\Controllers',
-        ], function (/**$router**/) {
-            require __DIR__.'/../routes/web.php';
-        });
 
 
         /**

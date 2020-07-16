@@ -1,4 +1,4 @@
-@extends('facilitador::layouts.facilitador.master')
+@extends('support::layouts.facilitador.master')
 @if($db->action == 'update')
     @section('page_title', __('facilitador::database.editing_table', ['table' => $db->table->name]))
 @else

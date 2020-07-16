@@ -1,0 +1,66 @@
+-$admin = app('facilitador.user')
+-$pages = (new Support\Template\Layout\Nav)->generate();
+.navigation
+	.top-level-nav
+		-if(is_array($pages))
+			-foreach($pages as $page)
+				-if (is_string($page))
+					.main-nav
+						=$page
+
+				-elseif(!empty($page->children))
+					.main-nav(class=$page->active?'active open':null)
+						%a.top-level.parent
+							-if(isset($page->icon) && $page->icon)
+								%span.glyphicon(class="glyphicon-#{$page->icon}")
+							!=$page->label
+
+						.subnav
+							-if(isset($page->children) && is_array($page->children))
+								-foreach($page->children as $child)
+									-if (!empty($child->divider))
+									-elseif(isset($child->url) && $admin->can('read', $child->url))
+										%a(href=$child->url class=$child->active?'active':null)
+											-if($child->icon != 'default')
+												%span.glyphicon(class="glyphicon-#{$child->icon}")
+											=$child->label
+
+				-elseif (!isset($page->url))
+					.main-nav
+						=$page->label
+
+				-elseif ($admin->can('read', $page->url))
+					.main-nav(class=$page->active?'active':null)
+						%a.top-level(href=$page->url)
+							-if(isset($page->icon) && $page->icon)
+								%span.glyphicon(class="glyphicon-#{$page->icon}")
+							!=$page->label
+
+		-# Settings folder
+		:php
+			$open = in_array(Request::segment(2), [
+				'admins',
+				'commands',
+				'workers',
+				'changes'
+			]);
+		.main-nav(class=$open?'active open':null)
+			%a.top-level.parent
+				%span.glyphicon.glyphicon-cog
+				!= __('facilitador::sidebar.nav.settings')
+
+			.subnav
+
+				-if($admin->can('read', 'admins'))
+					%a(href=FacilitadorURL::action('Facilitador\\Http\\Controllers\\Admin\\Admins@index') class=(Request::segment(2)=='admins'?'active':null))!= __('facilitador::sidebar.nav.admins')
+				-else
+					%a(href=$admin->getUserUrl() class=(Request::segment(2)=='admins'?'active':null))!= __('facilitador::sidebar.nav.account')
+
+				-if($admin->can('read', 'changes'))
+					%a(href=FacilitadorURL::action('Facilitador\\Http\\Controllers\\Admin\\Changes@index') class=(Request::segment(2)=='changes'?'active':null))!= __('facilitador::sidebar.nav.changes')
+
+				-if($admin->can('read', 'commands'))
+					%a(href=route('facilitador.commands') class=(Request::segment(2)=='commands'?'active':null))!= __('facilitador::sidebar.nav.commands')
+
+				-if($admin->can('read', 'workers') && count(Support\Models\Worker::all()))
+					%a(href=route('facilitador.workers')  class=(Request::segment(2)=='workers'?'active':null))!= __('facilitador::sidebar.nav.workers')

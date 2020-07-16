@@ -3,7 +3,7 @@
 namespace Support\Listeners;
 
 use Cache;
-use Facilitador\Events\SettingUpdated;
+use Support\Events\SettingUpdated;
 
 class ClearCachedSettingValue
 {
