@@ -7,7 +7,7 @@ namespace Support\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Facilitador\Support\Result\RelationshipResult;
+use Support\Support\Result\RelationshipResult;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Support\Models\Application\DataType;
 use Illuminate\Pagination\LengthAwarePaginator;

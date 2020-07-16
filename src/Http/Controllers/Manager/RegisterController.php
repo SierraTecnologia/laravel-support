@@ -8,7 +8,7 @@ use Population\Models\Components\Code\Commit;
 use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
 use Support\Http\Requests\ModelUpdateRequest;
-use Facilitador;
+use Support;
 
 class RegisterController extends Controller
 {

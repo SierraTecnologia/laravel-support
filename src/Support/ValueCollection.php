@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Facilitador\Support;
+namespace Support\Support;
 
 use Illuminate\Database\Eloquent\Model;
 use Facilitador\Models\Attribute;

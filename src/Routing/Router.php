@@ -47,21 +47,21 @@ class Router
          * Facilitador Routes
          */
         Route::group([
-            'namespace' => $namespacePrefix, //'\Facilitador\Http\Controllers',
+            'namespace' => '\Support\Http\Controllers', //$namespacePrefix, //
         ], function (/**$router**/) {
             require __DIR__.'/../../routes/web.php';
         });
 
 
 
-        // Public routes
-        Route::group([
-            'prefix' => $this->dir,
-            'middleware' => 'facilitador.public',
-        ], function () {
-            $this->registerLogin();
-            $this->registerResetPassword();
-        });
+        // // Public routes
+        // Route::group([
+        //     'prefix' => $this->dir,
+        //     'middleware' => 'facilitador.public',
+        // ], function () {
+        //     $this->registerLogin();
+        //     $this->registerResetPassword();
+        // });
 
         // Routes that don't require auth or CSRF
         Route::group([
@@ -85,40 +85,40 @@ class Router
         });
     }
 
-    /**
-     * Account routes
-     *
-     * @return void
-     */
-    public function registerLogin()
-    {
-        Route::get('/', [
-            'as' => 'facilitador.account@login',
-            'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@showLoginForm',
-        ]);
+    // /**
+    //  * Account routes
+    //  *
+    //  * @return void
+    //  */
+    // public function registerLogin()
+    // {
+    //     Route::get('/', [
+    //         'as' => 'facilitador.account@login',
+    //         'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@showLoginForm',
+    //     ]);
 
-        Route::post('/', [
-            'as' => 'facilitador.account@postLogin',
-            'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@login',
-        ]);
+    //     Route::post('/', [
+    //         'as' => 'facilitador.account@postLogin',
+    //         'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@login',
+    //     ]);
 
-        Route::get('logout', [
-            'as' => 'facilitador.account@logout',
-            'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@logout',
-        ]);
+    //     Route::get('logout', [
+    //         'as' => 'facilitador.account@logout',
+    //         'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@logout',
+    //     ]);
 
-        /**
-         * Facilitador Admin
-         */
-        Route::get('login', [
-            'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@login',
-            'as' => 'facilitador.login'
-        ]);
-        Route::post('login', [
-            'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@postLogin',
-            'as' => 'facilitador.postlogin'
-        ]);
-    }
+    //     /**
+    //      * Facilitador Admin
+    //      */
+    //     Route::get('login', [
+    //         'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@login',
+    //         'as' => 'facilitador.login'
+    //     ]);
+    //     Route::post('login', [
+    //         'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@postLogin',
+    //         'as' => 'facilitador.postlogin'
+    //     ]);
+    // }
 
     /**
      * Reset password routes

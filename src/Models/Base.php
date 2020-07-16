@@ -5,7 +5,7 @@ namespace Support\Models;
 use DB;
 use App;
 use URL;
-use Facilitador;
+use Support;
 use Event;
 use Config;
 use Session;

@@ -4,7 +4,7 @@ namespace Support\Traits\Controllers;
 
 // Deps
 use Carbon\Carbon;
-use Facilitador;
+use Support;
 use League\Csv\Writer;
 use SplTempFileObject;
 

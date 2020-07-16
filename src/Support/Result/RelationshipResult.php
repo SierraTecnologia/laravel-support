@@ -1,6 +1,6 @@
 <?php
 
-namespace Facilitador\Support\Result;
+namespace Support\Support\Result;
 
 use Support\Models\Application\DataRelationship;
 use Support\Models\Application\DataType;

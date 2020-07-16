@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property      \Carbon\Carbon|null                                                               $created_at
  * @property      \Carbon\Carbon|null                                                               $updated_at
  * @property      array                                                                             $entities
- * @property-read \Facilitador\Support\ValueCollection|\Facilitador\Models\Value[] $values
+ * @property-read \Support\Support\ValueCollection|\Facilitador\Models\Value[] $values
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute ordered($direction = 'asc')
  * @method static \Illuminate\Database\Eloquent\Builder|\Facilitador\Models\Attribute whereCreatedAt($value)

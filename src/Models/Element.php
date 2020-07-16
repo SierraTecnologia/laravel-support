@@ -8,7 +8,7 @@ use Support\Traits\Models\HasImages;
 use Bkwld\Library\Utils\File;
 use Config;
 use DB;
-use Facilitador;
+use Support;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;

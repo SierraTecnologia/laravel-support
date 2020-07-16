@@ -11,15 +11,22 @@ use Support\Components\Coders\Model\Factory as ModelFactory;
 use Config;
 use Support\Traits\Providers\ConsoleTools;
 use Log;
+use Illuminate\Support\Str;
 use App;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use SierraTecnologia\Crypto\Services\Crypto;
 
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
 use Support\Services\ModelService;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +37,9 @@ use Illuminate\Support\Facades\Validator;
 use Support\Facades\Support as SupportFacade;
 use Support\Elements\FormFields\MultipleImagesWithAttrsFormField;
 use Support\Elements\FormFields\KeyValueJsonFormField;
+use Facilitador\Events\FormFieldsRegistered;
+use Support\Elements\FormFields\After\DescriptionHandler;
+use Support\Support;
 
 
 // class CodersServiceProvider extends ServiceProvider
@@ -158,7 +168,7 @@ class SupportServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Router $router, Dispatcher $event)
     {
         $this->loadTranslations();
         $this->loadViews();
@@ -172,7 +182,7 @@ class SupportServiceProvider extends ServiceProvider
         Route::group([
             'namespace' => '\Support\Http\Controllers',
         ], function (/**$router**/) {
-            require __DIR__.'/Routes/web.php';
+            require __DIR__.'/../routes/web.php';
         });
 
 
@@ -231,23 +241,6 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerModelFactory();
-
-        $this->loadCommands();
-        $this->loadMigrations();
-        $this->loadConfigs();
-
-        $this->app->singleton(
-            \Support\Patterns\Parser\ComposerParser::class, function () {
-                return new \Support\Patterns\Parser\ComposerParser();
-            }
-        );
-
-        $this->app->singleton(
-            \Support\Services\ApplicationService::class, function () {
-                return new \Support\Services\ApplicationService();
-            }
-        );
 
 
         /**
@@ -274,21 +267,36 @@ class SupportServiceProvider extends ServiceProvider
 
         // ExtendedBreadFormFieldsServiceProvider
 
-        Support::addFormField(KeyValueJsonFormField::class);
-        Support::addFormField(MultipleImagesWithAttrsFormField::class);
+        SupportFacade::addFormField(KeyValueJsonFormField::class);
+        SupportFacade::addFormField(MultipleImagesWithAttrsFormField::class);
 
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorBaseController',
-            'ExtendedBreadFormFields\Controllers\ExtendedBreadFormFieldsController'
+            'Support\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsController'
         );
 
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorMediaController',
-            'ExtendedBreadFormFields\Controllers\ExtendedBreadFormFieldsMediaController'
+            'Support\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsMediaController'
         );
 
+        $this->registerModelFactory();
 
-*/
+        $this->loadCommands();
+        $this->loadMigrations();
+        $this->loadConfigs();
+
+        $this->app->singleton(
+            \Support\Patterns\Parser\ComposerParser::class, function () {
+                return new \Support\Patterns\Parser\ComposerParser();
+            }
+        );
+
+        $this->app->singleton(
+            \Support\Services\ApplicationService::class, function () {
+                return new \Support\Services\ApplicationService();
+            }
+        );
 
         $this->loadHelpers();
 
@@ -317,7 +325,7 @@ class SupportServiceProvider extends ServiceProvider
         // Register alerts
         View::composer(
             'facilitador::*', function ($view) {
-                $view->with('alerts', FacilitadorFacade::alerts());
+                $view->with('alerts', SupportFacade::alerts());
             }
         );
     }
@@ -356,7 +364,7 @@ class SupportServiceProvider extends ServiceProvider
                     ->title(__('facilitador::error.symlink_missing_title'))
                     ->text(__('facilitador::error.symlink_missing_text'))
                     ->button(__('facilitador::error.symlink_missing_button'), '?fix-missing-storage-symlink=1');
-                FacilitadorFacade::addAlert($alert);
+                SupportFacade::addAlert($alert);
             }
         }
     }
@@ -375,7 +383,7 @@ class SupportServiceProvider extends ServiceProvider
                 ->text(__('facilitador::error.symlink_failed_text'));
         }
 
-        FacilitadorFacade::addAlert($alert);
+        SupportFacade::addAlert($alert);
     }
 
     /**
@@ -785,10 +793,10 @@ class SupportServiceProvider extends ServiceProvider
         foreach ($formFields as $formField) {
             $class = Str::studly("{$formField}_handler");
 
-            FacilitadorFacade::addFormField("Support\\Elements\\FormFields\\{$class}");
+            SupportFacade::addFormField("Support\\Elements\\FormFields\\{$class}");
         }
 
-        FacilitadorFacade::addAfterFormField(DescriptionHandler::class);
+        SupportFacade::addAfterFormField(DescriptionHandler::class);
 
         event(new FormFieldsRegistered($formFields));
     }

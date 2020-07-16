@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Facilitador\Support;
+namespace Support\Support;
 
 use Closure;
 use Facilitador\Models\Attribute;
