@@ -254,7 +254,7 @@ class DatatableService
         $this->searchNames = [];
         if ($this->dataType->server_side) {
             $searchable = SchemaManager::describeTable(app($this->dataType->model_name)->getTable())->pluck('name')->toArray();
-            $dataRow = Facilitador::model('DataRow')->whereDataTypeId($this->dataType->id)->get();
+            $dataRow = Support::model('DataRow')->whereDataTypeId($this->dataType->id)->get();
             foreach ($searchable as $key => $value) {
                 $displayName = $dataRow->where('field', $value)->first()->getTranslatedAttribute('display_name');
                 $this->searchNames[$value] = $displayName ?: ucwords(str_replace('_', ' ', $value));
@@ -285,7 +285,7 @@ class DatatableService
         // Actions
         $actions = [];
         if (!empty($this->results->first())) {
-            foreach (Facilitador::actions() as $action) {
+            foreach (Support::actions() as $action) {
                 $action = new $action($this->dataType, $this->results->first());
 
                 if ($action->shouldActionDisplayOnDataType()) {

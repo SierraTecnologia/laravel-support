@@ -153,14 +153,14 @@ if (! function_exists('array_filter_recursive')) {
 if (!function_exists('setting')) {
     function setting($key, $default = null)
     {
-        return Facilitador\Facades\Facilitador::setting($key, $default);
+        return Facilitador\Facades\Support::setting($key, $default);
     }
 }
 
 if (!function_exists('menu')) {
     function menu($menuName, $type = null, array $options = [])
     {
-        return Facilitador\Facades\Facilitador::model('Menu')->display($menuName, $type, $options);
+        return Facilitador\Facades\Support::model('Menu')->display($menuName, $type, $options);
     }
 }
 

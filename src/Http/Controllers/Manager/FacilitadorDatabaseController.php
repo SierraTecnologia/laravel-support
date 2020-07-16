@@ -24,7 +24,7 @@ class FacilitadorDatabaseController extends Controller
     {
         // $this->authorize('browse_database');
 
-        $dataTypes = Facilitador::model('DataType')->select('id', 'name', 'slug')->get()->keyBy('name')->toArray();
+        $dataTypes = Support::model('DataType')->select('id', 'name', 'slug')->get()->keyBy('name')->toArray();
 
         $tables = array_map(
             function ($table) use ($dataTypes) {
@@ -41,7 +41,7 @@ class FacilitadorDatabaseController extends Controller
             }, SchemaManager::listTableNames()
         );
 
-        return Facilitador::view('facilitador::tools.database.index')->with(compact('dataTypes', 'tables'));
+        return Support::view('facilitador::tools.database.index')->with(compact('dataTypes', 'tables'));
     }
 
     /**
@@ -55,7 +55,7 @@ class FacilitadorDatabaseController extends Controller
 
         $db = $this->prepareDbManager('create');
 
-        return Facilitador::view('facilitador::tools.database.edit-add', compact('db'));
+        return Support::view('facilitador::tools.database.edit-add', compact('db'));
     }
 
     /**
@@ -135,7 +135,7 @@ class FacilitadorDatabaseController extends Controller
 
         $db = $this->prepareDbManager('update', $table);
 
-        return Facilitador::view('facilitador::tools.database.edit-add', compact('db'));
+        return Support::view('facilitador::tools.database.edit-add', compact('db'));
     }
 
     /**
@@ -250,7 +250,7 @@ class FacilitadorDatabaseController extends Controller
         // $this->authorize('browse_database');
 
         $additional_attributes = [];
-        $model_name = Facilitador::model('DataType')->where('name', $table)->pluck('model_name')->first();
+        $model_name = Support::model('DataType')->where('name', $table)->pluck('model_name')->first();
         if (isset($model_name)) {
             $model = app($model_name);
             if (isset($model->additional_attributes)) {

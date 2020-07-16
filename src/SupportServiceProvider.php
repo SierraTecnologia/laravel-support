@@ -27,6 +27,10 @@ use Illuminate\Support\ServiceProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Support\Facades\Support as SupportFacade;
+use Support\Elements\FormFields\MultipleImagesWithAttrsFormField;
+use Support\Elements\FormFields\KeyValueJsonFormField;
+
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -210,6 +214,14 @@ class SupportServiceProvider extends ServiceProvider
             */
         // Config Former
         $this->configureFormer();
+
+        $this->registerViewComposers();
+
+        $event->listen(
+            'facilitador.alerts.collecting', function () {
+                $this->addStorageSymlinkAlert();
+            }
+        );
     }
 
     /**
@@ -251,12 +263,19 @@ class SupportServiceProvider extends ServiceProvider
             }
         );
 
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Support', SupportFacade::class);
 
-        /**
-        //ExtendedBreadFormFieldsServiceProvider
+        $this->app->singleton(
+            'support', function () {
+                return new Support();
+            }
+        );
 
-        Facilitador::addFormField(KeyValueJsonFormField::class);
-        Facilitador::addFormField(MultipleImagesWithAttrsFormField::class);
+        // ExtendedBreadFormFieldsServiceProvider
+
+        Support::addFormField(KeyValueJsonFormField::class);
+        Support::addFormField(MultipleImagesWithAttrsFormField::class);
 
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorBaseController',
@@ -282,11 +301,96 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadLocalExternalPackages();
 
 
+        $this->registerFormFields();
+        $this->registerAlertComponents();
 
     }
 
 
 
+
+    /**
+     * Register view composers.
+     */
+    protected function registerViewComposers()
+    {
+        // Register alerts
+        View::composer(
+            'facilitador::*', function ($view) {
+                $view->with('alerts', FacilitadorFacade::alerts());
+            }
+        );
+    }
+
+    /**
+     * Add storage symlink alert.
+     */
+    protected function addStorageSymlinkAlert()
+    {
+        if (app('router')->current() !== null) {
+            $currentRouteAction = app('router')->current()->getAction();
+        } else {
+            $currentRouteAction = null;
+        }
+        $routeName = is_array($currentRouteAction) ? Arr::get($currentRouteAction, 'as') : null;
+
+        if ($routeName != 'facilitador.dashboard') {
+            return;
+        }
+
+        $storage_disk = (!empty(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))) ? \Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk') : 'public';
+
+        if (request()->has('fix-missing-storage-symlink')) {
+            if (file_exists(public_path('storage'))) {
+                if (@readlink(public_path('storage')) == public_path('storage')) {
+                    rename(public_path('storage'), 'storage_old');
+                }
+            }
+
+            if (!file_exists(public_path('storage'))) {
+                $this->fixMissingStorageSymlink();
+            }
+        } elseif ($storage_disk == 'public') {
+            if (!file_exists(public_path('storage')) || @readlink(public_path('storage')) == public_path('storage')) {
+                $alert = (new Alert('missing-storage-symlink', 'warning'))
+                    ->title(__('facilitador::error.symlink_missing_title'))
+                    ->text(__('facilitador::error.symlink_missing_text'))
+                    ->button(__('facilitador::error.symlink_missing_button'), '?fix-missing-storage-symlink=1');
+                FacilitadorFacade::addAlert($alert);
+            }
+        }
+    }
+
+    protected function fixMissingStorageSymlink()
+    {
+        app('files')->link(storage_path('app/public'), public_path('storage'));
+
+        if (file_exists(public_path('storage'))) {
+            $alert = (new Alert('fixed-missing-storage-symlink', 'success'))
+                ->title(__('facilitador::error.symlink_created_title'))
+                ->text(__('facilitador::error.symlink_created_text'));
+        } else {
+            $alert = (new Alert('failed-fixing-missing-storage-symlink', 'danger'))
+                ->title(__('facilitador::error.symlink_failed_title'))
+                ->text(__('facilitador::error.symlink_failed_text'));
+        }
+
+        FacilitadorFacade::addAlert($alert);
+    }
+
+    /**
+     * Register alert components.
+     */
+    protected function registerAlertComponents()
+    {
+        $components = ['title', 'text', 'button'];
+
+        foreach ($components as $component) {
+            $class = 'Support\\Elements\\Alert\\'.ucfirst(Str::camel($component)).'Component';
+
+            $this->app->bind("facilitador.alert.components.{$component}", $class);
+        }
+    }
 
 
 
@@ -650,5 +754,42 @@ class SupportServiceProvider extends ServiceProvider
                 $this->app->register(IdeHelperServiceProvider::class);
             }
         }
+    }
+    protected function registerFormFields()
+    {
+        $formFields = [
+            'checkbox',
+            'multiple_checkbox',
+            'color',
+            'date',
+            'file',
+            'image',
+            'multiple_images',
+            'media_picker',
+            'number',
+            'password',
+            'radio_btn',
+            'rich_text_box',
+            'code_editor',
+            'markdown_editor',
+            'select_dropdown',
+            'select_multiple',
+            'text',
+            'text_area',
+            'time',
+            'timestamp',
+            'hidden',
+            'coordinates',
+        ];
+
+        foreach ($formFields as $formField) {
+            $class = Str::studly("{$formField}_handler");
+
+            FacilitadorFacade::addFormField("Support\\Elements\\FormFields\\{$class}");
+        }
+
+        FacilitadorFacade::addAfterFormField(DescriptionHandler::class);
+
+        event(new FormFieldsRegistered($formFields));
     }
 }

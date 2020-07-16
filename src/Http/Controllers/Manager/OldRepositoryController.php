@@ -5,8 +5,8 @@ namespace Support\Http\Controllers\Manager;
 use Illuminate\Http\Request;
 use Facilitador\Services\FacilitadorService;
 use Support\Services\RepositoryService;
-use Facilitador\Http\Requests\ModelCreateRequest;
-use Facilitador\Http\Requests\ModelSearchRequest;
+use Support\Http\Requests\ModelCreateRequest;
+use Support\Http\Requests\ModelSearchRequest;
 
 class OldRepositoryController extends Controller
 {
@@ -44,7 +44,7 @@ class OldRepositoryController extends Controller
     /**
      * Display a listing of the resource searched.
      *
-     * @param  \Facilitador\Http\Requests\ModelSearchRequest $request
+     * @param  \Support\Http\Requests\ModelSearchRequest $request
      * @return \Illuminate\Http\Response
      */
     public function search(ModelSearchRequest $request)
@@ -75,7 +75,7 @@ class OldRepositoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Facilitador\Http\Requests\ModelCreateRequest $request
+     * @param  \Support\Http\Requests\ModelCreateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(ModelCreateRequest $request)

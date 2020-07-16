@@ -143,7 +143,7 @@ abstract class Base extends Model //Ardent
      */
     public function shouldLogChange($action)
     {
-        return Facilitador::handling()
+        return Support::handling()
             || (App::runningInConsole() && request()->path() == '/');
     }
 
@@ -600,7 +600,7 @@ abstract class Base extends Model //Ardent
     {
         $associate = false;
         // @todo migrar isso pra ca pro support
-        $associate = Facilitador::getInfluencia();
+        $associate = Support::getInfluencia();
 
         $modelFind = false;
         $keyName = (new static)->getKeyName();
@@ -716,7 +716,7 @@ abstract class Base extends Model //Ardent
      */
     public function hasGetMutator($key)
     {
-        if (!Facilitador::handling()
+        if (!Support::handling()
             || !array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
@@ -734,7 +734,7 @@ abstract class Base extends Model //Ardent
      */
     public function hasSetMutator($key)
     {
-        if (!Facilitador::handling()
+        if (!Support::handling()
             || !array_key_exists($key, $this->attributes)
             || in_array($key, $this->admin_mutators)
         ) {
@@ -769,7 +769,7 @@ abstract class Base extends Model //Ardent
          */
         // Remove any settings that affect JSON conversion (visible / hidden) and
         // mass assignment protection (fillable / guarded) while in the admin
-        if (Facilitador::handling()) {
+        if (Support::handling()) {
             $this->visible = $this->hidden = $this->fillable = $this->guarded = [];
         }
 
@@ -946,7 +946,7 @@ abstract class Base extends Model //Ardent
      */
     public function scopeLocalize($query, $locale = null)
     {
-        return $query->where('locale', $locale ?: Facilitador::locale());
+        return $query->where('locale', $locale ?: Support::locale());
     }
 
     /**

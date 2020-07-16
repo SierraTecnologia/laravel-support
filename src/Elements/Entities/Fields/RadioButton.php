@@ -3,7 +3,7 @@
 namespace Support\Elements\Entities\Fields;
 
 use Support\Elements\Entities\Fields\Field;
-use Facilitador\Http\Requests\FacilitadorRequest as NovaRequest;
+use Support\Http\Requests\FacilitadorRequest as NovaRequest;
 
 class RadioButton extends Field
 {

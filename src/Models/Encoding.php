@@ -134,7 +134,7 @@ class Encoding extends Base
      * Get an instance of the configured encoding provider
      *
      * @param  Facilitador\Models\Encoding
-     * @return Facilitador\Input\EncodingProviders\EncodingProvider
+     * @return Support\Template\Input\EncodingProviders\EncodingProvider
      */
     public static function encoder(Encoding $model = null)
     {

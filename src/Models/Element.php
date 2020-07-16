@@ -64,7 +64,7 @@ class Element extends Base
         // default.
         static::creating(
             function (Element $el) {
-                $el->setAttribute('locale', request()->segment(3) ?: Facilitador::defaultLocale());
+                $el->setAttribute('locale', request()->segment(3) ?: Support::defaultLocale());
             }
         );
 

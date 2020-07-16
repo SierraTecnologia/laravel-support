@@ -7,7 +7,7 @@ use Facilitador\Services\FacilitadorService;
 use Population\Models\Components\Code\Commit;
 use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
-use Facilitador\Http\Requests\ModelUpdateRequest;
+use Support\Http\Requests\ModelUpdateRequest;
 
 class OldRegisterController extends Controller
 {
@@ -64,7 +64,7 @@ class OldRegisterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Facilitador\Http\Requests\ModelUpdateRequest $request
+     * @param  \Support\Http\Requests\ModelUpdateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(ModelUpdateRequest $request)

@@ -37,7 +37,7 @@ class RepositoryController extends Controller
         $slug = $this->repositoryService->getSlug();
 
         // GET THE DataType based on the slug
-        if (!is_object($dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first())) {
+        if (!is_object($dataType = Support::model('DataType')->where('slug', '=', $slug)->first())) {
             throw new Exception;
         }
 
@@ -68,7 +68,7 @@ class RepositoryController extends Controller
             $view = "facilitador::cruds.$slug.browse";
         }
 
-        return Facilitador::view(
+        return Support::view(
             $view, compact(
                 'actions',
                 'dataType',
@@ -115,7 +115,7 @@ class RepositoryController extends Controller
         if (view()->exists("facilitador::cruds.$slug.edit-add")) {
             $view = "facilitador::cruds.$slug.edit-add";
         }
-        return Facilitador::view(
+        return Support::view(
             $view, compact(
                 'dataType',
                 'dataTypeContent',
@@ -135,7 +135,7 @@ class RepositoryController extends Controller
     {
         $slug = $this->repositoryService->getSlug();
 
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('add', app($dataType->model_name));
@@ -256,7 +256,7 @@ class RepositoryController extends Controller
     {
         $slug = $this->repositoryService->getSlug();
 
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('edit', app($dataType->model_name));
@@ -280,7 +280,7 @@ class RepositoryController extends Controller
 
         $display_column = $dataType->order_display_column;
 
-        $dataRow = Facilitador::model('DataRow')->whereDataTypeId($dataType->id)->whereField($display_column)->first();
+        $dataRow = Support::model('DataRow')->whereDataTypeId($dataType->id)->whereField($display_column)->first();
 
         $view = 'facilitador::cruds.bread.order';
 
@@ -288,7 +288,7 @@ class RepositoryController extends Controller
             $view = "facilitador::cruds.$slug.order";
         }
 
-        return Facilitador::view(
+        return Support::view(
             $view, compact(
                 'dataType',
                 'display_column',
@@ -302,7 +302,7 @@ class RepositoryController extends Controller
     {
         $slug = $this->repositoryService->getSlug();
 
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('edit', app($dataType->model_name));
@@ -325,7 +325,7 @@ class RepositoryController extends Controller
     public function action(Request $request)
     {
         $slug = $this->repositoryService->getSlug();
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
         $action = new $request->action($dataType, null);
 
@@ -345,7 +345,7 @@ class RepositoryController extends Controller
         $page = $request->input('page');
         $on_page = 50;
         $search = $request->input('search', false);
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
         $rows = $request->input('method', 'add') == 'add' ? $dataType->addRows : $dataType->editRows;
         foreach ($rows as $key => $row) {

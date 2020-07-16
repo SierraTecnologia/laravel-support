@@ -8,7 +8,7 @@ use Facilitador\Events\RoutingAfter;
 use Facilitador\Facades\Facilitador;
 
 // Route::group(['prefix' => 'facilitador'], function () {
-//     Facilitador::routes();
+//     Support::routes();
 // });
 
 /*

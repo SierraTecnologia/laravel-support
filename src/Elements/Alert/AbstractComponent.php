@@ -2,7 +2,7 @@
 
 namespace Support\Elements\Alert;
 
-use Facilitador\Alert;
+use Support\Alert;
 
 abstract class AbstractComponent implements ComponentInterface
 {

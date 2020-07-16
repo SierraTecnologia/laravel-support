@@ -5,7 +5,7 @@ namespace Support\Elements\Entities\Fields;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\File;
-use Facilitador\Http\Requests\FacilitadorRequest as NovaRequest;
+use Support\Http\Requests\FacilitadorRequest as NovaRequest;
 
 class SelectAutoCompleteController extends Controller
 {

@@ -5,7 +5,7 @@
         @else
             {!! __('facilitador::theme.footer_copyright') !!} <a href="http://thecontrolgroup.com" target="_blank">The Control Group</a>
         @endif
-        @php $version = Facilitador::getVersion(); @endphp
+        @php $version = Support::getVersion(); @endphp
         @if (!empty($version))
             - {{ $version }}
         @endif

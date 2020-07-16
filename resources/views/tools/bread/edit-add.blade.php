@@ -301,7 +301,7 @@
                                 @endphp
 
                                 @if(isset($dataType->id))
-                                    <?php $dataRow = Facilitador::model('DataRow')->where('data_type_id', '=', $dataType->id)->where('field', '=', $data['field'])->first(); ?>
+                                    <?php $dataRow = Support::model('DataRow')->where('data_type_id', '=', $dataType->id)->where('field', '=', $data['field'])->first(); ?>
                                 @endif
 
                                 <div class="row row-dd">
@@ -357,7 +357,7 @@
                                                    name="field_input_type_{{ $data['field'] }}">
                                         @else
                                             <select name="field_input_type_{{ $data['field'] }}">
-                                                @foreach (Facilitador::formFields() as $formField)
+                                                @foreach (Support::formFields() as $formField)
                                                     @php
                                                     $selected = (isset($dataRow->type) && $formField->getCodename() == $dataRow->type) || (!isset($dataRow->type) && $formField->getCodename() == 'text');
                                                     @endphp

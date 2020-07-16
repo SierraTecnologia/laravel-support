@@ -59,7 +59,7 @@ class DataType extends Model implements EloquentInterface
 
     public function rows()
     {
-        return $this->hasMany(Facilitador::modelClass('DataRow'))->orderBy('order');
+        return $this->hasMany(Support::modelClass('DataRow'))->orderBy('order');
     }
 
     public function browseRows()
@@ -89,7 +89,7 @@ class DataType extends Model implements EloquentInterface
 
     public function lastRow()
     {
-        return $this->hasMany(Facilitador::modelClass('DataRow'))->orderBy('order', 'DESC')->first();
+        return $this->hasMany(Support::modelClass('DataRow'))->orderBy('order', 'DESC')->first();
     }
 
     public function setGeneratePermissionsAttribute($value)
@@ -157,7 +157,7 @@ class DataType extends Model implements EloquentInterface
 
                 // It seems everything was fine. Let's check if we need to generate permissions
                 if ($this->generate_permissions) {
-                    Facilitador::model('Permission')->generateFor($this->name);
+                    Support::model('Permission')->generateFor($this->name);
                 }
 
                 DB::commit();
@@ -230,7 +230,7 @@ class DataType extends Model implements EloquentInterface
     public function dataRelactionships()
     {
         return $this->hasMany(
-            Facilitador::modelClass('DataRelationship'),
+            Support::modelClass('DataRelationship'),
             'origin_table_name',
             'table_name'
         );
@@ -239,7 +239,7 @@ class DataType extends Model implements EloquentInterface
     public function inversedDataRelactionships()
     {
         return $this->hasMany(
-            Facilitador::modelClass('DataRelationship'),
+            Support::modelClass('DataRelationship'),
             'related_table_name',
             'table_name'
         );

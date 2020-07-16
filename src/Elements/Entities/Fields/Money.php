@@ -7,7 +7,7 @@ use Support\Elements\Entities\Fields\Number;
 use Money\Currencies\ISOCurrencies;
 use Money\Currencies\BitcoinCurrencies;
 use Money\Currencies\AggregateCurrencies;
-use Facilitador\Http\Requests\FacilitadorRequest as NovaRequest;
+use Support\Http\Requests\FacilitadorRequest as NovaRequest;
 
 class Money extends Number
 {

@@ -7,7 +7,7 @@ use Facilitador\Services\FacilitadorService;
 use Population\Models\Components\Code\Commit;
 use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
-use Facilitador\Http\Requests\ModelUpdateRequest;
+use Support\Http\Requests\ModelUpdateRequest;
 use Facilitador;
 
 class RegisterController extends Controller
@@ -52,7 +52,7 @@ class RegisterController extends Controller
             $view = "facilitador::cruds.$slug.read";
         }
 
-        return Facilitador::view(
+        return Support::view(
             $view,
             compact(
                 'service',
@@ -81,7 +81,7 @@ class RegisterController extends Controller
     {
         $slug = $this->repositoryService->getSlug();
         $id = $this->registerService->getId();
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
         // dd($dataType, $slug, $id);
         if (strlen($dataType->model_name) != 0) {
@@ -119,14 +119,14 @@ class RegisterController extends Controller
             $view = "facilitador::cruds.$slug.edit-add";
         }
 
-        return Facilitador::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
+        return Support::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
     }
 
     // POST BR(E)AD
     public function update(Request $request)
     {
         $slug = $this->repositoryService->getSlug();
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
         $id = $this->registerService->getId();
 
         // Compatibility with Model binding.
@@ -181,7 +181,7 @@ class RegisterController extends Controller
     {
         $slug = $this->repositoryService->getSlug();
 
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
         // Check permission
         // $this->authorize('delete', app($dataType->model_name));
@@ -227,7 +227,7 @@ class RegisterController extends Controller
     public function restore(Request $request)
     {
         $slug = $this->repositoryService->getSlug();
-        $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
         $id = $this->registerService->getId();
 
         // Check permission
@@ -284,7 +284,7 @@ class RegisterController extends Controller
             // GET multi value
             $multi = $request->get('multi');
 
-            $dataType = Facilitador::model('DataType')->where('slug', '=', $slug)->first();
+            $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
             // Load model and find record
             $model = app($dataType->model_name);

@@ -127,7 +127,7 @@ if ($listing->count()) {
                 <?php
                 // Wrap the column value in an edit link only if it's the first
                 // column and it doesn't contain an a tag with an href attribute
-                $value = Facilitador::renderListColumn($item, $column, $convert_dates);
+                $value = Support::renderListColumn($item, $column, $convert_dates);
                 if ($i ===0 && !preg_match('#<a[^.]+href[^.]+>#', $value)) {
                     $value = '<a href="'
                     .$item->getAdminEditUri($controller, $many_to_many)
