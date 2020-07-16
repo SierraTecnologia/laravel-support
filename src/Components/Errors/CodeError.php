@@ -72,13 +72,18 @@ abstract class CodeError
             dd('CodeError Problem:', $target);
         }
         $this->setTarget($target);
-        if (!$this->supportModelCodeClass = Error::where($this->whereFind())->first()) {
-            $this->supportModelCodeClass = new Error;
-            $this->supportModelCodeClass->class_type = static::class;
-            $this->supportModelCodeClass->target = $this->getTarget();
-            $this->supportModelCodeClass->name = $this->getDescription();
-            $this->supportModelCodeClass->data = $customData;
-            $this->supportModelCodeClass->save();
+        try {
+            if (!$this->supportModelCodeClass = Error::where($this->whereFind())->first()) {
+                $this->supportModelCodeClass = new Error;
+                $this->supportModelCodeClass->class_type = static::class;
+                $this->supportModelCodeClass->target = $this->getTarget();
+                $this->supportModelCodeClass->name = $this->getDescription();
+                $this->supportModelCodeClass->data = $customData;
+                $this->supportModelCodeClass->save();
+            }
+            //code...
+        } catch (\Throwable $th) {
+            \Log::info('Erro ao cadastrar error no banco de dados: '.$th->getMessage());
         }
     }
 

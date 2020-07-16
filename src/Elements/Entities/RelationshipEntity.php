@@ -128,16 +128,21 @@ class RelationshipEntity
         }
     }
 
-    public function persist(): DataRelationship
+    public function persist() //: DataRelationship
     {
-        if (!$model = DataRelationship::find($this->getCodeName())) {
-            $model = new DataRelationship();
-            $model->code = $this->getCodeName();
-            foreach ($this->filliables as $filliable) {
-                $model->{$filliable} = $this->{$filliable};
+        try {
+            if (!$model = DataRelationship::find($this->getCodeName())) {
+                $model = new DataRelationship();
+                $model->code = $this->getCodeName();
+                foreach ($this->filliables as $filliable) {
+                    $model->{$filliable} = $this->{$filliable};
+                }
+                $model->save();
+                return $model;
             }
-            $model->save();
-            return $model;
+        } catch (\Throwable $th) {
+            $model = false;
+            \Log::info('Erro ao cadastrar DataRelationship no banco de dados: '.$th->getMessage());
         }
         
         return $model;

@@ -30,7 +30,7 @@
                     <tr>
                         <td>
                             <p class="name">
-                                <a href="{{ \Facilitador\Routing\UrlGenerator::routeForSlug('database', 'show', $table->prefix.$table->name) }}"
+                                <a href="{{ \Support\Routing\UrlGenerator::routeForSlug('database', 'show', $table->prefix.$table->name) }}"
                                    data-name="{{ $table->prefix.$table->name }}" class="desctable">
                                    {{ $table->name }}
                                 </a>
@@ -40,11 +40,11 @@
                         <td>
                             <div class="bread_actions">
                             @if($table->dataTypeId)
-                                <a href="{{ \Facilitador\Routing\UrlGenerator::routeForSlug($table->slug, 'index') }}"
+                                <a href="{{ \Support\Routing\UrlGenerator::routeForSlug($table->slug, 'index') }}"
                                    class="btn-sm btn-warning browse_bread">
                                     <i class="facilitador-plus"></i> {{ __('facilitador::database.browse_bread') }}
                                 </a>
-                                <a href="{{ \Facilitador\Routing\UrlGenerator::routeForSlug('bread', 'edit', $table->name) }}"
+                                <a href="{{ \Support\Routing\UrlGenerator::routeForSlug('bread', 'edit', $table->name) }}"
                                    class="btn-sm btn-default edit">
                                    {{ __('facilitador::cruds.bread.edit_bread') }}
                                 </a>
@@ -53,7 +53,7 @@
                                      {{ __('facilitador::cruds.bread.delete_bread') }}
                                 </a>
                             @else
-                                <a href="{{ \Facilitador\Routing\UrlGenerator::routeForSlug('bread', 'create', $table->name) }}"
+                                <a href="{{ \Support\Routing\UrlGenerator::routeForSlug('bread', 'create', $table->name) }}"
                                    class="btn-sm btn-default">
                                     <i class="facilitador-plus"></i> {{ __('facilitador::cruds.bread.add_bread') }}
                                 </a>
@@ -66,11 +66,11 @@
                                data-table="{{ $table->prefix.$table->name }}">
                                <i class="facilitador-trash"></i> {{ __('facilitador::generic.delete') }}
                             </a>
-                            <a href="{{ \Facilitador\Routing\UrlGenerator::routeForSlug('database', 'edit', $table->prefix.$table->name) }}"
+                            <a href="{{ \Support\Routing\UrlGenerator::routeForSlug('database', 'edit', $table->prefix.$table->name) }}"
                                class="btn btn-sm btn-primary pull-right" style="display:inline; margin-right:10px;">
                                <i class="facilitador-edit"></i> {{ __('facilitador::generic.edit') }}
                             </a>
-                            <a href="{{ \Facilitador\Routing\UrlGenerator::routeForSlug('database', 'show', $table->prefix.$table->name) }}"
+                            <a href="{{ \Support\Routing\UrlGenerator::routeForSlug('database', 'show', $table->prefix.$table->name) }}"
                                data-name="{{ $table->name }}"
                                class="btn btn-sm btn-warning pull-right desctable" style="display:inline; margin-right:10px;">
                                <i class="facilitador-eye"></i> {{ __('facilitador::generic.view') }}
@@ -217,7 +217,7 @@
                 } else {
                     $('#delete_table_name').text(table);
 
-                    $('#delete_table_form')[0].action = '{{ \Facilitador\Routing\UrlGenerator::routeForSlug('database', 'destroy', ['database' => '__database']) }}'.replace('__database', table)
+                    $('#delete_table_form')[0].action = '{{ \Support\Routing\UrlGenerator::routeForSlug('database', 'destroy', ['database' => '__database']) }}'.replace('__database', table)
                     $('#delete_modal').modal('show');
                 }
             });
@@ -229,7 +229,7 @@
                 name = $(this).data('name');
 
                 $('#delete_bread_name').text(name);
-                $('#delete_bread_form')[0].action = '{{ \Facilitador\Routing\UrlGenerator::routeForSlug('bread', 'delete', '__id') }}'.replace('__id', id);
+                $('#delete_bread_form')[0].action = '{{ \Support\Routing\UrlGenerator::routeForSlug('bread', 'delete', '__id') }}'.replace('__id', id);
                 $('#delete_bread_modal').modal('show');
             });
         });

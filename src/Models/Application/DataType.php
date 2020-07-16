@@ -21,6 +21,8 @@ class DataType extends Model implements EloquentInterface
     protected $table = 'data_types';
 
     protected $fillable = [
+        'code',
+        
         'name',
         'slug',
         'display_name_singular',

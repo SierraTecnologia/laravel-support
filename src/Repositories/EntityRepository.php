@@ -24,15 +24,20 @@ class EntityRepository
      */
     public function findByType($type, $code = '')
     {
-        if (!empty($code)) {
-            $type .= '|'.$code;
-        }
-        $item = $this->model->where('code', $type)->first();
+        try {
+            if (!empty($code)) {
+                $type .= '|'.$code;
+            }
+            $item = $this->model->where('code', $type)->first();
 
-        if ($item) {
-            $entity = new $type($code);
-            $entity->fromArray($item->data);
-            return $entity;
+            if ($item) {
+                $entity = new $type($code);
+                $entity->fromArray($item->data);
+                return $entity;
+            }
+        } catch (\Throwable $th) {
+            $model = false;
+            \Log::info('Erro ao cadastrar SupportEntity FindType no banco de dados: '.$th->getMessage());
         }
 
         return null;
@@ -56,16 +61,21 @@ class EntityRepository
             $parameter = explode('|', $codeInDatabase)[1];
         }
 
-        $item = $this->model->firstOrNew(['code' => $codeInDatabase]);
+        try {
+            $item = $this->model->firstOrNew(['code' => $codeInDatabase]);
 
-        return $item->fill(
-            [
-                'parameter'    => $parameter,
-                'type'         => $type,
-                'md5'         => md5(serialize($entity->toArray())),
-                'data'         => $entity->toArray(),
-            ]
-        )->save();
+            return $item->fill(
+                [
+                    'parameter'    => $parameter,
+                    'type'         => $type,
+                    'md5'         => md5(serialize($entity->toArray())),
+                    'data'         => $entity->toArray(),
+                ]
+            )->save();
+            //code...
+        } catch (\Throwable $th) {
+            \Log::info('Erro ao cadastrar SupportEntity Save no banco de dados: '.$th->getMessage());
+        }
     }
 
 }

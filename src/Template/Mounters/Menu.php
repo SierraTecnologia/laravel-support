@@ -15,6 +15,7 @@ use Log;
 class Menu
 {
 
+    protected $key = null;
     protected $code = null;
     protected $slug = null;
 
@@ -42,6 +43,13 @@ class Menu
     protected $isDivisory = false;
 
     protected $error = null;
+
+    protected $topnav = false;
+    protected $topnav_user = false;
+    protected $topnav_right = false;
+    protected $data = null;
+    protected $active = null;
+
 
 
 
@@ -140,6 +148,7 @@ class Menu
     public function getAttributes()
     {
         return [
+            'key',
             'code',
 
             'slug',
@@ -155,6 +164,12 @@ class Menu
             'nivel',
             'level',
             'order',
+
+            'topnav',
+            'topnav_user',
+            'topnav_right',
+            'data',
+            'active',
         ];
     }
 
@@ -173,6 +188,15 @@ class Menu
         return $group . $this->getSlug();
     }
 
+
+    public function getKey()
+    {
+        return $this->key;
+    }
+    public function setKey($value)
+    {
+        $this->key = $value;
+    }
 
     public function getCode()
     {
@@ -302,8 +326,48 @@ class Menu
     {
         $this->error = $value;
     }
+    public function getTopnav()
+    {
+        return $this->topnav;
+    }
+    public function setTopnav($value)
+    {
+        $this->topnav = $value;
+    }
+    public function getTopnavUser()
+    {
+        return $this->topnav_user;
+    }
+    public function setTopnavUser($value)
+    {
+        $this->topnav_user = $value;
+    }
+    public function getTopnavRight()
+    {
+        return $this->topnav_right;
+    }
+    public function setTopnavRight($value)
+    {
+        $this->topnav_right = $value;
+    }
+    public function getData()
+    {
+        return $this->data;
+    }
+    public function setData($value)
+    {
+        $this->data = $value;
+    }
+    public function getActive()
+    {
+        return $this->active;
+    }
+    public function setActive($value)
+    {
+        $this->active = $value;
+    }
 
-
+    
     /**
      * Caso nao seja pra exibir, cria log e retorna false.
      * 

@@ -30,7 +30,7 @@ class RestoreAction extends AbstractAction
 
     public function getDefaultRoute()
     {
-        return \Facilitador\Routing\UrlGenerator::managerRoute($this->dataType->slug, 'restore', $this->data->{$this->data->getKeyName()});
+        return \Support\Routing\UrlGenerator::managerRoute($this->dataType->slug, 'restore', $this->data->{$this->data->getKeyName()});
         // return route('facilitador.'.$this->dataType->slug.'.restore', $this->data->{$this->data->getKeyName()});
     }
 }

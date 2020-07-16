@@ -16,7 +16,7 @@
 
                 @if(isset($query))
                     <p>
-                        <a href="{{\Facilitador\Routing\UrlGenerator::managerRoute($relationshipData->{$options->model}, 'show', $relationshipData->{$options->column})}}">
+                        <a href="{{\Support\Routing\UrlGenerator::managerRoute($relationshipData->{$options->model}, 'show', $relationshipData->{$options->column})}}">
                         {{ $query->{$model->getApresentationNameKey()} }}
                         </a>
                     </p>

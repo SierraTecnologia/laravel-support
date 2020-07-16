@@ -432,11 +432,17 @@ class EloquentColumnBuilder extends BuilderAbstract
             return 'date';
         }
 
-        if ($type !== 'varchar') {
-            Log::channel('sitec-support')->error(
-                'EloquentBuilder: Não tratando tipo '.$type
-            );
+        if (in_array($type, [
+            'varchar',
+            'character varying',
+            'varying', 'character', 'char'
+        ])) {
+            return 'text';
         }
+
+        Log::channel('sitec-support')->error(
+            'EloquentBuilder: Não tratando tipo '.$type
+        );
         return 'text';
     }
     public function getColumnType(): string

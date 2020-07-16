@@ -16,6 +16,7 @@ class DataRelationship extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
+        'code',
         'origin_table_name',
         'origin_table_class',
         'origin_foreignKey',

@@ -4,7 +4,7 @@ namespace Support\Template\Layout;
 
 use URL;
 use Request;
-use Facilitador\Routing\Wildcard;
+use Support\Routing\Wildcard;
 use Support\Utils\Semantics\ReturnSimilars;
 
 /**

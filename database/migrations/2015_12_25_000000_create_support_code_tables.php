@@ -53,11 +53,12 @@ class CreateSupportCodeTables extends Migration
             'support_code_errors', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->nullable();
-                $table->timestamps();
 
                 $table->string('target')->nullable();
                 $table->string('class_type')->nullable();
                 $table->text('data')->nullable();
+
+                $table->timestamps();
 
             }
         );
