@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ \Illuminate\Support\Facades\Config::get('app.locale') }}" dir="{{ __('support::generic.is_rtl') == 'true' ? 'rtl' : 'ltr' }}">
+<html lang="{{ \Illuminate\Support\Facades\Config::get('app.locale') }}" dir="{{ __('facilitador::generic.is_rtl') == 'true' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     <meta name="description" content="admin login">
     <title>Admin - {{ Facilitador::setting("admin.title") }}</title>
     <link rel="stylesheet" href="{{ facilitador_asset('css/app.css') }}">
-    @if (__('support::generic.is_rtl') == 'true')
+    @if (__('facilitador::generic.is_rtl') == 'true')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css">
         <link rel="stylesheet" href="{{ facilitador_asset('css/rtl.css') }}">
     @endif
@@ -55,7 +55,7 @@
                         @endif
                         <div class="copy animated fadeIn">
                             <h1>{{ Facilitador::setting('admin.title', 'Facilitador') }}</h1>
-                            <p>{{ Facilitador::setting('admin.description', __('support::login.welcome')) }}</p>
+                            <p>{{ Facilitador::setting('admin.description', __('facilitador::login.welcome')) }}</p>
                         </div>
                     </div> <!-- .logo-title-container -->
                 </div>
@@ -66,33 +66,33 @@
 
             <div class="login-container">
 
-                <p>{{ __('support::login.signin_below') }}</p>
+                <p>{{ __('facilitador::login.signin_below') }}</p>
 
                 <form action="{{ route('facilitador.login') }}" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group form-group-default" id="emailGroup">
-                        <label>{{ __('support::generic.email') }}</label>
+                        <label>{{ __('facilitador::generic.email') }}</label>
                         <div class="controls">
-                            <input type="text" name="email" id="email" value="{{ old('email') }}" placeholder="{{ __('support::generic.email') }}" class="form-control" required>
+                            <input type="text" name="email" id="email" value="{{ old('email') }}" placeholder="{{ __('facilitador::generic.email') }}" class="form-control" required>
                          </div>
                     </div>
 
                     <div class="form-group form-group-default" id="passwordGroup">
-                        <label>{{ __('support::generic.password') }}</label>
+                        <label>{{ __('facilitador::generic.password') }}</label>
                         <div class="controls">
-                            <input type="password" name="password" placeholder="{{ __('support::generic.password') }}" class="form-control" required>
+                            <input type="password" name="password" placeholder="{{ __('facilitador::generic.password') }}" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="form-group" id="rememberMeGroup">
                         <div class="controls">
-                        <input type="checkbox" name="remember" id="remember" value="1"><label for="remember" class="remember-me-text">{{ __('support::generic.remember_me') }}</label>
+                        <input type="checkbox" name="remember" id="remember" value="1"><label for="remember" class="remember-me-text">{{ __('facilitador::generic.remember_me') }}</label>
                         </div>
                     </div>
                     
                     <button type="submit" class="btn btn-block login-button">
-                        <span class="signingin hidden"><span class="facilitador-refresh"></span> {{ __('support::login.loggingin') }}...</span>
-                        <span class="signin">{{ __('support::generic.login') }}</span>
+                        <span class="signingin hidden"><span class="facilitador-refresh"></span> {{ __('facilitador::login.loggingin') }}...</span>
+                        <span class="signin">{{ __('facilitador::generic.login') }}</span>
                     </button>
 
               </form>

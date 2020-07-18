@@ -7,4 +7,4 @@
 	%ul.dropdown-menu(role='menu')
 		-foreach($locales as $slug => $label)
 			%li
-				%a(href=URL::to(FacilitadorURL::relative('create')).'?locale='.$slug) #{__('support::base.header.new_locale', ['title' => str_singular($title), 'label' => $label])}
+				%a(href=URL::to(FacilitadorURL::relative('create')).'?locale='.$slug) #{__('facilitador::base.header.new_locale', ['title' => str_singular($title), 'label' => $label])}

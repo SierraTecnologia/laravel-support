@@ -8,7 +8,7 @@
                         <tr data-js-view="task-method">
                             <td>
                                 <a data-action="<?php echo route('facilitador.commands@execute', $command->getName())?>"
-                                   class="btn btn-default"><?php echo __('support::commands.execute')?></a>
+                                   class="btn btn-default"><?php echo __('facilitador::commands.execute')?></a>
                             </td>
                             <td>
                                 <p>

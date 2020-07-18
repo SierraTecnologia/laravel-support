@@ -1,17 +1,17 @@
 -# Require a model to act on
 -if($item)
 	%fieldset.form-vertical.localize
-		.legend!= __('support::relationships.localize.title')
+		.legend!= __('facilitador::relationships.localize.title')
 
 		-# Show the compare interface
 		-$localizations = $localize->other()
 		-if(!$localizations->isEmpty())
 			.form-group.compare
-				%label.control-label!= __('support::relationships.localize.compare')
+				%label.control-label!= __('facilitador::relationships.localize.compare')
 				.radio
 					%label
 						%input(type="radio" name="compare" value='' checked)
-						!= __('support::relationships.localize.none')
+						!= __('facilitador::relationships.localize.none')
 				-foreach($localizations as $model)
 					.radio
 						%label
@@ -19,25 +19,25 @@
 							%strong.locale=Config::get('site.site.locales')[$model->locale]
 							=' - '
 							%a(href=FacilitadorURL::relative('edit', $model->getKey()))!=$model->admin_title
-				%p.help-block!= __('support::relationships.localize.compare_help', ['title' => $title])
+				%p.help-block!= __('facilitador::relationships.localize.compare_help', ['title' => $title])
 		-# Create a new localization menu if there are un-assigned locales
 		-$locales = $localize->localizableLocales()
 		-if(count($locales))
 			!=Former::vertical_open(FacilitadorURL::relative('duplicate', $item->getKey()))
 			.form-group.create
-				%label.control-label!= __('support::relationships.localize.create')
+				%label.control-label!= __('facilitador::relationships.localize.create')
 
 				-# Show a locale select menu or an un-editable text menu if there is only one
 				-if (count($locales) > 1)
 					%select.form-control(name='locale')
 						-foreach($locales as $locale => $label)
-							%option(value=$locale)!= __('support::relationships.localize.create_lang', ['label' => $label])
+							%option(value=$locale)!= __('facilitador::relationships.localize.create_lang', ['label' => $label])
 							.check
 				-else
 					-$label = reset($locales)
 					-$locale = key($locales)
 					%input(type='hidden' name='locale' value=$locale)
-					.form-control!= __('support::relationships.localize.create_lang', ['label' => $label])
+					.form-control!= __('facilitador::relationships.localize.create_lang', ['label' => $label])
 
 				-# Additional options
 					%input(type="hidden" name='options')
@@ -52,21 +52,21 @@
 								Include images and files
 
 				-# Help
-				%p.help-block!= __('support::relationships.localize.create_help', ['title' => $title])
+				%p.help-block!= __('facilitador::relationships.localize.create_help', ['title' => $title])
 
 				-# Submit
 				%button.btn.btn-default
 					%span.glyphicon.glyphicon-plus.glyphicon
-					!= __('support::relationships.localize.create')
+					!= __('facilitador::relationships.localize.create')
 			!=Former::close()
 
 		-else
 			-# Not possible to localize
 			.form-group.create.disabled
-				%label.control-label!= __('support::relationships.localize.create')
-				%p.help-block!= __('support::relationships.localize.cannot_create', ['title' => $title])
+				%label.control-label!= __('facilitador::relationships.localize.create')
+				%p.help-block!= __('facilitador::relationships.localize.cannot_create', ['title' => $title])
 
 -else
 	%fieldset.disabled
-		.legend!= __('support::relationships.localize.title')
-		%p!= __('support::relationships.localize.not_saved', ['title' => $title])
+		.legend!= __('facilitador::relationships.localize.title')
+		%p!= __('facilitador::relationships.localize.not_saved', ['title' => $title])

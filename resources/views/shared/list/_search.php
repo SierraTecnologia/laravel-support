@@ -9,6 +9,6 @@ $search = (new Support\Template\Input\Search)->longhand($search);
     <div class="conditions">
         <?php // Most of the HTML is inserted by the backbone view ?>
         <button type="submit" class="btn btn-sm outline"><span class="glyphicon glyphicon-search"></span>
-        <?php echo __('support::list.search'); ?></button>
+        <?php echo __('facilitador::list.search'); ?></button>
     </div>
 </form>

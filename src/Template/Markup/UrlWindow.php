@@ -24,7 +24,7 @@ class UrlWindow extends LaravelUrlWindow
      * @param  int $window
      * @return array
      */
-    protected function getSliderTooCloseToBeginning($window)
+    protected function getSliderTooCloseToBeginning($window, $onEachSide)
     {
         return [
             'first'  => $this->paginator->getUrlRange(1, $window + max(1, $this->edge_count)),
@@ -39,7 +39,7 @@ class UrlWindow extends LaravelUrlWindow
      * @param  int $window
      * @return array
      */
-    protected function getSliderTooCloseToEnding($window)
+    protected function getSliderTooCloseToEnding($window, $onEachSide)
     {
         $last = $this->paginator->getUrlRange(
             $this->lastPage() - ($window + max(1, $this->edge_count)),

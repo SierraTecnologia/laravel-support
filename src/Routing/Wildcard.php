@@ -90,6 +90,20 @@ class Wildcard
      */
     public function detectController($class_name = null)
     {
+
+        $paths = explode('/', $this->path);
+
+        $local = 'App\Http\Controllers';
+        foreach($paths as $path) {
+            $local .= '\\'.Str::studly(Str::singular($path));
+        }
+        $local .= "Controller";
+        if (class_exists($local)) {
+            return $local;
+        }
+
+
+
         // Setup the two schemes
         if (!$class_name) {
             $class_name = $this->detectControllerClass();
@@ -97,12 +111,13 @@ class Wildcard
         $app = 'App\\Http\\Controllers\\'
             . ucfirst(Str::studly($this->dir))
             . '\\'.$class_name;
-        $facilitador = 'Facilitador\Http\Controllers\Admin\\'.$class_name;
-
         // Find the right one
         if (class_exists($app)) {
             return $app;
         }
+        
+        $facilitador = 'Facilitador\Http\Controllers\Admin\\'.$class_name;
+
         
         if (class_exists($facilitador)) {
             return $facilitador;
@@ -119,6 +134,7 @@ class Wildcard
      */
     public function detectControllerClass($name = null)
     {
+
         // The path must begin with the config dir
         if (!preg_match('#^'.$this->dir.'#i', $this->path, $matches)) {
             return false;

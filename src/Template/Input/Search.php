@@ -101,7 +101,7 @@ class Search
         // Convert date formats
         if ($type == 'date') {
             $field = $this->convertDateField($field);
-            $input = Carbon::createFromFormat(__('support::form.date.format'), $input)
+            $input = Carbon::createFromFormat(__('facilitador::form.date.format'), $input)
                 ->format('Y-m-d');
         }
 

@@ -25,7 +25,7 @@
 
     // Add sidebar pagination
     if (!empty($layout) && $layout != 'full' && $count > count($listing)) : ?>
-        <a href="<?php echo FacilitadorURL::relative('index', $parent_id, $controller)?>" class="btn btn-default btn-sm btn-block full-list"><?php echo __('support::list.standard.related', ['title' => title_case($title)]) ?></b></a>
+        <a href="<?php echo FacilitadorURL::relative('index', $parent_id, $controller)?>" class="btn btn-default btn-sm btn-block full-list"><?php echo __('facilitador::list.standard.related', ['title' => title_case($title)]) ?></b></a>
     <?php endif ?>
 
 </div>

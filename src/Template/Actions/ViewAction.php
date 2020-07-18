@@ -6,7 +6,7 @@ class ViewAction extends AbstractAction
 {
     public function getTitle()
     {
-        return __('support::generic.view');
+        return __('facilitador::generic.view');
     }
 
     public function getIcon()

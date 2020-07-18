@@ -47,20 +47,20 @@
 		.main-nav(class=$open?'active open':null)
 			%a.top-level.parent
 				%span.glyphicon.glyphicon-cog
-				!= __('support::sidebar.nav.settings')
+				!= __('facilitador::sidebar.nav.settings')
 
 			.subnav
 
 				-if($admin->can('read', 'admins'))
-					%a(href=FacilitadorURL::action('Facilitador\\Http\\Controllers\\Admin\\Admins@index') class=(Request::segment(2)=='admins'?'active':null))!= __('support::sidebar.nav.admins')
+					%a(href=FacilitadorURL::action('Facilitador\\Http\\Controllers\\Admin\\Admins@index') class=(Request::segment(2)=='admins'?'active':null))!= __('facilitador::sidebar.nav.admins')
 				-else
-					%a(href=$admin->getUserUrl() class=(Request::segment(2)=='admins'?'active':null))!= __('support::sidebar.nav.account')
+					%a(href=$admin->getUserUrl() class=(Request::segment(2)=='admins'?'active':null))!= __('facilitador::sidebar.nav.account')
 
 				-if($admin->can('read', 'changes'))
-					%a(href=FacilitadorURL::action('Facilitador\\Http\\Controllers\\Admin\\Changes@index') class=(Request::segment(2)=='changes'?'active':null))!= __('support::sidebar.nav.changes')
+					%a(href=FacilitadorURL::action('Facilitador\\Http\\Controllers\\Admin\\Changes@index') class=(Request::segment(2)=='changes'?'active':null))!= __('facilitador::sidebar.nav.changes')
 
 				-if($admin->can('read', 'commands'))
-					%a(href=route('facilitador.commands') class=(Request::segment(2)=='commands'?'active':null))!= __('support::sidebar.nav.commands')
+					%a(href=route('facilitador.commands') class=(Request::segment(2)=='commands'?'active':null))!= __('facilitador::sidebar.nav.commands')
 
 				-if($admin->can('read', 'workers') && count(Support\Models\Worker::all()))
-					%a(href=route('facilitador.workers')  class=(Request::segment(2)=='workers'?'active':null))!= __('support::sidebar.nav.workers')
+					%a(href=route('facilitador.workers')  class=(Request::segment(2)=='workers'?'active':null))!= __('facilitador::sidebar.nav.workers')

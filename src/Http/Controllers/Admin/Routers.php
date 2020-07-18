@@ -34,8 +34,8 @@ class Routers extends Base
      */
     public function __construct()
     {
-        $this->title = __('support::routers.controller.title');
-        $this->description = __('support::routers.controller.description');
+        $this->title = __('facilitador::routers.controller.title');
+        $this->description = __('facilitador::routers.controller.description');
 
         parent::__construct();
     }

@@ -6,7 +6,7 @@ class DeleteAction extends AbstractAction
 {
     public function getTitle()
     {
-        return __('support::generic.delete');
+        return __('facilitador::generic.delete');
     }
 
     public function getIcon()

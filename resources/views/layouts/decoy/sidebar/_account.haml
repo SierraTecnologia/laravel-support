@@ -4,8 +4,8 @@
 		%img.gravatar(src=$auth->getUserPhoto())
 		%span.name
 			-if(($name = $auth->getShortName()) == "Default")
-				!= __('support::sidebar.account.welcome')
+				!= __('facilitador::sidebar.account.welcome')
 			-else
-				!= __('support::sidebar.account.welcome_admin', ['name' => $name])
+				!= __('facilitador::sidebar.account.welcome_admin', ['name' => $name])
 	%a.btn.outline.close-nav
 		%span.glyphicon.close.glyphicon-remove

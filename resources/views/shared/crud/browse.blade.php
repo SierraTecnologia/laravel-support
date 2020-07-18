@@ -1,6 +1,6 @@
 @extends('support::layouts.voyager.master')
 
-@section('page_title', __('support::generic.viewing').' '.$dataType->getTranslatedAttribute('display_name_plural'))
+@section('page_title', __('facilitador::generic.viewing').' '.$dataType->getTranslatedAttribute('display_name_plural'))
 
 @section('page_header')
     <div class="container-fluid">
@@ -9,7 +9,7 @@
         </h1>
         @can('add', app($dataType->model_name))
             <a href="{!! $dataType->getModelService()->getUrl('create') !!}" class="btn btn-success btn-add-new">
-                <i class="facilitador-plus"></i> <span>{{ __('support::generic.add_new') }}</span>
+                <i class="facilitador-plus"></i> <span>{{ __('facilitador::generic.add_new') }}</span>
             </a>
         @endcan
         @can('delete', app($dataType->model_name))
@@ -18,13 +18,13 @@
         @can('edit', app($dataType->model_name))
             @if(isset($dataType->order_column) && isset($dataType->order_display_column))
                 <a href="{!! $dataType->getModelService()->getUrl('order') !!}" class="btn btn-primary btn-add-new">
-                    <i class="facilitador-list"></i> <span>{{ __('support::cruds.bread.order') }}</span>
+                    <i class="facilitador-list"></i> <span>{{ __('facilitador::cruds.bread.order') }}</span>
                 </a>
             @endif
         @endcan
         @can('delete', app($dataType->model_name))
             @if($usesSoftDeletes)
-                <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('support::cruds.bread.soft_deletes_off') }}" data-off="{{ __('support::cruds.bread.soft_deletes_on') }}">
+                <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('facilitador::cruds.bread.soft_deletes_off') }}" data-off="{{ __('facilitador::cruds.bread.soft_deletes_on') }}">
             @endif
         @endcan
         @foreach($actions as $action)
@@ -60,7 +60,7 @@
                                         </select>
                                     </div>
                                     <div class="input-group col-md-12">
-                                        <input type="text" class="form-control" placeholder="{{ __('support::generic.search') }}" name="s" value="{{ $search->value }}">
+                                        <input type="text" class="form-control" placeholder="{{ __('facilitador::generic.search') }}" name="s" value="{{ $search->value }}">
                                         <span class="input-group-btn">
                                             <button class="btn btn-info btn-lg" type="submit">
                                                 <i class="facilitador-search"></i>
@@ -125,16 +125,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('support::generic.close') }}"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="facilitador-trash"></i> {{ __('support::generic.delete_question') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_singular')) }}?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('facilitador::generic.close') }}"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="facilitador-trash"></i> {{ __('facilitador::generic.delete_question') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_singular')) }}?</h4>
                 </div>
                 <div class="modal-footer">
                     <form action="#" id="delete_form" method="POST">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-danger pull-right delete-confirm" value="{{ __('support::generic.delete_confirm') }}">
+                        <input type="submit" class="btn btn-danger pull-right delete-confirm" value="{{ __('facilitador::generic.delete_confirm') }}">
                     </form>
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{ __('support::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -158,7 +158,7 @@
                 var table = $('#dataTable').DataTable({!! json_encode(
                     array_merge([
                         "order" => $orderColumn,
-                        "language" => __('support::datatable'),
+                        "language" => __('facilitador::datatable'),
                         "columnDefs" => [['targets' => -1, 'searchable' =>  false, 'orderable' => false]],
                     ],
                     \Illuminate\Support\Facades\Config::get('sitec.facilitador.dashboard.data_tables', []))

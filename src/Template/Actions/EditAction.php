@@ -6,7 +6,7 @@ class EditAction extends AbstractAction
 {
     public function getTitle()
     {
-        return __('support::generic.edit');
+        return __('facilitador::generic.edit');
     }
 
     public function getIcon()

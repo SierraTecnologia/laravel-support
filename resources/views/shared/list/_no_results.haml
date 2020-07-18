@@ -4,16 +4,16 @@
         %p
 
             -if($many_to_many)
-                != __('support::list.no_results.many_to_many.none', ['url' => URL::to(FacilitadorURL::relative('index', $parent_id, $controller)), 'description' => $description, 'title' => $title, 'parent' => str_singular($parent_controller_title)])
+                != __('facilitador::list.no_results.many_to_many.none', ['url' => URL::to(FacilitadorURL::relative('index', $parent_id, $controller)), 'description' => $description, 'title' => $title, 'parent' => str_singular($parent_controller_title)])
 
                 -if (app('facilitador.user')->can('update', $controller))
-                    != __('support::list.no_results.many_to_many.none_create')
+                    != __('facilitador::list.no_results.many_to_many.none_create')
 
             -elseif ($parent_id)
-                != __('support::list.no_results.none', ['url' => URL::to(FacilitadorURL::relative('index', $parent_id, $controller)), 'description' => $description, 'title' => $title, 'parent' => str_singular($parent_controller_title)])
+                != __('facilitador::list.no_results.none', ['url' => URL::to(FacilitadorURL::relative('index', $parent_id, $controller)), 'description' => $description, 'title' => $title, 'parent' => str_singular($parent_controller_title)])
 
                 -if (app('facilitador.user')->can('create', $controller))
-                    != __('support::list.no_results.create', ['url' => URL::to(FacilitadorURL::relative('create', null, $controller))])
+                    != __('facilitador::list.no_results.create', ['url' => URL::to(FacilitadorURL::relative('create', null, $controller))])
 
             -else
                 No <b>#{$title}</b> have been created yet.

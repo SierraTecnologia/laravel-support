@@ -61,7 +61,7 @@ class BelongsTo extends Field
         $attributes = array_merge(
             [
             'class' => 'span5',
-            'placeholder' => __('support::form.belongs_to.search'),
+            'placeholder' => __('facilitador::form.belongs_to.search'),
             'autocomplete' => 'off',
             ], (array) $attributes
         );

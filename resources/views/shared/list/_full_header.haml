@@ -3,7 +3,7 @@
 
 	-# Stats
 	%span.stat
-		!= __('support::list.full_header.total')
+		!= __('facilitador::list.full_header.total')
 		%span.badge= number_format($count)
 
 	-# Potentially contain other buttons
@@ -18,7 +18,7 @@
 				}
 				$disabled = !$listing->count();
 			%a.btn.btn-sm.outline.download.js-tooltip(href=$disabled?null:$url
-				title="#{__('support::list.full_header.download')}"
+				title="#{__('facilitador::list.full_header.download')}"
 				disabled=$disabled)
 				.glyphicon.glyphicon-save
 
@@ -31,7 +31,7 @@
 					.glyphicon.glyphicon-search
 
 				-# Rest button
-				%a.btn.btn-sm.outline.search-clear.js-tooltip(title="#{__('support::list.full_header.reset')}")
+				%a.btn.btn-sm.outline.search-clear.js-tooltip(title="#{__('facilitador::list.full_header.reset')}")
 					.glyphicon.glyphicon-ban-circle
 
 -# Search UI
