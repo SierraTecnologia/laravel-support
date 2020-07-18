@@ -150,6 +150,17 @@ class Handler extends ExceptionHandler
             return response(null, 404);
         }
 
+        // Check for right exception
+        if (is_a($e, NotFoundHttpException::class)) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Página não existe'
+                ],
+                406
+            );
+        }
+
         return response()->json(
             [
                 'success' => false,

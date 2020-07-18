@@ -1,12 +1,16 @@
 @extends('adminlte::page')
 
 @push('css')
-    @include('boravel::botman.partials.css')
+    @if (View::exists('welcome'))
+        @include('boravel::botman.partials.css')
+    @endif
 @endpush
 
 @section('js')
     @parent
-    @include('boravel::botman.partials.js')
+    @if (View::exists('welcome'))
+        @include('boravel::botman.partials.js')
+    @endif
     @stack('javascript')
     @yield('javascript')
 @stop

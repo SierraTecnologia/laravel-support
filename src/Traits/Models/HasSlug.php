@@ -28,3 +28,34 @@ trait HasSlug
         );
     }
 }
+// <?php
+
+// namespace Support\Traits\Models;
+
+// use Illuminate\Database\Eloquent\Model;
+
+// trait HasSlug
+// {
+//     public static function bootHasSlug()
+//     {
+//         static::saving(
+//             function (Model $model) {
+//                 collect($model->getTranslatedLocales('name'))
+//                 ->each(
+//                     function (string $locale) use ($model) {
+//                         $model->setTranslation('code', $locale, $model->generateSlug($locale));
+//                     }
+//                 );
+//             }
+//         );
+//     }
+
+//     protected function generateSlug(string $locale): string
+//     {
+//         $slugger = \Illuminate\Support\Facades\Config::get('tags.slugger');
+
+//         $slugger = $slugger ?: '\Illuminate\Support\Str::slug';
+
+//         return call_user_func($slugger, $this->getTranslation('name', $locale));
+//     }
+// }

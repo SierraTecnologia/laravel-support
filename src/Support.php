@@ -36,6 +36,7 @@ use Request;
 use Session;
 use Bkwld\Library;
 use ReflectionClass;
+use Crypto;
 
 class Support
 {
@@ -788,8 +789,7 @@ class Support
 
         return array_filter($array);
     }
-
-
+    
     /**
      * Set Influencia
      */

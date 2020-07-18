@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Support\Models;
 
-use Informate\Traits\HasSlug;
+use Support\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 // // // @Arquivo no existe
 use Spatie\Sluggable\SlugOptions;
