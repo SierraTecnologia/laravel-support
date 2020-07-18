@@ -143,7 +143,7 @@ class DataType extends Model implements EloquentInterface
                         : [];
 
                     if (!$dataRow->save()) {
-                        throw new \Exception(__('facilitador::database.field_safe_failed', ['field' => $field]));
+                        throw new \Exception(__('support::database.field_safe_failed', ['field' => $field]));
                     }
 
                     // Save translations if applied

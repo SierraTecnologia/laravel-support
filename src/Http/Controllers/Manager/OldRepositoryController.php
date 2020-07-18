@@ -25,7 +25,7 @@ class OldRepositoryController extends Controller
         
 
         return view(
-            'facilitador::components.repositories.index',
+            'support::components.repositories.index',
             compact('service', 'registros')
         );
     }
@@ -52,7 +52,7 @@ class OldRepositoryController extends Controller
         $registros = $this->repositoryService->search($request->user()->id, $request->search);
 
         return view(
-            'facilitador::components.repositories.index',
+            'support::components.repositories.index',
             compact('registros')
         );
     }
@@ -67,7 +67,7 @@ class OldRepositoryController extends Controller
         $service = $this->repositoryService;
 
         return view(
-            'facilitador::components.repositories.create',
+            'support::components.repositories.create',
             compact('service')
         );
     }

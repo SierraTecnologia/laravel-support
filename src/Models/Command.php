@@ -6,7 +6,7 @@ use App;
 use Support\Patterns\Parser\ComposerParser;
 
 /**
- * Adds some shared functionality to taks as well as informs the Decoy
+ * Adds some shared functionality to taks as well as informs the Facilitador
  * admin interface.  Also functions as a sort of model.
  */
 class Command

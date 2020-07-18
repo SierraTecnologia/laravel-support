@@ -25,7 +25,7 @@
         <div>
             <div class="form-group">
                 <div class="col-md-5" v-if="showAutocomplete">
-                    <label class="control-label">{{ __('facilitador::generic.find_by_place') }}</label>
+                    <label class="control-label">{{ __('support::generic.find_by_place') }}</label>
                     <input
                         class="form-control"
                         type="text"
@@ -35,7 +35,7 @@
                     />
                 </div>
                 <div class="col-md-2" v-if="showLatLng">
-                    <label class="control-label">{{ __('facilitador::generic.latitude') }}</label>
+                    <label class="control-label">{{ __('support::generic.latitude') }}</label>
                     <input
                         class="form-control"
                         type="number"
@@ -48,7 +48,7 @@
                     />
                 </div>
                 <div class="col-md-2" v-if="showLatLng">
-                    <label class="control-label">{{ __('facilitador::generic.longitude') }}</label>
+                    <label class="control-label">{{ __('support::generic.longitude') }}</label>
                     <input
                         class="form-control"
                         type="number"

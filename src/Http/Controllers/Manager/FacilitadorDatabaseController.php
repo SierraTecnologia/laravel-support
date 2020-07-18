@@ -41,7 +41,7 @@ class FacilitadorDatabaseController extends Controller
             }, SchemaManager::listTableNames()
         );
 
-        return Support::view('facilitador::tools.database.index')->with(compact('dataTypes', 'tables'));
+        return Support::view('support::tools.database.index')->with(compact('dataTypes', 'tables'));
     }
 
     /**
@@ -55,7 +55,7 @@ class FacilitadorDatabaseController extends Controller
 
         $db = $this->prepareDbManager('create');
 
-        return Support::view('facilitador::tools.database.edit-add', compact('db'));
+        return Support::view('support::tools.database.edit-add', compact('db'));
     }
 
     /**
@@ -110,7 +110,7 @@ class FacilitadorDatabaseController extends Controller
 
             return redirect()
                 ->route('facilitador.database.index')
-                ->with($this->alertSuccess(__('facilitador::database.success_create_table', ['table' => $table->name])));
+                ->with($this->alertSuccess(__('support::database.success_create_table', ['table' => $table->name])));
         } catch (Exception $e) {
             return back()->with($this->alertException($e))->withInput();
         }
@@ -130,12 +130,12 @@ class FacilitadorDatabaseController extends Controller
         if (!SchemaManager::tableExists($table)) {
             return redirect()
                 ->route('facilitador.database.index')
-                ->with($this->alertError(__('facilitador::database.edit_table_not_exist')));
+                ->with($this->alertError(__('support::database.edit_table_not_exist')));
         }
 
         $db = $this->prepareDbManager('update', $table);
 
-        return Support::view('facilitador::tools.database.edit-add', compact('db'));
+        return Support::view('support::tools.database.edit-add', compact('db'));
     }
 
     /**
@@ -162,7 +162,7 @@ class FacilitadorDatabaseController extends Controller
 
         return redirect()
             ->route('facilitador.database.index')
-            ->with($this->alertSuccess(__('facilitador::database.success_create_table', ['table' => $table['name']])));
+            ->with($this->alertSuccess(__('support::database.success_create_table', ['table' => $table['name']])));
     }
 
     protected function prepareDbManager($action, $table = '')
@@ -280,7 +280,7 @@ class FacilitadorDatabaseController extends Controller
 
             return redirect()
                 ->route('facilitador.database.index')
-                ->with($this->alertSuccess(__('facilitador::database.success_delete_table', ['table' => $table])));
+                ->with($this->alertSuccess(__('support::database.success_delete_table', ['table' => $table])));
         } catch (Exception $e) {
             return back()->with($this->alertException($e));
         }

@@ -33,11 +33,11 @@
                 :disabled="column.type.notSupportIndex"
                 class="form-control">
             <option value=""></option>
-            <option value="INDEX">{{ __('facilitador::database.index') }}</option>
-            <option value="UNIQUE">{{ __('facilitador::database.unique') }}</option>
-            <option value="PRIMARY">{{ __('facilitador::database.primary') }}</option>
+            <option value="INDEX">{{ __('support::database.index') }}</option>
+            <option value="UNIQUE">{{ __('support::database.unique') }}</option>
+            <option value="PRIMARY">{{ __('support::database.primary') }}</option>
         </select>
-        <small v-if="column.composite" v-once>{{ __('facilitador::database.composite_warning') }}</small>
+        <small v-if="column.composite" v-once>{{ __('support::database.composite_warning') }}</small>
     </td>
 
     <td>
@@ -52,8 +52,8 @@
 
 @endsection
 
-@include('facilitador::tools.database.vue-components.database-types')
-@include('facilitador::tools.database.vue-components.database-column-default')
+@include('support::tools.database.vue-components.database-types')
+@include('support::tools.database.vue-components.database-column-default')
 
 <script>
     Vue.component('database-column', {
@@ -101,7 +101,7 @@
             },
             onIndexTypeChange(event) {
                 if (this.column.name == '') {
-                    return toastr.error("{{ __('facilitador::database.name_warning') }}");
+                    return toastr.error("{{ __('support::database.name_warning') }}");
                 }
 
                 return this.$emit('indexChanged', {

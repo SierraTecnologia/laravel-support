@@ -7,7 +7,7 @@ use Route;
 
 /**
  * This class acts as a bootstrap for setting up
- * Decoy routes
+ * Facilitador routes
  */
 class Router
 {

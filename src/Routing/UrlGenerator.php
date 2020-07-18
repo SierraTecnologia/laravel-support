@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Support\Utils\Extratores\ClasserExtractor;
 
 /**
- * This class exists to help make links between pages in Decoy, which is
+ * This class exists to help make links between pages in Facilitador, which is
  * complicated because none of the routes are explicitly defined.  All of
  * the relationships and breadcrumbs are created through controller, models,
  * and reading the current URL

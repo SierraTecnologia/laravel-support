@@ -20,7 +20,7 @@ class AccessibleDimmer extends AbstractWidget
     public function run()
     {
         return view(
-            'facilitador::dimmer', array_merge(
+            'support::dimmer', array_merge(
                 $this->config, [
                 'icon'   => '',
                 'title'  => '',

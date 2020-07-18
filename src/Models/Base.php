@@ -286,7 +286,7 @@ abstract class Base extends Model //Ardent
                     return $this->$attribute;
                 }, $this->titleAttributes()
             )
-        ) ?: __('facilitador::base.untitled');
+        ) ?: __('support::base.untitled');
     }
 
     /**
@@ -537,7 +537,7 @@ abstract class Base extends Model //Ardent
     /**
      * The pivot_id may be accessible at $this->pivot->id if the result was fetched
      * through a relationship OR it may be named pivot_id out of convention (something
-     * currently done in Decoy_Base_Controller->get_index_child()).  This function
+     * currently done in Facilitador_Base_Controller->get_index_child()).  This function
      * checks for either
      *
      * @return integer
@@ -696,7 +696,7 @@ abstract class Base extends Model //Ardent
 
 
     /**
-     * Use the Decoy Base Collection
+     * Use the Facilitador Base Collection
      *
      * @param  array $models
      * @return Images
@@ -824,7 +824,7 @@ abstract class Base extends Model //Ardent
             '<a class="visibility js-tooltip" data-placement="left" title="%s">
                 <span class="glyphicon glyphicon-eye-%s"></span>
             </a>',
-            $public ? __('facilitador::base.standard_list.private') : __('facilitador::base.standard_list.publish'),
+            $public ? __('support::base.standard_list.private') : __('support::base.standard_list.publish'),
             $public ? 'open' : 'close'
         );
     }
@@ -848,8 +848,8 @@ abstract class Base extends Model //Ardent
             </a>',
             $this->getAdminEditUri($controller, $many_to_many), // URL
             $editable ? // Label
-                __('facilitador::base.action.edit') :
-                __('facilitador::base.action.read'),
+                __('support::base.action.edit') :
+                __('support::base.action.read'),
             $editable ? 'pencil' : 'zoom-in' // Icon
         );
     }
@@ -885,7 +885,7 @@ abstract class Base extends Model //Ardent
 
         return sprintf(
             '<a href="%s" target="_blank" class="action-view js-tooltip"
-            data-placement="left" title="' . __('facilitador::base.action.view') . '">
+            data-placement="left" title="' . __('support::base.action.view') . '">
                 <span class="glyphicon glyphicon-bookmark"></span>
             </a>', $uri
         );
@@ -916,10 +916,10 @@ abstract class Base extends Model //Ardent
 
         // Make the label
         $label = $many_to_many ?
-            __('facilitador::base.action.remove') :
+            __('support::base.action.remove') :
             $with_trashed ?
-                __('facilitador::base.action.soft_delete') :
-                __('facilitador::base.action.delete');
+                __('support::base.action.soft_delete') :
+                __('support::base.action.delete');
 
         // Return markup
         return sprintf(
@@ -950,15 +950,15 @@ abstract class Base extends Model //Ardent
     }
 
     /**
-     * Fire an Decoy model event.
+     * Fire an Facilitador model event.
      *
      * @param  $string event The name of this event
      * @param  $array  args  An array of params that will be passed to the handler
      * @return object
      */
-    public function fireDecoyEvent($event, $args = null)
+    public function fireFacilitadorEvent($event, $args = null)
     {
-        $event = "facilitador::model.{$event}: ".get_class($this);
+        $event = "support::model.{$event}: ".get_class($this);
 
         return Event::dispatch($event, $args);
     }

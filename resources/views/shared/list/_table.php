@@ -60,10 +60,10 @@ if ($listing->count()) {
 
                 <?php if (isset($test_actions)) : ?>
                     <?php if (count($test_actions)) : ?>
-                        <th class="actions-<?php echo count($test_actions)?>"><?php echo __('facilitador::list.table.actions') ?></th>
+                        <th class="actions-<?php echo count($test_actions)?>"><?php echo __('support::list.table.actions') ?></th>
                     <?php endif ?>
                 <?php else: ?>
-                    <th class="actions-3"><?php echo __('facilitador::list.table.actions') ?></th>
+                    <th class="actions-3"><?php echo __('support::list.table.actions') ?></th>
                 <?php endif ?>
 
             </tr>
@@ -76,14 +76,14 @@ if ($listing->count()) {
                 <td colspan="999">
                     <a class="btn btn-warning remove-confirm" href="#">
                         <span class="glyphicon glyphicon-remove"></span>
-            <?php echo __('facilitador::list.table.remove_selected') ?>
+            <?php echo __('support::list.table.remove_selected') ?>
                     </a>
                 </td>
             </tr>
 
             <?php // Standard bulk actions ?>
         <?php else: ?>
-            <?php echo View::make('facilitador::shared.list._bulk_actions')->render()?>
+            <?php echo View::make('support::shared.list._bulk_actions')->render()?>
         <?php endif ?>
 
         <?php
@@ -149,7 +149,7 @@ if ($listing->count()) {
         <?php endforeach ?>
 
         <?php // Maybe there were no results found ?>
-        <?php echo View::make('facilitador::shared.list._no_results', $__data)->render()?>
+        <?php echo View::make('support::shared.list._no_results', $__data)->render()?>
 
     </tbody>
 </table>

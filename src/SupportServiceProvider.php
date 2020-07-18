@@ -153,7 +153,7 @@ class SupportServiceProvider extends ServiceProvider
         \Laracasts\Flash\FlashServiceProvider::class,
 
         /**
-         * VEio pelo Decoy
+         * VEio pelo Facilitador
          **/
         \Former\FormerServiceProvider::class,
         \Bkwld\Upchuck\ServiceProvider::class,
@@ -316,7 +316,7 @@ class SupportServiceProvider extends ServiceProvider
     {
         // Register alerts
         View::composer(
-            'facilitador::*', function ($view) {
+            'support::*', function ($view) {
                 $view->with('alerts', SupportFacade::alerts());
             }
         );
@@ -353,9 +353,9 @@ class SupportServiceProvider extends ServiceProvider
         } elseif ($storage_disk == 'public') {
             if (!file_exists(public_path('storage')) || @readlink(public_path('storage')) == public_path('storage')) {
                 $alert = (new Alert('missing-storage-symlink', 'warning'))
-                    ->title(__('facilitador::error.symlink_missing_title'))
-                    ->text(__('facilitador::error.symlink_missing_text'))
-                    ->button(__('facilitador::error.symlink_missing_button'), '?fix-missing-storage-symlink=1');
+                    ->title(__('support::error.symlink_missing_title'))
+                    ->text(__('support::error.symlink_missing_text'))
+                    ->button(__('support::error.symlink_missing_button'), '?fix-missing-storage-symlink=1');
                 SupportFacade::addAlert($alert);
             }
         }
@@ -367,12 +367,12 @@ class SupportServiceProvider extends ServiceProvider
 
         if (file_exists(public_path('storage'))) {
             $alert = (new Alert('fixed-missing-storage-symlink', 'success'))
-                ->title(__('facilitador::error.symlink_created_title'))
-                ->text(__('facilitador::error.symlink_created_text'));
+                ->title(__('support::error.symlink_created_title'))
+                ->text(__('support::error.symlink_created_text'));
         } else {
             $alert = (new Alert('failed-fixing-missing-storage-symlink', 'danger'))
-                ->title(__('facilitador::error.symlink_failed_title'))
-                ->text(__('facilitador::error.symlink_failed_text'));
+                ->title(__('support::error.symlink_failed_title'))
+                ->text(__('support::error.symlink_failed_text'));
         }
 
         SupportFacade::addAlert($alert);
@@ -535,13 +535,13 @@ class SupportServiceProvider extends ServiceProvider
         // // Change Former's required field HTML
         // Config::set(
         //     'former.required_text', ' <span class="glyphicon glyphicon-exclamation-sign js-tooltip required" title="' .
-        //     __('facilitador::login.form.required') . '"></span>'
+        //     __('support::login.form.required') . '"></span>'
         // );
 
         // Make pushed checkboxes have an empty string as their value
         Config::set('former.unchecked_value', '');
 
-        // Add Decoy's custom Fields to Former so they can be invoked using the "Former::"
+        // Add Facilitador's custom Fields to Former so they can be invoked using the "Former::"
         // namespace and so we can take advantage of sublassing Former's Field class.
         $this->app['former.dispatcher']->addRepository('Support\\Elements\\Fields\\');
     }

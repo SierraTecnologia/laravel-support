@@ -10,10 +10,10 @@ $breadcrumb_count = count($breadcrumbs);
     <div class="inner">
 
         <?php // Back button is first so floating works correctly ?>
-        <?php if ($back && !Route::is('facilitador.account@forgot', 'facilitador::account@reset')) : ?>
+        <?php if ($back && !Route::is('facilitador.account@forgot', 'support::account@reset')) : ?>
             <a href="<?php echo $back?>" class="back">
                 <span class="glyphicon glyphicon-arrow-left"></span>
-            <?php echo __('facilitador::cruds.breadcrumbs.back_to_listing'); ?>
+            <?php echo __('support::cruds.breadcrumbs.back_to_listing'); ?>
             </a>
         <?php endif?>
 

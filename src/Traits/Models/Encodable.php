@@ -139,7 +139,7 @@ trait Encodable
     }
 
     /**
-     * A utitliy function to create status badges for Decoy listings
+     * A utitliy function to create status badges for Facilitador listings
      *
      * @return string HTML
      */

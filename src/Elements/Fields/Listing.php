@@ -4,16 +4,16 @@ namespace Support\Elements\Fields;
 
 use URL;
 use View;
-use Decoy;
+use Facilitador;
 use Former;
 use Request;
-use DecoyURL;
+use FacilitadorURL;
 use Former\Traits\Field;
 use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Facilitador\Http\Controllers\Admin\Base;
 /**
  * Create a table-layout listing of records in the database.  An index view.  It may
  * be presented in different styles.  Example:
@@ -107,7 +107,7 @@ class Listing extends Field
         $this->controller(
             isset($config['controller'])
             ? $config['controller']
-            : Decoy::controllerForModel($model)
+            : Facilitador::controllerForModel($model)
         );
 
         // If no title is passed, set it to the controller name
@@ -130,11 +130,11 @@ class Listing extends Field
      * A factory to create an instance using the passed controller.  This is to prevent
      * duplicate controller instantations when invoked from the base controller.
      *
-     * @param  Facilitador\Http\Controllers\Decoy\Base $controller
+     * @param  Facilitador\Http\Controllers\Admin\Base $controller
      * @param  LengthAwarePaginator                    $items
      * @return Facilitador\Field\Listing
      */
-    public static function createFromController($controller, $items)
+    public static function createFromController(Base $controller, $items)
     {
         $model = $controller->model();
 
@@ -149,7 +149,7 @@ class Listing extends Field
     /**
      * Replace the controller
      *
-     * @param  Facilitador\Http\Controllers\Decoy\Base | string $controller
+     * @param  Facilitador\Http\Controllers\Admin\Base | string $controller
      * @return Field                                 This field
      */
     public function controller($controller)
@@ -158,7 +158,7 @@ class Listing extends Field
         // Instantiate a string controller
         if (is_string($controller)
             && class_exists($controller)
-            && is_subclass_of($controller, 'Facilitador\Http\Controllers\Decoy\Base')
+            && is_subclass_of($controller, 'Facilitador\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = $controller;
             $this->controller = new $controller;
@@ -170,7 +170,7 @@ class Listing extends Field
 
             // Or, validate a passed controller instance
         } elseif (is_object($controller)
-            && is_a($controller, 'Facilitador\Http\Controllers\Decoy\Base')
+            && is_a($controller, 'Facilitador\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = get_class($controller);
             $this->controller = $controller;
@@ -292,7 +292,7 @@ class Listing extends Field
         if (empty($this->parent_item)) {
             $this->addGroupClass('note');
 
-            return $this->group->wrapField(Former::note($this->label_text, trans('facilitador::form.listing.pending_save', ['model' => $this->label_text, 'description' => $this->controller->description()])));
+            return $this->group->wrapField(Former::note($this->label_text, trans('support::form.listing.pending_save', ['model' => $this->label_text, 'description' => $this->controller->description()])));
         }
 
         // Add create button if we have permission and if there is a parent item
@@ -326,7 +326,7 @@ class Listing extends Field
         // then don't show a special message
         if ($this->layout == 'sidebar' && !$this->parent_item) {
             return View::make(
-                'facilitador::shared.list._pending', [
+                'support::shared.list._pending', [
                 'title' => $this->label_text,
                 'description' => $this->controller->description(),
                 ]
@@ -366,7 +366,7 @@ class Listing extends Field
         }
 
         // Return the view, passing in a bunch of variables
-        return View::make('facilitador::shared.list._standard', $vars)->render();
+        return View::make('support::shared.list._standard', $vars)->render();
     }
 
     /**
@@ -378,7 +378,7 @@ class Listing extends Field
     {
         return '<div class="btn-group">
             <a href="'.URL::to($this->getCreateURL()).'" class="btn btn-info btn-small new">
-            <span class="glyphicon glyphicon-plus"></span> ' . __('facilitador::form.listing.new') . '</a>
+            <span class="glyphicon glyphicon-plus"></span> ' . __('support::form.listing.new') . '</a>
             </div>';
     }
 
@@ -390,8 +390,8 @@ class Listing extends Field
     protected function getIndexURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            DecoyURL::action($this->controller_name.'@index') :
-            DecoyURL::relative('index', null, $this->controller_name);
+            FacilitadorURL::action($this->controller_name.'@index') :
+            FacilitadorURL::relative('index', null, $this->controller_name);
     }
 
     /**
@@ -402,8 +402,8 @@ class Listing extends Field
     protected function getCreateURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            DecoyURL::action($this->controller_name.'@create') :
-            DecoyURL::relative('create', null, $this->controller_name);
+            FacilitadorURL::action($this->controller_name.'@create') :
+            FacilitadorURL::relative('create', null, $this->controller_name);
     }
 
     /**
@@ -460,7 +460,7 @@ class Listing extends Field
         // If there is a parent, run the query through the relationship to this model
         // from the parent
         if ($this->parent_item) {
-            $relationship = Decoy::hasManyName($this->name);
+            $relationship = Facilitador::hasManyName($this->name);
             $query = $this->parent_item->$relationship()->ordered();
         }
 

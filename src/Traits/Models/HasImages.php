@@ -140,7 +140,7 @@ trait HasImages
         // Add the image to the container and set it.  Then return the model. It
         // must be explicitly converted to an array because Laravel won't
         // automatically do it during collection serialization. Another, more
-        // complicated approach could have been to use the Decoy Base model to add
+        // complicated approach could have been to use the Facilitador Base model to add
         // a cast type of "model" and then call toArray() on it when casting the
         // attribute.
         $imgs[$property] = $image->toArray();

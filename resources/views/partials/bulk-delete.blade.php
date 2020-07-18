@@ -1,4 +1,4 @@
-<a class="btn btn-danger" id="bulk_delete_btn"><i class="facilitador-trash"></i> <span>{{ __('facilitador::generic.bulk_delete') }}</span></a>
+<a class="btn btn-danger" id="bulk_delete_btn"><i class="facilitador-trash"></i> <span>{{ __('support::generic.bulk_delete') }}</span></a>
 
 {{-- Bulk delete modal --}}
 <div class="modal modal-danger fade" tabindex="-1" id="bulk_delete_modal" role="dialog">
@@ -8,7 +8,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    <i class="facilitador-trash"></i> {{ __('facilitador::generic.are_you_sure_delete') }} <span id="bulk_delete_count"></span> <span id="bulk_delete_display_name"></span>?
+                    <i class="facilitador-trash"></i> {{ __('support::generic.are_you_sure_delete') }} <span id="bulk_delete_count"></span> <span id="bulk_delete_display_name"></span>?
                 </h4>
             </div>
             <div class="modal-body" id="bulk_delete_modal_body">
@@ -19,10 +19,10 @@
                     {{ csrf_field() }}
                     <input type="hidden" name="ids" id="bulk_delete_input" value="">
                     <input type="submit" class="btn btn-danger pull-right delete-confirm"
-                             value="{{ __('facilitador::generic.bulk_delete_confirm') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_plural')) }}">
+                             value="{{ __('support::generic.bulk_delete_confirm') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_plural')) }}">
                 </form>
                 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">
-                    {{ __('facilitador::generic.cancel') }}
+                    {{ __('support::generic.cancel') }}
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -63,7 +63,7 @@ window.onload = function () {
             $bulkDeleteModal.modal('show');
         } else {
             // No row selected
-            toastr.warning('{{ __('facilitador::generic.bulk_delete_nothing') }}');
+            toastr.warning('{{ __('support::generic.bulk_delete_nothing') }}');
         }
     });
 }

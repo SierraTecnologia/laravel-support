@@ -49,6 +49,8 @@ class Support
     protected $afterFormFields = [];
 
     protected $viewLoadingEvents = [];
+    
+    protected $influenciaModel = false;
 
     protected $actions = [
         DeleteAction::class,
@@ -200,7 +202,7 @@ class Support
         $widgetClasses = config('sitec.facilitador.dashboard.widgets');
         $dimmerGroups = [];
         $dimmerCount = 0;
-        $dimmers = Widget::group("facilitador::dimmers-{$dimmerCount}");
+        $dimmers = Widget::group("support::dimmers-{$dimmerCount}");
 
         foreach ($widgetClasses as $widgetClass) {
             $widget = app($widgetClass);
@@ -212,7 +214,7 @@ class Support
                 if ($dimmerCount % 3 === 0 && $dimmerCount !== 0) {
                     $dimmerGroups[] = $dimmers;
                     $dimmerGroupTag = ceil($dimmerCount / 3);
-                    $dimmers = Widget::group("facilitador::dimmers-{$dimmerGroupTag}");
+                    $dimmers = Widget::group("support::dimmers-{$dimmerGroupTag}");
                 }
 
                 $dimmers->addWidget($widgetClass);
@@ -587,7 +589,7 @@ class Support
     }
 
     /**
-     * Is Decoy handling the request?  Check if the current path is exactly "admin" or if
+     * Is Facilitador handling the request?  Check if the current path is exactly "admin" or if
      * it contains admin/*
      *
      * @return boolean
@@ -607,7 +609,7 @@ class Support
     }
 
     /**
-     * Force Decoy to believe that it's handling or not handling the request
+     * Force Facilitador to believe that it's handling or not handling the request
      *
      * @param  boolean $bool
      * @return void
@@ -619,9 +621,9 @@ class Support
 
     /**
      * Set or return the current locale.  Default to the first key from
-     * `facilitador::site.locale`.
+     * `support::site.locale`.
      *
-     * @param  string $locale A key from the `facilitador::site.locale` array
+     * @param  string $locale A key from the `support::site.locale` array
      * @return string
      */
     public function locale($locale = null)

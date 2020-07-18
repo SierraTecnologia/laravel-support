@@ -62,10 +62,10 @@ class RepositoryController extends Controller
         ) = $this->repositoryService->repositoryIndex($dataType, $request);
 
 
-        $view = 'facilitador::cruds.bread.browse';
+        $view = 'support::cruds.bread.browse';
 
-        if (view()->exists("facilitador::cruds.$slug.browse")) {
-            $view = "facilitador::cruds.$slug.browse";
+        if (view()->exists("support::cruds.$slug.browse")) {
+            $view = "support::cruds.$slug.browse";
         }
 
         return Support::view(
@@ -111,9 +111,9 @@ class RepositoryController extends Controller
             $isModelTranslatable
         ) = $this->repositoryService->repositoryCreate($request);
 
-        $view = 'facilitador::cruds.bread.edit-add';
-        if (view()->exists("facilitador::cruds.$slug.edit-add")) {
-            $view = "facilitador::cruds.$slug.edit-add";
+        $view = 'support::cruds.bread.edit-add';
+        if (view()->exists("support::cruds.$slug.edit-add")) {
+            $view = "support::cruds.$slug.edit-add";
         }
         return Support::view(
             $view, compact(
@@ -155,7 +155,7 @@ class RepositoryController extends Controller
 
             return $redirect->with(
                 [
-                    'message'    => __('facilitador::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+                    'message'    => __('support::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
                     'alert-type' => 'success',
                 ]
             );
@@ -266,7 +266,7 @@ class RepositoryController extends Controller
                 ->route("facilitador.{$dataType->slug}.index")
                 ->with(
                     [
-                    'message'    => __('facilitador::cruds.bread.ordering_not_set'),
+                    'message'    => __('support::cruds.bread.ordering_not_set'),
                     'alert-type' => 'error',
                     ]
                 );
@@ -282,10 +282,10 @@ class RepositoryController extends Controller
 
         $dataRow = Support::model('DataRow')->whereDataTypeId($dataType->id)->whereField($display_column)->first();
 
-        $view = 'facilitador::cruds.bread.order';
+        $view = 'support::cruds.bread.order';
 
-        if (view()->exists("facilitador::cruds.$slug.order")) {
-            $view = "facilitador::cruds.$slug.order";
+        if (view()->exists("support::cruds.$slug.order")) {
+            $view = "support::cruds.$slug.order";
         }
 
         return Support::view(
@@ -369,7 +369,7 @@ class RepositoryController extends Controller
                 if (!$row->required && !$search) {
                     $results[] = [
                         'id'   => '',
-                        'text' => __('facilitador::generic.none'),
+                        'text' => __('support::generic.none'),
                     ];
                 }
 

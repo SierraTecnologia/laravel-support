@@ -177,12 +177,12 @@ class Image extends File
 			<div class="image-holder">
 			<div class="toolbar input-group">
 			<div class="btn-group btn-group-sm">
-			<div class="crop btn js-tooltip active" title="' . __('facilitador::form.image.crop_tooltip') . '">
+			<div class="crop btn js-tooltip active" title="' . __('support::form.image.crop_tooltip') . '">
 			<div class="glyphicon glyphicon-scissors"></div></div>';
 
         // Will add the focal point ui
         if ($this->add_focal_point) {
-            $html .= '<div class="focal btn js-tooltip" title="' . __('facilitador::form.image.focal_tooltip') . '">
+            $html .= '<div class="focal btn js-tooltip" title="' . __('support::form.image.focal_tooltip') . '">
 				<div class="glyphicon glyphicon-screenshot"></div></div>';
 
             // Will store the focal point
@@ -198,8 +198,8 @@ class Image extends File
         // Add the title input
         $html .= Former::text($this->inputName('title'))
             ->class('title js-tooltip')
-            ->placeholder(__('facilitador::form.image.title_placeholder'))
-            ->title(__('facilitador::form.image.title_help'))
+            ->placeholder(__('support::form.image.title_placeholder'))
+            ->title(__('support::form.image.title_help'))
             ->render();
 
         // Add delete button

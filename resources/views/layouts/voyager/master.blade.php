@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ \Illuminate\Support\Facades\Config::get('app.locale') }}" dir="{{ __('facilitador::generic.is_rtl') == 'true' ? 'rtl' : 'ltr' }}">
+<html lang="{{ \Illuminate\Support\Facades\Config::get('app.locale') }}" dir="{{ __('support::generic.is_rtl') == 'true' ? 'rtl' : 'ltr' }}">
 <head>
     <title>@yield('page_title', setting('admin.title') . " - " . setting('admin.description'))</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ facilitador_asset('css/app.css') }}">
 
     @yield('css')
-    @if(__('facilitador::generic.is_rtl') == 'true')
+    @if(__('support::generic.is_rtl') == 'true')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css">
         <link rel="stylesheet" href="{{ facilitador_asset('css/rtl.css') }}">
     @endif
@@ -115,7 +115,7 @@ if (!is_object(Auth::user())) {
         </div>
     </div>
 </div>
-@include('facilitador::partials.app-footer')
+@include('support::partials.app-footer')
 
 <!-- Javascript Libs -->
 
@@ -142,7 +142,7 @@ if (!is_object(Auth::user())) {
     }
     @endif
 </script>
-@include('facilitador::tools.media.manager')
+@include('support::tools.media.manager')
 @yield('javascript')
 @stack('javascript')
 @if(!empty(\Illuminate\Support\Facades\Config::get('sitec.facilitador.additional_js')))<!-- Additional Javascript -->

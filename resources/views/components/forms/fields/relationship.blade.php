@@ -21,7 +21,7 @@
                         </a>
                     </p>
                 @else
-                    <p>{{ __('facilitador::generic.no_results') }}</p>
+                    <p>{{ __('support::generic.no_results') }}</p>
                 @endif
 
             @else
@@ -39,7 +39,7 @@
                     @endphp
 
                     @if(!$row->required)
-                        <option value="">{{__('facilitador::generic.none')}}</option>
+                        <option value="">{{__('support::generic.none')}}</option>
                     @endif
 
                     @foreach($query as $relationshipData)
@@ -62,7 +62,7 @@
                 @if(isset($query))
                     <p>{{ $query->{$options->label} }}</p>
                 @else
-                    <p>{{ __('facilitador::generic.no_results') }}</p>
+                    <p>{{ __('support::generic.no_results') }}</p>
                 @endif
 
             @else
@@ -80,7 +80,7 @@
                     @endphp
 
                     @if(!$row->required)
-                        <option value="">{{__('facilitador::generic.none')}}</option>
+                        <option value="">{{__('support::generic.none')}}</option>
                     @endif
 
                     @foreach($query as $relationshipData)
@@ -104,7 +104,7 @@
             @if(isset($query))
                 <p>{{ $query->{$options->label} }}</p>
             @else
-                <p>{{ __('facilitador::generic.no_results') }}</p>
+                <p>{{ __('support::generic.no_results') }}</p>
             @endif
 
         @elseif($options->type == 'hasMany')
@@ -126,13 +126,13 @@
                         if(mb_strlen($string_values) > 25){ $string_values = mb_substr($string_values, 0, 25) . '...'; }
                     @endphp
                     @if(empty($selected_values))
-                        <p>{{ __('facilitador::generic.no_results') }}</p>
+                        <p>{{ __('support::generic.no_results') }}</p>
                     @else
                         <p>{{ $string_values }}</p>
                     @endif
                 @else
                     @if(empty($selected_values))
-                        <p>{{ __('facilitador::generic.no_results') }}</p>
+                        <p>{{ __('support::generic.no_results') }}</p>
                     @else
                         <ul>
                             @foreach($selected_values as $selected_value)
@@ -157,7 +157,7 @@
                     </ul>
 
                 @else
-                    <p>{{ __('facilitador::generic.no_results') }}</p>
+                    <p>{{ __('support::generic.no_results') }}</p>
                 @endif
 
             @endif
@@ -180,13 +180,13 @@
                         if(mb_strlen($string_values) > 25){ $string_values = mb_substr($string_values, 0, 25) . '...'; }
                     @endphp
                     @if(empty($selected_values))
-                        <p>{{ __('facilitador::generic.no_results') }}</p>
+                        <p>{{ __('support::generic.no_results') }}</p>
                     @else
                         <p>{{ $string_values }}</p>
                     @endif
                 @else
                     @if(empty($selected_values))
-                        <p>{{ __('facilitador::generic.no_results') }}</p>
+                        <p>{{ __('support::generic.no_results') }}</p>
                     @else
                         <ul>
                             @foreach($selected_values as $selected_value)
@@ -207,7 +207,7 @@
                     @if(isset($options->taggable) && $options->taggable === 'on')
                         data-route="{{ route('facilitador.'.\Illuminate\Support\Str::slug($options->table).'.store') }}"
                         data-label="{{$options->label}}"
-                        data-error-message="{{__('facilitador::cruds.bread.error_tagging')}}"
+                        data-error-message="{{__('support::cruds.bread.error_tagging')}}"
                     @endif
                 >
 
@@ -220,7 +220,7 @@
                         @endphp
 
                         @if(!$row->required)
-                            <option value="">{{__('facilitador::generic.none')}}</option>
+                            <option value="">{{__('support::generic.none')}}</option>
                         @endif
 
                         @foreach($relationshipOptions as $relationshipOption)

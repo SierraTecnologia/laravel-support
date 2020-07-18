@@ -2,8 +2,8 @@
 
 namespace Support\Elements\Fields;
 
-use Decoy;
-use DecoyURL;
+use Facilitador;
+use FacilitadorURL;
 use Former\Traits\Field;
 use Illuminate\Support\Str;
 use HtmlObject\Input as HtmlInput;
@@ -61,7 +61,7 @@ class BelongsTo extends Field
         $attributes = array_merge(
             [
             'class' => 'span5',
-            'placeholder' => __('facilitador::form.belongs_to.search'),
+            'placeholder' => __('support::form.belongs_to.search'),
             'autocomplete' => 'off',
             ], (array) $attributes
         );
@@ -103,7 +103,7 @@ class BelongsTo extends Field
      */
     public function parent($class)
     {
-        $this->route(DecoyURL::action(Decoy::controllerForModel($class)));
+        $this->route(FacilitadorURL::action(Facilitador::controllerForModel($class)));
 
         return $this;
     }

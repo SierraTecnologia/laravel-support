@@ -18,7 +18,7 @@ return [
     /**
      * If not empty, subsitute the destiation path that is returned from the
      * encoder with this.  If this is an absolute path (like the example), then
-     * Decoy will try and remove the encodes if the encode is deleted.
+     * Facilitador will try and remove the encodes if the encode is deleted.
      * Ex: /uploads/encodes
      */
     'destination_root' => '',

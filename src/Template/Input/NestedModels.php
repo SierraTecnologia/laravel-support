@@ -2,7 +2,7 @@
 
 namespace Support\Template\Input;
 
-use Decoy;
+use Facilitador;
 use Facilitador\Models\Image;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -30,7 +30,7 @@ class NestedModels
     {
         // Vars
         $relation_attributes = [];
-        $input = Decoy::filteredInput();
+        $input = Facilitador::filteredInput();
 
         // Loop through the input, looking for relationships
         foreach ($input as $name => $data) {

@@ -38,12 +38,12 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
     
                 // Check if field exists
                 if (!isset($data->{$field})) {
-                    throw new Exception(__('facilitador::generic.field_does_not_exist'), 400);
+                    throw new Exception(__('support::generic.field_does_not_exist'), 400);
                 }
     
                 // Check if valid json
                 if (is_null(@json_decode($data->{$field}))) {
-                    throw new Exception(__('facilitador::json.invalid'), 500);
+                    throw new Exception(__('support::json.invalid'), 500);
                 }
                 
                 // Decode field value
@@ -55,7 +55,7 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                     }
                 }
                 if(!isset($founded)) {
-                    throw new Exception(__('facilitador::media.image_does_not_exist'), 400);
+                    throw new Exception(__('support::media.image_does_not_exist'), 400);
                 }
                 
                 // Remove image from array
@@ -69,13 +69,13 @@ class ExtendedBreadFormFieldsMediaController extends FacilitadorMediaController
                     [
                     'data' => [
                        'status'  => 200,
-                       'message' => __('facilitador::media.image_removed'),
+                       'message' => __('support::media.image_removed'),
                     ],
                     ]
                 );
             } catch (Exception $e) {
                 $code = 500;
-                $message = __('facilitador::generic.internal_error');
+                $message = __('support::generic.internal_error');
     
                 if ($e->getCode()) {
                     $code = $e->getCode();

@@ -39,7 +39,7 @@ class OldRegisterController extends Controller
         // );
 
         return view(
-            'facilitador::components.registers.index',
+            'support::components.registers.index',
             compact('service', 'modelRelationsResults', 'register', 'htmlGenerator')
         );
     }
@@ -56,7 +56,7 @@ class OldRegisterController extends Controller
         $register = $this->registerService->getInstance();
 
         return view(
-            'facilitador::components.registers.edit',
+            'support::components.registers.edit',
             compact('service', 'modelRelationsResults', 'register')
         );
     }

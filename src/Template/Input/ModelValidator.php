@@ -15,7 +15,7 @@ use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
 class ModelValidator
 {
     /**
-     * Validate a model, firing Decoy events
+     * Validate a model, firing Facilitador events
      *
      * @param  BaseModel $data
      * @param  array     $rules    A Laravel rules array. If null, will be pulled from model
@@ -65,7 +65,7 @@ class ModelValidator
 
         // Build the validation instance and fire the intiating event.
         $validator = Validator::make($data, $rules, $messages);
-        $model->fireDecoyEvent('validating', [$model, $validator]);
+        $model->fireFacilitadorEvent('validating', [$model, $validator]);
 
         // Strip the prefix out of error messages
         if ($prefix) {
@@ -79,7 +79,7 @@ class ModelValidator
         }
 
         // Fire completion event
-        $model->fireDecoyEvent('validated', [$model, $validator]);
+        $model->fireFacilitadorEvent('validated', [$model, $validator]);
 
         // Return the validator
         return $validator;

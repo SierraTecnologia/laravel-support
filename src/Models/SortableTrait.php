@@ -190,7 +190,7 @@ trait SortableTrait
 
     /**
      * Search the title (where "title" is the admin definiton of the title) for
-     * the terms.  This is designed for the Decoy autocomplete
+     * the terms.  This is designed for the Facilitador autocomplete
      *
      * @param  Illuminate\Database\Query\Builder $query
      * @param  string                            $term

@@ -46,10 +46,10 @@ class RegisterController extends Controller
             $isSoftDeleted
         ) = $this->registerService->registerShowIndex($request);
 
-        $view = 'facilitador::cruds.bread.read';
+        $view = 'support::cruds.bread.read';
 
-        if (view()->exists("facilitador::cruds.$slug.read")) {
-            $view = "facilitador::cruds.$slug.read";
+        if (view()->exists("support::cruds.$slug.read")) {
+            $view = "support::cruds.$slug.read";
         }
 
         return Support::view(
@@ -113,10 +113,10 @@ class RegisterController extends Controller
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($dataTypeContent);
 
-        $view = 'facilitador::cruds.bread.edit-add';
+        $view = 'support::cruds.bread.edit-add';
 
-        if (view()->exists("facilitador::cruds.$slug.edit-add")) {
-            $view = "facilitador::cruds.$slug.edit-add";
+        if (view()->exists("support::cruds.$slug.edit-add")) {
+            $view = "support::cruds.$slug.edit-add";
         }
 
         return Support::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
@@ -159,7 +159,7 @@ class RegisterController extends Controller
 
         return $redirect->with(
             [
-            'message'    => __('facilitador::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+            'message'    => __('support::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
             'alert-type' => 'success',
             ]
         );
@@ -209,11 +209,11 @@ class RegisterController extends Controller
         $res = $data->destroy($ids);
         $data = $res
             ? [
-                'message'    => __('facilitador::generic.successfully_deleted')." {$displayName}",
+                'message'    => __('support::generic.successfully_deleted')." {$displayName}",
                 'alert-type' => 'success',
             ]
             : [
-                'message'    => __('facilitador::generic.error_deleting')." {$displayName}",
+                'message'    => __('support::generic.error_deleting')." {$displayName}",
                 'alert-type' => 'error',
             ];
 
@@ -245,11 +245,11 @@ class RegisterController extends Controller
         $res = $data->restore($id);
         $data = $res
             ? [
-                'message'    => __('facilitador::generic.successfully_restored')." {$displayName}",
+                'message'    => __('support::generic.successfully_restored')." {$displayName}",
                 'alert-type' => 'success',
             ]
             : [
-                'message'    => __('facilitador::generic.error_restoring')." {$displayName}",
+                'message'    => __('support::generic.error_restoring')." {$displayName}",
                 'alert-type' => 'error',
             ];
 
@@ -292,7 +292,7 @@ class RegisterController extends Controller
 
             // Check if field exists
             if (!isset($data->{$field})) {
-                throw new Exception(__('facilitador::generic.field_does_not_exist'), 400);
+                throw new Exception(__('support::generic.field_does_not_exist'), 400);
             }
 
             // Check permission
@@ -301,7 +301,7 @@ class RegisterController extends Controller
             if (@json_decode($multi)) {
                 // Check if valid json
                 if (is_null(@json_decode($data->{$field}))) {
-                    throw new Exception(__('facilitador::json.invalid'), 500);
+                    throw new Exception(__('support::json.invalid'), 500);
                 }
 
                 // Decode field value
@@ -323,7 +323,7 @@ class RegisterController extends Controller
 
                 // Check if file was found in array
                 if (is_null($key) || $key === false) {
-                    throw new Exception(__('facilitador::media.file_does_not_exist'), 400);
+                    throw new Exception(__('support::media.file_does_not_exist'), 400);
                 }
 
                 $fileToRemove = $fieldData[$key];
@@ -339,7 +339,7 @@ class RegisterController extends Controller
 
                     $data->{$field} = null;
                 } else {
-                    throw new Exception(__('facilitador::media.file_does_not_exist'), 400);
+                    throw new Exception(__('support::media.file_does_not_exist'), 400);
                 }
             }
 
@@ -369,13 +369,13 @@ class RegisterController extends Controller
                 [
                 'data' => [
                    'status'  => 200,
-                   'message' => __('facilitador::media.file_removed'),
+                   'message' => __('support::media.file_removed'),
                 ],
                 ]
             );
         } catch (Exception $e) {
             $code = 500;
-            $message = __('facilitador::generic.internal_error');
+            $message = __('support::generic.internal_error');
 
             if ($e->getCode()) {
                 $code = $e->getCode();

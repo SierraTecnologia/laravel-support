@@ -6,7 +6,7 @@ use Former\Form\Fields\Textarea;
 use Illuminate\Container\Container;
 
 /**
- * Essentially a textarea with the wysiwyg class applied, which Decoy JS
+ * Essentially a textarea with the wysiwyg class applied, which Facilitador JS
  * turns into a Wywsiwyg editor
  */
 class Wysiwyg extends Textarea

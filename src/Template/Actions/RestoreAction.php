@@ -6,7 +6,7 @@ class RestoreAction extends AbstractAction
 {
     public function getTitle()
     {
-        return __('facilitador::generic.restore');
+        return __('support::generic.restore');
     }
 
     public function getIcon()

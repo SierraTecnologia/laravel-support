@@ -127,7 +127,7 @@ class Zencoder extends EncodingProvider
      */
     protected function addCommonProps($outputs)
     {
-        // Decoy settings
+        // Facilitador settings
         $common = [
 
             // Destination location as a directory
@@ -135,7 +135,7 @@ class Zencoder extends EncodingProvider
 
             // Register for notifications for when the conding is done. If testing
             // from CLI, just set the app.url config to a ngork domain.
-            'notifications' => [route('facilitador::encode@notify')],
+            'notifications' => [route('support::encode@notify')],
 
         ];
 

@@ -114,7 +114,7 @@ class ManyToManyChecklist extends Checkbox
 
     /**
      * Generate the checkbox name using a special prefix that tells
-     * Decoy to treat it has a many to many checkbox
+     * Facilitador to treat it has a many to many checkbox
      *
      * @return string
      */

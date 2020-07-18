@@ -3,7 +3,7 @@
 namespace Support\Template\Input;
 
 /**
- * Utilities that the Decoy base controller can use to generate
+ * Utilities that the Facilitador base controller can use to generate
  * the related content sidebar
  */
 class Sidebar
@@ -23,7 +23,7 @@ class Sidebar
     private $ending_items = [];
 
     /**
-     * The model instance currently being worked on by Decoy
+     * The model instance currently being worked on by Facilitador
      *
      * @var Illuminate\Database\Eloquent\Model
      */
@@ -33,7 +33,7 @@ class Sidebar
      * Inject dependencies
      *
      * @param Illuminate\Database\Eloquent\Model $parent The model instance
-     *                                                   currently being worked on by Decoy
+     *                                                   currently being worked on by Facilitador
      */
     public function __construct($parent = null)
     {
