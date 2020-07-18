@@ -13,8 +13,7 @@ trait DevDebug
     // @todo Tirar essa gambiarra
     public $isDebugging = false;
     public $modelsForDebug = [
-        // \Population\Models\Identity\Digital\Account::class,
-        // \Population\Models\Identity\Digital\Email::class,
+        
     ];
 
 

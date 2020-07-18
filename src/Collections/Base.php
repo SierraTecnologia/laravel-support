@@ -14,4 +14,5 @@ class Base extends Collection
 {
     use CanSerializeTransform,
         SerializeWithImages;
+
 }
