@@ -120,15 +120,15 @@ class SystemEntity extends EntityAbstract
                     // @todo Verificar outras classes que nao possue nome igual mas é filha
                     /**
 * ^ "Chieldren"
-                    ^ "Finder\Models\Digital\Infra\Ci\Build"
+                    ^ "Fabrica\Models\Infra\Ci\Build"
                     ^ "build"
-                    ^ "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
+                    ^ "Fabrica\Models\Infra\Ci\Build\GitBuild"
                     ^ "gitbuild"
                     ^ array:4 [▼
-                    0 => "Finder\Models\Digital\Infra\Ci\Build\GitBuild"
-                    1 => "Finder\Models\Digital\Infra\Ci\Build\HgBuild"
-                    2 => "Finder\Models\Digital\Infra\Ci\Build\LocalBuild"
-                    3 => "Finder\Models\Digital\Infra\Ci\Build\SvnBuild"
+                    0 => "Fabrica\Models\Infra\Ci\Build\GitBuild"
+                    1 => "Fabrica\Models\Infra\Ci\Build\HgBuild"
+                    2 => "Fabrica\Models\Infra\Ci\Build\LocalBuild"
+                    3 => "Fabrica\Models\Infra\Ci\Build\SvnBuild"
                     ] 
 */
 
