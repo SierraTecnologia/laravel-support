@@ -3,7 +3,7 @@
 namespace Support\Repositories;
 
 use Carbon\Carbon;
-use App\Repositories\TranslationRepository;
+use Translation\Repositories\TranslationRepository;
 use Illuminate\Support\Facades\Schema;
 use Support\Models\Application\DataType;
 

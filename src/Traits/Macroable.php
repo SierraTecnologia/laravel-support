@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SierraTecnologia\Support\Traits;
+namespace Support\Traits;
 
 use Error;
 use Exception;

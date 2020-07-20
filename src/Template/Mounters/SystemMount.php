@@ -5,6 +5,8 @@
 
 namespace Support\Template\Mounters;
 
+use Translation;
+
 /**
  * SystemMount helper to make table and object form mapping easy.
  */
@@ -63,13 +65,13 @@ class SystemMount
                 $this->getProviders()
             )->reject(
                 function ($class) {
-                    return !class_exists($class);
+                    return !class_exists($class) || !is_array($class::$menuItens) || empty($class::$menuItens);
                 }
             )->map(
                 function ($class) {
                     return $class::$menuItens;
                 }
-            )
+            ) //->push(Translation::menuBuilder())
         );
     }
 }

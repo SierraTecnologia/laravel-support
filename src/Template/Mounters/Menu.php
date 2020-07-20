@@ -8,6 +8,7 @@ namespace Support\Template\Mounters;
 
 use Route;
 use Log;
+use Illuminate\Support\Str;
 
 /**
  * Menu helper to make table and object form mapping easy.
@@ -98,7 +99,7 @@ class Menu
             return true;
         }
 
-        return isset($arrayMenu['text']);
+        return isset($arrayMenu['text']) || isset($arrayMenu['key']);
     }
 
     public function attributeIsDefault($attribute)
@@ -185,7 +186,7 @@ class Menu
             $group = $this->getGroup() . '.';
         }
 
-        return $group . $this->getSlug();
+        return $group . $this->getKey();
     }
 
 
@@ -195,6 +196,7 @@ class Menu
     }
     public function setKey($value)
     {
+        $value = Str::slug($value, '-');
         $this->key = $value;
     }
 
@@ -216,6 +218,10 @@ class Menu
     }
     public function setSlug($value)
     {
+        $value = Str::slug($value, '-');
+        if (is_null($this->getKey())) {
+            $this->setKey($value);
+        }
         $this->slug = $value;
     }
 
@@ -225,7 +231,9 @@ class Menu
     }
     public function setText($value)
     {
-        $this->setSlug($value);
+        if (is_null($this->getSlug())) {
+            $this->setSlug($value);
+        }
         $this->text = $value;
     }
 

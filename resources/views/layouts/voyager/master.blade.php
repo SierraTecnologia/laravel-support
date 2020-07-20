@@ -142,7 +142,7 @@ if (!is_object(Auth::user())) {
     }
     @endif
 </script>
-@include('support::tools.media.manager')
+@include('facilitador::tools.media.manager')
 @yield('javascript')
 @stack('javascript')
 @if(!empty(\Illuminate\Support\Facades\Config::get('sitec.facilitador.additional_js')))<!-- Additional Javascript -->

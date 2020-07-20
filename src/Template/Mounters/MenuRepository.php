@@ -5,6 +5,10 @@
 
 namespace Support\Template\Mounters;
 
+use Illuminate\Support\Str;
+use Exception;
+use Illuminate\Support\Collection;
+
 /**
  * MenuRepository helper to make table and object form mapping easy.
  */
@@ -13,30 +17,6 @@ class MenuRepository
 
     protected $menus = [];
 
-    public static function createFromArray($array)
-    {
-        $arrayFromMenuEntitys = [];
-        foreach ($array as $value) {
-            if ($createMenuArray = Menu::createFromArray($value)) {
-                $arrayFromMenuEntitys[] = $createMenuArray;
-            }
-        }
-
-        return new self($arrayFromMenuEntitys);
-    }
-
-    public static function createFromMultiplosArray($array)
-    {
-        $mergeArray = [];
-
-        if (!self::isArraysFromMenus($array) && !empty($array)) {
-            foreach ($array as $value) {
-                $mergeArray = array_merge($mergeArray, self::mergeDinamicGroups($value));
-            }
-        }
-
-        return self::createFromArray($mergeArray);
-    }
 
     public function __construct($menus = [])
     {
@@ -60,62 +40,6 @@ class MenuRepository
         //     $this->menus
         // // return $this->getInOrder($menuArrayList);
         // );
-    }
-
-    protected static function mergeDinamicGroups($array, $groupParent = '')
-    {
-        $mergeArray = [];
-
-        if (self::isArraysFromMenus($array)) {
-            return $array;
-        }
-
-        foreach ($array as $indice => $values) {
-            $group = $groupParent;
-            if (is_string($indice)) {
-                if (!empty($group)) {
-                    $mergeArray = array_merge(
-                        $mergeArray, [
-                        [
-                            'text' => $indice,
-                            'group' => $group
-                        ]
-                        ]
-                    );
-                    $group .= '.';
-                } else {
-                    $mergeArray = array_merge($mergeArray, [$indice]);
-                }
-
-                $group .= explode('|', $indice)[0];
-            }
-            if (Menu::isArrayMenu($values, $indice)) {
-                if (!empty($group)) {
-                    if (!isset($values['group'])) {
-                        $values['group'] = $group;
-                    } else {
-                        $values['group'] = $group . '.' . $values[$indice]['group'];
-                    }
-                }
-                $values = [$values];
-            } else if (self::isArraysFromMenus($values)) {
-                if (!empty($group)) {
-                    foreach ($values as $indice => $value) {
-                        if (!isset($value['group'])) {
-                            $values[$indice]['group'] = $group;
-                        } else {
-                            $values[$indice]['group'] = $group . '.' . $values[$indice]['group'];
-                        }
-                    }
-                }
-            } else {
-                $values = self::mergeDinamicGroups($values, $group);
-            }
-
-            $mergeArray = array_merge($mergeArray, $values);
-        }
-
-        return $mergeArray;
     }
 
     public function getTreeInArray($parent = 'root')
@@ -181,6 +105,98 @@ class MenuRepository
         // dd($byGroup, $this->menus);
         return $byGroup;
     }
+
+
+    public static function createFromArray(array $array): MenuRepository
+    {
+        $arrayFromMenuEntitys = [];
+        foreach ($array as $value) {
+            if ($createMenuArray = Menu::createFromArray($value)) {
+                $arrayFromMenuEntitys[] = $createMenuArray;
+            }
+        }
+
+        return new self($arrayFromMenuEntitys);
+    }
+
+    public static function createFromMultiplosArray(Collection $array): MenuRepository
+    {
+        $mergeArray = [];
+
+        if (!self::isArraysFromMenus($array) && !empty($array)) {
+            foreach ($array as $value) {
+                $mergeArray = array_merge($mergeArray, self::mergeDinamicGroups($value));
+            }
+        }
+
+        return self::createFromArray($mergeArray);
+    }
+
+    protected static function mergeDinamicGroups($array, $groupParent = '')
+    {
+        $mergeArray = [];
+
+        if (self::isArraysFromMenus($array)) {
+            return $array;
+        }
+        
+        if (!is_array($array)) {
+            throw new Exception('Deveria ser um array aqui no mergeDinamicGroups do MenuRepository');
+        };
+
+
+        foreach ($array as $indice => $values) {
+            $group = $groupParent;
+            if (is_string($indice)) {
+                if (!empty($group)) {
+                    $tempArrayToMerge = [
+                        'text' => explode('|', $indice)[0],
+                        'group' => $group
+                    ];
+                    if (isset(explode('|', $indice)[1])) {
+                        $tempArrayToMerge['order'] = explode('|', $indice)[1];
+                    }
+                    $mergeArray = array_merge(
+                        $mergeArray, [
+                            $tempArrayToMerge
+                        ]
+                    );
+                    $group .= '.';
+                } else {
+                    $mergeArray = array_merge($mergeArray, [$indice]);
+                }
+
+                $group .= Str::slug(explode('|', $indice)[0], '-');
+            }
+            if (Menu::isArrayMenu($values, $indice)) {
+                if (!empty($group)) {
+                    if (!isset($values['group'])) {
+                        $values['group'] = $group;
+                    } else {
+                        $values['group'] = $group . '.' . $values[$indice]['group'];
+                    }
+                }
+                $values = [$values];
+            } else if (self::isArraysFromMenus($values)) {
+                if (!empty($group)) {
+                    foreach ($values as $indice => $value) {
+                        if (!isset($value['group'])) {
+                            $values[$indice]['group'] = $group;
+                        } else {
+                            $values[$indice]['group'] = $group . '.' . $values[$indice]['group'];
+                        }
+                    }
+                }
+            } else {
+                $values = self::mergeDinamicGroups($values, $group);
+            }
+
+            $mergeArray = array_merge($mergeArray, $values);
+        }
+
+        return $mergeArray;
+    }
+
     public static function isArraysFromMenus($arrayMenu)
     {
         if (is_string($arrayMenu)) {
@@ -192,7 +208,6 @@ class MenuRepository
         }
 
         foreach ($arrayMenu as $indice => $values) {
-            // dd($arrayMenu);
             if (!Menu::isArrayMenu($values, $indice)) {
                 return false;
             }
@@ -200,4 +215,6 @@ class MenuRepository
 
         return true;
     }
+
+    
 }
