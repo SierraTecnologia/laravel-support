@@ -249,13 +249,13 @@ class EloquentRender implements Arrayable
                 // $this->setErrors($this->relations->getError()); @todo PEgar erro do relationsscripts
             }
             
-            // dd($key, (new RelationshipsRender($this->modelClass)),(new RelationshipsRender($this->modelClass))($key));
             return $this->relations;
 
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
             $this->setErrors($e);
-            // dd($this->model, $method, $e);
-            dd($e);
+            dd( 'Erro EloloquentRender generateRelations',
+                $e
+            );
             // @todo Tratar aqui
         }
     }

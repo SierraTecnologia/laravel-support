@@ -7,6 +7,8 @@ return [
 
     // The layout to use
     'layout' => 'support::layouts.decoy.default',
+    // 'layout' => 'support::layouts.adminlte.master',
+    // 'layout' => 'support::layouts.voyager.master',
 
 
     // // Auth guard and policy to use

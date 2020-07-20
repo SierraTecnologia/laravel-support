@@ -36,6 +36,9 @@ return [
         'Boravel\Models',
         'Tracking\Models',
         'Facilitador\Models',
+        'Integrations\Models',
+        'Transmissor\Models',
+        'Fabrica\Models',
         // 'Support\Models',
     ],
 ];

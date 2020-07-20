@@ -67,10 +67,7 @@ abstract class AbstractCategorizador implements InterfaceCategorizador
     public function isValid(): bool
     {
         $material = explode('\\', $this->materialDescription);
-        // dd(
-        //     $material, $this->examples,
-        //     StringCompare::isSimilar($material, $this->examples)
-        // );
+
         return StringCompare::isSimilar($material, $this->examples);
     }
 

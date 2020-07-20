@@ -83,7 +83,6 @@ class RegisterController extends Controller
         $id = $this->registerService->getId();
         $dataType = Support::model('DataType')->where('slug', '=', $slug)->first();
 
-        // dd($dataType, $slug, $id);
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
 

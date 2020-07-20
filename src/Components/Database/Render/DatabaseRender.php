@@ -130,56 +130,17 @@ class DatabaseRender implements Arrayable
                 Log::debug(
                     'Render Database -> Renderizando'
                 );
-                // try {
-                    // $classUniversal = false; // for reference in debug
-                    $this->eloquentRenders = $this->returnEloquentRenders($this->eloquentClasses);
-                    $this->renderTables();
-                
-                    $this->registerAndMapperDisplayClassesFromEloquentRenders();
+                // $classUniversal = false; // for reference in debug
+                $this->eloquentRenders = $this->returnEloquentRenders($this->eloquentClasses);
+                $this->renderTables();
+            
+                $this->registerAndMapperDisplayClassesFromEloquentRenders();
 
-                    // // Debug Temp
-                    // $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
+                // // Debug Temp
+                // $classUniversal = false; // for reference in debug, @todo ver se usa classe nessas 2 funcoes aqui abaixo
 
-                    // Reordena
-                    $this->sortArrays();
-                // } catch(SchemaException|DBALException $e) {
-                //     dd(
-                //         'Aqui nao era pra cair pois tem outro',
-                //         $e
-                //     );
-                //     $reference = false;
-                //     if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                //         $reference = [
-                //         'model' => $classUniversal
-                //         ];
-                //     } 
-                //     // else if (isset($classUniversal) && !empty($classUniversal) && is_object($classUniversal)) {
-                //     //     $reference = [
-                //     //         'model' => $classUniversal
-                //     //     ];
-                //     // }
-                //     // @todo Tratar, Tabela Nao existe
-                //     $this->setErrors(
-                //         $e,
-                //         $reference
-                //     );
-
-                // } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-                //     dd(
-                //         'Aqui nao era pra cair pois tem outro',
-                //         $e
-                //     );
-                //     $reference = false;
-                //     if (isset($classUniversal) && !empty($classUniversal) && is_string($classUniversal)) {
-                //         $reference = [
-                //         'model' => $classUniversal
-                //         ];
-                //     } 
-                //     $this->setErrors(
-                //         $e,
-                //         $reference
-                //     );
-                // }
+                // Reordena
+                $this->sortArrays();
 
                 return $this->toArray();
             }

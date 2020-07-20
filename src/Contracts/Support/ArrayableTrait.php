@@ -124,7 +124,7 @@ trait ArrayableTrait
                 $display[] = $infos;
             }
         }
-        dd(
+        dd('Displau',
             ...$display
         );
     }

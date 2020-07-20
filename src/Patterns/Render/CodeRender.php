@@ -14,7 +14,25 @@ class CodeRender extends RenderAbstract
 
     protected function renderChildrens(): Collection
     {
-        $configModelsAlias = \Illuminate\Support\Facades\Config::get('generators.loader.models_alias', []);
+        $configModelsAlias = \Illuminate\Support\Facades\Config::get('generators.loader.models_alias', [
+            'App\Models',
+            'Informate\Models',
+            'Population\Models',
+            'Gamer\Models',
+            'Casa\Models',
+            'Stalker\Models',
+            'Finder\Models',
+            'Trainner\Models',
+            'Siravel\Models',
+            'Audit\Models',
+            'Boravel\Models',
+            'Tracking\Models',
+            'Facilitador\Models',
+            'Integrations\Models',
+            'Transmissor\Models',
+            'Fabrica\Models',
+            // 'Support\Models',
+        ]);
         $composerParser = resolve(\Support\Patterns\Parser\ComposerParser::class);
         
         $eloquentClasses = $composerParser->returnClassesByAlias($configModelsAlias);

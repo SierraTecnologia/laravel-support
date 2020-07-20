@@ -345,8 +345,7 @@ class EloquentEntity
             return StringCompare::isSimilar($typeClass, $this->dataForColumns[$columnName]['type']);
         }
 
-        dd(
-            'EloquenntEntity: Nao deveria estar aqui',
+        dd('EloquenntEntity: Nao deveria estar aqui',
             $this->dataForColumns[$columnName],
             $typeClass,
             $typeClass->getName()

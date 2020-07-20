@@ -464,8 +464,7 @@ class DataType extends Model implements EloquentInterface
             return StringCompare::isSimilar($typeClass, $this->dataForColumns[$columnName]['type']);
         }
 
-        dd(
-            'EloquenntEntity: Nao deveria estar aqui',
+        dd('EloquenntEntity: Nao deveria estar aqui',
             $this->dataForColumns[$columnName],
             $typeClass,
             $typeClass->getName()
@@ -484,7 +483,6 @@ class DataType extends Model implements EloquentInterface
         // ];
         // $columnArray['name'] = $columnName;
         // $column = \Support\Components\Database\Schema\Column::make($columnArray, $this->getTableName());
-        // dd($column);
         // return $column->columnIsType($columnName, $typeClass);
     }
 

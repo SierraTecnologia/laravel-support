@@ -32,11 +32,6 @@ class OldRegisterController extends Controller
 
         $htmlGenerator = new \Support\Generators\RegisterGenerator($service);
 
-        // dd(
-        //     $service,
-        //     $modelRelationsResults,
-        //     $service->getModelService()->getColumns()
-        // );
 
         return view(
             'support::components.registers.index',

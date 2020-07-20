@@ -22,11 +22,15 @@ class SystemMount
 
             \Informate\InformateProvider::class,
             \Populate\PopulateProvider::class,
+            \Stalker\StalkerProvider::class,
+            \Integrations\IntegrationsProvider::class,
+            \Transmissor\TransmissorProvider::class,
+            \Fabrica\FabricaProvider::class,
             \Finder\FinderProvider::class,
             \Casa\CasaProvider::class,
 
-            // \Trainner\TrainnerProvider::class,
-            // \Gamer\GamerProvider::class,
+            \Trainner\TrainnerProvider::class,
+            \Gamer\GamerProvider::class,
             
             \Facilitador\FacilitadorProvider::class,
             \Boravel\BoravelProvider::class,

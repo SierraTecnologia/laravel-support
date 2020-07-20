@@ -51,8 +51,7 @@ class ArrayExtractor
                 \Log::debug('ArrayExtractor: Retornando nome pois a classe não existe: '.strtolower(StringModificator::plurarize($stringQuebrada[count($stringQuebrada)-1])));
                 return strtolower(StringModificator::plurarize($stringQuebrada[count($stringQuebrada)-1]));
             } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
-                dd(
-                    'Problema ArrayExtractor',
+                dd('Problema ArrayExtractor',
                     $e->getMessage()
                 );
             }

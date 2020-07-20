@@ -57,11 +57,6 @@ class MapperCommand extends Command
         // $this->config = $config;
 
 
-
-        // dd(
-        //     $models,
-        //     $config
-        // );
     }
 
     /**
@@ -79,16 +74,6 @@ class MapperCommand extends Command
 
         // $render = new \Support\Patterns\Builder\DatabaseBuilder($this);
         // $render = new \Support\Patterns\Builder\ModelagemBuilder($this);
-        // dd(
-        //     $render
-        // );
-
-
-
-
-        // dd(
-        //     $render
-        // );
 
 
 
@@ -110,15 +95,13 @@ class MapperCommand extends Command
         //     \Support\Patterns\Entity\DatabaseEntity::class
         // )) {
         //     $render = \Support\Patterns\Render\DatabaseRender::makeWithOutput($this, '')();
-        //     dd(
-        //         $render
-        //     );
+
         // }
 
 
 
 
-        // dd(
+        // dd('CommandMapper,
         //     $this->systemService->render()
         //     // $systemService->render()['persons']->toArray()
         // );

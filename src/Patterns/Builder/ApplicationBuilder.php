@@ -43,7 +43,7 @@ class ApplicationBuilder extends BuilderAbstract
     public function builder(): bool
     {
 
-        // dd(
+        // dd('Build',
         //     $this->entity
         //     // $this->entity->system->tables,
         //     // $this->entity->relations,
@@ -56,7 +56,7 @@ class ApplicationBuilder extends BuilderAbstract
          */
         $this->builderRelations();
 
-        // dd(
+        // dd('Relations',
         //     $this->entity->models["Informate\Models\Entytys\Fisicos\Weapon"]
         // );
         return true;
@@ -77,7 +77,7 @@ class ApplicationBuilder extends BuilderAbstract
                     // Register DataType/DataRow
                     $this->registerDataType($this->entity->models[$result->getClassName()]);
                 } catch (EloquentTableNotExistException $th) {
-                    dd(
+                    dd('BuildException',
                         $th
                     );
                 }

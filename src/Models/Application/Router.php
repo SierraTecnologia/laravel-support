@@ -23,7 +23,6 @@ class Router
     
     public static function all()
     {
-        // dd(Route::getRoutes());
         return Route::getRoutes()->get();
     }
 

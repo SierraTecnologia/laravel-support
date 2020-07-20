@@ -100,7 +100,7 @@ class Nav
         // Loop through the list of pages and massage
         $massaged = [];
         foreach ($pages as $key => $val) {
-            dd($pages, $key, $val);
+            dd('OldGenerator', $pages, $key, $val);
             // If val is an array, make a drop down menu
             if (is_array($val)) {
 

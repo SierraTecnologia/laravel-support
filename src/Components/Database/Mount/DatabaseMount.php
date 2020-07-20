@@ -138,7 +138,6 @@ class DatabaseMount implements Arrayable
 
     public function getAllEloquentsEntitys(): array
     {
-        //     dd($this->eloquentEntitys,
         //     $this->renderDatabaseArray['AplicationTemp']['tempErrorClasses']
         // );
         return $this->eloquentEntitys->toArray();

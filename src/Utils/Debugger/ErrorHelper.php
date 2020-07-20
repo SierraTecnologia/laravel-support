@@ -28,7 +28,7 @@ class ErrorHelper
      * Debugs
      */
     public static $debugModels = [
-        \Population\Models\Identity\Actors\Person::class,
+        \Telefonica\Models\Actors\Person::class,
     ];
 
 

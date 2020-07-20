@@ -76,8 +76,7 @@ class SystemEntity extends EntityAbstract
             }
 
             if (!is_string($tableName) || empty($tableName)) {
-                dd(
-                    'Nao era pra ta aqui Cararin',
+                dd( 'Nao era pra ta aqui Cararin',
                     $tableName
                 );
             }

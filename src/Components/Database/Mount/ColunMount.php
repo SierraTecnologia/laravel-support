@@ -44,9 +44,6 @@ class ColunMount
         $this->column = $column;
         $this->renderDatabaseData = $renderDatabase;
 
-        // dd(
-        //     $className, $column, $renderDatabase
-        // );
     }
 
     /**
@@ -197,15 +194,6 @@ class ColunMount
             // Filtra o Primeiro
             $relation = $relation[count($relation)-1];
 
-            // @todo Ajeitar aqu dps 
-            // if (!isset($relation['table_target']) || !isset($this->renderDatabaseData['Mapper']['mapperTableToClasses'][$relation['table_target']])) {
-            //     dd(
-            //         'deu ruim aqui mountcolumn',
-            //         $relation
-            //     );
-            //     return null; //@todo tratar erro de tabela que nao existe
-            // }
-            // name, key, label
             $haveDetails = true;
 
             // Get Relation Data
@@ -223,8 +211,7 @@ class ColunMount
             if ($relationData['pivot']) {
                 $array['pivot'] = 1;
                 $array['pivot_table'] = $relationData['pivot'];
-                dd(
-                    'fazer pivon',
+                dd('fazer pivon',
                     $relation,
                     $array
                 );
@@ -378,7 +365,7 @@ class ColunMount
     "type" => "MorphMany"
     "relations" => array:1 [
       0 => array:12 [
-        "origin_table_class" => "Population\Models\Identity\Actors\Person"
+        "origin_table_class" => "Telefonica\Models\Actors\Person"
         "origin_foreignKey" => "gastoable_id"
         "related_table_class" => "Casa\Models\Economic\Gasto"
         "is_inverse" => false
@@ -413,17 +400,10 @@ class ColunMount
                     $found[] = $this->renderDatabaseData['Dicionario']['dicionarioTablesRelations'][$valorFound];
                 }
             }
-            // dd($found);
             if ($isMorph) {
                 return $found;
             }
         }
-        //     dd(
-        //         $this->className,
-        //         $this->column,
-        //         $this->renderDatabaseData
-        //     );
-        // }
         
         return false;
     }

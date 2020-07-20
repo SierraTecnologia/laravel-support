@@ -185,8 +185,7 @@ class UrlGenerator
         $route = 'facilitador.'.$slug.'.'.$page.'';
         if (!Route::has($route)) {
             return static::managerRoute($slug, $page, $data);
-            // return dd(
-            //     'Gerando UrlGenerator',
+            // return dd('Gerando UrlGenerator',
             //     $route,
             //     $data
             // );

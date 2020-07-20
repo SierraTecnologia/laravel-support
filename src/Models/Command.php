@@ -65,7 +65,6 @@ class Command
                 }
             }
         }
-        // dd($commands);
         // Return matching commands
         return $commands;
     }

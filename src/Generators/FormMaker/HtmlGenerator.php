@@ -284,7 +284,6 @@ class HtmlGenerator
      */
     public function getId($config)
     {
-        // dd($config);
         return app(InputCalibrator::class)->getId($config['name'], $config);
     }
 

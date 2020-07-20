@@ -56,7 +56,7 @@ class EloquentColumnBuilder extends BuilderAbstract
     public function builder(): bool
     {
 
-        // dd(
+        // dd('Builde',
         //     $this->parentEntity->system,
         //     $this->entity->code
         // );
@@ -235,8 +235,7 @@ class EloquentColumnBuilder extends BuilderAbstract
             if ($relationData['pivot']) {
                 $array['pivot'] = 1;
                 $array['pivot_table'] = $relationData['pivot'];
-                dd(
-                    'fazer pivon',
+                dd('fazer pivon',
                     $relation,
                     $array
                 );
@@ -474,7 +473,7 @@ class EloquentColumnBuilder extends BuilderAbstract
     "type" => "MorphMany"
     "relations" => array:1 [
       0 => array:12 [
-        "origin_table_class" => "Population\Models\Identity\Actors\Person"
+        "origin_table_class" => "Telefonica\Models\Actors\Person"
         "origin_foreignKey" => "gastoable_id"
         "related_table_class" => "Casa\Models\Economic\Gasto"
         "is_inverse" => false

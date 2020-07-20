@@ -87,10 +87,6 @@ class EloquentMount
         $indexes = $databaseTableArray[
             'indexes'
         ];
-        // dd(
-        //         $eloquentClassArray,
-        //         $this->renderDatabaseData["Leitoras"]["displayTables"][$tableName]
-        // );
         $eloquentEntity = new EloquentEntity($this->className);
         $eloquentEntity->setTablename($tableName);
         $eloquentEntity->setName($name);

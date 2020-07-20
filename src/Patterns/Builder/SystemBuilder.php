@@ -346,8 +346,7 @@ class SystemBuilder extends BuilderAbstract
                     $reference
                 );
                 // } catch (\Exception $e) {
-                dd(
-                    'LaravelSupport>Database>> Não era pra Cair Erro aqui',
+                dd('LaravelSupport>Database>> Não era pra Cair Erro aqui',
                     $e,
                     $relation,
                     $relation['name'],
