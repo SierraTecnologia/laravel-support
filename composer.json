@@ -23,14 +23,15 @@
     },
     "authors": [
         {
-            "name": "SierraTecnologia LLC",
-            "homepage": "https://sierratecnologia.com",
-            "email": "help@sierratecnologia.com"
+            "name": "SierraTecnologia",
+            "homepage": "https://sierratecnologia.com.br",
+            "email": "help@sierratecnologia.com.br"
         }
     ],
     "require": {
         "php": ">=7.2.0",
         "cviebrock/eloquent-sluggable": ">=4.0",
+        "league/plates": "^1.0|^2.0|^3.0|^4.0",
         "doctrine/orm": ">=2.5",
         "illuminate/auth": "^6.0|^7.0|^8.0",
         "illuminate/bus": "^6.0|^7.0|^8.0",
@@ -79,6 +80,10 @@
         "league/climate": ">=3.4",
         "google/recaptcha": "*",
         "spatie/laravel-backup": "^6.0|^5.0",
+        "waavi/sanitizer": "*",
+        "yajra/laravel-datatables-oracle": "^9.0",
+        "spatie/laravel-pjax": ">=1.3",
+        "laravel/passport": "^7.0|^8.0|^9.0",
         "maatwebsite/excel": ">=3.1",
         "kartik-v/bootstrap-fileinput": "dev-master",
         "pusher/pusher-php-server": "^3.0|^4.0",
@@ -94,6 +99,8 @@
         "venturecraft/revisionable": ">=1.30",
         "felixkiss/uniquewith-validator": "^3.4.0",
         "watson/validating": "^5.0.0",
+        "ricardosierra/laravel-model-events": "^1.0",
+        "jeroennoten/laravel-adminlte": "*",
         "ricardosierra/phpwhois": "dev-dev"
     },
     "require-dev": {
