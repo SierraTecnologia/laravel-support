@@ -3,13 +3,13 @@
 namespace Support;
 // namespace Support\Components\Coders;
 
-use Support\Utils\Debugger\Classify;
+use Muleta\Utils\Debugger\Classify;
 use Support\Components\Coders\Model\Config as GenerateConfig;
 use Illuminate\Filesystem\Filesystem;
 use Support\Console\Commands\CodeModelsCommand;
 use Support\Components\Coders\Model\Factory as ModelFactory;
 use Config;
-use Support\Traits\Providers\ConsoleTools;
+use Muleta\Traits\Providers\ConsoleTools;
 use Log;
 use Illuminate\Support\Str;
 use App;

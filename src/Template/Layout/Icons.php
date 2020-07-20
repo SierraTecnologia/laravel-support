@@ -5,7 +5,7 @@ namespace Support\Template\Layout;
 use URL;
 use Request;
 use Support\Routing\Wildcard;
-use Support\Utils\Semantics\ReturnSimilars;
+use Muleta\Utils\Semantics\ReturnSimilars;
 
 /**
  * Generate default breadcrumbs and provide a store where they can be

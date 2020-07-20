@@ -26,12 +26,12 @@ use Illuminate\Support\Str;
 use Watson\Validating\ValidatingTrait;
 use Support\Services\ModelService;
 
-use Support\Utils\Modificators\ArrayModificator;
-use Support\Utils\Extratores\DbalExtractor;
-use Support\Utils\Mergeators\DbalMergeator;
-use Support\Utils\Inclusores\DbalInclusor;
+use Muleta\Utils\Modificators\ArrayModificator;
+use Muleta\Utils\Extratores\DbalExtractor;
+use Muleta\Utils\Mergeators\DbalMergeator;
+use Muleta\Utils\Inclusores\DbalInclusor;
 
-use Support\Traits\Models\Importable;
+use Muleta\Traits\Models\Importable;
 use Support\Collections\Base as BaseCollection;
 use Audit\Traits\Loggable;
 use Illuminate\Database\Eloquent\Model;
@@ -49,8 +49,8 @@ abstract class Base extends Model //Ardent
         Sluggable,
         SluggableScopeHelpers,
         // SupportsUploads,
-        \Support\Traits\Models\CanSerializeTransform,
-        \Support\Traits\Models\Exportable,
+        \Muleta\Traits\Models\CanSerializeTransform,
+        \Muleta\Traits\Models\Exportable,
         Loggable;
     
     /**

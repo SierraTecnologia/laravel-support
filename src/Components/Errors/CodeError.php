@@ -3,7 +3,7 @@
 namespace Support\Components\Errors;
 
 use Support\Models\Code\Error;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Coder\GetSetTrait;
 
 abstract class CodeError
 {

@@ -8,12 +8,12 @@ namespace Support\Patterns\Parser;
 use App;
 use Log;
 use Support\Models\Code\Classer;
-use Support\Traits\Debugger\HasErrors;
+use Muleta\Traits\Debugger\HasErrors;
 
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
-use Support\Traits\Coder\GetSetTrait;
-use Support\Utils\Extratores\ClasserExtractor;
+use Muleta\Traits\Coder\GetSetTrait;
+use Muleta\Utils\Extratores\ClasserExtractor;
 
 use Support\Analysator\Information\Group\EloquentGroup;
 use Support\Analysator\Information\HistoryType\AbstractHistoryType;

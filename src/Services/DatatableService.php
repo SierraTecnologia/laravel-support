@@ -11,7 +11,7 @@ use Support\Exceptions\Coder\EloquentHasErrorException;
 use Illuminate\Http\Request;
 use Support\Services\ModelService;
 use Support\Models\Application\DataType;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Coder\GetSetTrait;
 use App;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Support\Facades\Route;
-use Support\Utils\Extratores\ClasserExtractor;
+use Muleta\Utils\Extratores\ClasserExtractor;
 
 /**
  * This class exists to help make links between pages in Facilitador, which is

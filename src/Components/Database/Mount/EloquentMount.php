@@ -10,8 +10,8 @@ use Doctrine\DBAL\Schema\TableDiff;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
-use Support\Traits\Debugger\DevDebug;
-use Support\Traits\Debugger\HasErrors;
+use Muleta\Traits\Debugger\DevDebug;
+use Muleta\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -58,7 +58,7 @@ class EloquentMount
         $tableName = $eloquentClassArray["tableName"];
 
         $databaseTableArray = false;
-        if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+        if ($foundTableRender = \Muleta\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
             $tableName,
             $this->renderDatabaseData["Leitoras"]["displayTables"],
             'name'
@@ -67,7 +67,7 @@ class EloquentMount
             $databaseTableArray = $this->renderDatabaseData["Leitoras"]["displayTables"][$foundTableRender[0]];
         }
         // Procura nas tabelas de relacionamento
-        if ($foundTableRender = \Support\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
+        if ($foundTableRender = \Muleta\Utils\Searchers\ArraySearcher::arraySearchByAttribute(
             $tableName,
             $this->renderDatabaseData["AplicationTemp"]["tempAppTablesWithNotPrimaryKey"],
             'name'

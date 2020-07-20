@@ -17,12 +17,15 @@ class SystemMount
     {
         return [
             \Support\SupportServiceProvider::class,
+            \Informate\InformateProvider::class,
+            \Translation\TranslationProvider::class,
+            \Locaravel\LocaravelProvider::class,
+            \Populate\PopulateProvider::class,
+            \Telefonica\TelefonicaProvider::class,
+            \Stalker\StalkerProvider::class,
             \Audit\AuditProvider::class,
             \Tracking\TrackingProvider::class,
 
-            \Informate\InformateProvider::class,
-            \Populate\PopulateProvider::class,
-            \Stalker\StalkerProvider::class,
             \Integrations\IntegrationsProvider::class,
             \Transmissor\TransmissorProvider::class,
             \Fabrica\FabricaProvider::class,

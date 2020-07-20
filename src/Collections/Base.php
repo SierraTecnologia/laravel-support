@@ -3,8 +3,8 @@
 namespace Support\Collections;
 
 use Illuminate\Database\Eloquent\Collection;
-use Support\Traits\Models\SerializeWithImages;
-use Support\Traits\Models\CanSerializeTransform;
+use Muleta\Traits\Models\SerializeWithImages;
+use Muleta\Traits\Models\CanSerializeTransform;
 
 /**
  * The collection that is returned from queries on models that extend from

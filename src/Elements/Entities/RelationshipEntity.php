@@ -2,7 +2,7 @@
 
 namespace Support\Elements\Entities;
 
-use Support\Utils\Modificators\StringModificator;
+use Muleta\Utils\Modificators\StringModificator;
 
 use ErrorException;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -10,7 +10,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use Illuminate\Support\Collection;
 use Support\Models\Application\DataRelationship;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Coder\GetSetTrait;
 
 class RelationshipEntity
 {

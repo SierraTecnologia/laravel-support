@@ -1,8 +1,8 @@
 <?php
 namespace Support\Contracts\Manager;
 
-use Support\Traits\Debugger\HasErrors;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Debugger\HasErrors;
+use Muleta\Traits\Coder\GetSetTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Support\Repositories\EntityRepository;
 

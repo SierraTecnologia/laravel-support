@@ -9,7 +9,7 @@ use Support\Components\Database\Schema\SchemaManager;
 use Facilitador\Facades\Facilitador;
 use Translation\Traits\HasTranslations;
 use Support\Services\ModelService;
-use Support\Utils\Compare\StringCompare;
+use Muleta\Utils\Compare\StringCompare;
 use Support\Contracts\Services\EloquentInterface;
 
 class DataType extends Model implements EloquentInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Support\Models;
 
-use Support\Traits\Models\HasSlug;
+use Muleta\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 // // // @Arquivo no existe
 use Spatie\Sluggable\SlugOptions;
@@ -13,9 +13,9 @@ use Spatie\EloquentSortable\Sortable;
 // // @Arquivo no existe
 use Support\Recursos\Cacheable\CacheableEloquent;
 // @Arquivo no existe
-use Support\Traits\Models\HasTranslations;
+use Muleta\Traits\Models\HasTranslations;
 // @Arquivo no existe
-use Support\Traits\Models\ValidatingTrait;
+use Muleta\Traits\Models\ValidatingTrait;
 // @todo Add Essa lib Trait 'Spatie\EloquentSortable\SortableTrait' not found
 use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;

@@ -23,7 +23,7 @@ use TypeError;
 use Throwable;
 use Watson\Validating\ValidationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Support\Utils\Extratores\ClasserExtractor;
+use Muleta\Utils\Extratores\ClasserExtractor;
 
 class ParseModelClass extends ParseClass
 {

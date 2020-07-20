@@ -8,8 +8,8 @@ use League\Pipeline\ProcessorInterface;
 use League\Pipeline\PipelineBuilderInterface;
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
-use Support\Traits\Debugger\HasErrors;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Debugger\HasErrors;
+use Muleta\Traits\Coder\GetSetTrait;
 use Support\Contracts\Output\OutputableTrait;
 use Illuminate\Database\Eloquent\Collection;
 

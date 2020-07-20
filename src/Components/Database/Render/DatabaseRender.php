@@ -24,16 +24,16 @@ use Support\Components\Database\Types\Type;
 use Log;
 use Support\Components\Database\Schema\SchemaManager;
 
-use Support\Utils\Modificators\ArrayModificator;
-use Support\Utils\Inclusores\ArrayInclusor;
-use Support\Utils\Modificators\StringModificator;
-use Support\Utils\Extratores\ClasserExtractor;
+use Muleta\Utils\Modificators\ArrayModificator;
+use Muleta\Utils\Inclusores\ArrayInclusor;
+use Muleta\Utils\Modificators\StringModificator;
+use Muleta\Utils\Extratores\ClasserExtractor;
 
 use Support\Patterns\Parser\ParseClass;
 
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
-use Support\Traits\Debugger\HasErrors;
+use Muleta\Traits\Debugger\HasErrors;
 
 class DatabaseRender implements Arrayable
 {

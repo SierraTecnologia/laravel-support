@@ -24,21 +24,28 @@ return [
 
     'models_alias' => [
         'App\Models',
+        // 'Support\Models',
+
         'Informate\Models',
+        'Translation\Models',
+        'Locaravel\Models',
         'Population\Models',
-        'Gamer\Models',
-        'Casa\Models',
+        'Telefonica\Models',
         'Stalker\Models',
-        'Finder\Models',
-        'Trainner\Models',
-        'Siravel\Models',
         'Audit\Models',
-        'Boravel\Models',
         'Tracking\Models',
-        'Facilitador\Models',
+
         'Integrations\Models',
         'Transmissor\Models',
         'Fabrica\Models',
-        // 'Support\Models',
+        'Finder\Models',
+        'Casa\Models',
+
+        'Trainner\Models',
+        'Gamer\Models',
+
+        'Facilitador\Models',
+        'Siravel\Models',
+        'Boravel\Models',
     ],
 ];

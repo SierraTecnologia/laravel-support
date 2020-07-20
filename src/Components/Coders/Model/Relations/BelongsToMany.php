@@ -8,7 +8,7 @@
 namespace Support\Components\Coders\Model\Relations;
 
 use Illuminate\Support\Str;
-use Support\Utils\Debugger\Dumper;
+use Muleta\Utils\Debugger\Dumper;
 use Illuminate\Support\Fluent;
 use Support\Components\Coders\Model\Model;
 use Support\Components\Coders\Model\Relation;

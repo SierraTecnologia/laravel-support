@@ -2,7 +2,7 @@
 
 namespace Support\Elements\FormFields\After;
 
-use Support\Traits\Models\Renderable;
+use Muleta\Traits\Models\Renderable;
 
 abstract class AbstractHandler implements HandlerInterface
 {

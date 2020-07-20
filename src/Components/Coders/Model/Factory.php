@@ -9,7 +9,7 @@ namespace Support\Components\Coders\Model;
 
 use Illuminate\Support\Str;
 use Support\Components\Database\Meta\Blueprint;
-use Support\Utils\Debugger\Classify;
+use Muleta\Utils\Debugger\Classify;
 use Support\Components\Database\Meta\SchemaManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\DatabaseManager;
@@ -32,7 +32,7 @@ class Factory
     protected $files;
 
     /**
-     * @var \Support\Utils\Debugger\Classify
+     * @var \Muleta\Utils\Debugger\Classify
      */
     protected $class;
 
@@ -56,7 +56,7 @@ class Factory
      *
      * @param \Illuminate\Database\DatabaseManager    $db
      * @param \Illuminate\Filesystem\Filesystem       $files
-     * @param \Support\Utils\Debugger\Classify        $writer
+     * @param \Muleta\Utils\Debugger\Classify        $writer
      * @param \Support\Components\Coders\Model\Config $config
      */
     public function __construct(DatabaseManager $db, Filesystem $files, Classify $writer, Config $config)

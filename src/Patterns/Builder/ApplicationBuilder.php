@@ -5,9 +5,9 @@ declare(strict_types=1);
 
 namespace Support\Patterns\Builder;
 
-use Support\Utils\Modificators\ArrayModificator;
-use Support\Utils\Modificators\StringModificator;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Utils\Modificators\ArrayModificator;
+use Muleta\Utils\Modificators\StringModificator;
+use Muleta\Traits\Coder\GetSetTrait;
 use Support\Components\Database\Schema\Table;
 use Log;
 use Support\Contracts\Manager\BuilderAbstract;
@@ -17,7 +17,7 @@ use Support\Elements\Entities\RelationshipEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
-use Support\Utils\Extratores\ArrayExtractor;
+use Muleta\Utils\Extratores\ArrayExtractor;
 
 class ApplicationBuilder extends BuilderAbstract
 {

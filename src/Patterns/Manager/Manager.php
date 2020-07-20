@@ -9,7 +9,7 @@ namespace Support\Patterns\Manager;
 
 
 use Illuminate\Support\Facades\Cache;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Coder\GetSetTrait;
 
 use Log;
 

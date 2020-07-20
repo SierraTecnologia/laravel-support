@@ -2,7 +2,7 @@
 
 namespace Support\Patterns\Parser;
 
-use Support\Traits\Debugger\HasErrors;
+use Muleta\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;

@@ -22,7 +22,7 @@ use Support\Components\Database\Types\Type;
 use Support\Patterns\Parser\ParseModelClass;
 
 use Support\Patterns\Parser\ComposerParser;
-use Support\Utils\Searchers\ArraySearcher;
+use Muleta\Utils\Searchers\ArraySearcher;
 use Support\Elements\Entities\EloquentColumn;
 use Log;
 

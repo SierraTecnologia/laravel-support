@@ -5,7 +5,7 @@ namespace Support\Patterns\Entity;
 use Support\Contracts\Manager\EntityAbstract;
 
 
-use Support\Utils\Compare\StringCompare;
+use Muleta\Utils\Compare\StringCompare;
 
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
@@ -28,7 +28,7 @@ use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Coder\GetSetTrait;
 
 class EloquentEntity extends EntityAbstract
 {

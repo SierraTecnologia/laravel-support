@@ -4,8 +4,8 @@ namespace Support\Components\Database\Schema;
 
 use Doctrine\DBAL\Schema\Comparator;
 use Doctrine\DBAL\Schema\Table as DoctrineTable;
-use Support\Utils\Modificators\ArrayModificator;
-use Support\Utils\Modificators\StringModificator;
+use Muleta\Utils\Modificators\ArrayModificator;
+use Muleta\Utils\Modificators\StringModificator;
 
 class Table extends DoctrineTable
 {

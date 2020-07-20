@@ -3,7 +3,7 @@ namespace Support\Contracts\Manager;
 
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
-use Support\Traits\Debugger\HasErrors;
+use Muleta\Traits\Debugger\HasErrors;
 use Illuminate\Database\Eloquent\Collection;
 use Support\Repositories\EntityRepository;
 

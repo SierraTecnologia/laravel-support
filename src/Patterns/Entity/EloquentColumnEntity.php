@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Support\Elements\Entities\DataTypes\Varchar;
 use Support\Services\EloquentService;
-use Support\Traits\Coder\GetSetTrait;
+use Muleta\Traits\Coder\GetSetTrait;
 
 
 class EloquentColumnEntity extends EntityAbstract

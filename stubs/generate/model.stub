@@ -3,7 +3,7 @@
 namespace App;
 
 use Facilitador\Models\Base;
-use Support\Traits\Models\HasImages;
+use Muleta\Traits\Models\HasImages;
 use Illuminate\Database\Eloquent\Builder;
 
 class {{model}} extends Base

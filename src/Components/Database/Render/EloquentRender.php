@@ -7,7 +7,7 @@ use Doctrine\DBAL\Schema\TableDiff;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
-use Support\Traits\Debugger\DevDebug;
+use Muleta\Traits\Debugger\DevDebug;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use ReflectionClass;
 use ReflectionMethod;
@@ -37,9 +37,9 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
-use Support\Traits\Debugger\HasErrors;
-use Support\Traits\Coder\GetSetTrait;
-use Support\Utils\Modificators\StringModificator;
+use Muleta\Traits\Debugger\HasErrors;
+use Muleta\Traits\Coder\GetSetTrait;
+use Muleta\Utils\Modificators\StringModificator;
 
 class EloquentRender implements Arrayable
 {

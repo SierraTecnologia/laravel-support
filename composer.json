@@ -14,7 +14,7 @@
         "trait"
     ],
     "license": "MIT",
-    "homepage": "https://sierratecnologia.com/marketplace/sierratecnologia-support/",
+    "homepage": "https://sierratecnologia.com/packages/laravel-support/",
     "support": {
         "email": "help@sierratecnologia.com",
         "issues": "https://github.com/sierratecnologia/laravel-support/issues",

@@ -1,7 +1,7 @@
 <?php
 namespace Support\Contracts\Categorizador;
 
-use Support\Utils\Compare\StringCompare;
+use Muleta\Utils\Compare\StringCompare;
 
 abstract class AbstractCategorizador implements InterfaceCategorizador
 {

@@ -21,8 +21,8 @@ use Support\Components\Database\Schema\SchemaManager;
 use Support\Components\Database\Schema\Table;
 use Support\Components\Database\Types\Type;
 use Support\Patterns\Parser\ParseModelClass;
-use Support\Utils\Modificators\StringModificator;
-use Support\Utils\Extratores\ArrayExtractor;
+use Muleta\Utils\Modificators\StringModificator;
+use Muleta\Utils\Extratores\ArrayExtractor;
 use Support\Patterns\Parser\ComposerParser;
 
 use Support\Elements\Entities\DatabaseEntity;

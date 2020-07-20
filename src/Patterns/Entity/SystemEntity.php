@@ -6,12 +6,12 @@
 namespace Support\Patterns\Entity;
 
 use Support\Contracts\Manager\EntityAbstract;
-use Support\Utils\Extratores\ClasserExtractor;
+use Muleta\Utils\Extratores\ClasserExtractor;
 use Support\Patterns\Parser\ParseClass;
-use Support\Traits\Debugger\HasErrors;
+use Muleta\Traits\Debugger\HasErrors;
 use Support\Patterns\Parser\ParseModelClass;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
-use Support\Utils\Searchers\ArraySearcher;
+use Muleta\Utils\Searchers\ArraySearcher;
 use Support\Components\Errors\TableNotExistError;
 use Support\Components\Database\Schema\Table;
 

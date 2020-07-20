@@ -3,7 +3,7 @@
 namespace Support\Elements\FormFields;
 
 use Illuminate\Support\Str;
-use Support\Traits\Models\Renderable;
+use Muleta\Traits\Models\Renderable;
 
 abstract class AbstractHandler implements HandlerInterface
 {

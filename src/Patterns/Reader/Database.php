@@ -2,7 +2,7 @@
 
 namespace Support\Patterns\Reader;
 
-use Support\Traits\Debugger\HasErrors;
+use Muleta\Traits\Debugger\HasErrors;
 
 class Database
 {

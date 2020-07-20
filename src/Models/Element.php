@@ -3,8 +3,8 @@
 namespace Support\Models;
 
 // Dependencies
-use Support\Traits\Models\Encodable;
-use Support\Traits\Models\HasImages;
+use Muleta\Traits\Models\Encodable;
+use Muleta\Traits\Models\HasImages;
 use Bkwld\Library\Utils\File;
 use Config;
 use DB;
