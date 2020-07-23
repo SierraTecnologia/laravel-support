@@ -55,10 +55,10 @@ return [
     ],
 
     /**
-     * A class that implements the Support\Template\Input\EncodingProviders\EncoderInterface
+     * A class that implements the Stalker\Template\EncodingProviders\EncoderInterface
      * interface and contains the logic to push a video encode request to service
      * provider and handle the responses
      */
-    'provider' => '\Support\Template\Input\EncodingProviders\Zencoder',
+    'provider' => '\Stalker\Template\EncodingProviders\Zencoder',
 
 ];

@@ -3,7 +3,7 @@
 namespace Support\Models;
 
 // Dependencies
-use Muleta\Traits\Models\Encodable;
+use Stalker\Traits\Encodable;
 use Muleta\Traits\Models\HasImages;
 use Bkwld\Library\Utils\File;
 use Config;

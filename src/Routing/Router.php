@@ -63,13 +63,13 @@ class Router
             $this->registerResetPassword();
         });
 
-        // Routes that don't require auth or CSRF
-        Route::group([
-            'prefix' => $this->dir,
-            'middleware' => 'facilitador.endpoint',
-        ], function () {
-            $this->registerExternalEndpoints();
-        });
+        // // Routes that don't require auth or CSRF
+        // Route::group([
+        //     'prefix' => $this->dir,
+        //     'middleware' => 'facilitador.endpoint',
+        // ], function () {
+        //     $this->registerExternalEndpoints(); // @todo Stalkers
+        // });
 
         // Protected, admin routes
         Route::group([
@@ -78,7 +78,6 @@ class Router
         ], function () {
             $this->registerAdmins();
             $this->registerElements();
-            $this->registerEncode();
             $this->registerRedactor();
             $this->registerWorkers();
             $this->registerWildcard(); // Must be last
@@ -207,18 +206,6 @@ class Router
         ]);
     }
 
-    /**
-     * Get the status of an encode
-     *
-     * @return void
-     */
-    public function registerEncode()
-    {
-        Route::get('encode/{id}/progress', [
-            'as' => 'facilitador.encode@progress',
-            'uses' => '\Facilitador\Http\Controllers\Admin\Encoder@progress',
-        ]);
-    }
 
     /**
      * Elements system
@@ -259,18 +246,6 @@ class Router
         Route::post('redactor', '\Facilitador\Http\Controllers\Admin\Redactor@store');
     }
 
-    /**
-     * Web service callback endpoints
-     *
-     * @return void
-     */
-    public function registerExternalEndpoints()
-    {
-        Route::post('encode/notify', [
-            'as' => 'facilitador.encode@notify',
-            'uses' => '\Facilitador\Http\Controllers\Admin\Encoder@notify',
-        ]);
-    }
 
     /**
      * Set and get the action for this request
