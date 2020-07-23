@@ -9,7 +9,7 @@ class ImageHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.image', [
+            'support::shared.forms.fields.image', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

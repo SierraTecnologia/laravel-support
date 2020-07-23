@@ -9,7 +9,7 @@ class TimeHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.time', [
+            'support::shared.forms.fields.time', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

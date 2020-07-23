@@ -9,7 +9,7 @@ class TimestampHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.timestamp', [
+            'support::shared.forms.fields.timestamp', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

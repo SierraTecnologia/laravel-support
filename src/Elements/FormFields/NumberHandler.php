@@ -9,7 +9,7 @@ class NumberHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.number', [
+            'support::shared.forms.fields.number', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

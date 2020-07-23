@@ -48,7 +48,7 @@ class Routers extends Base
     public function index()
     {
         return $this->populateView(
-            'support::application.routers.index', [
+            'support::tools.routers.index', [
             'routers' => Router::all(),
             ]
         );

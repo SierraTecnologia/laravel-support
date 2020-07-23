@@ -29,7 +29,7 @@
             {{ __('facilitador::generic.return_to_list') }}
         </a>
     </h1>
-    @include('support::components.forms.multilingual.language-selector')
+    @include('support::shared.forms.multilingual.language-selector')
 @stop
 
 @section('content')
@@ -70,7 +70,7 @@
                                          src="{{ filter_var($dataTypeContent->{$row->field}, FILTER_VALIDATE_URL) ? $dataTypeContent->{$row->field} : Facilitador::image($dataTypeContent->{$row->field}) }}">
                                 @endif
                             @elseif($row->type == 'relationship')
-                                 @include('support::components.forms.fields.relationship', ['view' => 'read', 'options' => $row->details])
+                                 @include('support::shared.forms.fields.relationship', ['view' => 'read', 'options' => $row->details])
                             @elseif($row->type == 'select_dropdown' && property_exists($row->details, 'options') &&
                                     !empty($row->details->options->{$dataTypeContent->{$row->field}})
                             )
@@ -119,7 +119,7 @@
                                 @if(is_array($dataTypeContent->{$row->field}))
                                     <p>{!! implode(', ',$dataTypeContent->{$row->field}) !!}</p>
                                 @else
-                                    @include('support::components.forms.multilingual.input-hidden-bread-read')
+                                    @include('support::shared.forms.multilingual.input-hidden-bread-read')
                                     <p>{!! $dataTypeContent->{$row->field} !!}</p>
                                 @endif
                             @elseif($row->type == 'file')
@@ -139,7 +139,7 @@
                                 @if(is_array($dataTypeContent->{$row->field}))
                                     <p>{!! implode(', ', $dataTypeContent->{$row->field}) !!}</p>
                                 @else
-                                    @include('support::components.forms.multilingual.input-hidden-bread-read')
+                                    @include('support::shared.forms.multilingual.input-hidden-bread-read')
                                     <p>{{ $dataTypeContent->{$row->field} }}</p>
                                 @endif
                             @endif

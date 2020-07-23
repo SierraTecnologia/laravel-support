@@ -9,7 +9,7 @@ class SelectMultipleHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.select_multiple', [
+            'support::shared.forms.fields.select_multiple', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

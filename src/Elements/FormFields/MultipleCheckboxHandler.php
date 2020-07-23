@@ -9,7 +9,7 @@ class MultipleCheckboxHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.multiple_checkbox', [
+            'support::shared.forms.fields.multiple_checkbox', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

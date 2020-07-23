@@ -9,7 +9,7 @@ class SelectDropdownHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.select_dropdown', [
+            'support::shared.forms.fields.select_dropdown', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,

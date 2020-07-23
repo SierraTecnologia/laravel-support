@@ -9,7 +9,7 @@ class TextHandler extends AbstractHandler
     public function createContent($row, $dataType, $dataTypeContent, $options)
     {
         return view(
-            'support::components.forms.fields.text', [
+            'support::shared.forms.fields.text', [
             'row'             => $row,
             'options'         => $options,
             'dataType'        => $dataType,
