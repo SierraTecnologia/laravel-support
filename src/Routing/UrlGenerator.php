@@ -70,13 +70,21 @@ class UrlGenerator
             $path .= '/'.$id;
         }
 
+
         // If there is a child controller, add that now
         if ($child) {
+            $childParts = explode('Http\Controllers\\', $child);
+            $child = array_pop($childParts);
 
+            if (ends_with($child, 'Controller')) {
+                $child = strtolower(str_plural(str_limit($child, -10, '')));
+            }
             // If the child has a backslash, it's a namespaced class name, so convert to just name
             if (strpos($child, '\\') !== false) {
                 $child = $this->slugController($child);
             }
+
+            // @todo cosertar isso
 
             // If currently on an edit view (where we always respect child parameters literally),
             // or if the link is to an index view (for many to many to self) or if the child
@@ -85,7 +93,9 @@ class UrlGenerator
                 || $action == 'index'
                 || !preg_match('#'.$child.'(/\d+)?$#', $path)
             ) {
-                $path .= '/'.$child;
+                if (!ends_with($path, $child.'/')) {
+                    $path .= '/'.$child;
+                }
             }
 
             // If the action was not index and there was an id, add it
@@ -164,6 +174,15 @@ class UrlGenerator
 
         // Done
         return $controller;
+    }
+
+    public function isWildCard()
+    {
+        return starts_with($this->getPath(), $this->getWildCardRoute());
+    }
+    public function getWildCardRoute()
+    {
+        return \Illuminate\Support\Facades\Config::get('application.routes.main').'//'.'admin';
     }
 
     /**

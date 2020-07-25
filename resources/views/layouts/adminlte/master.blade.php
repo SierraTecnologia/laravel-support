@@ -157,7 +157,13 @@
 
 @section('content')
     @parent
-    <?php if(isset($content)) echo $content->render(); ?>
+    @if (isset($content))
+      @if (is_string($content))
+        {!! $content !!}
+      @else
+        {!! $content->render() !!}
+      @endif
+    @endif
     @stack('content')
     @yield('content')
 @stop

@@ -5,7 +5,7 @@ use Support\Events\Routing;
 use Support\Events\RoutingAdmin;
 use Support\Events\RoutingAdminAfter;
 use Support\Events\RoutingAfter;
-use Facilitador\Facades\Facilitador;
+use Support\Facades\Support;
 
 // Public routes
 Route::group(

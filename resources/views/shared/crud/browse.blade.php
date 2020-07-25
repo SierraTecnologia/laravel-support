@@ -38,7 +38,7 @@
 
 @section('content')
     <div class="page-content browse container-fluid">
-        @include('support::alerts')
+        @include('facilitador::alerts')
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">

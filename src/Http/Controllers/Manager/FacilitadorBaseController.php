@@ -13,7 +13,7 @@ use Support\Events\BreadDataDeleted;
 use Support\Events\BreadDataRestored;
 use Support\Events\BreadDataUpdated;
 use Support\Events\BreadImagesDeleted;
-use Facilitador\Facades\Facilitador;
+use Support\Facades\Support;
 
 class FacilitadorBaseController extends Controller
 {

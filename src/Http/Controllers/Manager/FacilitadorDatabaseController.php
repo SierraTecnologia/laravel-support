@@ -16,7 +16,7 @@ use Support\Components\Database\Types\Type;
 use Support\Events\TableAdded;
 use Support\Events\TableDeleted;
 use Support\Events\TableUpdated;
-use Facilitador\Facades\Facilitador;
+use Support\Facades\Support;
 
 class FacilitadorDatabaseController extends Controller
 {

@@ -61,8 +61,8 @@ abstract class Base extends Model //Ardent
     * umn not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:61)                                                                                                                                   
     * [stacktrace]                                                                                                                                   
      */
-    use /*ValidatingTrait, */SortableTrait, Importable;
-
+    use /*ValidatingTrait, */Importable;
+    // use SortableTrait; // @todo Nem todos sao Sortable
     //---------------------------------------------------------------------------
     // Overrideable properties
     //---------------------------------------------------------------------------
@@ -962,4 +962,21 @@ abstract class Base extends Model //Ardent
 
         return Event::dispatch($event, $args);
     }
+
+
+    /**
+     * Gatilhos para funcionar
+     */
+
+    /**
+     * Gatinho para funcionar o ordered pra quem nao tem ordenacao
+     */
+    public function scopeOrderedForce($query)
+    {
+        if ($this->usesTimestamps()) {
+            $query->orderBy($this->getTable().'.created_at', 'desc');
+        }
+        return $query;
+    }
+
 }

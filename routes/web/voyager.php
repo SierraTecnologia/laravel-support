@@ -5,7 +5,7 @@ use Support\Events\Routing;
 use Support\Events\RoutingAdmin;
 use Support\Events\RoutingAdminAfter;
 use Support\Events\RoutingAfter;
-use Facilitador\Facades\Facilitador;
+use Support\Facades\Support;
 
 // Route::group(['prefix' => 'facilitador'], function () {
 //     Support::routes();
@@ -27,8 +27,9 @@ Route::namespace('Manager')->group(
         Route::group(
             ['as' => 'facilitador.'], function () {
 
-                Route::group(
-                    ['middleware' => 'admin.user'], function () {
+                // Route::group(
+                    // @todo
+                    // ['middleware' => 'admin.user'], function () {
                         event(new RoutingAdmin());
 
                         // Database Routes
@@ -40,8 +41,8 @@ Route::namespace('Manager')->group(
                         */
 
                         event(new RoutingAdminAfter());
-                    }
-                );
+                    // }
+                // );
 
             }
         );

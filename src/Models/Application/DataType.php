@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Support\Components\Database\Schema\SchemaManager;
-use Facilitador\Facades\Facilitador;
+use Support\Facades\Support;
 use Translation\Traits\HasTranslations;
 use Support\Services\ModelService;
 use Muleta\Utils\Compare\StringCompare;

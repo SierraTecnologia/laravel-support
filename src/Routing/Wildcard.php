@@ -93,7 +93,12 @@ class Wildcard
 
         $paths = explode('/', $this->path);
 
-        $local = 'App\Http\Controllers';
+        $rootNamespace = 'App';
+        if ($paths[0] == 'rica') {
+            array_shift($paths);
+            $rootNamespace = Str::studly(Str::singular(array_shift($paths)));
+        }
+        $local = $rootNamespace.'\Http\Controllers';
         foreach($paths as $path) {
             $local .= '\\'.Str::studly(Str::singular($path));
         }
@@ -101,8 +106,6 @@ class Wildcard
         if (class_exists($local)) {
             return $local;
         }
-
-
 
         // Setup the two schemes
         if (!$class_name) {
@@ -123,7 +126,9 @@ class Wildcard
             return $facilitador;
         }
 
-        return false;
+        throw new Exception("Controller não encontrado p rota: ".$this->path, 1);
+        
+        // return false;
     }
 
     /**

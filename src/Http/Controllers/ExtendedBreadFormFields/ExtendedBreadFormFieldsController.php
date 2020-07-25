@@ -5,7 +5,7 @@ namespace Support\Http\Controllers\ExtendedBreadFormFields;
 use Illuminate\Http\Request;
 use Facilitador\Http\Controllers\FacilitadorBaseController;
 use Facilitador\Http\Controllers\Controller;
-use Facilitador\Facades\Facilitador;
+use Support\Facades\Support;
 
 use Support\Elements\ContentTypes\MultipleImagesWithAttrsContentType;
 use Support\Elements\ContentTypes\KeyValueJsonContentType;

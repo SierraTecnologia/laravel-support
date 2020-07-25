@@ -150,24 +150,29 @@ class Router
      */
     public function registerWildcard()
     {
-        // Setup a wildcarded catch all route
-        Route::any('{path}', ['as' => 'facilitador.wildcard', function ($path) {
 
-            // Remember the detected route
-            App::make('events')->listen('wildcard.detection', function ($controller, $action) {
-                $this->action($controller.'@'.$action);
-            });
+        Route::group([
+            'prefix' => 'admin',
+        ], function () {
+            // Setup a wildcarded catch all route
+            Route::any('{path}', ['as' => 'facilitador.wildcard', function ($path) {
 
-            // Do the detection
-            $router = App::make('facilitador.wildcard');
-            $response = $router->detectAndExecute();
-            if (is_a($response, 'Symfony\Component\HttpFoundation\Response')
-                || is_a($response, 'Illuminate\View\View')) { // Possible when layout is involved
-                return $response;
-            } else {
-                App::abort(404);
-            }
-        }])->where('path', '.*');
+                // Remember the detected route
+                App::make('events')->listen('wildcard.detection', function ($controller, $action) {
+                    $this->action($controller.'@'.$action);
+                });
+
+                // Do the detection
+                $router = App::make('facilitador.wildcard');
+                $response = $router->detectAndExecute();
+                if (is_a($response, 'Symfony\Component\HttpFoundation\Response')
+                    || is_a($response, 'Illuminate\View\View')) { // Possible when layout is involved
+                    return $response;
+                } else {
+                    App::abort(404);
+                }
+            }])->where('path', '.*');
+        });
     }
 
     /**

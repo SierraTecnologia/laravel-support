@@ -23,7 +23,7 @@ use Support\Events\BreadDataDeleted;
 use Support\Events\BreadDataRestored;
 use Support\Events\BreadDataUpdated;
 use Support\Events\BreadImagesDeleted;
-use Facilitador\Facades\Facilitador;
+use Support\Facades\Support;
 use Support\Contracts\Manager\RelationshipableTrait;
 
 class DatatableService
@@ -203,7 +203,9 @@ class DatatableService
 
     public static function makeFromCollection($collection)
     {
-        // dd($collection);
+        if ($collection->isEmpty()) {
+            return false;
+        }
         $model = new self(new ModelService(get_class($collection->first())));
         $model->setResults($collection);
         return $model;

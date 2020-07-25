@@ -11,7 +11,7 @@
 @section('content')
 
     <div class="page-content container-fluid">
-        @include('support::alerts')
+        @include('facilitador::alerts')
         <div class="row">
             <div class="col-md-12">
 
