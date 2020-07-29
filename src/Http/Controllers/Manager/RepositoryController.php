@@ -62,10 +62,10 @@ class RepositoryController extends Controller
         ) = $this->repositoryService->repositoryIndex($dataType, $request);
 
 
-        $view = 'support::cruds.bread.browse';
+        $view = 'facilitador::cruds.bread.browse';
 
-        if (view()->exists("support::cruds.$slug.browse")) {
-            $view = "support::cruds.$slug.browse";
+        if (view()->exists("facilitador::cruds.$slug.browse")) {
+            $view = "facilitador::cruds.$slug.browse";
         }
 
         return Support::view(

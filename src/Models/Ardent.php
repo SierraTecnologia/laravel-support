@@ -20,13 +20,13 @@ use Illuminate\Validation\Factory as ValidationFactory;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Translator;
 use Facilitador\Models\Builder;
-
+use Muleta\Traits\Models\ValidatingTrait;
 /**
  * Ardent - Self-validating Eloquent model base class
  */
 abstract class Ardent extends Model
 {
-
+    use ValidatingTrait;
 
     public static $classeBuilder = Builder::class;
 
@@ -284,27 +284,6 @@ abstract class Ardent extends Model
         );
     }
 
-    /**
-     * Register a validating model event with the dispatcher.
-     *
-     * @param  Closure|string $callback
-     * @return void
-     */
-    public static function validating($callback)
-    {
-        static::registerModelEvent('validating', $callback);
-    }
-
-    /**
-     * Register a validated model event with the dispatcher.
-     *
-     * @param  Closure|string $callback
-     * @return void
-     */
-    public static function validated($callback)
-    {
-        static::registerModelEvent('validated', $callback);
-    }
 
     /**
      * Looks for the relation in the {@link $relationsData} array and does the correct magic as Eloquent would require

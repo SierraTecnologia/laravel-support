@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Log;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
 use Illuminate\Support\Str;
-use Watson\Validating\ValidatingTrait;
 use Support\Services\ModelService;
 
 use Muleta\Utils\Modificators\ArrayModificator;
@@ -35,6 +34,7 @@ use Muleta\Traits\Models\Importable;
 use Support\Collections\Base as BaseCollection;
 use Audit\Traits\Loggable;
 use Illuminate\Database\Eloquent\Model;
+use Muleta\Traits\Models\ValidatingTrait;
 
 abstract class Base extends Model //Ardent
 {
@@ -53,6 +53,7 @@ abstract class Base extends Model //Ardent
         \Muleta\Traits\Models\Exportable,
         Loggable;
     
+
     /**
      * @todo bug Resolver pra tirar esse coment
      * [2020-02-02 08:18:39] local.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' (SQL: select count(*) as aggregate from `users` where `email` = rafacollares@hotmail.com and `2` <> 2) {"exception":"[object] (Illuminate\\Database\\QueryExcept
@@ -61,7 +62,7 @@ abstract class Base extends Model //Ardent
     * umn not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:61)                                                                                                                                   
     * [stacktrace]                                                                                                                                   
      */
-    use /*ValidatingTrait, */Importable;
+    use ValidatingTrait, Importable;
     // use SortableTrait; // @todo Nem todos sao Sortable
     //---------------------------------------------------------------------------
     // Overrideable properties
