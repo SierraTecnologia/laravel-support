@@ -24,10 +24,34 @@ trait OutputableTrait
             $this->output->info($message);
         }
     }
+    public function debug($message)
+    {
+        if ($this->output) {
+            $this->output->info($message);
+        }
+    }
     public function info($message)
     {
         if ($this->output) {
             $this->output->info($message);
+        }
+    }
+    public function notice($message)
+    {
+        if ($this->output) {
+            $this->output->info($message);
+        }
+    }
+    public function warning($message)
+    {
+        if ($this->output) {
+            $this->output->warning($message);
+        }
+    }
+    public function error($message)
+    {
+        if ($this->output) {
+            $this->output->error($message);
         }
     }
 

@@ -98,7 +98,7 @@
         "league/csv": "^9.0|^8.0|^7.1",
         "spatie/eloquent-sortable": ">=3.7",
         "spatie/laravel-schemaless-attributes": ">=1.6.0",
-        "spatie/laravel-sluggable": ">=2.2",
+        "spatie/laravel-sluggable": "^2.2.0",
         "symfony/inflector": ">=5.0",
         "venturecraft/revisionable": ">=1.30",
         "felixkiss/uniquewith-validator": "^3.4.0",

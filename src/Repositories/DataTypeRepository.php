@@ -37,19 +37,25 @@ class DataTypeRepository
 
         foreach ($models as $model) {
             try {
-                $model = $model->getModelService();
-                $array[] = [
-                    'model' => $model,
-                    'url' => $model->getUrl(),
-                    'count' => $model->getRepository()->count(),
-                    'icon' => $model->getIcon(),
-                    'name' => $model->getName(),
-                    'group_package' => $model->getGroupPackage(),
-                    'group_type' => $model->getGroupType(),
-                    'history_type' => $model->getHistoryType(),
-                    'register_type' => $model->getRegisterType(),
-                ];
+                if (class_exists($model->model_name)) {
+                    $model = $model->getModelService();
+                    $array[] = [
+                        'model' => $model,
+                        'url' => $model->getUrl(),
+                        'count' => $model->getRepository()->count(),
+                        'icon' => $model->getIcon(),
+                        'name' => $model->getName(),
+                        'group_package' => $model->getGroupPackage(),
+                        'group_type' => $model->getGroupType(),
+                        'history_type' => $model->getHistoryType(),
+                        'register_type' => $model->getRegisterType(),
+                    ];
+                } else {
+                    \Log::warning('Não existe classe: '.$model->model_name);
+                }
 
+            } catch (\Illuminate\Database\QueryException $e) {
+                \Log::warning('DataTypeRepository Class Dont Exist: '.$e->getMessage());
             } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
                 $this->setErrors($e);
                 // dd('a',

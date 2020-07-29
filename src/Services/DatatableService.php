@@ -206,7 +206,7 @@ class DatatableService
         if ($collection->isEmpty()) {
             return false;
         }
-        $model = new self(new ModelService(get_class($collection->first())));
+        $model = new self(new RepositoryService(new ModelService(get_class($collection->first()))));
         $model->setResults($collection);
         return $model;
     }
