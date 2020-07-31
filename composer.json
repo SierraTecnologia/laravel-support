@@ -30,6 +30,7 @@
     ],
     "require": {
         "php": ">=7.2.0",
+        "sierratecnologia/templeiro": "^5.0.4",
         "sierratecnologia/former": "^5.0.4",
         "sierratecnologia/crudmaker": "dev-master",
         "sierratecnologia/crypto": "dev-master",

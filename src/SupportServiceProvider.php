@@ -53,13 +53,13 @@ class SupportServiceProvider extends ServiceProvider
 
 
     public static $menuItens = [
-        [
-            'text' => 'System',
-            'icon' => 'fas fa-fw fa-search',
-            'icon_color' => "blue",
-            'label_color' => "success",
-            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        ],
+        // [
+        //     'text' => 'System',
+        //     'icon' => 'fas fa-fw fa-search',
+        //     'icon_color' => "blue",
+        //     'label_color' => "success",
+        //     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        // ],
         'System|450' => [
             [
                 'text'        => 'Manager',
@@ -67,6 +67,7 @@ class SupportServiceProvider extends ServiceProvider
                 'icon'        => 'fas fa-fw fa-edit', //television
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
+                'space'      => 'rica',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 //  'access' => \App\Models\Role::$ADMIN
             ],
@@ -75,6 +76,7 @@ class SupportServiceProvider extends ServiceProvider
                 'icon' => 'fas fa-fw fa-eye',
                 'icon_color' => "blue",
                 'label_color' => "success",
+                'space'      => 'rica',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
             ],
             [
@@ -82,6 +84,7 @@ class SupportServiceProvider extends ServiceProvider
                 'icon' => 'fas fa-fw fa-bug', //shield
                 'icon_color' => "blue",
                 'label_color' => "success",
+                'space'      => 'rica',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
             ],
             'Manipule' => [
@@ -91,6 +94,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-eye',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'space'      => 'rica',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     //  'access' => \App\Models\Role::$ADMIN
                 ],
@@ -100,6 +104,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-database',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'space'      => 'rica',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     //  'access' => \App\Models\Role::$ADMIN
                 ],
@@ -109,6 +114,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-asterisk',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'space'      => 'rica',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     //  'access' => \App\Models\Role::$ADMIN
                 ],
@@ -118,6 +124,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-folder',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'space'      => 'rica',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     //  'access' => \App\Models\Role::$ADMIN
                 ],
@@ -129,6 +136,7 @@ class SupportServiceProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-bug', //times, warning
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'space'      => 'rica',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     //  'access' => \App\Models\Role::$ADMIN
                 ],
@@ -233,6 +241,17 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+
+        // Build the Breadcrumbs store
+        $this->app->singleton(
+            'rica.breadcrumbs', function ($app) {
+                $breadcrumbs = new \Support\Template\Layout\Breadcrumbs();
+                $breadcrumbs->set($breadcrumbs->parseURL());
+
+                return $breadcrumbs;
+            }
+        );
 
 
         /**

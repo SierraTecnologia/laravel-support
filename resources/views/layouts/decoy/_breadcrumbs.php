@@ -1,7 +1,7 @@
 <?php
 
-$back = app('facilitador.breadcrumbs')->back();
-$breadcrumbs = app('facilitador.breadcrumbs')->get();
+$back = app('rica.breadcrumbs')->back();
+$breadcrumbs = app('rica.breadcrumbs')->get();
 $breadcrumb_count = count($breadcrumbs);
 ?>
 

@@ -29,6 +29,8 @@ class CodeRender extends RenderAbstract
     
             'Integrations\Models',
             'Transmissor\Models',
+            'Bancario\Models',
+            'Operador\Models',
             'Fabrica\Models',
             'Finder\Models',
             'Casa\Models',

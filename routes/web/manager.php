@@ -20,6 +20,10 @@
                     Route::namespace('Manager')->group(
                         function () {
 
+                            // ADmin Router
+                            Route::get('/', 'AdminController@index')->name('dashboard');
+                            Route::get('/search', 'AdminController@search')->name('globalsearch');
+                            
                             /**
                              * By Model
                              */

@@ -1,7 +1,9 @@
 @extends('adminlte::page')
 
 @push('css')
-    @if (View::exists('boravel::botman.partials.css'))
+    @if (View::exists('socrates::botman.partials.css'))
+        @include('socrates::botman.partials.css')
+    @elseif (View::exists('boravel::botman.partials.css'))
         @include('boravel::botman.partials.css')
     @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
@@ -9,7 +11,9 @@
 
 @section('js')
     @parent
-    @if (View::exists('boravel::botman.partials.js'))
+    @if (View::exists('socrates::botman.partials.js'))
+        @include('socrates::botman.partials.js')
+    @elseif (View::exists('boravel::botman.partials.js'))
         @include('boravel::botman.partials.js')
     @endif
     @stack('javascript')

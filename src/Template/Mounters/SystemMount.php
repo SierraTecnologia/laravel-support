@@ -28,6 +28,8 @@ class SystemMount
 
             \Integrations\IntegrationsProvider::class,
             \Transmissor\TransmissorProvider::class,
+            \Bancario\BancarioProvider::class,
+            \Operador\OperadorProvider::class,
             \Fabrica\FabricaProvider::class,
             \Finder\FinderProvider::class,
             \Casa\CasaProvider::class,

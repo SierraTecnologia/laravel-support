@@ -1,36 +1,17 @@
-window.jQuery = window.$ = $ = require('jquery');
-window.Vue = require('vue');
-window.perfectScrollbar = require('perfect-scrollbar/jquery')($);
-window.Cropper = require('cropperjs');
-window.Cropper = 'default' in window.Cropper ? window.Cropper['default'] : window.Cropper;
-window.toastr = require('toastr');
-window.DataTable = require('datatables');
-require('datatables-bootstrap3-plugin/media/js/datatables-bootstrap3');
-window.EasyMDE = require('easymde');
-require('dropzone');
-require('jquery-match-height');
-require('bootstrap-toggle');
-require('nestable2');
-require('bootstrap');
-require('bootstrap-switch');
-require('select2');
-require('eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker');
-var brace = require('brace');
-require('brace/mode/json');
-require('brace/theme/github');
-require('./slugify');
+
 window.TinyMCE = window.tinymce = require('tinymce');
-require('./multilingual');
+require('./commons/multilingual');
 require('./facilitador_tinymce');
 window.facilitadorTinyMCE = require('./facilitador_tinymce_config');
 require('./facilitador_ace_editor');
-window.helpers = require('./helpers.js');
 
 Vue.component('admin-menu', require('./components/admin_menu.vue').default);
 
 var admin_menu = new Vue({
     el: '#adminmenu',
 });
+
+require('./commons/app');
 
 $(document).ready(function () {
 
@@ -131,11 +112,6 @@ $(document).ready(function () {
         }
     });
 
-    $('.match-height').matchHeight();
-
-    $('.datatable').DataTable({
-        "dom": '<"top"fl<"clear">>rt<"bottom"ip<"clear">>'
-    });
 
     $(".side-menu .nav .dropdown").on('show.bs.collapse', function () {
         return $(".side-menu .nav .dropdown .collapse").collapse('hide');
@@ -180,27 +156,5 @@ $(document).ready(function () {
         }
         $this.closest('.panel').toggleClass('is-fullscreen');
     });
-
-    $('.datepicker').datetimepicker();
-
-    // Save shortcut
-    $(document).keydown(function (e) {
-        if ((e.metaKey || e.ctrlKey) && e.keyCode == 83) { /*ctrl+s or command+s*/
-            $(".btn.save").click();
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    /********** MARKDOWN EDITOR **********/
-
-    $('textarea.easymde').each(function () {
-        var easymde = new EasyMDE({
-            element: this
-        });
-        easymde.render();
-    });
-
-    /********** END MARKDOWN EDITOR **********/
 
 });

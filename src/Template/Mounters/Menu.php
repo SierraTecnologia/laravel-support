@@ -29,6 +29,8 @@ class Menu
 
     protected $url = null;
     protected $route = null;
+    protected $feature = null;
+    protected $space = null;
     /**
      * 
      */
@@ -164,6 +166,8 @@ class Menu
 
             'nivel',
             'level',
+            'feature',
+            'space',
             'order',
 
             'topnav',
@@ -298,6 +302,24 @@ class Menu
     public function setLevel($value)
     {
         $this->level = $value;
+    }
+
+    public function getFeature()
+    {
+        return $this->feature;
+    }
+    public function setFeature($value)
+    {
+        $this->feature = $value;
+    }
+
+    public function getSpace()
+    {
+        return $this->space;
+    }
+    public function setSpace($value)
+    {
+        $this->space = $value;
     }
 
     public function getOrder()

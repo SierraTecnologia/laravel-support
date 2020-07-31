@@ -5,6 +5,7 @@ namespace Support\Routing;
 use App;
 use Event;
 use Illuminate\Support\Str;
+use Support\Exceptions\Exception;
 
 /**
  * The wildcard router is what allows us to wildcard the admin routes so that the

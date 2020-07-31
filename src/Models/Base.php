@@ -62,7 +62,8 @@ abstract class Base extends Model //Ardent
     * umn not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:61)                                                                                                                                   
     * [stacktrace]                                                                                                                                   
      */
-    use ValidatingTrait, Importable;
+    // use ValidatingTrait, 
+    use Importable;
     // use SortableTrait; // @todo Nem todos sao Sortable
     //---------------------------------------------------------------------------
     // Overrideable properties

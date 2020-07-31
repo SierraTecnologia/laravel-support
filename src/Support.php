@@ -381,7 +381,7 @@ class Support
         // If no title has been set, try to figure it out based on breadcrumbs
         $title = View::yieldContent('title');
         if (empty($title)) {
-            $title = app('facilitador.breadcrumbs')->title();
+            $title = app('rica.breadcrumbs')->title();
         }
 
         // Set the title
