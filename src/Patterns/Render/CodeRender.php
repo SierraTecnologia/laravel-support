@@ -41,6 +41,7 @@ class CodeRender extends RenderAbstract
             'Facilitador\Models',
             'Siravel\Models',
             'Boravel\Models',
+            'Socrates\Models',
         ]);
         $composerParser = resolve(\Support\Patterns\Parser\ComposerParser::class);
         

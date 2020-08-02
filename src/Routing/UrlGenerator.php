@@ -182,7 +182,7 @@ class UrlGenerator
     }
     public function getWildCardRoute()
     {
-        return \Illuminate\Support\Facades\Config::get('application.routes.main').'//'.'admin';
+        return \Illuminate\Support\Facades\Config::get('application.routes.main').'//'.'wildcard';
     }
 
     /**

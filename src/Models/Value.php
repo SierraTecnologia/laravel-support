@@ -38,7 +38,7 @@ abstract class Value extends Model
      *
      * @var array
      */
-    protected $rules = [];
+    public $rules = [];
 
     /**
      * Whether the model should throw a

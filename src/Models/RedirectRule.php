@@ -29,7 +29,7 @@ class RedirectRule extends Base
      *
      * @var array
      */
-    public static $rules = [
+    public $rules = [
         'from' => 'required|unique:redirect_rules,from',
         'to' => 'required',
     ];

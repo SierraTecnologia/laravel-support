@@ -35,7 +35,7 @@ abstract class Ardent extends Model
      *
      * @var array
      */
-    public static $rules = array();
+    public $rules = array();
 
     /**
      * The array of custom error messages.

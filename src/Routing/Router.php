@@ -152,7 +152,7 @@ class Router
     {
 
         Route::group([
-            'prefix' => 'admin',
+            'prefix' => 'wildcard',
         ], function () {
             // Setup a wildcarded catch all route
             Route::any('{path}', ['as' => 'facilitador.wildcard', function ($path) {

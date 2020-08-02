@@ -118,7 +118,7 @@ class Attribute extends Model// implements Sortable
      *
      * @var array
      */
-    protected $rules = [];
+    public $rules = [];
 
     /**
      * Whether the model should throw a

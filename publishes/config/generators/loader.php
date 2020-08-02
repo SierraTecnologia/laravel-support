@@ -49,5 +49,6 @@ return [
         'Facilitador\Models',
         'Siravel\Models',
         'Boravel\Models',
+        'Socrates\Models',
     ],
 ];
