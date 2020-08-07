@@ -78,7 +78,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        dd($exception);
+        if (config('app.env')!=='production' && config('app.debug')){
+            dd($exception);
+        }
         // Check for custom handling
         if ($response = $this->handle404s($request, $exception)) {
             return $response;
