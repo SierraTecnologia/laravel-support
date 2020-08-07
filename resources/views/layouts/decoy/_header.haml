@@ -24,7 +24,7 @@
 			-# Controller actions
 			.pull-right.btn-toolbar
 				.btn-group
-					%a.btn.outline.new(href=URL::to(FacilitadorURL::relative('create')))
+					%a.btn.outline.new(href=URL::to(SupportURL::relative('create')))
 						%span.glyphicon.glyphicon-plus
 					!=View::make('support::shared.form._create-locales', $__data)->render()
 

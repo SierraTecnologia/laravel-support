@@ -3,7 +3,7 @@
 namespace Support\Elements\Fields;
 
 use Facilitador;
-use FacilitadorURL;
+use SupportURL;
 use Former\Traits\Field;
 use Illuminate\Support\Str;
 use HtmlObject\Input as HtmlInput;
@@ -103,7 +103,7 @@ class BelongsTo extends Field
      */
     public function parent($class)
     {
-        $this->route(FacilitadorURL::action(Facilitador::controllerForModel($class)));
+        $this->route(SupportURL::action(Facilitador::controllerForModel($class)));
 
         return $this;
     }

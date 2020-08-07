@@ -10,7 +10,7 @@ use Event;
 use Config;
 use Session;
 use Facilitador\Services\FacilitadorService;
-use FacilitadorURL;
+use SupportURL;
 use Bkwld\Cloner\Cloneable;
 use Bkwld\Upchuck\SupportsUploads;
 use Bkwld\Library\Utils\Collection;
@@ -866,10 +866,10 @@ abstract class Base extends Model //Ardent
     public function getAdminEditUri($controller, $many_to_many = false)
     {
         if ($many_to_many) {
-            return URL::to(FacilitadorURL::action($controller.'@edit', $this->getKey()));
+            return URL::to(SupportURL::action($controller.'@edit', $this->getKey()));
         }
 
-        return URL::to(FacilitadorURL::relative('edit', $this->getKey(), $controller));
+        return URL::to(SupportURL::relative('edit', $this->getKey(), $controller));
     }
 
     /**

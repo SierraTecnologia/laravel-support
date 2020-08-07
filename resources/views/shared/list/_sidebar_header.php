@@ -1,6 +1,6 @@
 <?php // The header above a list that is rendered into a sidebar ?>
 
-<div class="legend sidebar-header"><a href="<?php echo URL::to(FacilitadorURL::relative('index', $parent_id, $controller))?>" title="<?php echo $description?>" class="js-tooltip progress-link"><?php echo $title?></a> <span class="badge"><?php echo $count?></span> 
+<div class="legend sidebar-header"><a href="<?php echo URL::to(SupportURL::relative('index', $parent_id, $controller))?>" title="<?php echo $description?>" class="js-tooltip progress-link"><?php echo $title?></a> <span class="badge"><?php echo $count?></span> 
     
     <div class="btn-toolbar pull-right">
     
@@ -12,7 +12,7 @@
         <?php // Else it's a regular one to many, so show a link to create a new item ?>
     <?php elseif (app('facilitador.user')->can('create', $controller)) : ?>
         <div class="btn-group">
-            <a href="<?php echo URL::to(FacilitadorURL::relative('create', null, $controller))?>" class="btn outline btn-sm new progress-link"><span class="glyphicon glyphicon-plus"></span> New</a>
+            <a href="<?php echo URL::to(SupportURL::relative('create', null, $controller))?>" class="btn outline btn-sm new progress-link"><span class="glyphicon glyphicon-plus"></span> New</a>
         <?php echo View::make('support::shared.form._create-locales', ['title' => $title, 'small' => true])->render() ?>
         </div>
     <?php endif ?>

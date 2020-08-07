@@ -46,6 +46,9 @@ use Support\Support;
 class SupportServiceProvider extends ServiceProvider
 {
     use ConsoleTools;
+
+    public $packageName = 'laravel-support';
+    const pathVendor = 'sierratecnologia/laravel-support';
     // /**
     //  * @var bool
     //  */
@@ -120,7 +123,7 @@ class SupportServiceProvider extends ServiceProvider
                 ],
                 [
                     'text'        => 'Routers',
-                    'route'       => 'facilitador.routers',
+                    'route'       => 'support.routers',
                     'icon'        => 'fas fa-fw fa-folder',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -149,6 +152,7 @@ class SupportServiceProvider extends ServiceProvider
         // Form field generation
         'Former' => \Former\Facades\Former::class,
 
+        'SupportURL' => \Facilitador\Facades\SupportURL::class,
     ];
 
     // public static $providers = [
@@ -232,6 +236,11 @@ class SupportServiceProvider extends ServiceProvider
                 $this->addStorageSymlinkAlert();
             }
         );
+        
+        // Register the routes.
+        if (\Illuminate\Support\Facades\Config::get('site.core.register_routes', true) && !$this->app->routesAreCached()) {
+            $this->app['support.router']->registerAll();
+        }
     }
 
     /**
@@ -250,6 +259,22 @@ class SupportServiceProvider extends ServiceProvider
                 $breadcrumbs->set($breadcrumbs->parseURL());
 
                 return $breadcrumbs;
+            }
+        );
+
+        // Registers explicit rotues and wildcarding routing
+        $this->app->singleton(
+            'support.router', function ($app) {
+                $dir = \Illuminate\Support\Facades\Config::get('application.routes.main');
+
+                return new \Support\Routing\Router($dir);
+            }
+        );
+
+        // Register URL Generators as "SupportURL".
+        $this->app->singleton(
+            'support.url', function ($app) {
+                return new \Support\Routing\UrlGenerator($app['request']->path());
             }
         );
 
@@ -433,14 +458,6 @@ class SupportServiceProvider extends ServiceProvider
                 );
             }
         );
-    }
-
-    /**
-     * @return array
-     */
-    public function provides()
-    {
-        return [ModelFactory::class];
     }
 
 
@@ -810,5 +827,18 @@ class SupportServiceProvider extends ServiceProvider
         SupportFacade::addAfterFormField(DescriptionHandler::class);
 
         event(new FormFieldsRegistered($formFields));
+    }
+
+    /**
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            ModelFactory::class,
+            'rica.breadcrumbs',
+            'support.router',
+            'support.url',
+        ];
     }
 }

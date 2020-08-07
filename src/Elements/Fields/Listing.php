@@ -7,7 +7,7 @@ use View;
 use Facilitador;
 use Former;
 use Request;
-use FacilitadorURL;
+use SupportURL;
 use Former\Traits\Field;
 use Illuminate\Support\Str;
 use Illuminate\Container\Container;
@@ -390,8 +390,8 @@ class Listing extends Field
     protected function getIndexURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            FacilitadorURL::action($this->controller_name.'@index') :
-            FacilitadorURL::relative('index', null, $this->controller_name);
+            SupportURL::action($this->controller_name.'@index') :
+            SupportURL::relative('index', null, $this->controller_name);
     }
 
     /**
@@ -402,8 +402,8 @@ class Listing extends Field
     protected function getCreateURL()
     {
         return $this->controller->isChildInManyToMany() ?
-            FacilitadorURL::action($this->controller_name.'@create') :
-            FacilitadorURL::relative('create', null, $this->controller_name);
+            SupportURL::action($this->controller_name.'@create') :
+            SupportURL::relative('create', null, $this->controller_name);
     }
 
     /**

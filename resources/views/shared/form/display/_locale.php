@@ -20,7 +20,7 @@ if ($item && ($localizations = $localize->other())) {
         if ($sibling = $localizations->get($options['value'])) {
             $sibling = $sibling[0]; // The groupBy makes an array for its value
             $options['disabled'] = true;
-            $label = "<span class='locale-label'>{$label} - " . __('facilitador::display.locale.localized_as') . " <a href='".FacilitadorURL::relative('edit', $sibling->getKey())."'>".$sibling->admin_title.'</a></span>';
+            $label = "<span class='locale-label'>{$label} - " . __('facilitador::display.locale.localized_as') . " <a href='".SupportURL::relative('edit', $sibling->getKey())."'>".$sibling->admin_title.'</a></span>';
             $config[$label] = $options;
 
             // Else, don't touch

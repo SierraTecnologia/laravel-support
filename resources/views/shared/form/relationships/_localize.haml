@@ -18,12 +18,12 @@
 							%input(type="radio" name="compare" value=$model->locale data-model=json_encode($model->attributes_for_localization_comparison))
 							%strong.locale=Config::get('site.site.locales')[$model->locale]
 							=' - '
-							%a(href=FacilitadorURL::relative('edit', $model->getKey()))!=$model->admin_title
+							%a(href=SupportURL::relative('edit', $model->getKey()))!=$model->admin_title
 				%p.help-block!= __('facilitador::relationships.localize.compare_help', ['title' => $title])
 		-# Create a new localization menu if there are un-assigned locales
 		-$locales = $localize->localizableLocales()
 		-if(count($locales))
-			!=Former::vertical_open(FacilitadorURL::relative('duplicate', $item->getKey()))
+			!=Former::vertical_open(SupportURL::relative('duplicate', $item->getKey()))
 			.form-group.create
 				%label.control-label!= __('facilitador::relationships.localize.create')
 

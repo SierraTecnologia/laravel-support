@@ -4,6 +4,8 @@ namespace Support\Routing;
 
 use App;
 use Route;
+use Request;
+use Muleta\Traits\Providers\ConsoleTools;
 
 /**
  * This class acts as a bootstrap for setting up
@@ -11,6 +13,8 @@ use Route;
  */
 class Router
 {
+    use ConsoleTools;
+    
     /**
      * Action for current wildcard request
      *
@@ -42,7 +46,7 @@ class Router
      */
     public function registerAll()
     {
-        $namespacePrefix = '\\'.\Illuminate\Support\Facades\Config::get('application.core.controllers.namespace');
+        // $namespacePrefix = '\\'.\Illuminate\Support\Facades\Config::get('application.core.controllers.namespace');
         /**
          * Facilitador Routes
          */
@@ -51,6 +55,23 @@ class Router
         ], function (/**$router**/) {
             require __DIR__.'/../../routes/web.php';
         });
+        /**
+         * Facilitador Routes
+         */
+        Route::group(
+            [
+                'namespace' => '\Support\Http\Controllers\RiCa', //$namespacePrefix, //
+                'middleware' => 'admin',
+                'prefix' => \Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica'),
+                'as' => 'rica.',
+            ], function ($router) {
+                if (file_exists(__DIR__.'/../../routes/rica.php')) {
+                    include __DIR__.'/../../routes/rica.php';
+                } else {
+                    $this->loadRoutesFromPath(__DIR__.'/../../routes/rica');
+                }
+            }
+        );
 
 
 
@@ -250,7 +271,27 @@ class Router
     {
         Route::post('redactor', '\Facilitador\Http\Controllers\Admin\Redactor@store');
     }
+    
+    public function getRouteSpace()
+    {
+        $req = explode('/', Request::path());
 
+        $first = array_shift($req);
+
+        if ($first == \Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica')) {
+            return 'rica';
+        }
+
+        if ($first == \Illuminate\Support\Facades\Config::get('application.routes.admin', 'admin')) {
+            return 'admin';
+        }
+
+        if ($first == \Illuminate\Support\Facades\Config::get('application.routes.painel', 'painel')) {
+            return 'admin';
+        }
+
+        return 'main';
+    }
 
     /**
      * Set and get the action for this request
