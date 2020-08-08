@@ -40,15 +40,15 @@
                 <ol class="breadcrumb float-sm-right">
                     @php
                     if (!isset($segments))
-                        $segments = array_filter(explode('/', str_replace(route('facilitador.dashboard'), '', Request::url())));
+                        $segments = array_filter(explode('/', str_replace(route('rica.dashboard'), '', Request::url())));
                     if (!isset($mainUrl))
-                        $mainUrl = route('facilitador.dashboard');
+                        $mainUrl = route('rica.dashboard');
                     @endphp
                     @if(count($segments) == 0)
                         <li class="breadcrumb-item active"><i class="facilitador-boat"></i> {{ __('facilitador::generic.dashboard') }}</li>
                     @else
                         <li class="breadcrumb-item active">
-                            <a href="{{ route('facilitador.dashboard')}}"><i class="facilitador-boat"></i> {{ __('facilitador::generic.dashboard') }}</a>
+                            <a href="{{ route('rica.dashboard')}}"><i class="facilitador-boat"></i> {{ __('facilitador::generic.dashboard') }}</a>
                         </li>
                         @foreach ($segments as $segment)
                             @php

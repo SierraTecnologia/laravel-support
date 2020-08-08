@@ -56,6 +56,36 @@ class SupportServiceProvider extends ServiceProvider
 
 
     public static $menuItens = [
+        [
+            'text'        => 'Painel Admin',
+            'route'       => 'rica.dashboard',
+            'icon'        => 'share',
+            'icon_color'  => 'red',
+            'label_color' => 'success',
+            // 'space'     => 'painel',
+            'level'       => 3,
+            'topnav' => true,
+        ],
+        [
+            'text'        => 'Business Admin',
+            'route'       => 'rica.dashboard',
+            'icon'        => 'share',
+            'icon_color'  => 'red',
+            'label_color' => 'success',
+            // 'space'     => 'painel',
+            'level'       => 3,
+            'topnav' => true,
+        ],
+        [
+            'text'        => 'RiCa Admin',
+            'route'       => 'rica.dashboard',
+            'icon'        => 'share',
+            'icon_color'  => 'red',
+            'label_color' => 'success',
+            // 'space'     => 'painel',
+            'level'       => 3,
+            'topnav' => true,
+        ],
         // [
         //     'text' => 'System',
         //     'icon' => 'fas fa-fw fa-search',
@@ -66,7 +96,7 @@ class SupportServiceProvider extends ServiceProvider
         'System|450' => [
             [
                 'text'        => 'Manager',
-                'route'       => 'facilitador.dashboard',
+                'route'       => 'rica.dashboard',
                 'icon'        => 'fas fa-fw fa-edit', //television
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -135,7 +165,7 @@ class SupportServiceProvider extends ServiceProvider
             'Debugger' => [
                 [
                     'text'        => 'View Errors',
-                    'route'       => 'facilitador.dashboard',
+                    'route'       => 'rica.dashboard',
                     'icon'        => 'fas fa-fw fa-bug', //times, warning
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -378,7 +408,7 @@ class SupportServiceProvider extends ServiceProvider
         }
         $routeName = is_array($currentRouteAction) ? Arr::get($currentRouteAction, 'as') : null;
 
-        if ($routeName != 'facilitador.dashboard') {
+        if ($routeName != 'rica.dashboard') {
             return;
         }
 

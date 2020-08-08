@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Controllers\Manipule;
+namespace Support\Http\Controllers\RiCa\Manipule;
 
 use Facilitador\Http\Controllers\Controller as BaseController;
 

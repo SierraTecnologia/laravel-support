@@ -31,7 +31,7 @@
 @section('breadcrumbs')
 <ol class="breadcrumb hidden-xs">
     <li class="active">
-        <a href="{{ route('facilitador.dashboard')}}"><i class="facilitador-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
+        <a href="{{ route('rica.dashboard')}}"><i class="facilitador-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
     </li>
     <li class="active">
         <a href="{{ route('facilitador.bread.index') }}">

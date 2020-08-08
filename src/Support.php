@@ -201,7 +201,7 @@ class Support
      */
     public function dimmers()
     {
-        $widgetClasses = config('sitec.facilitador.dashboard.widgets');
+        $widgetClasses = config('sitec.rica.dashboard.widgets');
         $dimmerGroups = [];
         $dimmerCount = 0;
         $dimmers = Widget::group("support::dimmers-{$dimmerCount}");

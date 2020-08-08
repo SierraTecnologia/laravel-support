@@ -1,10 +1,11 @@
 <?php
 
-namespace Support\Http\Controllers\Manager;
+namespace Support\Http\Controllers\RiCa\Manager;
 
-use Facilitador\Http\Controllers\System\Controller as BaseController;
+use Facilitador\Http\Controllers\RiCa\Controller as BaseController;
 use Facilitador\Services\FacilitadorService;
 use Support\Services\RepositoryService;
+
 class Controller extends BaseController
 {
     

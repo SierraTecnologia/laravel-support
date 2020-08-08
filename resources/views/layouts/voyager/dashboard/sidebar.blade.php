@@ -2,7 +2,7 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="side-menu-container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ route('facilitador.dashboard') }}">
+                <a class="navbar-brand" href="{{ route('rica.dashboard') }}">
                     <div class="logo-icon-container">
                         <?php $admin_logo_img = Facilitador::setting('admin.icon_image', ''); ?>
                         @if($admin_logo_img == '')

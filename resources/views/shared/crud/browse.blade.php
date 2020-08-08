@@ -161,7 +161,7 @@
                         "language" => __('facilitador::datatable'),
                         "columnDefs" => [['targets' => -1, 'searchable' =>  false, 'orderable' => false]],
                     ],
-                    \Illuminate\Support\Facades\Config::get('sitec.facilitador.dashboard.data_tables', []))
+                    \Illuminate\Support\Facades\Config::get('sitec.rica.dashboard.data_tables', []))
                 , true) !!});
             @else
                 $('#search-input select').select2({

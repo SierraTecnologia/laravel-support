@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Http\Controllers\Manager;
+namespace Support\Http\Controllers\RiCa\Manager;
 
 use App\Http\Requests;
 use App\Models\Admin;

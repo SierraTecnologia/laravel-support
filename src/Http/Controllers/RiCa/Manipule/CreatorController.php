@@ -1,13 +1,13 @@
 <?php
 
-namespace Support\Http\Controllers\Manipule;
+namespace Support\Http\Controllers\RiCa\Manipule;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ExcelController extends Controller
+class CreatorController extends Controller
 {
     use ValidatesRequests;
 
@@ -19,16 +19,7 @@ class ExcelController extends Controller
      */
     public function download(Request $request, ResponseFactory $response): BinaryFileResponse
     {
-        $data = $this->validate(
-            $request, [
-            'path'     => 'required',
-            'filename' => 'required',
-            ]
-        );
-
-        return $response->download(
-            $data['path'],
-            $data['filename']
-        )->deleteFileAfterSend($shouldDelete = true);
+        $models = $database->convertToModels();
+        $models->convertToMigrations();
     }
 }
