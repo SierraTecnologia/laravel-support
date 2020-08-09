@@ -218,7 +218,8 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishAssets();
         $this->publishConfigs();
 
-
+        // Register global and named middlewares
+        $this->registerMiddlewares();
 
         /**
          * Load Active https://github.com/letrunghieu/active
@@ -857,6 +858,63 @@ class SupportServiceProvider extends ServiceProvider
         SupportFacade::addAfterFormField(DescriptionHandler::class);
 
         event(new FormFieldsRegistered($formFields));
+    }
+
+    /**
+     * Register middlewares
+     *
+     * @return void
+     */
+    protected function registerMiddlewares()
+    {
+        if (config('siravel.login', true)) {
+            $this->app['router']->aliasMiddleware('admin.user', FacilitadorAdminMiddleware::class);
+        }
+
+        // Register middleware individually
+        foreach ([
+            'facilitador.auth'          => \Facilitador\Http\Middleware\Auth::class,
+            'facilitador.edit-redirect' => \Facilitador\Http\Middleware\EditRedirect::class,
+            'facilitador.guest'         => \Facilitador\Http\Middleware\Guest::class,
+            'facilitador.save-redirect' => \Facilitador\Http\Middleware\SaveRedirect::class,
+        ] as $key => $class) {
+            $this->app['router']->aliasMiddleware($key, $class);
+        }
+
+        // This group is used by public facilitador routes
+        $this->app['router']->middlewareGroup(
+            'facilitador.public', [
+            'web',
+            ]
+        );
+
+        if (config('siravel.login', true)) {
+            // The is the starndard auth protected group
+            $this->app['router']->middlewareGroup(
+                'facilitador.protected', [
+                'web',
+                'facilitador.auth',
+                'facilitador.save-redirect',
+                'facilitador.edit-redirect',
+                ]
+            );
+
+            // Require a logged in admin session but no CSRF token
+            $this->app['router']->middlewareGroup(
+                'facilitador.protected_endpoint', [
+                \App\Http\Middleware\EncryptCookies::class,
+                \Illuminate\Session\Middleware\StartSession::class,
+                'facilitador.auth',
+                ]
+            );
+
+            // An open endpoint, like used by Zendcoder
+            $this->app['router']->middlewareGroup(
+                'facilitador.endpoint', [
+                'api'
+                ]
+            );
+        }
     }
 
     /**
