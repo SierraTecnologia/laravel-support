@@ -56,7 +56,24 @@ class Router
             require __DIR__.'/../../routes/web.php';
         });
         /**
-         * Facilitador Routes
+         * Admin Routes
+         */
+        Route::group(
+            [
+                'namespace' => '\Support\Http\Controllers\Admin', //$namespacePrefix, //
+                'middleware' => 'admin',
+                'prefix' => \Illuminate\Support\Facades\Config::get('application.routes.admin', 'admin'),
+                'as' => 'admin.',
+            ], function ($router) {
+                if (file_exists(__DIR__.'/../../routes/admin.php')) {
+                    include __DIR__.'/../../routes/admin.php';
+                } else {
+                    $this->loadRoutesFromPath(__DIR__.'/../../routes/admin');
+                }
+            }
+        );
+        /**
+         * RiCa Routes
          */
         Route::group(
             [

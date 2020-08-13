@@ -66,6 +66,16 @@ class SupportServiceProvider extends ServiceProvider
             'level'       => 3,
             'topnav' => true,
         ],
+        // [
+        //     'text'        => 'Changelog',
+        //     'route'       => 'admin.changelog',
+        //     'icon'        => 'fas fa-fw fa-user-secret',
+        // ],
+        // [
+        //     'text'        => 'Documentação',
+        //     'url'         => 'docs',
+        //     'icon'        => 'fas fa-fw fa-user-secret',
+        // ],
         [
             'text'        => 'Business Admin',
             'route'       => 'rica.dashboard',
@@ -123,7 +133,7 @@ class SupportServiceProvider extends ServiceProvider
             'Manipule' => [
                 [
                     'text'        => 'Crud Builder',
-                    'route'       => 'facilitador.bread.index',
+                    'route'       => 'rica.facilitador.bread.index',
                     'icon'        => 'fas fa-fw fa-eye',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -133,7 +143,7 @@ class SupportServiceProvider extends ServiceProvider
                 ],
                 [
                     'text'        => 'Database',
-                    'route'       => 'facilitador.database.index',
+                    'route'       => 'rica.facilitador.database.index',
                     'icon'        => 'fas fa-fw fa-database',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -143,7 +153,7 @@ class SupportServiceProvider extends ServiceProvider
                 ],
                 [
                     'text'        => 'Commands',
-                    'route'       => 'facilitador.commands',
+                    'route'       => 'rica.facilitador.commands',
                     'icon'        => 'fas fa-fw fa-asterisk',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -153,7 +163,7 @@ class SupportServiceProvider extends ServiceProvider
                 ],
                 [
                     'text'        => 'Routers',
-                    'route'       => 'support.routers',
+                    'route'       => 'rica.support.routers',
                     'icon'        => 'fas fa-fw fa-folder',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',

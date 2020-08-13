@@ -368,7 +368,7 @@ class ParseModelClass extends ParseClass
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
             $this->setErrors($e);
             // dd($this->model, $method, $e);
-            dd($e);
+            dd('Error In parse Model Class', $e);
             // @todo Tratar aqui
         }
     }

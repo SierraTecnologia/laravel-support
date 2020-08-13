@@ -16,15 +16,21 @@
     @elseif (View::exists('boravel::botman.partials.js'))
         @include('boravel::botman.partials.js')
     @endif
+    aa
     @stack('javascript')
     @yield('javascript')
 @stop
 
 @section('title')
     @parent
-    <?php if(isset($title)) echo $title; ?>
-    @stack('title')
-    @yield('title')
+    @hasSection('page_title')
+        @stack('page_title')
+        @yield('page_title')
+    @else 
+        <?php if(isset($title)) echo $title; ?>
+        @stack('title')
+        @yield('title')
+    @endif
 @stop
 
 @section('content_header')
@@ -32,7 +38,10 @@
     <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark"><?php if(isset($title)) echo $title; ?></h1>
+            <h1 class="m-0 text-dark">
+                @stack('title')
+                @yield('title')
+            </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
 
@@ -160,6 +169,7 @@
 @stop
 
 @section('content')
+  <div id="app">
     @parent
     @if (isset($content))
       @if (is_string($content))
@@ -170,4 +180,12 @@
     @endif
     @stack('content')
     @yield('content')
+  </div>
+@stop
+
+@section('footer')
+    @parent
+    <?php if(isset($footer)) echo $footer; ?>
+    @stack('footer')
+    @yield('footer')
 @stop

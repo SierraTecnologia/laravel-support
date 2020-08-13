@@ -54,7 +54,7 @@ Route::namespace('Admin')->group(
     function () {
 
         Route::group(
-            ['as' => 'facilitador.'], function () {
+            ['as' => 'support.'], function () {
 
                 // Route::group(
                 //     ['middleware' => 'admin.user'], function () {

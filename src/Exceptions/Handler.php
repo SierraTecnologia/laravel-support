@@ -18,6 +18,8 @@ class Handler extends ExceptionHandler
 
     public static $DEFAULT_MESSAGE = 'Algo que não esta certo deu errado! Por favor, entre em contato conosco.';
 
+    public $reportSendToSentry = false;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -47,21 +49,24 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        if (config('app.env')=='production'/* && app()->bound('sentry') && $this->shouldReport($exception)*/) {
+        if (config('app.env')=='production' && $this->shouldReport($exception)) {
             // Slack Report
-            Log::channel('slack')->error('[PaymentService Fatal Error] Fatal erro: '.$exception->getMessage());
+            Log::channel('slack')->error('['.config('app.name').' (V'.config('app.version').') Report] Fatal erro: '.$exception->getMessage());
 
-            // // Sentry Report
-            // // \Sentry\configureScope(function (Scope $scope): void {
-            // //     if ($user = auth()->user()) {
-            // //         $scope->setUser([
-            // //             'id' => $user->id,
-            // //             'email' => $user->email,
-            // //             'cpf' => $user->cpf
-            // //         ]);
-            // //     }
-            // // });
-            // app('sentry')->captureException($exception);
+            if (app()->bound('sentry')) {
+                // Sentry Report
+                \Sentry\configureScope(function (Scope $scope): void {
+                    if ($user = auth()->user()) {
+                        $scope->setUser([
+                            'id' => $user->id,
+                            'email' => $user->email,
+                            'cpf' => $user->cpf
+                        ]);
+                    }
+                });
+                app('sentry')->captureException($exception);
+                $this->reportSendToSentry = true;
+            }
         }
     
         parent::report($exception);
@@ -78,9 +83,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if (config('app.env')!=='production' && config('app.debug')){
-            dd($exception);
-        }
         // Check for custom handling
         if ($response = $this->handle404s($request, $exception)) {
             return $response;
@@ -123,6 +125,8 @@ class Handler extends ExceptionHandler
         // instead of our own view in resources/views/errors/500.blade.php
         if (config('app.env')=='production' && $this->shouldReport($exception) && !$this->isHttpException($exception) && !config('app.debug')) {
             $exception = new HttpException(500, 'Whoops!');
+        } else if (config('app.debug') && $this->shouldReport($exception)) {
+            dd('Error Handler', $exception);
         }
 
         return parent::render($request, $exception);
