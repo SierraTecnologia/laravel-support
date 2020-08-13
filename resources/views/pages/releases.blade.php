@@ -5,18 +5,18 @@
         <h1 class="page-header text-center">{!! trans('words.changelog') !!}</h1>
     </div>
     @foreach($releases as $release)
-        <div class="box">
-            <div class="box-header with-border">
-            <h3 class="box-title">{!! $release->getName() !!}</h3>
+        <div class="box card">
+            <div class="box-header card-header with-border">
+            <h3 class="box-title card-title">{!! $release->getName() !!}</h3>
 
-            <div class="box-tools pull-right">
+            <div class="box-tools card-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
                 <i class="fa fa-minus"></i></button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
                 <i class="fa fa-times"></i></button>
             </div>
             </div>
-            <div class="box-body">
+            <div class="box-body card-body">
                 <dl class="dl-horizontal">
 
                     @if (!empty($changes = $release->getChanges('Added')))
@@ -45,7 +45,7 @@
                     @endif
                 </dl>
             </div>
-            <!-- /.box-body -->
+            <!-- /.box-body card-body -->
         </div>
     @endforeach
 
