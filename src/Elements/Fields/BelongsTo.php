@@ -103,7 +103,7 @@ class BelongsTo extends Field
      */
     public function parent($class)
     {
-        $this->route(SupportURL::action(Facilitador::controllerForModel($class)));
+        $this->route(SupportURL::action(SupportURL::controllerForModel($class)));
 
         return $this;
     }

@@ -6,7 +6,7 @@ use Validator;
 use Illuminate\Support\Arr;
 use Stalker\Models\Image;
 use Facilitador\Models\Base as BaseModel;
-use Facilitador\Exceptions\ValidationFail;
+use Support\Exceptions\ValidationFail;
 use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
 
 /**

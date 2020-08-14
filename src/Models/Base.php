@@ -601,8 +601,10 @@ abstract class Base extends Model //Ardent
     {
         $associate = false;
         // @todo migrar isso pra ca pro support
-        $associate = Support::getInfluencia();
-
+        if (config('siravel.influencia', false)) {
+            $associate = Support::getInfluencia();
+        }
+        
         $modelFind = false;
         $keyName = (new static)->getKeyName();
         $data = ArrayModificator::convertToArrayWithIndex($dataOrPrimaryCode, $keyName);

@@ -192,7 +192,7 @@ class SupportServiceProvider extends ServiceProvider
         // Form field generation
         'Former' => \Former\Facades\Former::class,
 
-        'SupportURL' => \Facilitador\Facades\SupportURL::class,
+        'SupportURL' => \Support\Facades\SupportURL::class,
     ];
 
     // public static $providers = [

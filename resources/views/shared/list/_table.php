@@ -148,7 +148,9 @@ if ($listing->count()) {
             </tr>
         <?php endforeach ?>
 
-        <?php // Maybe there were no results found ?>
+        <?php 
+        // Maybe there were no results found 
+        ?>
         <?php echo View::make('support::shared.list._no_results', $__data)->render()?>
 
     </tbody>

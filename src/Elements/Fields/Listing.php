@@ -107,7 +107,7 @@ class Listing extends Field
         $this->controller(
             isset($config['controller'])
             ? $config['controller']
-            : Facilitador::controllerForModel($model)
+            : SupportURL::controllerForModel($model)
         );
 
         // If no title is passed, set it to the controller name
@@ -317,10 +317,10 @@ class Listing extends Field
      */
     public function getContent()
     {
-        // Check that the current user has permission to access this controller
-        if (!app('facilitador.user')->can('read', $this->controller)) {
-            return;
-        }
+        // // Check that the current user has permission to access this controller
+        // if (!app('facilitador.user')->can('read', $this->controller)) {
+        //     return;
+        // }
 
         // If in a sidebar and there is no parent (like if you are on a create page)
         // then don't show a special message
