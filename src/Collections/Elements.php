@@ -66,7 +66,7 @@ class Elements extends Collection
     /**
      * Map the items into a collection of Element instances
      *
-     * @return Facilitador\Collections\Elements
+     * @return Support\Collections\Elements
      */
     public function asModels()
     {

@@ -4,7 +4,7 @@ namespace Support\Elements\Fields;
 
 use URL;
 use View;
-use Facilitador;
+use Support;
 use Former;
 use Request;
 use SupportURL;
@@ -13,7 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Facilitador\Http\Controllers\Admin\Base;
+use Support\Http\Controllers\Admin\Base;
+
 /**
  * Create a table-layout listing of records in the database.  An index view.  It may
  * be presented in different styles.  Example:
@@ -48,7 +49,7 @@ class Listing extends Field
     /**
      * Preserve the controller
      *
-     * @var Facilitador\Controller\Base
+     * @var Support\Controller\Base
      */
     private $controller;
 
@@ -107,7 +108,7 @@ class Listing extends Field
         $this->controller(
             isset($config['controller'])
             ? $config['controller']
-            : SupportURL::controllerForModel($model)
+            : Support::controllerForModel($model)
         );
 
         // If no title is passed, set it to the controller name
@@ -130,9 +131,9 @@ class Listing extends Field
      * A factory to create an instance using the passed controller.  This is to prevent
      * duplicate controller instantations when invoked from the base controller.
      *
-     * @param  Facilitador\Http\Controllers\Admin\Base $controller
+     * @param  Support\Http\Controllers\Admin\Base $controller
      * @param  LengthAwarePaginator                    $items
-     * @return Facilitador\Field\Listing
+     * @return Support\Field\Listing
      */
     public static function createFromController(Base $controller, $items)
     {
@@ -149,7 +150,7 @@ class Listing extends Field
     /**
      * Replace the controller
      *
-     * @param  Facilitador\Http\Controllers\Admin\Base | string $controller
+     * @param  Support\Http\Controllers\Admin\Base | string $controller
      * @return Field                                 This field
      */
     public function controller($controller)
@@ -158,7 +159,7 @@ class Listing extends Field
         // Instantiate a string controller
         if (is_string($controller)
             && class_exists($controller)
-            && is_subclass_of($controller, 'Facilitador\Http\Controllers\Admin\Base')
+            && is_subclass_of($controller, 'Support\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = $controller;
             $this->controller = new $controller;
@@ -170,7 +171,7 @@ class Listing extends Field
 
             // Or, validate a passed controller instance
         } elseif (is_object($controller)
-            && is_a($controller, 'Facilitador\Http\Controllers\Admin\Base')
+            && is_a($controller, 'Support\Http\Controllers\Admin\Base')
         ) {
             $this->controller_name = get_class($controller);
             $this->controller = $controller;
@@ -409,7 +410,7 @@ class Listing extends Field
     /**
      * Get the list of columns of the controller
      *
-     * @param  Facilitador\Controller\Base $controller A controller instance
+     * @param  Support\Controller\Base $controller A controller instance
      * @return array                       Associative array of column keys and values
      */
     protected function getColumns($controller)
@@ -460,7 +461,7 @@ class Listing extends Field
         // If there is a parent, run the query through the relationship to this model
         // from the parent
         if ($this->parent_item) {
-            $relationship = Facilitador::hasManyName($this->name);
+            $relationship = Support::hasManyName($this->name);
             $query = $this->parent_item->$relationship()->ordered();
         }
 

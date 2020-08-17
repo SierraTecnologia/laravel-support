@@ -1,5 +1,5 @@
 :php
-	use Facilitador\Breadcrumbs;
+	use Support\Template\Layout\Breadcrumbs;
 	use Support\Template\Input\Search;
 
 -# Push over for horizontal forms
@@ -49,8 +49,3 @@
 -# Close the form
 != Former::close()
 
--# Close first column, show sidebar, and then close the row
--if(isset($sidebar) && !$sidebar->isEmpty())
-	!='</div><div class="col-md-5 related">'
-	!=$sidebar->render()
-	!='</div></div>'

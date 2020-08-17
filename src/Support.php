@@ -690,7 +690,7 @@ class Support
             'App\Http\Controllers\Admin',
             'App\Models',
             $model,
-            $is_support
+            $is_admin
         );
 
         // Replace non-facilitador controller's with the standard model namespace

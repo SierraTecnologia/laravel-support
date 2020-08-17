@@ -7,6 +7,7 @@
         @include('boravel::botman.partials.css')
     @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
+    
 @endpush
 
 @section('js')
@@ -16,7 +17,7 @@
     @elseif (View::exists('boravel::botman.partials.js'))
         @include('boravel::botman.partials.js')
     @endif
-    aa
+    <script src="https://cdn.rawgit.com/download/glyphicons/0.1.0/glyphicons.js"></script>
     @stack('javascript')
     @yield('javascript')
 @stop

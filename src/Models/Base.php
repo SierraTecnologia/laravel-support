@@ -813,13 +813,13 @@ abstract class Base extends Model //Ardent
     {
         extract($data);
 
-        // Check if this model supports editing the visibility
-        if ($many_to_many
-            || !app('facilitador.user')->can('publish', $controller)
-            || !array_key_exists('public', $this->attributes)
-        ) {
-            return;
-        }
+        // // Check if this model supports editing the visibility
+        // if ($many_to_many
+        //     || !app('facilitador.user')->can('publish', $controller)
+        //     || !array_key_exists('public', $this->attributes)
+        // ) {
+        //     return;
+        // }
 
         // Create the markup
         $public = $this->getAttribute('public');
@@ -904,13 +904,14 @@ abstract class Base extends Model //Ardent
     {
         extract($data);
 
-        // Check if this model can be deleted.  This mirrors code found in the table
-        //  partial for generating the edit link on the title
-        if (!(app('facilitador.user')->can('destroy', $controller)
-            || ($many_to_many && app('facilitador.user')->can('update', $parent_controller)))
-        ) {
-            return;
-        }
+        // @todo
+        // // Check if this model can be deleted.  This mirrors code found in the table
+        // //  partial for generating the edit link on the title
+        // if (!(app('facilitador.user')->can('destroy', $controller)
+        //     || ($many_to_many && app('facilitador.user')->can('update', $parent_controller)))
+        // ) {
+        //     return;
+        // }
 
         // If soft deleted, show a disabled icon
         if (method_exists($this, 'trashed') && $this->trashed()) {

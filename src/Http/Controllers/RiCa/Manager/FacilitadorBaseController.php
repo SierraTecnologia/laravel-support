@@ -159,10 +159,9 @@ class FacilitadorBaseController extends Controller
             }
         }
 
-        $view = 'facilitador::cruds.bread.browse';
-
-        if (view()->exists("facilitador::cruds.$slug.browse")) {
-            $view = "facilitador::cruds.$slug.browse";
+        $view = 'support::cruds.bread.browse';
+        if (view()->exists("support::cruds.$slug.browse")) {
+            $view = "support::cruds.$slug.browse";
         }
 
         return Support::view(

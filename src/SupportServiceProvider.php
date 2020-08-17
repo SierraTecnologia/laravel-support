@@ -153,7 +153,7 @@ class SupportServiceProvider extends ServiceProvider
                 ],
                 [
                     'text'        => 'Commands',
-                    'route'       => 'rica.facilitador.commands',
+                    'route'       => 'rica.support.commands',
                     'icon'        => 'fas fa-fw fa-asterisk',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -898,7 +898,7 @@ class SupportServiceProvider extends ServiceProvider
             ]
         );
 
-        if (config('siravel.login', true)) {
+        // if (config('siravel.login', true)) {
             // The is the starndard auth protected group
             $this->app['router']->middlewareGroup(
                 'facilitador.protected', [
@@ -924,7 +924,7 @@ class SupportServiceProvider extends ServiceProvider
                 'api'
                 ]
             );
-        }
+        // }
     }
 
     /**

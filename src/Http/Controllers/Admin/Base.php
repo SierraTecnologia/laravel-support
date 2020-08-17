@@ -773,6 +773,7 @@ class Base extends BaseController
     protected function findOrFail($id)
     {
         $model = $this->model;
+        
         if ($this->withTrashed()) {
             return $model::withTrashed()->findOrFail($id);
         } else {
@@ -789,6 +790,10 @@ class Base extends BaseController
     {
         $class = $this->model; // PHP won't allow as a one-liner
 
+        if(defined($class.'::RULES')){
+            return $class::RULES;
+        }
+        
         return $class::$rules;
     }
 

@@ -13,7 +13,7 @@
             </a>
         @endcan
         @can('delete', app($dataType->model_name))
-            @include('support::partials.bulk-delete')
+            @include('facilitador::partials.bulk-delete')
         @endcan
         @can('edit', app($dataType->model_name))
             @if(isset($dataType->order_column) && isset($dataType->order_display_column))
@@ -76,7 +76,7 @@
                         @endif
                         <div class="table-responsive">
 
-                        @include('support::components.repositories.table', [
+                        @include('facilitador::components.repositories.table', [
                             'actions' => $actions,
                             'dataType' => $dataType,
                             'dataTypeContent' => $dataTypeContent,
@@ -97,7 +97,7 @@
                         @if ($isServerSide)
                             <div class="pull-left">
                                 <div role="status" class="show-res" aria-live="polite">{{ trans_choice(
-                                    'support::generic.showing_entries', $dataTypeContent->total(), [
+                                    'facilitador::generic.showing_entries', $dataTypeContent->total(), [
                                         'from' => $dataTypeContent->firstItem(),
                                         'to' => $dataTypeContent->lastItem(),
                                         'all' => $dataTypeContent->total()
@@ -203,9 +203,9 @@
             $(function() {
                 $('#show_soft_deletes').change(function() {
                     if ($(this).prop('checked')) {
-                        $('#dataTable').before('<a id="redir" href="{{ (route('rica.index', array_merge($params, ['showSoftDeleted' => 1]), true)) }}"></a>');
+                        $('#dataTable').before('<a id="redir" href="{{ (route('facilitador.index', array_merge($params, ['showSoftDeleted' => 1]), true)) }}"></a>');
                     }else{
-                        $('#dataTable').before('<a id="redir" href="{{ (route('rica.index', array_merge($params, ['showSoftDeleted' => 0]), true)) }}"></a>');
+                        $('#dataTable').before('<a id="redir" href="{{ (route('facilitador.index', array_merge($params, ['showSoftDeleted' => 0]), true)) }}"></a>');
                     }
 
                     $('#redir')[0].click();

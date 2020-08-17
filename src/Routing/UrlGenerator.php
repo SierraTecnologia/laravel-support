@@ -196,7 +196,7 @@ class UrlGenerator
         if ($data) {
             $page = '/'.Crypto::shareableEncrypt($data).$page;
         }
-        return url(\Illuminate\Support\Facades\Config::get('generators.core.dir', 'siravel').'/manager/'.Crypto::shareableEncrypt($slug).$page);
+        return url(\Illuminate\Support\Facades\Config::get('generators.core.dir', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
     }
 
     public static function routeForSlug($slug, $page = 'index', $data = false)

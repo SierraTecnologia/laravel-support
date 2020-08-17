@@ -28,6 +28,7 @@ class SystemMount
 
             \Integrations\IntegrationsProvider::class,
             \Transmissor\TransmissorProvider::class,
+            \Market\MarketProvider::class,
             \Bancario\BancarioProvider::class,
             \Operador\OperadorProvider::class,
             \Fabrica\FabricaProvider::class,
