@@ -213,25 +213,29 @@ class Base extends BaseController
      */
     public function detailPath($class)
     {
-        // Remove Decoy from the class
-        $path = str_replace('Support\Http\Controllers\Admin\\', '', $class, $is_facilitador);
+        if (defined($class.'::VIEWS')) {
+            $path = $class::VIEWS;
+        } else {
+            // Remove Decoy from the class
+            $path = str_replace('Support\Http\Controllers\Admin\\', '', $class, $is_facilitador);
 
-        // Remove the App controller prefix
-        $path = str_replace('App\Http\Controllers\\', '', $path);
+            // Remove the App controller prefix
+            $path = str_replace('App\Http\Controllers\\', '', $path);
 
-        // Break up all the remainder of the class and de-study them (which is what
-        // title() does)
-        $parts = explode('\\', $path);
+            // Break up all the remainder of the class and de-study them (which is what
+            // title() does)
+            $parts = explode('\\', $path);
 
-        foreach ($parts as &$part) {
-            $part = str_replace(' ', '_', strtolower($this->title($part)));
-        }
+            foreach ($parts as &$part) {
+                $part = str_replace(' ', '_', strtolower($this->title($part)));
+            }
 
-        $path = implode('.', $parts);
+            $path = implode('.', $parts);
 
-        // If the controller is part of Decoy, add it to the path
-        if ($is_facilitador) {
-            $path = 'facilitador::'.$path;
+            // If the controller is part of Decoy, add it to the path
+            if ($is_facilitador) {
+                $path = 'facilitador::'.$path;
+            }
         }
 
         // Done
@@ -794,7 +798,14 @@ class Base extends BaseController
             return $class::RULES;
         }
         
-        return $class::$rules;
+        if (!property_exists($class, 'rules')) {
+            return [];
+        }
+
+        if (isset($class::$rules)) {
+            return $class::$rules;
+        }
+        return (new $class)->rules;
     }
 
     /**

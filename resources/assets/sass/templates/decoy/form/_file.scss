@@ -1,0 +1,37 @@
+// These are the image upload control groups.  The 10px margins here just seemd to
+// look better than the 5px that is generally the spacing on the help block.
+.form-group.upload {
+
+	// This the styling for generic file uploads
+	.download {
+		color: inherit;
+		a { color: #1E8AAA; }
+	}
+	.upload-delete {
+		&, a { color: #D14; }
+	}
+	.download, .upload-delete, .status {
+		display: block;
+		margin-top: 5px;
+
+		// Override a padding added by BS on horzontal forms
+		.form-horizontal & {
+			padding-top: 0;
+		}
+
+		// The icon
+		.glyphicon {
+			margin-right: 2px;
+		}
+	}
+
+	// The link to a file field.  This simulates the look of the
+	// code tag
+	.download-link {
+		padding: 2px 4px;
+		border: 1px solid $gray-lighter;
+		font-family: $font-family-monospace;
+		font-size: 12px;
+	}
+
+}

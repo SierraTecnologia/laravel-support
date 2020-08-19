@@ -19,5 +19,5 @@
                 -if($listing->count()==0)
                     No <b>#{$title}</b> have been created yet.
 
-                    -if (app('facilitador.user')->can('create', $controller))
+                    -if (app('facilitador.user') && app('facilitador.user')->can('create', $controller))
                         <span class="nowrap">Click <b><a href="#{URL::to(SupportURL::relative('create', null, $controller))}"><span class="glyphicon glyphicon-plus"></span> New</a></b></span> to create one.

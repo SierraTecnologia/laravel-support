@@ -1,0 +1,29 @@
+.standard-list .legend {
+
+	// Space out the stats in the legend
+	.stat {
+		margin-right: $table-cell-padding-horizontal;
+
+		@media(max-width: $screen-sm) {
+			font-size: 13px;
+		}
+	}
+
+	// Push badges over a tad
+	.badge {
+		margin-left: 3px;
+		background: rgba($theme-secondary-inverse, .7);
+		color: $theme-secondary-color;
+		padding-bottom: 4px;
+
+		// Nudge it up a bit
+		position: relative;
+		top: -1px;
+	}
+
+	// Slightly tweak placement
+	body.index & > .pull-right.btn-toolbar {
+		margin-right: -1px;
+	}
+
+}

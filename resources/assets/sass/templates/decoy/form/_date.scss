@@ -1,0 +1,17 @@
+
+// Give the date input a fixed size
+$date-input-width: 150px;
+.date-field .input-group {
+	width: $date-input-width;
+}
+
+// Position the date picker over the component
+.datepicker {
+	margin-left: 4px;
+}
+
+// Make datepicker go above header-z-ed items, like the `.form-actions`.  This
+// fixes cases where there is a date at the bototm of a form
+.dropdown-menu {
+	z-index: $header-z + 1 !important;
+}

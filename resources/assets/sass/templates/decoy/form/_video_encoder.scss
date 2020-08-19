@@ -1,0 +1,53 @@
+
+// Skin video encoder
+.form-group.video-encoder {
+
+	// Format the progress bar
+	.progress {
+		margin-bottom: 0;
+		.progress-bar {
+			font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+			font-size: 12px;
+			text-shadow: none;
+			text-transform: capitalize;
+		}
+	}
+
+	// The video player
+	video {
+		max-width: 100%;
+	}
+
+	// Collpase the player and make the stats flush
+	.player {
+		margin-top: 5px;
+		display: inline-block;
+		line-height: 0;
+		border: 1px solid #ddd;
+		border-radius: 0 0 4px 4px;
+	}
+
+	// The stats
+	.stats {
+		$pad: 4px;
+		background: $light-grey;
+		padding: 4px;
+
+		span {
+			vertical-align: middle;
+		}
+
+		.label {
+			display: inline-block;
+			color: #737373;
+			font-weight: normal;
+		}
+
+		.badge {
+			background: #aaa;
+			margin-left: 2px;
+			a { color: white;	 }
+		}
+	}
+
+}

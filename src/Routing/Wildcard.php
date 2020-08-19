@@ -90,10 +90,13 @@ class Wildcard
      * @return string i.e. App\Http\Controllers\Admin\People or
      *                Facilitador\Http\Controllers\Admin\Admins
      */
-    public function detectController($class_name = null)
+    public function detectController($class_name = null): string
     {
         // CAso ache nas rotas nem continua
         if ($routeForPath = app()->make(RouteRepository::class)->findByRoute($this->path)) {
+            if (!$routeForPath->controller) {
+                return explode('@', $routeForPath->action['controller'])[0];
+            }
             return get_class($routeForPath->controller);
         }
         

@@ -1,0 +1,43 @@
+
+// Add spacing after checkaxbles
+.form-vertical .form-inline {
+	input[type="checkbox"], input[type="radio"] {
+		margin-right: 5px;
+	}
+}
+
+// Reduce bootstrap's vertical margins.  It's 7 and not 5 so
+// that labels in the row have a 2px spacing in between.
+.radio, .checkbox {
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+// Put the margins on the right rather than the left
+// https://github.com/BKWLD/decoy/issues/360
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline { margin-left: 0; }
+.radio-inline, .checkbox-inline { 
+	margin-right: 10px; 
+	&:last-child { margin-right: 0; }
+}
+
+// Remove unnecessary Bootstrap top padding after break
+@media (max-width: $screen-md) {
+	.form-horizontal {
+		.radio,
+		.checkbox,
+		.radio-inline,
+		.checkbox-inline {
+		  padding-top: 0;
+		}
+	}
+}
+
+// If a radio immediately has a label, put a little padding to the right
+// to make subsequent text look better
+.radio, .checkbox {
+	input + .label {
+		margin-right: 3px;
+	}
+}

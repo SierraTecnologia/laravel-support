@@ -1,0 +1,45 @@
+/**
+ * Contains the user info
+ */
+.sidebar .dashboard {
+	padding: $nav-pad;
+	@include clearfix;
+
+	// Makes it look more left aligned
+	padding-left: $nav-pad - 2px;
+
+	// Make the whole row clickable
+	display: block; 
+	&:hover {
+		background-color: lighten($gray-dark, 2%);
+	}
+
+	// Size of gravatar
+	$size: 40px;
+	line-height: $size;
+	@media(max-width:$screen-sm) {
+
+		// Adjust the height requirements so the close button
+		// fits snuggly in place
+		line-height: 26px;
+	}
+
+	.name {
+		color: #dedede;
+		padding-left: 4px;
+		font-family: $headings-font-family;
+		font-weight: $headings-font-weight;
+		font-size: 16px;
+	}
+
+	.gravatar {		
+		float: right;
+		width: $size;
+		height: $size;
+
+		// Hide on mobile cause the close button is up htere
+		@media(max-width: $screen-sm) {
+			display: none;
+		}
+	}
+}

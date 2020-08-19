@@ -1,6 +1,8 @@
+require('./bootstrap');
+
 window.jQuery = window.$ = $ = require('jquery');
 window.Vue = require('vue');
-window.perfectScrollbar = require('perfect-scrollbar/jquery')($);
+// window.perfectScrollbar = require('perfect-scrollbar/jquery')($);
 window.Cropper = require('cropperjs');
 window.Cropper = 'default' in window.Cropper ? window.Cropper['default'] : window.Cropper;
 window.toastr = require('toastr');

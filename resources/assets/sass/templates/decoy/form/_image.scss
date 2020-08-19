@@ -1,0 +1,136 @@
+.image-upload {
+  $height: 33px;
+  $bkgd: #f5f5f5;
+  $border: 1px solid #ccc;
+  position: relative;
+
+  .image-holder {
+    display: none;
+    margin-top: 5px;
+
+    // Add border around the region
+    border: $border;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &.has-image {
+
+    .image-holder {
+      display: block;
+    }
+
+    .bootstrap-file {
+      display: none;
+    }
+  }
+
+  .title {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    outline: none;
+    background: transparent;
+
+    // Center the title
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    text-align: center;
+    top: 4px;
+
+    border: 1px solid transparent;
+    transition: border-color 200ms;
+    &:focus {
+      border: $border;
+    }
+  }
+
+  .btn-default {
+    background: none;
+  }
+
+
+
+  .input-group .btn-group {
+
+    .btn {
+      padding: 9px 10px;
+      border-radius: 0;
+      height: $height;
+      transition: background-color 250ms, color 250ms;
+
+      &:not(.active):hover {
+        background-color: $theme-primary-color;
+        color: white;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+
+    .active {
+      background-color: #ccc;
+      box-shadow: none;
+    }
+  }
+
+  .delete {
+    padding: 9px 10px;
+    border-radius: 0 4px 0 0;
+    top: 0;
+    height: $height;
+    transition: background-color 250ms, color 250ms;
+
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
+
+  .toolbar {
+    background: $bkgd;
+    border-bottom: $border;
+    border-radius: 4px 4px 0 0;
+    width: calc(100% + 1px); // Correct for some subpixel issues
+  }
+
+  .img-thumbnail {
+    border-top: 0;
+    border-radius: 0 0 4px 4px;
+    position: relative;
+  }
+
+  .focal-point {
+    position: absolute;
+    z-index: 1000;
+    color: white;
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+
+  .delete {
+    float: right;
+  }
+
+  // Contains the source image and the jcrop instance
+  .preview {
+
+    // Add checkered bkgd
+    background: url($decoy_img_dir + 'jcrop/img-bkgd.png');
+
+    // Make images fit
+    .source {
+      max-width: 100%;
+    }
+
+    // Remove the default black bkgd
+    .jcrop-holder {
+      background: none !important;
+    }
+
+  }
+}

@@ -1,0 +1,66 @@
+// Styles related to drag and drop.
+.listing {
+
+	.ui-sortable {
+
+		// This is the drop box
+		.placeholder {
+			background: darken($body-color, 5%);
+
+			// Prevent the new dotted border from having a double border
+			// look with the normal row
+			& + tr td {
+				border-top-color: white;
+			}
+		}
+
+		// Show the move curosr
+		tr {
+			cursor: move;
+			[type="checkbox"] {
+				cursor: pointer;
+			}
+		}
+
+		// Don't show move cursor on disabled rows
+		&.ui-sortable-disabled tr {
+			cursor: auto;
+		}
+	}
+
+	// This is the unit that gets dragged around
+	.ui-sortable-helper {
+		background: darken($table-row-hover, 1%) !important;
+		border: 1px dashed $grey-border;
+
+		// The popover box-shadow
+		@include box-shadow(0 5px 10px rgba(0,0,0,.2));
+
+		// Remove borders on the sides so there is no shift
+		border-left: none;
+		border-right: none;
+
+		// Fix for long cells not looking right
+		// https://github.com/BKWLD/decoy/issues/53
+		display: block !important;
+		white-space: nowrap;
+		font-size: 0; // Remove the whitespace between tds
+
+		// Prepare for fixed width cells via JS
+		td {
+			display: inline-block;
+			font-size: $font-size-base; // Put the font size back
+			border: none;
+
+			// Hide columns on break as defined in listing._table.scss
+			@media (max-width: $screen-sm) {
+				display: none;
+				&:first-child + td, &:last-child { display: inline-block; }
+			}
+		}
+
+		// For the IE9 fix
+		@include clearfix;
+	}
+
+}

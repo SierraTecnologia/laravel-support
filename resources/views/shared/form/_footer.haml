@@ -38,7 +38,7 @@
 			-if (isset($item) && app('facilitador.user')->can('create', $controller) && !empty($item->cloneable))
 				%a.btn.btn-default.js-tooltip(title=__('facilitador::form.secondary_actions.duplicate') href=SupportURL::relative('duplicate', $item->id))
 					%span.glyphicon.glyphicon-duplicate
-			-if (isset($item) && app('facilitador.user')->can('read', 'changes'))
+			-if (isset($item) && is_object($item) && app('facilitador.user')->can('read', 'changes'))
 				-$url = SupportURL::action('changes').'?'.Search::query([ 'model' => get_class($item), 'key' => $item->getKey()])
 				%a.btn.btn-default.js-tooltip(title=__('facilitador::form.secondary_actions.changes') href=$url)
 					%span.glyphicon.glyphicon-list-alt

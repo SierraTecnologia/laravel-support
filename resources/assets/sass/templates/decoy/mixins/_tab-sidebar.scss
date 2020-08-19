@@ -1,0 +1,136 @@
+/**
+ * A mixin for creating a page with a right aligned Bootstrap
+ * tab based sidebar
+ */
+@mixin tab-sidebar {
+	$width: 200px;
+
+	// Wraps the two cols
+	.row {
+		position: relative;
+	}
+
+	// The sidebar
+	.tab-sidebar {
+		width: $width;
+		position: absolute;
+		right: $main-padding/2;
+		top: 0;
+
+		// Bottom margin puhses it off of the form-actions fixed bar
+		margin-bottom: $footer-height + $main-padding;
+
+		// Otherwise, fixed position never takes
+		&.affix {
+			position: fixed;
+			right: $main-padding; // The padding of the row no longer affects it
+
+			// If a really wide page, fix it using left
+			@media(min-width: $effective-max-width) {
+				right: auto;
+				left: $effective-max-width - $width - $main-padding;
+			}
+		}
+	}
+
+	// The main content
+	.tab-content {
+
+		// Give it deimnsions
+		margin-right: $width+60;
+
+		// Stop srollbars
+		overflow: visible;
+
+		// Increase the padding a bit
+		@media(min-width: $screen-sm + 1px) {
+			padding-left: $main-padding;
+		}
+	}
+
+	// Make it flush
+	.tab-pane {
+		@include flush-cols;
+		@media(max-width: $screen-sm) {
+			@include flush-cols(false)
+		}
+	}
+	
+	// Make the nav pills grey scale
+	.nav-pills a {
+		color: $gray-light; // Same color as breadcrumbs
+		background: white;
+		margin: 4px 0;
+		font-size: 13px;
+
+		// Style text similar to fieldset legends
+		font-weight: $headings-font-weight;
+		font-family: $headings-font-family;
+		padding: 7px $form-group-margin; // 7px makes it about as high as table th's
+		@media(max-width: $screen-sm) {
+			padding-left: $form-group-margin-sm;
+			padding-right: $form-group-margin-sm;
+		}
+
+		// Make the bkgd a little darker on hover
+		&:hover {
+			color: darken($gray-light, 5%);
+			background: darken(white, 2%);
+		}
+	}
+
+	// Remove the top margin of the first pill so it's flush with the form fieldsets
+	@media(min-width: $screen-sm + 1px) {
+		.nav-pills li:first-child a {
+			margin-top: 0;
+		}
+	}
+
+	// Set the active state of the pills, overriding bootstrap
+	.nav-pills a:active, .nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
+		color: $theme-primary-inverse;
+		background: $theme-primary-color;
+	}
+	
+	// Fix positioning at all breakpoints.  Bootstrap span rules tweak this.
+	.nav-pills {
+		margin-left: 0;
+	}
+	
+	// Breaking changes
+	@media(max-width: $screen-sm) {
+
+		// Make full width
+		.tab-sidebar {
+			width: auto;
+			padding: $main-padding/2;
+			margin-bottom: 0;
+
+			// Override affixable
+			padding-top: 0 !important;
+			position: static !important;
+		}
+
+		// Make locale not span full width
+		.locale {
+			width: $width;
+			margin-right: $main-padding/2;
+			margin-bottom: 4px;
+		}
+
+		// Make the pills a list on mobile
+		.nav-pills li {
+			display: inline-block;
+			a {
+				margin: 2px 1px;
+			}
+		}
+
+		// Make full width
+		.tab-content {
+			margin-right: 0;
+			padding: 0 $main-padding/2;
+		}
+	}
+
+}
