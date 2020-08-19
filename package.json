@@ -11,15 +11,16 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+    
+  },
+  "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
     "jquery": "^3.1.1",
     "laravel-mix": "^4.1.4",
     "lodash": "^4.17.4",
     "sass-loader": "^7.3.1",
-    "vue-template-compiler": "^2.5.21"
-  },
-  "dependencies": {
+    "vue-template-compiler": "^2.5.21",
     "ace-builds": "^1.4.6",
     "bootstrap": "^3.3.7",
     "bootstrap-datepicker": "^1.6.4",
@@ -42,7 +43,6 @@
     "@hapi/hoek": ">=4.2.1",
     "animate.css": "^4.1.0",
     "axios": "^0.19.2",
-    "bootstrap-sass": "^3.2.0",
     "bootstrap-tagsinput": "^0.7.1",
     "botman-tinker": "0.0.1",
     "brace": "^0.11.1",
