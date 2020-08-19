@@ -25,6 +25,27 @@ require('./multilingual');
 window.helpers = require('./helpers.js');
 
 
+// Videos
+// import Vue from 'vue'
+// import VueVideoPlayer from 'vue-video-player'
+// // require videojs style
+// import 'video.js/dist/video-js.css'
+// // import 'vue-video-player/src/custom-theme.css'
+// Vue.use(VueVideoPlayer, /* {
+//   options: global default options,
+//   events: global videojs events
+// } */)
+import VueCoreVideoPlayer from 'vue-core-video-player'
+//...
+Vue.use(VueCoreVideoPlayer)
+
+
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+
 $(document).ready(function () {
 
 

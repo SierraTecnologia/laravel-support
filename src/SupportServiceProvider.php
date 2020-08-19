@@ -878,15 +878,15 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerMiddlewares()
     {
         if (config('siravel.login', true)) {
-            $this->app['router']->aliasMiddleware('admin.user', FacilitadorAdminMiddleware::class);
+            $this->app['router']->aliasMiddleware('admin', \Support\Http\Middleware\AdminMiddleware::class);
         }
 
         // Register middleware individually
         foreach ([
-            'facilitador.auth'          => \Facilitador\Http\Middleware\Auth::class,
-            'facilitador.edit-redirect' => \Facilitador\Http\Middleware\EditRedirect::class,
-            'facilitador.guest'         => \Facilitador\Http\Middleware\Guest::class,
-            'facilitador.save-redirect' => \Facilitador\Http\Middleware\SaveRedirect::class,
+            'facilitador.auth'          => \Support\Http\Middleware\Auth::class,
+            'facilitador.edit-redirect' => \Support\Http\Middleware\EditRedirect::class,
+            'facilitador.guest'         => \Support\Http\Middleware\Guest::class,
+            'facilitador.save-redirect' => \Support\Http\Middleware\SaveRedirect::class,
         ] as $key => $class) {
             $this->app['router']->aliasMiddleware($key, $class);
         }

@@ -36,7 +36,7 @@
     <div class="page-content read container-fluid">
         <div class="row">
             <div class="col-lg-8 margin-tb">
-                @include('facilitador::components.registers.relations')
+                @include('support::components.registers.relations')
             </div>
 
             <div class="col-lg-4 margin-tb">

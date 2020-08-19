@@ -14,11 +14,21 @@
 @import "node_modules/dropzone/dist/dropzone";
 @import "node_modules/cropperjs/dist/cropper";
 @import "node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker";
-@import "fonts";
+
+
+// AdminLTE
+@import '../../vendor/almasaeed2010/adminlte/dist/css/adminlte.css';
+// Bootstrap
+// Already imported by AdminLTE
+//@import '~bootstrap/scss/bootstrap';
+
 // Fonts
+@import "fonts";
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic');
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~glyphicons-only-bootstrap/css/bootstrap';
+@import '~open-iconic/font/css/open-iconic-bootstrap.css';
+// @import 'node_modules/open-iconic/font/css/open-iconic-bootstrap.css';
 
 /********** LOGIN STYLES ***********/
 

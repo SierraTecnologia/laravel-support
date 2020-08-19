@@ -207,7 +207,7 @@
                     @if(isset($options->taggable) && $options->taggable === 'on')
                         data-route="{{ route('facilitador.'.\Illuminate\Support\Str::slug($options->table).'.store') }}"
                         data-label="{{$options->label}}"
-                        data-error-message="{{__('facilitador::cruds.bread.error_tagging')}}"
+                        data-error-message="{{__('support::cruds.bread.error_tagging')}}"
                     @endif
                 >
 

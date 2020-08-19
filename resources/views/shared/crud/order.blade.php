@@ -1,10 +1,10 @@
 @extends('support::layouts.voyager.master')
 
-@section('page_title', $dataType->getTranslatedAttribute('display_name_plural') . ' ' . __('facilitador::cruds.bread.order'))
+@section('page_title', $dataType->getTranslatedAttribute('display_name_plural') . ' ' . __('support::cruds.bread.order'))
 
 @section('page_header')
 <h1 class="page-title">
-    <i class="facilitador-list"></i>{{ $dataType->getTranslatedAttribute('display_name_plural') }} {{ __('facilitador::cruds.bread.order') }}
+    <i class="facilitador-list"></i>{{ $dataType->getTranslatedAttribute('display_name_plural') }} {{ __('support::cruds.bread.order') }}
 </h1>
 @stop
 
@@ -61,7 +61,7 @@ $(document).ready(function () {
             order: JSON.stringify($('.dd').nestable('serialize')),
             _token: '{{ csrf_token() }}'
         }, function (data) {
-            toastr.success("{{ __('facilitador::cruds.bread.updated_order') }}");
+            toastr.success("{{ __('support::cruds.bread.updated_order') }}");
         });
     });
 });

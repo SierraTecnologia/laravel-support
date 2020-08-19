@@ -18,13 +18,13 @@
         @can('edit', app($dataType->model_name))
             @if(isset($dataType->order_column) && isset($dataType->order_display_column))
                 <a href="{!! $dataType->getModelService()->getUrl('order') !!}" class="btn btn-primary btn-add-new">
-                    <i class="facilitador-list"></i> <span>{{ __('facilitador::cruds.bread.order') }}</span>
+                    <i class="facilitador-list"></i> <span>{{ __('support::cruds.bread.order') }}</span>
                 </a>
             @endif
         @endcan
         @can('delete', app($dataType->model_name))
             @if($usesSoftDeletes)
-                <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('facilitador::cruds.bread.soft_deletes_off') }}" data-off="{{ __('facilitador::cruds.bread.soft_deletes_on') }}">
+                <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('support::cruds.bread.soft_deletes_off') }}" data-off="{{ __('support::cruds.bread.soft_deletes_on') }}">
             @endif
         @endcan
         @foreach($actions as $action)

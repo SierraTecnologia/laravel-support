@@ -37,6 +37,7 @@ return [
 
         'Integrations\Models',
         'Transmissor\Models',
+        'Market\Models',
         'Bancario\Models',
         'Operador\Models',
         'Fabrica\Models',

@@ -6,6 +6,7 @@ use App;
 use Event;
 use Illuminate\Support\Str;
 use Support\Exceptions\Exception;
+use Support\Repositories\RouteRepository;
 
 /**
  * The wildcard router is what allows us to wildcard the admin routes so that the
@@ -91,7 +92,11 @@ class Wildcard
      */
     public function detectController($class_name = null)
     {
-
+        // CAso ache nas rotas nem continua
+        if ($routeForPath = app()->make(RouteRepository::class)->findByRoute($this->path)) {
+            return get_class($routeForPath->controller);
+        }
+        
         $paths = explode('/', $this->path);
 
         $rootNamespace = 'App';
