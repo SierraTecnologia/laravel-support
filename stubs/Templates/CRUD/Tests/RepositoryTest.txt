@@ -7,7 +7,7 @@ class _camel_case_RepositoryTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->repo = $this->app->make(_camel_case_Repository::class);

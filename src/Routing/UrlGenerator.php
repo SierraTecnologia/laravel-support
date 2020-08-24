@@ -2,11 +2,11 @@
 
 namespace Support\Routing;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Muleta\Utils\Extratores\ClasserExtractor;
+use SierraTecnologia\Crypto\Services\Crypto;
 
 /**
  * This class exists to help make links between pages in Facilitador, which is
@@ -196,7 +196,7 @@ class UrlGenerator
         if ($data) {
             $page = '/'.Crypto::shareableEncrypt($data).$page;
         }
-        return url(\Illuminate\Support\Facades\Config::get('generators.core.dir', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
+        return url(\Illuminate\Support\Facades\Config::get('applcation.routes.rica', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
     }
 
     public static function routeForSlug($slug, $page = 'index', $data = false)

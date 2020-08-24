@@ -8,7 +8,7 @@ class _camel_case_IntegrationTest extends TestCase
     use DatabaseMigrations;
     use WithoutMiddleware;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

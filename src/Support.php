@@ -2,7 +2,18 @@
 
 namespace Support;
 
+use App\Models\User;
 use Arrilot\Widgets\Facade as Widget;
+use Bkwld\Library;
+use Config;
+use Crypto;
+use Facilitador\Models\Menu;
+use Facilitador\Models\MenuItem;
+use Facilitador\Models\Permission;
+use Siravel\Models\Blog\Post;
+use Facilitador\Models\Role;
+use Facilitador\Models\Setting;
+use Facilitador\Models\Translation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\Filesystem;
@@ -10,34 +21,23 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use ReflectionClass;
+use Request;
+use Session;
+use Siravel\Models\Blog\Category;
+use Siravel\Models\Negocios\Page;
+use Support\Elements\FormFields\After\HandlerInterface as AfterHandlerInterface;
+use Support\Elements\FormFields\HandlerInterface;
+use Support\Events\AlertsCollection;
+use Support\Models\Application\DataRelationship;
+use Support\Models\Application\DataRow;
+use Support\Models\Application\DataType;
 use Support\Template\Actions\DeleteAction;
 use Support\Template\Actions\EditAction;
 use Support\Template\Actions\RestoreAction;
 use Support\Template\Actions\ViewAction;
-use Support\Events\AlertsCollection;
-use Support\Elements\FormFields\After\HandlerInterface as AfterHandlerInterface;
-use Support\Elements\FormFields\HandlerInterface;
-use Siravel\Models\Blog\Category;
-use Support\Models\Application\DataRow;
-use Support\Models\Application\DataRelationship;
-use Support\Models\Application\DataType;
-use Facilitador\Models\Menu;
-use Facilitador\Models\MenuItem;
-use Siravel\Models\Negocios\Page;
-use Facilitador\Models\Permission;
-use Facilitador\Models\Post;
-use Facilitador\Models\Role;
-use Facilitador\Models\Setting;
-use Facilitador\Models\Translation;
-use App\Models\User;
 use Translation\Traits\HasTranslations;
 use View;
-use Config;
-use Request;
-use Session;
-use Bkwld\Library;
-use ReflectionClass;
-use Crypto;
 
 class Support
 {
@@ -62,18 +62,19 @@ class Support
     ];
 
     protected $models = [
-        'Category'    => Category::class,
-        'DataRow'     => DataRow::class,
-        'DataType'    => DataType::class,
-        'Menu'        => Menu::class,
-        'MenuItem'    => MenuItem::class,
-        'Page'        => Page::class,
-        'Permission'  => Permission::class,
-        'Post'        => Post::class,
-        'Role'        => Role::class,
-        'Setting'     => Setting::class,
-        'User'        => User::class,
-        'Translation' => Translation::class,
+        'Category'          => Category::class,
+        'DataRow'           => DataRow::class,
+        'DataRelationship'  => DataRelationship::class,
+        'DataType'          => DataType::class,
+        'Menu'              => Menu::class,
+        'MenuItem'          => MenuItem::class,
+        'Page'              => Page::class,
+        'Permission'        => Permission::class,
+        'Post'              => Post::class,
+        'Role'              => Role::class,
+        'Setting'           => Setting::class,
+        'User'              => User::class,
+        'Translation'       => Translation::class,
     ];
 
     public $setting_cache = null;

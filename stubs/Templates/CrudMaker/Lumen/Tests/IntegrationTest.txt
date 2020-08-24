@@ -7,7 +7,7 @@ class _camel_case_IntegrationTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->app->instance('middleware.disable', true);
