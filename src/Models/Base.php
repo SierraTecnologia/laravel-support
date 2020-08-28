@@ -2,39 +2,39 @@
 
 namespace Support\Models;
 
-use DB;
 use App;
-use URL;
-use Support;
-use Event;
-use Config;
-use Session;
-use Facilitador\Services\FacilitadorService;
-use SupportURL;
+use Audit\Traits\Loggable;
 use Bkwld\Cloner\Cloneable;
-use Bkwld\Upchuck\SupportsUploads;
 use Bkwld\Library\Utils\Collection;
-use Support\Exceptions\Exception;
+use Bkwld\Upchuck\SupportsUploads;
+use Config;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use Illuminate\Database\Eloquent\Model as Eloquent;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Log;
+use DB;
 use Doctrine\DBAL\Types\StringType as DoctrineStringType;
+use Event;
+use Facilitador\Services\FacilitadorService;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Support\Services\ModelService;
+use Log;
+use Muleta\Traits\Models\Importable;
+use Muleta\Traits\Models\ValidatingTrait;
+use Muleta\Utils\Extratores\DbalExtractor;
+use Muleta\Utils\Inclusores\DbalInclusor;
+use Muleta\Utils\Mergeators\DbalMergeator;
 
 use Muleta\Utils\Modificators\ArrayModificator;
-use Muleta\Utils\Extratores\DbalExtractor;
-use Muleta\Utils\Mergeators\DbalMergeator;
-use Muleta\Utils\Inclusores\DbalInclusor;
+use Session;
+use Support;
+use SupportURL;
 
-use Muleta\Traits\Models\Importable;
 use Support\Collections\Base as BaseCollection;
-use Audit\Traits\Loggable;
-use Illuminate\Database\Eloquent\Model;
-use Muleta\Traits\Models\ValidatingTrait;
+use Support\Exceptions\Exception;
+use Support\Services\ModelService;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use URL;
 
 abstract class Base extends Model //Ardent
 {
@@ -921,9 +921,9 @@ abstract class Base extends Model //Ardent
         // Make the label
         $label = $many_to_many ?
             __('facilitador::base.action.remove') :
-            $with_trashed ?
+            ($with_trashed ?
                 __('facilitador::base.action.soft_delete') :
-                __('facilitador::base.action.delete');
+                __('facilitador::base.action.delete'));
 
         // Return markup
         return sprintf(

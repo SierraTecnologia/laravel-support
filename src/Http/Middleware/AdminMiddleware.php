@@ -17,7 +17,7 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request); //@todo
+        // return $next($request); //@todo
         auth()->setDefaultDriver(app('FacilitadorGuard'));
 
         if (!Auth::guest()) {
