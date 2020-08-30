@@ -1,33 +1,6 @@
 require('./bootstrap');
 
-window.jQuery = window.$ = $ = require('jquery');
-window.Vue = require('vue');
-// window.perfectScrollbar = require('perfect-scrollbar/jquery')($);
-window.Cropper = require('cropperjs');
-window.Cropper = 'default' in window.Cropper ? window.Cropper['default'] : window.Cropper;
-window.toastr = require('toastr');
-window.DataTable = require('datatables');
-require('datatables-bootstrap3-plugin/media/js/datatables-bootstrap3');
-window.EasyMDE = require('easymde');
-require('dropzone');
-require('jquery-match-height');
-require('bootstrap-toggle');
-require('nestable2');
-require('bootstrap');
-require('bootstrap-switch');
-require('select2');
-require('eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker');
-var brace = require('brace');
-require('brace/mode/json');
-require('brace/theme/github');
-require('./slugify');
-window.TinyMCE = window.tinymce = require('tinymce');
-require('./multilingual');
-
-window.helpers = require('./helpers.js');
-
-
-// Videos
+window.Vue = require('vue');// Videos
 // import Vue from 'vue'
 // import VueVideoPlayer from 'vue-video-player'
 // // require videojs style
@@ -42,6 +15,33 @@ import VueCoreVideoPlayer from 'vue-core-video-player'
 Vue.use(VueCoreVideoPlayer)
 
 
+// window.perfectScrollbar = require('perfect-scrollbar/jquery')($);
+window.Cropper = require('cropperjs');
+window.Cropper = 'default' in window.Cropper ? window.Cropper['default'] : window.Cropper;
+window.toastr = require('toastr');
+require('datatables-bootstrap3-plugin/media/js/datatables-bootstrap3');
+window.EasyMDE = require('easymde');
+require('dropzone');
+require('jquery-match-height');
+require('bootstrap-toggle');
+require('nestable2');
+require('bootstrap-switch');
+require('select2');
+require('eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker');
+var brace = require('brace');
+require('brace/mode/json');
+require('brace/theme/github');
+require('./slugify');
+window.TinyMCE = window.tinymce = require('tinymce');
+require('./multilingual');
+
+window.helpers = require('./helpers.js');
+
+window.DataTable = require('datatables');
+
+
+
+
 jQuery(document).ready(function($) {
     $(".clickable-row").click(function() {
         window.location = $(this).data("href");
@@ -53,11 +53,11 @@ $(document).ready(function () {
 
     $('.match-height').matchHeight();
 
-    $('.datatable').DataTable({
-        "dom": '<"top"fl<"clear">>rt<"bottom"ip<"clear">>'
-    });
+    // $('.datatable').DataTable({
+    //     "dom": '<"top"fl<"clear">>rt<"bottom"ip<"clear">>'
+    // });
 
-    $('.datepicker').datetimepicker();
+    // $('.datepicker').datetimepicker();
 
     // Save shortcut
     $(document).keydown(function (e) {

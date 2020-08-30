@@ -1,46 +1,46 @@
 <?php
 
 namespace Support;
+
 // namespace Support\Components\Coders;
 
-use Muleta\Utils\Debugger\Classify;
-use Support\Components\Coders\Model\Config as GenerateConfig;
-use Illuminate\Filesystem\Filesystem;
-use Support\Console\Commands\CodeModelsCommand;
-use Support\Components\Coders\Model\Factory as ModelFactory;
-use Config;
-use Muleta\Traits\Providers\ConsoleTools;
-use Log;
-use Illuminate\Support\Str;
 use App;
-use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Route;
-use SierraTecnologia\Crypto\Services\Crypto;
-
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Config;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Foundation\Application;
+use Illuminate\Routing\Events\RouteMatched;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
+
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Laravel\Dusk\DuskServiceProvider;
+use Log;
+use Muleta\Traits\Providers\ConsoleTools;
+use Muleta\Utils\Debugger\Classify;
+
+use SierraTecnologia\Crypto\Services\Crypto;
+use Support\Components\Coders\Model\Config as GenerateConfig;
+use Support\Components\Coders\Model\Factory as ModelFactory;
+use Support\Console\Commands\CodeModelsCommand;
+
+use Support\Elements\FormFields\After\DescriptionHandler;
+use Support\Elements\FormFields\KeyValueJsonFormField;
+use Support\Elements\FormFields\MultipleImagesWithAttrsFormField;
+use Support\Events\FormFieldsRegistered;
+use Support\Facades\Support as SupportFacade;
+use Support\Services\ModelService;
 use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
-use Support\Services\ModelService;
-
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Foundation\Application;
-use Illuminate\Routing\Events\RouteMatched;
-use Illuminate\Support\ServiceProvider;
-
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
-use Laravel\Dusk\DuskServiceProvider;
-use Illuminate\Support\Facades\Validator;
-use Support\Facades\Support as SupportFacade;
-use Support\Elements\FormFields\MultipleImagesWithAttrsFormField;
-use Support\Elements\FormFields\KeyValueJsonFormField;
-use Support\Events\FormFieldsRegistered;
-use Support\Elements\FormFields\After\DescriptionHandler;
 use Support\Support;
-
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -273,7 +273,8 @@ class SupportServiceProvider extends ServiceProvider
         $this->registerViewComposers();
 
         $event->listen(
-            'facilitador.alerts.collecting', function () {
+            'facilitador.alerts.collecting',
+            function () {
                 $this->addStorageSymlinkAlert();
             }
         );
@@ -295,7 +296,8 @@ class SupportServiceProvider extends ServiceProvider
 
         // Build the Breadcrumbs store
         $this->app->singleton(
-            'rica.breadcrumbs', function ($app) {
+            'rica.breadcrumbs',
+            function ($app) {
                 $breadcrumbs = new \Support\Template\Layout\Breadcrumbs();
                 $breadcrumbs->set($breadcrumbs->parseURL());
 
@@ -305,8 +307,9 @@ class SupportServiceProvider extends ServiceProvider
 
         // Registers explicit rotues and wildcarding routing
         $this->app->singleton(
-            'support.router', function ($app) {
-                $dir = \Illuminate\Support\Facades\Config::get('application.routes.main');
+            'support.router',
+            function ($app) {
+                $dir = \Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica');
 
                 return new \Support\Routing\Router($dir);
             }
@@ -314,7 +317,8 @@ class SupportServiceProvider extends ServiceProvider
 
         // Register URL Generators as "SupportURL".
         $this->app->singleton(
-            'support.url', function ($app) {
+            'support.url',
+            function ($app) {
                 return new \Support\Routing\UrlGenerator($app['request']->path());
             }
         );
@@ -326,7 +330,6 @@ class SupportServiceProvider extends ServiceProvider
         $this->app->singleton(
             'active',
             function ($app) {
-
                 $instance = new Active($app['router']->getCurrentRequest());
 
                 return $instance;
@@ -337,7 +340,8 @@ class SupportServiceProvider extends ServiceProvider
         $loader->alias('Support', SupportFacade::class);
 
         $this->app->singleton(
-            'support', function () {
+            'support',
+            function () {
                 return new Support();
             }
         );
@@ -364,13 +368,15 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadConfigs();
 
         $this->app->singleton(
-            \Support\Patterns\Parser\ComposerParser::class, function () {
+            \Support\Patterns\Parser\ComposerParser::class,
+            function () {
                 return new \Support\Patterns\Parser\ComposerParser();
             }
         );
 
         $this->app->singleton(
-            \Support\Services\ApplicationService::class, function () {
+            \Support\Services\ApplicationService::class,
+            function () {
                 return new \Support\Services\ApplicationService();
             }
         );
@@ -388,7 +394,6 @@ class SupportServiceProvider extends ServiceProvider
 
         $this->registerFormFields();
         $this->registerAlertComponents();
-
     }
 
 
@@ -401,7 +406,8 @@ class SupportServiceProvider extends ServiceProvider
     {
         // Register alerts
         View::composer(
-            'support::*', function ($view) {
+            'support::*',
+            function ($view) {
                 $view->with('alerts', SupportFacade::alerts());
             }
         );
@@ -490,7 +496,8 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerModelFactory()
     {
         $this->app->singleton(
-            ModelFactory::class, function ($app) {
+            ModelFactory::class,
+            function ($app) {
                 return new ModelFactory(
                     $app->make('db'),
                     $app->make(Filesystem::class),
@@ -505,14 +512,15 @@ class SupportServiceProvider extends ServiceProvider
 
 
     /**
-     * 
+     *
      */
     private function loadLogger()
     {
         $level = env('APP_LOG_LEVEL_FOR_SUPPORT', 'warning');
         //@todo configurar adaptada dos leveis
         Config::set(
-            'logging.channels.sitec-support', [
+            'logging.channels.sitec-support',
+            [
             'driver' => 'single',
             'path' => storage_path('logs/sitec-support.log'),
             'level' => $level,
@@ -520,7 +528,8 @@ class SupportServiceProvider extends ServiceProvider
         );
 
         Config::set(
-            'logging.channels.sitec-providers', [
+            'logging.channels.sitec-providers',
+            [
             'driver' => 'single',
             'path' => storage_path('logs/sitec-providers.log'),
             'level' => $level,
@@ -538,7 +547,8 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishes(
             [
             $this->getResourcesPath('lang') => resource_path('lang/vendor/support')
-            ], ['lang',  'sitec', 'sitec-lang', 'translations']
+            ],
+            ['lang',  'sitec', 'sitec-lang', 'translations']
         );
 
         // Load translations
@@ -553,15 +563,13 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishes(
             [
             $viewsPath => base_path('resources/views/vendor/support'),
-            ], ['views',  'sitec', 'sitec-views']
+            ],
+            ['views',  'sitec', 'sitec-views']
         );
-
     }
 
     protected function publishMigrations()
     {
-        
-       
     }
        
     protected function publishAssets()
@@ -571,9 +579,9 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishes(
             [
             $this->getDistPath('support') => public_path('assets/support')
-            ], ['public',  'sitec', 'sitec-public']
+            ],
+            ['public',  'sitec', 'sitec-public']
         );
-
     }
 
     protected function publishConfigs()
@@ -590,9 +598,9 @@ class SupportServiceProvider extends ServiceProvider
                 $this->getPublishesPath('config/debugbar.php') => config_path('debugbar.php'),
                 $this->getPublishesPath('config/excel.php') => config_path('excel.php'),
                 $this->getPublishesPath('config/tinker.php') => config_path('tinker.php'),
-            ], ['config',  'sitec', 'sitec-config']
+            ],
+            ['config',  'sitec', 'sitec-config']
         );
-
     }
 
     /**
@@ -641,7 +649,6 @@ class SupportServiceProvider extends ServiceProvider
             base_path('vendor/sierratecnologia/laravel-support/src/Console/Commands') => '\Support\Console\Commands',
             ]
         );
-
     }
        
        
@@ -649,12 +656,11 @@ class SupportServiceProvider extends ServiceProvider
     {
         // Register Migrations
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-       
     }
     protected function loadConfigs()
     {
         
-        // // Merge own configs into user configs 
+        // // Merge own configs into user configs
         $this->mergeConfigFrom($this->getPublishesPath('config/elements/fields.php'), 'elements.fields');
         $this->mergeConfigFrom($this->getPublishesPath('config/generators/core.php'), 'generators.core');
         $this->mergeConfigFrom($this->getPublishesPath('config/generators/loader.php'), 'generators.loader');
@@ -679,7 +685,6 @@ class SupportServiceProvider extends ServiceProvider
 
     protected function loadServiceContainerSingletons()
     {
-
     }
     protected function loadServiceContainerRouteBinds()
     {
@@ -689,7 +694,8 @@ class SupportServiceProvider extends ServiceProvider
          * @todo Ta passando duas vezes por aqui
          */
         Route::bind(
-            'modelClass', function ($value) {
+            'modelClass',
+            function ($value) {
                 if (Crypto::isCrypto($value)) {
                     $value = Crypto::shareableDecrypt($value);
                 }
@@ -699,7 +705,8 @@ class SupportServiceProvider extends ServiceProvider
             }
         );
         Route::bind(
-            'identify', function ($value) {
+            'identify',
+            function ($value) {
                 if (Crypto::isCrypto($value)) {
                     $value = Crypto::shareableDecrypt($value);
                 }
@@ -732,7 +739,8 @@ class SupportServiceProvider extends ServiceProvider
         // @todo
 
         $this->app->bind(
-            ModelService::class, function ($app) {
+            ModelService::class,
+            function ($app) {
                 // return $app->make(ModelService::class);
                 $modelClass = false;
                 if (isset($app['router']->current()->parameters['modelClass'])) {
@@ -749,7 +757,7 @@ class SupportServiceProvider extends ServiceProvider
                 //     Crypto::isCrypto($app['router']->current()->parameters['modelClass']),
                 //     $modelClass
                 // );
-                // dd('@todo', 
+                // dd('@todo',
                 //     $modelClass, $app['router']->current()->parameters['modelClass'], Crypto::shareableDecrypt($app['router']->current()->parameters['modelClass']),
                 //     auth()->id()
                 // );
@@ -761,7 +769,8 @@ class SupportServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            RepositoryService::class, function ($app) {
+            RepositoryService::class,
+            function ($app) {
                 Log::debug('Bind Repository Service');
                 $modelService = $app->make(ModelService::class);
                 return new RepositoryService($modelService);
@@ -770,7 +779,8 @@ class SupportServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            RegisterService::class, function ($app) {
+            RegisterService::class,
+            function ($app) {
                 // return $app->make(RegisterService::class);
                 $identify = '';
                 if (isset($app['router']->current()->parameters['identify'])) {
@@ -819,11 +829,10 @@ class SupportServiceProvider extends ServiceProvider
 
     protected function loadLocalExternalPackages()
     {
-
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
-        if ($this->app->environment('local')) { 
+        if ($this->app->environment('local')) {
             if (class_exists(DebugService::class)) {
                 $this->app->register(DebugService::class);
             }
@@ -893,37 +902,41 @@ class SupportServiceProvider extends ServiceProvider
 
         // This group is used by public facilitador routes
         $this->app['router']->middlewareGroup(
-            'facilitador.public', [
+            'facilitador.public',
+            [
             'web',
             ]
         );
 
         // if (config('siravel.login', true)) {
-            // The is the starndard auth protected group
-            $this->app['router']->middlewareGroup(
-                'facilitador.protected', [
+        // The is the starndard auth protected group
+        $this->app['router']->middlewareGroup(
+            'facilitador.protected',
+            [
                 'web',
                 'facilitador.auth',
                 'facilitador.save-redirect',
                 'facilitador.edit-redirect',
                 ]
-            );
+        );
 
-            // Require a logged in admin session but no CSRF token
-            $this->app['router']->middlewareGroup(
-                'facilitador.protected_endpoint', [
+        // Require a logged in admin session but no CSRF token
+        $this->app['router']->middlewareGroup(
+            'facilitador.protected_endpoint',
+            [
                 \App\Http\Middleware\EncryptCookies::class,
                 \Illuminate\Session\Middleware\StartSession::class,
                 'facilitador.auth',
                 ]
-            );
+        );
 
-            // An open endpoint, like used by Zendcoder
-            $this->app['router']->middlewareGroup(
-                'facilitador.endpoint', [
+        // An open endpoint, like used by Zendcoder
+        $this->app['router']->middlewareGroup(
+            'facilitador.endpoint',
+            [
                 'api'
                 ]
-            );
+        );
         // }
     }
 

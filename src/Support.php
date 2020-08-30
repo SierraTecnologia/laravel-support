@@ -10,7 +10,6 @@ use Crypto;
 use Facilitador\Models\Menu;
 use Facilitador\Models\MenuItem;
 use Facilitador\Models\Permission;
-use Siravel\Models\Blog\Post;
 use Facilitador\Models\Role;
 use Facilitador\Models\Setting;
 use Facilitador\Models\Translation;
@@ -25,6 +24,7 @@ use ReflectionClass;
 use Request;
 use Session;
 use Siravel\Models\Blog\Category;
+use Siravel\Models\Blog\Post;
 use Siravel\Models\Negocios\Page;
 use Support\Elements\FormFields\After\HandlerInterface as AfterHandlerInterface;
 use Support\Elements\FormFields\HandlerInterface;
@@ -390,6 +390,10 @@ class Support
 
         return '<title>' . ($title ? "$title | $site" : $site) . '</title>';
     }
+    public function description()
+    {
+        return 'descricao';
+    }
 
     /**
      * Get the site name
@@ -511,14 +515,14 @@ class Support
         } elseif (method_exists($item, $column)) {
             return call_user_func([$item, $column]);
 
-            // Else if the column is a property, echo it
+        // Else if the column is a property, echo it
         } elseif (array_key_exists($column, $attributes)) {
 
             // Format date if appropriate
             if ($convert_dates && preg_match('/^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/', $item->$column)) {
                 return date($date_formats[$convert_dates], strtotime($item->$column));
 
-                // If the column name has a plural form as a static array or method on the model, use the key
+            // If the column name has a plural form as a static array or method on the model, use the key
                 // against that array and pull the value.  This is designed to handle my convention
                 // of setting the source for pulldowns, radios, and checkboxes as static arrays
                 // on the model.
@@ -530,18 +534,20 @@ class Support
                 // Support comma delimited lists by splitting on commas before checking
                 // if the key exists in the array
                 return join(
-                    ', ', array_map(
+                    ', ',
+                    array_map(
                         function ($key) use ($ar, $class, $plural) {
                             if (array_key_exists($key, $ar)) {
                                 return $ar[$key];
                             }
 
                             return $key;
-                        }, explode(',', $item->$column)
+                        },
+                        explode(',', $item->$column)
                     )
                 );
 
-                // Just display the column value
+            // Just display the column value
             } else {
                 return $item->$column;
             }
@@ -604,7 +610,8 @@ class Support
         if (!is_null($this->is_handling)) {
             return $this->is_handling;
         }
-        if (env('DECOY_TESTING')) { return true;
+        if (env('DECOY_TESTING')) {
+            return true;
         }
         $this->is_handling = preg_match('#^'.Config::get('application.routes.main').'($|/)'.'#i', Request::path());
 

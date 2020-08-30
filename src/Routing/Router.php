@@ -3,9 +3,9 @@
 namespace Support\Routing;
 
 use App;
-use Route;
-use Request;
 use Muleta\Traits\Providers\ConsoleTools;
+use Request;
+use Route;
 
 /**
  * This class acts as a bootstrap for setting up
@@ -64,7 +64,8 @@ class Router
                 'middleware' => 'admin',
                 'prefix' => \Illuminate\Support\Facades\Config::get('application.routes.admin', 'admin'),
                 'as' => 'admin.',
-            ], function ($router) {
+            ],
+            function ($router) {
                 if (file_exists(__DIR__.'/../../routes/admin.php')) {
                     include __DIR__.'/../../routes/admin.php';
                 } else {
@@ -81,7 +82,8 @@ class Router
                 'middleware' => 'admin',
                 'prefix' => \Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica'),
                 'as' => 'rica.',
-            ], function ($router) {
+            ],
+            function ($router) {
                 if (file_exists(__DIR__.'/../../routes/rica.php')) {
                     include __DIR__.'/../../routes/rica.php';
                 } else {
@@ -149,7 +151,7 @@ class Router
          */
         Route::get('login', [
             'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@login',
-            'as' => 'facilitador.login'
+            'as' => 'rica.login'
         ]);
         Route::post('login', [
             'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@postLogin',
@@ -188,7 +190,6 @@ class Router
      */
     public function registerWildcard()
     {
-
         Route::group([
             'prefix' => 'wildcard',
         ], function () {

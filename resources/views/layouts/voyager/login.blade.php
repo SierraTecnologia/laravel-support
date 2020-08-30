@@ -68,7 +68,7 @@
 
                 <p>{{ __('facilitador::login.signin_below') }}</p>
 
-                <form action="{{ route('facilitador.login') }}" method="POST">
+                <form action="{{ route('rica.login') }}" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group form-group-default" id="emailGroup">
                         <label>{{ __('facilitador::generic.email') }}</label>
