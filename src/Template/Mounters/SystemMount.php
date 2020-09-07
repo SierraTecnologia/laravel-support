@@ -12,7 +12,6 @@ use Translation;
  */
 class SystemMount
 {
-
     public function getProviders()
     {
         return [
@@ -52,11 +51,11 @@ class SystemMount
         }
         // dd($this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-            collect($this->getAllMenus()->getTreeInArray())->map(
-                function ($valor) use ($event) {
+        collect($this->getAllMenus()->getTreeInArray())->map(
+            function ($valor) use ($event) {
                     $event->menu->add($valor);
                 }
-            );
+        );
         // });
     }
 

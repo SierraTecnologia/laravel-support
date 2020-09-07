@@ -56,135 +56,135 @@ class SupportServiceProvider extends ServiceProvider
 
 
     public static $menuItens = [
-        [
-            'text'        => 'Painel Admin',
-            'route'       => 'rica.dashboard',
-            'icon'        => 'share',
-            'icon_color'  => 'red',
-            'label_color' => 'success',
-            // 'space'     => 'painel',
-            'level'       => 3,
-            'topnav' => true,
-        ],
+        // // [
+        // //     'text'        => 'Painel Admin',
+        // //     'route'       => 'rica.dashboard',
+        // //     'icon'        => 'share',
+        // //     'icon_color'  => 'red',
+        // //     'label_color' => 'success',
+        // //     // 'space'     => 'painel',
+        // //     'level'       => 3,
+        // //     'topnav' => true,
+        // // ],
+        // // [
+        // //     'text'        => 'Changelog',
+        // //     'route'       => 'admin.changelog',
+        // //     'icon'        => 'fas fa-fw fa-user-secret',
+        // // ],
+        // // [
+        // //     'text'        => 'Documentação',
+        // //     'url'         => 'docs',
+        // //     'icon'        => 'fas fa-fw fa-user-secret',
+        // // ],
         // [
-        //     'text'        => 'Changelog',
-        //     'route'       => 'admin.changelog',
-        //     'icon'        => 'fas fa-fw fa-user-secret',
+        //     'text'        => 'Business Admin',
+        //     'route'       => 'rica.dashboard',
+        //     'icon'        => 'share',
+        //     'icon_color'  => 'red',
+        //     'label_color' => 'success',
+        //     // 'space'     => 'painel',
+        //     'level'       => 3,
+        //     'topnav' => true,
         // ],
         // [
-        //     'text'        => 'Documentação',
-        //     'url'         => 'docs',
-        //     'icon'        => 'fas fa-fw fa-user-secret',
+        //     'text'        => 'RiCa Admin',
+        //     'route'       => 'rica.dashboard',
+        //     'icon'        => 'share',
+        //     'icon_color'  => 'red',
+        //     'label_color' => 'success',
+        //     // 'space'     => 'painel',
+        //     'level'       => 3,
+        //     'topnav' => true,
         // ],
-        [
-            'text'        => 'Business Admin',
-            'route'       => 'rica.dashboard',
-            'icon'        => 'share',
-            'icon_color'  => 'red',
-            'label_color' => 'success',
-            // 'space'     => 'painel',
-            'level'       => 3,
-            'topnav' => true,
-        ],
-        [
-            'text'        => 'RiCa Admin',
-            'route'       => 'rica.dashboard',
-            'icon'        => 'share',
-            'icon_color'  => 'red',
-            'label_color' => 'success',
-            // 'space'     => 'painel',
-            'level'       => 3,
-            'topnav' => true,
-        ],
-        // [
-        //     'text' => 'System',
-        //     'icon' => 'fas fa-fw fa-search',
-        //     'icon_color' => "blue",
-        //     'label_color' => "success",
-        //     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        // // [
+        // //     'text' => 'System',
+        // //     'icon' => 'fas fa-fw fa-search',
+        // //     'icon_color' => "blue",
+        // //     'label_color' => "success",
+        // //     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        // // ],
+        // 'System|450' => [
+        //     [
+        //         'text'        => 'Manager',
+        //         'route'       => 'rica.dashboard',
+        //         'icon'        => 'fas fa-fw fa-edit', //television
+        //         'icon_color'  => 'blue',
+        //         'label_color' => 'success',
+        //         'space'      => 'rica',
+        //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //         //  'access' => \App\Models\Role::$ADMIN
+        //     ],
+        //     [
+        //         'text' => 'Manipule',
+        //         'icon' => 'fas fa-fw fa-eye',
+        //         'icon_color' => "blue",
+        //         'label_color' => "success",
+        //         'space'      => 'rica',
+        //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //     ],
+        //     [
+        //         'text' => 'Debugger',
+        //         'icon' => 'fas fa-fw fa-bug', //shield
+        //         'icon_color' => "blue",
+        //         'label_color' => "success",
+        //         'space'      => 'rica',
+        //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //     ],
+        //     'Manipule' => [
+        //         [
+        //             'text'        => 'Crud Builder',
+        //             'route'       => 'rica.facilitador.bread.index',
+        //             'icon'        => 'fas fa-fw fa-eye',
+        //             'icon_color'  => 'blue',
+        //             'label_color' => 'success',
+        //             'space'      => 'rica',
+        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //             //  'access' => \App\Models\Role::$ADMIN
+        //         ],
+        //         [
+        //             'text'        => 'Database',
+        //             'route'       => 'rica.facilitador.database.index',
+        //             'icon'        => 'fas fa-fw fa-database',
+        //             'icon_color'  => 'blue',
+        //             'label_color' => 'success',
+        //             'space'      => 'rica',
+        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //             //  'access' => \App\Models\Role::$ADMIN
+        //         ],
+        //         [
+        //             'text'        => 'Commands',
+        //             'route'       => 'rica.support.commands',
+        //             'icon'        => 'fas fa-fw fa-asterisk',
+        //             'icon_color'  => 'blue',
+        //             'label_color' => 'success',
+        //             'space'      => 'rica',
+        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //             //  'access' => \App\Models\Role::$ADMIN
+        //         ],
+        //         [
+        //             'text'        => 'Routers',
+        //             'route'       => 'rica.support.routers',
+        //             'icon'        => 'fas fa-fw fa-folder',
+        //             'icon_color'  => 'blue',
+        //             'label_color' => 'success',
+        //             'space'      => 'rica',
+        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //             //  'access' => \App\Models\Role::$ADMIN
+        //         ],
+        //     ],
+        //     'Debugger' => [
+        //         [
+        //             'text'        => 'View Errors',
+        //             'route'       => 'rica.dashboard',
+        //             'icon'        => 'fas fa-fw fa-bug', //times, warning
+        //             'icon_color'  => 'blue',
+        //             'label_color' => 'success',
+        //             'space'      => 'rica',
+        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //             //  'access' => \App\Models\Role::$ADMIN
+        //         ],
+        //     ],
         // ],
-        'System|450' => [
-            [
-                'text'        => 'Manager',
-                'route'       => 'rica.dashboard',
-                'icon'        => 'fas fa-fw fa-edit', //television
-                'icon_color'  => 'blue',
-                'label_color' => 'success',
-                'space'      => 'rica',
-                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                //  'access' => \App\Models\Role::$ADMIN
-            ],
-            [
-                'text' => 'Manipule',
-                'icon' => 'fas fa-fw fa-eye',
-                'icon_color' => "blue",
-                'label_color' => "success",
-                'space'      => 'rica',
-                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-            ],
-            [
-                'text' => 'Debugger',
-                'icon' => 'fas fa-fw fa-bug', //shield
-                'icon_color' => "blue",
-                'label_color' => "success",
-                'space'      => 'rica',
-                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-            ],
-            'Manipule' => [
-                [
-                    'text'        => 'Crud Builder',
-                    'route'       => 'rica.facilitador.bread.index',
-                    'icon'        => 'fas fa-fw fa-eye',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'space'      => 'rica',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    //  'access' => \App\Models\Role::$ADMIN
-                ],
-                [
-                    'text'        => 'Database',
-                    'route'       => 'rica.facilitador.database.index',
-                    'icon'        => 'fas fa-fw fa-database',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'space'      => 'rica',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    //  'access' => \App\Models\Role::$ADMIN
-                ],
-                [
-                    'text'        => 'Commands',
-                    'route'       => 'rica.support.commands',
-                    'icon'        => 'fas fa-fw fa-asterisk',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'space'      => 'rica',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    //  'access' => \App\Models\Role::$ADMIN
-                ],
-                [
-                    'text'        => 'Routers',
-                    'route'       => 'rica.support.routers',
-                    'icon'        => 'fas fa-fw fa-folder',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'space'      => 'rica',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    //  'access' => \App\Models\Role::$ADMIN
-                ],
-            ],
-            'Debugger' => [
-                [
-                    'text'        => 'View Errors',
-                    'route'       => 'rica.dashboard',
-                    'icon'        => 'fas fa-fw fa-bug', //times, warning
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'space'      => 'rica',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    //  'access' => \App\Models\Role::$ADMIN
-                ],
-            ],
-        ],
     ];
     public static $aliasProviders = [
         'Active' => \Support\Facades\Active::class,
