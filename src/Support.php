@@ -16,6 +16,7 @@ use Facilitador\Models\Translation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -679,7 +680,7 @@ class Support
      * @param  string $controller ex: "App\Http\Controllers\Admin\People"
      * @return string ex: "App\Person"
      */
-    public function modelForController($controller)
+    public function modelForController(string $controller): string
     {
         // Swap out the namespace if facilitador
         $model = str_replace(
@@ -700,9 +701,15 @@ class Support
             $model,
             $is_admin
         );
+        $model = str_replace(
+            'Http\Controllers\Admin',
+            'Models',
+            $model,
+            $is_other
+        );
 
         // Replace non-facilitador controller's with the standard model namespace
-        if (!$is_facilitador && !$is_support && !$is_admin) {
+        if (!$is_facilitador && !$is_support && !$is_admin && !$is_other) {
             $namespace = ucfirst(Config::get('application.routes.main'));
             $model = str_replace('App\Http\Controllers\\'.$namespace.'\\', 'App\\', $model);
         } else {
@@ -722,10 +729,10 @@ class Support
     /**
      * Get the controller class string from a model class string
      *
-     * @param  string $controller ex: "App\Person"
+     * @param  string $model ex: "App\Person"
      * @return string ex: "App\Http\Controllers\Admin\People"
      */
-    public function controllerForModel($model)
+    public function controllerForModel(Model $model): Controller
     {
         // Swap out the namespace if facilitador
         $controller = str_replace('Facilitador\Models', 'Facilitador\Http\Controllers\Admin', $model, $is_facilitador);

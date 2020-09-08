@@ -3,32 +3,32 @@
 namespace Support\Http\Controllers\Admin;
 
 use App;
-use URL;
-use View;
-use Support;
-use SupportURL;
+use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
+use Bkwld\Library\Utils\File;
 use Event;
 use Former;
-use Request;
-use Redirect;
-use Response;
-use stdClass;
-use Validator;
-use Illuminate\Support\Str;
-use Support\Template\Input\Search;
-use Bkwld\Library\Utils\File;
-use Support\Template\Input\Sidebar;
-use Support\Elements\Fields\Listing;
-use Translation\Template\Localize;
-use Support\Template\Input\Position;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Controller;
-use Support\Template\Input\NestedModels;
-use Support\Template\Input\ModelValidator;
-use Support\Models\Base as BaseModel;
+use Illuminate\Support\Str;
+use Redirect;
+use Request;
+use Response;
+use Support;
+use SupportURL;
+use Support\Elements\Fields\Listing;
 use Support\Exceptions\ValidationFail;
-use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
-
 use Support\Http\Controllers\Controller as BaseController;
+use Support\Models\Base as BaseModel;
+use Support\Template\Input\ModelValidator;
+use Support\Template\Input\NestedModels;
+use Support\Template\Input\Position;
+use Support\Template\Input\Search;
+use Support\Template\Input\Sidebar;
+use Translation\Template\Localize;
+use URL;
+use Validator;
+use View;
+use stdClass;
 
 /**
  * The base controller is gives Decoy most of the magic/for-free mojo
@@ -239,7 +239,7 @@ class Base extends BaseController
         }
 
         // Done
-        return $path.'.edit';
+        return $path;
     }
 
     /**
@@ -248,7 +248,7 @@ class Base extends BaseController
      * @param  string $class ex: "Admin\SlidesController"
      * @return string ex: "Slide"
      */
-    public function model($class = null)
+    public function model($class = null): string
     {
         if ($class) {
             return Support::modelForController($class);
@@ -264,7 +264,7 @@ class Base extends BaseController
      * @param  Illuminate\Database\Eloquent\Model $parent
      * @return $this
      */
-    public function parent($parent)
+    public function parent(Model $parent)
     {
         // Save out the passed reference
         $this->parent = $parent;
@@ -284,14 +284,14 @@ class Base extends BaseController
         if ($this->parent_controller == $this->controller && method_exists($this->model, $this->parent_to_self.'AsChild')) {
             $this->self_to_parent = $this->parent_to_self.'AsChild';
 
-            // If the parent relationship is a polymorphic one-many, then the
+        // If the parent relationship is a polymorphic one-many, then the
             // relationship function on the child model will be the model name plus
             // "able".  For instance, the Link model would have it's relationship to
             // parent called "linkable".
         } elseif (is_a($this->parentRelation(), 'Illuminate\Database\Eloquent\Relations\MorphMany')) {
             $this->self_to_parent = Support::belongsToName($this->model).'able';
 
-            // Save out to self to parent relationship.  It will be singular if the
+        // Save out to self to parent relationship.  It will be singular if the
             // relationship is a many to many.
         } else {
             $this->self_to_parent = $this->isChildInManyToMany()?
@@ -393,7 +393,8 @@ class Base extends BaseController
 
         // Render view
         return $this->populateView(
-            $this->show_view, [
+            $this->show_view.'.create',
+            [
             'item' => null,
             'localize' => $localize,
             'sidebar' => $sidebar,
@@ -471,7 +472,8 @@ class Base extends BaseController
 
         // Render view
         return $this->populateView(
-            $this->show_view, [
+            $this->show_view.'.edit',
+            [
             'item' => $item,
             'localize' => $localize,
             'sidebar' => $sidebar,
@@ -621,7 +623,7 @@ class Base extends BaseController
 
         // Get data matching the query
         $query = call_user_func([$this->model, 'titleContains'], request('query'))
-            ->orderedForce()
+            ->ordered()
             ->take(15); // Note, this is also enforced in the autocomplete.js
 
         // Don't return any rows already attached to the parent.  So make sure the
@@ -719,7 +721,8 @@ class Base extends BaseController
         $items = array_map(
             function ($id) {
                 return $this->findOrFail($id);
-            }, $ids
+            },
+            $ids
         );
 
         // Lookup up the parent model so we can bulk remove multiple of THIS model
@@ -754,8 +757,8 @@ class Base extends BaseController
         // Open up the query. We can assume that Model has an ordered() function
         // because it's defined on Decoy's Base_Model
         $query = $this->parent ?
-            $this->parentRelation()->orderedForce() :
-            call_user_func([$this->model, 'orderedForce']);
+            $this->parentRelation()->ordered() :
+            call_user_func([$this->model, 'ordered']);
 
         // Allow trashed records
         if ($this->withTrashed()) {
@@ -794,7 +797,7 @@ class Base extends BaseController
     {
         $class = $this->model; // PHP won't allow as a one-liner
 
-        if(defined($class.'::RULES')){
+        if (defined($class.'::RULES')) {
             return $class::RULES;
         }
         

@@ -32,6 +32,7 @@ use SupportURL;
 
 use Support\Collections\Base as BaseCollection;
 use Support\Exceptions\Exception;
+use Support\Models\SortableTrait;
 use Support\Services\ModelService;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use URL;
@@ -51,7 +52,8 @@ abstract class Base extends Model //Ardent
         // SupportsUploads,
         \Muleta\Traits\Models\CanSerializeTransform,
         \Muleta\Traits\Models\Exportable,
-        Loggable;
+        Loggable,
+        SortableTrait;
     
 
     /**
@@ -59,10 +61,10 @@ abstract class Base extends Model //Ardent
      * [2020-02-02 08:18:39] local.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' (SQL: select count(*) as aggregate from `users` where `email` = rafacollares@hotmail.com and `2` <> 2) {"exception":"[object] (Illuminate\\Database\\QueryExcept
     * ion(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' (SQL: select count(*) as aggregate from `users` where `email` = rafacollares@hotmail.com and `2` <> 2) at /var/www/html/vendor/laravel/framework/src/Illuminate/Database/Connecti
     * on.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:63, PDOException(code: 42S22): SQLSTATE[42S22]: Col
-    * umn not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:61)                                                                                                                                   
-    * [stacktrace]                                                                                                                                   
+    * umn not found: 1054 Unknown column '2' in 'where clause' at /var/www/html/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:61)
+    * [stacktrace]
      */
-    // use ValidatingTrait, 
+    // use ValidatingTrait,
     use Importable;
     // use SortableTrait; // @todo Nem todos sao Sortable
     //---------------------------------------------------------------------------
@@ -157,8 +159,8 @@ abstract class Base extends Model //Ardent
     /**
      * @todo Fazer
      */
-    public function getIdentificador()                                                                                                                                                          
-    {                                                                                                                    
+    public function getIdentificador()
+    {
         return $this->{$this->getKeyName()};
     }
 
@@ -169,28 +171,28 @@ abstract class Base extends Model //Ardent
      * @return void|false
      */
     public function onSaving()
-    { 
+    {
     }
     public function onSaved()
-    { 
+    {
     }
     public function onCreating()
-    { 
+    {
     }
     public function onCreated()
-    { 
+    {
     }
     public function onUpdating()
-    { 
+    {
     }
     public function onUpdated()
-    { 
+    {
     }
     public function onDeleting()
-    { 
+    {
     }
     public function onDeleted()
-    { 
+    {
     }
 
     /**
@@ -200,10 +202,10 @@ abstract class Base extends Model //Ardent
      * @return void|false
      */
     public function onValidating($validation)
-    { 
+    {
     }
     public function onValidated($validation)
-    { 
+    {
     }
 
     /**
@@ -213,16 +215,16 @@ abstract class Base extends Model //Ardent
      * @return void|false
      */
     public function onAttaching($parent)
-    { 
+    {
     }
     public function onAttached($parent)
-    { 
+    {
     }
     public function onRemoving($parent)
-    { 
+    {
     }
     public function onRemoved($parent)
-    { 
+    {
     }
 
     /**
@@ -282,10 +284,12 @@ abstract class Base extends Model //Ardent
     public function getAdminTitleAttribute()
     {
         return implode(
-            ' ', array_map(
+            ' ',
+            array_map(
                 function ($attribute) {
                     return $this->$attribute;
-                }, $this->titleAttributes()
+                },
+                $this->titleAttributes()
             )
         ) ?: __('facilitador::base.untitled');
     }
@@ -356,7 +360,8 @@ abstract class Base extends Model //Ardent
         // Get all the file validation rule keys
         $attributes = array_keys(
             array_filter(
-                $this->rules, function ($rules) {
+                $this->rules,
+                function ($rules) {
                     return preg_match('#file|image|mimes|video|dimensions#i', $rules);
                 }
             )
@@ -516,7 +521,7 @@ abstract class Base extends Model //Ardent
         // object, it would throw exceptions
         $row = $this->getAttributes();
 
-         // Name before title to cover the case of people with job titles
+        // Name before title to cover the case of people with job titles
         if (isset($row['name'])) {
             return ['name'];
         }
@@ -575,7 +580,7 @@ abstract class Base extends Model //Ardent
     }
 
     /**
-     * 
+     *
      */
     public static function createAndAssociate($dataOrPrimaryCode, $associateTo)
     {
@@ -595,7 +600,7 @@ abstract class Base extends Model //Ardent
     }
 
     /**
-     * 
+     *
      */
     public static function createIfNotExistAndReturn($dataOrPrimaryCode)
     {
@@ -663,7 +668,6 @@ abstract class Base extends Model //Ardent
             static::associate($entity, $associate);
         }
         return $entity;
-
     }
 
 
@@ -671,8 +675,8 @@ abstract class Base extends Model //Ardent
     /**
      * Help for Class
      */
-    public function hasAttribute($attr)                                                                                                                                                          
-    {                                                                                                                    
+    public function hasAttribute($attr)
+    {
         return array_key_exists($attr, $this->attributes);
     }
 
@@ -759,7 +763,8 @@ abstract class Base extends Model //Ardent
          */
         // Blacklist special columns that aren't intended for the DB
         $this->guarded = array_merge(
-            $this->guarded, [
+            $this->guarded,
+            [
             'parent_controller', // Backbone.js sends this with sort updates
             'parent_id', // Backbone.js may also send this with sort
             'select-row', // This is the name of the checkboxes used for bulk delete
@@ -792,7 +797,8 @@ abstract class Base extends Model //Ardent
      */
     public function sluggable()
     {
-        if (!$this->needsSlugging()) { return [];
+        if (!$this->needsSlugging()) {
+            return [];
         }
         return [
             'slug' => [
@@ -890,7 +896,8 @@ abstract class Base extends Model //Ardent
             '<a href="%s" target="_blank" class="action-view js-tooltip"
             data-placement="left" title="' . __('facilitador::base.action.view') . '">
                 <span class="glyphicon glyphicon-bookmark"></span>
-            </a>', $uri
+            </a>',
+            $uri
         );
     }
 
@@ -982,5 +989,4 @@ abstract class Base extends Model //Ardent
         }
         return $query;
     }
-
 }

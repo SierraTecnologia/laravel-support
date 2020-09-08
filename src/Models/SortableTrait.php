@@ -3,9 +3,9 @@
 namespace Support\Models;
 
 use ArrayAccess;
-use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use InvalidArgumentException;
 
 trait SortableTrait
 {
@@ -65,7 +65,7 @@ trait SortableTrait
 
     protected function determineOrderColumnName(): string
     {
-        if (isset($this->sortable['order_column_name']) 
+        if (isset($this->sortable['order_column_name'])
             && ! empty($this->sortable['order_column_name'])
         ) {
             return $this->sortable['order_column_name'];
@@ -211,7 +211,7 @@ trait SortableTrait
         }
 
         // Concatenate all the attributes with spaces and look for the term.
-        switch(DB::getDriverName()) {
+        switch (DB::getDriverName()) {
         case 'mysql':
             $source = DB::raw('CONCAT('.implode('," ",', $attributes).')');
             break;

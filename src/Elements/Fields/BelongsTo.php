@@ -2,12 +2,12 @@
 
 namespace Support\Elements\Fields;
 
-use SupportURL;
-use Support;
 use Former\Traits\Field;
-use Illuminate\Support\Str;
 use HtmlObject\Input as HtmlInput;
 use Illuminate\Container\Container;
+use Illuminate\Support\Str;
+use Support;
+use SupportURL;
 
 /**
  * Create an autocomplete field that populates a foreign key in a
@@ -63,7 +63,8 @@ class BelongsTo extends Field
             'class' => 'span5',
             'placeholder' => __('facilitador::form.belongs_to.search'),
             'autocomplete' => 'off',
-            ], (array) $attributes
+            ],
+            (array) $attributes
         );
 
         // Create a text type field
@@ -101,7 +102,7 @@ class BelongsTo extends Field
      *
      * @param string $class
      */
-    public function parent($class)
+    public function parent(Model $class)
     {
         $this->route(Support::action(SupportURL::controllerForModel($class)));
 
@@ -114,7 +115,7 @@ class BelongsTo extends Field
      *
      * @param string $title
      */
-    public function title($title)
+    public function title(string $title)
     {
         $this->title = $title;
 
@@ -185,7 +186,7 @@ class BelongsTo extends Field
         if ($parent = $this->parentModel()) {
             $this->value = $parent->getAdminTitleAttribute();
 
-            // Else, if there is no parent (it's a create page), set the value if a
+        // Else, if there is no parent (it's a create page), set the value if a
             // title was set
         } elseif ($this->title) {
             $this->value = $this->title;

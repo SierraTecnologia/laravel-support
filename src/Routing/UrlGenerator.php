@@ -85,18 +85,18 @@ class UrlGenerator
             }
 
             // @todo cosertar isso
-
-            // If currently on an edit view (where we always respect child parameters literally),
-            // or if the link is to an index view (for many to many to self) or if the child
-            // is different than the current path, appened the child controller slug.
-            if (preg_match('#edit$#', $this->path)
-                || $action == 'index'
-                || !preg_match('#'.$child.'(/\d+)?$#', $path)
-            ) {
-                if (!ends_with($path, $child.'/')) {
-                    $path .= '/'.$child;
-                }
-            }
+            // // If currently on an edit view (where we always respect child parameters literally),
+            // // or if the link is to an index view (for many to many to self) or if the child
+            // // is different than the current path, appened the child controller slug.
+            // if (preg_match('#edit$#', $this->path)
+            //     || $action == 'index'
+            //     || !preg_match('#'.$child.'(/\d+)?$#', $path)
+            // ) {
+            //     if (!ends_with($path, $child.'/')) {
+            //         dd($path, $action, $child);
+            //         $path .= '/'.$child;
+            //     }
+            // }
 
             // If the action was not index and there was an id, add it
             if ($action != 'index' && $id) {
@@ -108,7 +108,7 @@ class UrlGenerator
         if ($action && $action != 'index') {
             $path .= '/'.$action;
         }
-
+        
         // Done, return it
         return $path;
     }
@@ -166,7 +166,9 @@ class UrlGenerator
         // Get the controller name
         $controller = preg_replace(
             '#^('.preg_quote('Facilitador\Http\Controllers\Admin\\')
-            .'|'.preg_quote('App\Http\Controllers\Admin\\').')#', '', $controller
+            .'|'.preg_quote('App\Http\Controllers\Admin\\').')#',
+            '',
+            $controller
         );
 
         // Convert study caps to dashes
