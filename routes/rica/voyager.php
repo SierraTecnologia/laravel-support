@@ -23,60 +23,59 @@ use Support\Facades\Support;
             
 Route::namespace('Manager')->group(
     function () {
-
         Route::group(
-            ['as' => 'facilitador.'], function () {
+            ['as' => 'facilitador.'],
+            function () {
 
                 // Route::group(
-                    // @todo
-                    // ['middleware' => 'admin.user'], function () {
-                        event(new RoutingAdmin());
+                // @todo
+                // ['middleware' => 'admin.user'], function () {
+                event(new RoutingAdmin());
 
-                        // Database Routes
-                        Route::resource('database', 'FacilitadorDatabaseController');
+                // Database Routes
+                Route::resource('database', 'FacilitadorDatabaseController');
 
 
-                        /**
-                         * Fim do Para Corrigir Bugs
-                        */
+                /**
+                 * Fim do Para Corrigir Bugs
+                */
 
-                        event(new RoutingAdminAfter());
-                    // }
+                event(new RoutingAdminAfter());
+                // }
                 // );
-
             }
         );
     }
 );
 
             
-Route::namespace('Admin')->group(
-    function () {
+// Route::namespace('Admin')->group(
+//     function () {
 
         Route::group(
-            ['as' => 'support.'], function () {
+            ['as' => 'support.'],
+            function () {
 
                 // Route::group(
                 //     ['middleware' => 'admin.user'], function () {
                        
-                        Route::get('commands', [
+                Route::get('commands', [
                             'as' => 'commands',
                             'uses' => '\Support\Http\Controllers\Admin\Commands@index',
                         ]);
 
-                        Route::post('commands/{command}', [
+                Route::post('commands/{command}', [
                             'as' => 'commands@execute',
                             'uses' => '\Support\Http\Controllers\Admin\Commands@execute',
                         ]);
 
-                        Route::get('routers', [
+                Route::get('routers', [
                             'as' => 'routers',
                             'uses' => '\Support\Http\Controllers\Admin\Routers@index',
                         ]);
-                    // }
+                // }
                 // );
-
             }
         );
-    }
-);
+//     }
+// );

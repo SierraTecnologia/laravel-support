@@ -46,15 +46,15 @@ class SystemMount
 
     public function loadMenuForAdminlte($event)
     {
-        if (!config('siravel.packagesMenu', true)) {
+        if (!config('siravel.packagesMenu', false)) {
             return ;
         }
         // dd($this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
         collect($this->getAllMenus()->getTreeInArray())->map(
             function ($valor) use ($event) {
-                    $event->menu->add($valor);
-                }
+                $event->menu->add($valor);
+            }
         );
         // });
     }

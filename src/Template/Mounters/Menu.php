@@ -6,16 +6,15 @@
 
 namespace Support\Template\Mounters;
 
-use Route;
-use Log;
 use Illuminate\Support\Str;
+use Log;
+use Route;
 
 /**
  * Menu helper to make table and object form mapping easy.
  */
 class Menu
 {
-
     protected $key = null;
     protected $code = null;
     protected $slug = null;
@@ -31,8 +30,10 @@ class Menu
     protected $route = null;
     protected $feature = null;
     protected $space = null;
+    protected $section = null;
+    protected $dontSection = null;
     /**
-     * 
+     *
      */
     protected $group = null;
     protected $order = null;
@@ -41,7 +42,7 @@ class Menu
 
 
     /**
-     * 
+     *
      */
     protected $isDivisory = false;
 
@@ -82,10 +83,8 @@ class Menu
                     $instance->setOrder($data[1]);
                 }
             }
-            
-        }else
-        // Caso seja um menu
-        if (is_array($data)) {
+        } elseif // Caso seja um menu
+        (is_array($data)) {
             foreach ($data as $attribute => $valor) {
                 $methodName = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
                 $array[$attribute] = $instance->{$methodName}($valor);
@@ -168,6 +167,8 @@ class Menu
             'level',
             'feature',
             'space',
+            'section',
+            'dontSection',
             'order',
 
             'topnav',
@@ -180,7 +181,7 @@ class Menu
 
 
     /**
-     * 
+     *
      */
     public function getAddressSlugGroup()
     {
@@ -322,6 +323,24 @@ class Menu
         $this->space = $value;
     }
 
+    public function getSection()
+    {
+        return $this->section;
+    }
+    public function setSection($value)
+    {
+        $this->section = $value;
+    }
+
+    public function getDontSection()
+    {
+        return $this->dontSection;
+    }
+    public function setDontSection($value)
+    {
+        $this->dontSection = $value;
+    }
+
     public function getOrder()
     {
         if (is_null($this->order) || empty($this->order)) {
@@ -400,7 +419,7 @@ class Menu
     
     /**
      * Caso nao seja pra exibir, cria log e retorna false.
-     * 
+     *
      * Se nao retorna a propria instancia
      */
     public function validateAndReturn()

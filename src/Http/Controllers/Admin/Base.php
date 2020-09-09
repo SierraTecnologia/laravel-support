@@ -8,10 +8,11 @@ use Bkwld\Library\Utils\File;
 use Event;
 use Former;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Redirect;
-use Request;
+// use Request;
 use Response;
 use Support;
 use SupportURL;
@@ -185,6 +186,7 @@ class Base extends BaseController
      *
      * @return array
      */
+    // public function search(Request $request)
     public function search()
     {
         $search = new Search;
@@ -347,6 +349,7 @@ class Base extends BaseController
      * @return Illuminate\Contracts\View\Factory
      */
     public function index()
+    // public function index(Request $request)
     {
         // Look for overriden views
         $this->overrideViews();
@@ -373,6 +376,7 @@ class Base extends BaseController
      * @return Illuminate\Contracts\View\Factory
      */
     public function create()
+    // public function create(Request $request)
     {
         // Look for overriden views
         $this->overrideViews();

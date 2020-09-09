@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
 @push('css')
-    @if (View::exists('socrates::botman.partials.css'))
+    @if (View::exists('socrates::botman.partials.css') && config('siravel.botman', false))
         @include('socrates::botman.partials.css')
-    @elseif (View::exists('boravel::botman.partials.css'))
+    @elseif (View::exists('boravel::botman.partials.css') && config('siravel.botman', false))
         @include('boravel::botman.partials.css')
     @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
@@ -12,9 +12,9 @@
 
 @section('js')
     @parent
-    @if (View::exists('socrates::botman.partials.js'))
+    @if (View::exists('socrates::botman.partials.js') && config('siravel.botman', false))
         @include('socrates::botman.partials.js')
-    @elseif (View::exists('boravel::botman.partials.js'))
+    @elseif (View::exists('boravel::botman.partials.js') && config('siravel.botman', false))
         @include('boravel::botman.partials.js')
     @endif
     <script src="https://cdn.rawgit.com/download/glyphicons/0.1.0/glyphicons.js"></script>
@@ -28,7 +28,9 @@
         @stack('page_title')
         @yield('page_title')
     @else 
-        <?php if(isset($title)) echo $title; ?>
+        <?php if (isset($title)) {
+    echo $title;
+} ?>
         @stack('title')
         @yield('title')
     @endif
@@ -186,7 +188,9 @@
 
 @section('footer')
     @parent
-    <?php if(isset($footer)) echo $footer; ?>
+    <?php if (isset($footer)) {
+    echo $footer;
+} ?>
     @stack('footer')
     @yield('footer')
 @stop
