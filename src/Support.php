@@ -312,12 +312,13 @@ class Support
             $file = json_decode(
                 $this->filesystem->get(base_path('composer.lock'))
             );
-
-            // Loop through all the packages and get the version of facilitador
-            foreach ($file->packages as $package) {
-                if ($package->name == 'facilitador') {
-                    $this->version = $package->version;
-                    break;
+            if (is_object($file)) {
+                // Loop through all the packages and get the version of facilitador
+                foreach ($file->packages as $package) {
+                    if ($package->name == 'facilitador') {
+                        $this->version = $package->version;
+                        break;
+                    }
                 }
             }
         }
