@@ -4,7 +4,7 @@ namespace Support\Models;
 
 use App;
 use Audit\Traits\Loggable;
-use Bkwld\Cloner\Cloneable;
+// use Bkwld\Cloner\Cloneable;
 use Bkwld\Library\Utils\Collection;
 use Bkwld\Upchuck\SupportsUploads;
 use Config;
@@ -46,8 +46,8 @@ abstract class Base extends Model //Ardent
      * Adding common traits.  The memory usage of adding additional methods is
      * negligible.
      */
-    use Cloneable,
-        Sluggable,
+    // use Cloneable;
+    use Sluggable,
         SluggableScopeHelpers,
         // SupportsUploads,
         \Muleta\Traits\Models\CanSerializeTransform,
