@@ -29,9 +29,9 @@
         }
     ],
     "require": {
-        "php": ">=7.2.0",
+        "php": "^7.4",
         "sierratecnologia/templeiro": "dev-master",
-        "sierratecnologia/former": "^5.0.4",
+        "sierratecnologia/former": "^5.0",
         "sierratecnologia/crudmaker": "dev-master",
         "sierratecnologia/crypto": "dev-master",
         "sierratecnologia/muleta": "dev-master",
@@ -39,8 +39,6 @@
         "ricardosierra/minify": "dev-master",
         "ricardosierra/validate": "^0.2",
         "ricardosierra/changelog": "~1.4",
-        "ricardosierra/phpwhois": "dev-dev",
-        "ricardosierra/laravel-model-events": "^1.0",
         "ricardosierra/entrust": "dev-master",
         "ricardosierra/library": "^4.0",
         "ricardosierra/laravel-haml": "^2.0",
@@ -57,7 +55,6 @@
         "doctrine/dbal": ">=2.5",
         "larapack/doctrine-support": ">=0.1",
         "laracasts/presenter": ">=0.2",
-        "bkwld/croppa": "^4.0",
         "league/flysystem": ">=1.0.41",
         "bkwld/cloner": "^3.0",
         "nicolaslopezj/searchable": ">=1.10",
@@ -74,10 +71,9 @@
         "anahkiasen/html-object": ">=1.4",
         "zendframework/zend-crypt": "*",
         "laracasts/flash": "^3.0",
-        "elasticquent/elasticquent": "*",
-        "predis/predis": ">=1.1",
+        "predis/predis": "^1.1|^2.0",
         "graham-campbell/markdown": "*",
-        "rap2hpoutre/fast-excel": "^1.0",
+        "rap2hpoutre/fast-excel": "^1.0|^2.0",
         "league/pipeline": "*",
         "league/climate": ">=3.4",
         "google/recaptcha": "*",
@@ -93,16 +89,15 @@
         "pusher/pusher-php-server": "^3.0|^4.0",
         "jlapp/swaggervel": "dev-master",
         "prettus/l5-repository": "*",
-        "hieu-le/active": "^7.0",
+        "hieu-le/active": "^7.0|^8.0",
         "sabre/xml": "*",
         "league/csv": "^9.0|^8.0|^7.1",
         "spatie/eloquent-sortable": ">=3.7",
         "spatie/laravel-schemaless-attributes": ">=1.6.0",
-        "spatie/laravel-sluggable": "~2.2.0",
+        "spatie/laravel-sluggable": "^2.2",
         "symfony/inflector": ">=5.0",
         "venturecraft/revisionable": ">=1.30",
-        "felixkiss/uniquewith-validator": "^3.4.0",
-        "watson/validating": "^5.0.0",
+        "watson/validating": "^5.0|^6.0",
         "jeroennoten/laravel-adminlte": "*"
     },
     "require-dev": {
@@ -110,6 +105,10 @@
         "barryvdh/laravel-ide-helper": ">=2.7",
         "codedungeon/phpunit-result-printer": ">=0.27.0",
         "phpunit/phpunit": "^7.0|^8.0|^9.0|^10.0"
+    },
+    "suggest": {
+        "elasticquent/elasticquent": "^1.0",
+        "phoenix-lib/elasticsearch-model": "^1.3"
     },
     "autoload": {
         "psr-4": {
