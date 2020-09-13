@@ -71,8 +71,8 @@ class CreateSupportCodeTables extends Migration
      */
     public function down()
     {
-        Schema::drop('support_code_errors');
-        Schema::drop('support_code_entitys');
-        Schema::drop('support_code_classers');
+        Schema::dropIfExists('support_code_errors');
+        Schema::dropIfExists('support_code_entitys');
+        Schema::dropIfExists('support_code_classers');
     }
 }

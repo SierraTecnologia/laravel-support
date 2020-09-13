@@ -71,6 +71,6 @@ class CreateDataRelationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('data_relations');
+        Schema::dropIfExists('data_relations');
     }
 }
