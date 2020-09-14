@@ -18,7 +18,7 @@ class CreateSettingsTable extends Migration
             function (Blueprint $table) {
                 // @todo resolver lance do bussiness_code
                 $table->engine = 'InnoDB';
-                $table->increments('id');
+                // $table->increments('id');
                 // $table->string('code')->unique();
                 // $table->primary('code');
                 $table->string('setting_key')->primary()->indexed();

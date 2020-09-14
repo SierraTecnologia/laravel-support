@@ -95,10 +95,10 @@
         "barryvdh/laravel-debugbar": "*",
         "barryvdh/laravel-ide-helper": ">=2.7",
         "codedungeon/phpunit-result-printer": ">=0.27.0",
-        "phpunit/phpunit": "^7.0|^8.0|^9.0|^10.0"
+        "phpunit/phpunit": "^8.0|^9.0|^10.0"
     },
     "suggest": {
-        "hieu-le/active": "^7.0|^8.0",
+        "hieu-le/active": "^7.0 || ^8.0",
         "prettus/l5-repository": "*",
         "elasticquent/elasticquent": "^1.0",
         "bkwld/cloner": "^3.0",
