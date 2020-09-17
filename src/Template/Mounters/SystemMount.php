@@ -49,6 +49,15 @@ class SystemMount
         if (!config('siravel.packagesMenu', false)) {
             return ;
         }
+
+        if (Session::get('original_user')) {
+            $event->menu->add([
+                'text' => 'Return to your Login',
+                'url' => '/users/switch-back',
+            ]);
+        }
+
+
         // dd($this->getAllMenus()->getTreeInArray());
         // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
         collect($this->getAllMenus()->getTreeInArray())->map(
