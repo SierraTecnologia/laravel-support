@@ -91,7 +91,8 @@ class RelationshipsRender
                         } else if ($tmpReturnReflectionClass->hasMethod('getForeignPivotKeyName')) {
                             $tmpForeignKey = $return->getForeignPivotKeyName();
                         } else {
-                            dd('[Support] Discover (Não Deveria Cair Aqui) -> Relação de Tabelas sem Chave Privada: ', $tmpReturnReflectionClass, $return, $this->model,
+                            dd(
+                                '[Support] Discover (Não Deveria Cair Aqui) -> Relação de Tabelas sem Chave Privada: ', $tmpReturnReflectionClass, $return, $this->model,
                                 $tmpReturnReflectionClass->hasMethod('getForeignPivotKeyName'),
                                 $return->getForeignPivotKeyName()
                             );

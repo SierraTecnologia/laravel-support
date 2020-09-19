@@ -9,10 +9,14 @@ class RoutesExplorer
 {
     public function getRoutes()
     {
-        /** @var \Illuminate\Routing\Route[] $allRoutes */
+        /**
+ * @var \Illuminate\Routing\Route[] $allRoutes 
+*/
         $allRoutes = Route::getRoutes()->getRoutes();
 
-        /** @var \Illuminate\Routing\Route[] $allRoutes */
+        /**
+ * @var \Illuminate\Routing\Route[] $allRoutes 
+*/
         $namedRoutes = Route::getRoutes()->getRoutesByName();
 
         $namedRoutesUri = [];

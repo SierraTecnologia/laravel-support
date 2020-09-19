@@ -25,9 +25,12 @@ class RouteRepository
     public function findByRoute($route)
     {
         $item = collect($this->model->all());
-        if (!$find = $item->search(function ($item, $key) use ($route) {
-            return $item->uri() == $route;
-        })) {
+        if (!$find = $item->search(
+            function ($item, $key) use ($route) {
+                return $item->uri() == $route;
+            }
+        )
+        ) {
             return false;
         }
         

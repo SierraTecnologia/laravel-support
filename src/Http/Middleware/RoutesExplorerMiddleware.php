@@ -11,15 +11,17 @@ class RoutesExplorerMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $response = $next($request);
 
-        /** @var DataCollectorInterface[] $collectorInstance */
+        /**
+ * @var DataCollectorInterface[] $collectorInstance 
+*/
         $collectors = [];
 
         if (config('infyom.routes_explorer.collections.api_calls_count')) {

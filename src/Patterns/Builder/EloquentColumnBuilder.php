@@ -47,7 +47,8 @@ class EloquentColumnBuilder extends BuilderAbstract
             $this->entity->code['name'],
             $this->parentEntity->system->relations,
             'morph_type'
-        )) {
+        )
+        ) {
             return true;
         }
         return false;
@@ -235,7 +236,8 @@ class EloquentColumnBuilder extends BuilderAbstract
             if ($relationData['pivot']) {
                 $array['pivot'] = 1;
                 $array['pivot_table'] = $relationData['pivot'];
-                dd('fazer pivon',
+                dd(
+                    'fazer pivon',
                     $relation,
                     $array
                 );
@@ -298,53 +300,53 @@ class EloquentColumnBuilder extends BuilderAbstract
          *   #items: array:6 [▼
          * id" => array:19 [▶]
          * name" => array:21 [▼
-           * name" => "name"
-           * type" => "varchar"
-           * default" => null
-           * notnull" => false
-           * length" => 255
-           * precision" => 10
-           * scale" => 0
-           * fixed" => false
-           * unsigned" => false
-           * autoincrement" => false
-           * columnDefinition" => null
-           * comment" => null
-           * charset" => "utf8mb4"
-           * collation" => "utf8mb4_unicode_ci"
-           * oldName" => "name"
-           * null" => "YES"
-           * extra" => ""
-           * composite" => false
-           * field" => "name"
-           * indexes" => []
-           * key" => null
-          *    ]
+         * name" => "name"
+         * type" => "varchar"
+         * default" => null
+         * notnull" => false
+         * length" => 255
+         * precision" => 10
+         * scale" => 0
+         * fixed" => false
+         * unsigned" => false
+         * autoincrement" => false
+         * columnDefinition" => null
+         * comment" => null
+         * charset" => "utf8mb4"
+         * collation" => "utf8mb4_unicode_ci"
+         * oldName" => "name"
+         * null" => "YES"
+         * extra" => ""
+         * composite" => false
+         * field" => "name"
+         * indexes" => []
+         * key" => null
+         *    ]
          * description" => array:21 [▶]
          * created_at" => array:19 [▼
-           * name" => "created_at"
-           * type" => "timestamp"
-           * default" => null
-           * notnull" => false
-           * length" => 0
-           * precision" => 10
-           * scale" => 0
-           * fixed" => false
-           * unsigned" => false
-           * autoincrement" => false
-           * columnDefinition" => null
-           * comment" => null
-           * oldName" => "created_at"
-           * null" => "YES"
-           * extra" => ""
-           * composite" => false
-           * field" => "created_at"
-           * indexes" => []
-           * key" => null
-          *    ]
+         * name" => "created_at"
+         * type" => "timestamp"
+         * default" => null
+         * notnull" => false
+         * length" => 0
+         * precision" => 10
+         * scale" => 0
+         * fixed" => false
+         * unsigned" => false
+         * autoincrement" => false
+         * columnDefinition" => null
+         * comment" => null
+         * oldName" => "created_at"
+         * null" => "YES"
+         * extra" => ""
+         * composite" => false
+         * field" => "created_at"
+         * indexes" => []
+         * key" => null
+         *    ]
          * updated_at" => array:19 [▶]
          * deleted_at" => array:19 [▶]
-          *  ]
+         *  ]
          * }
          */
 
@@ -374,7 +376,6 @@ class EloquentColumnBuilder extends BuilderAbstract
      */
 
     /**
-     * 
      * 'checkbox',
      * 'multiple_checkbox',
      * 'color',
@@ -431,11 +432,14 @@ class EloquentColumnBuilder extends BuilderAbstract
             return 'date';
         }
 
-        if (in_array($type, [
+        if (in_array(
+            $type, [
             'varchar',
             'character varying',
             'varying', 'character', 'char'
-        ])) {
+            ]
+        )
+        ) {
             return 'text';
         }
 
@@ -486,7 +490,6 @@ class EloquentColumnBuilder extends BuilderAbstract
         "morph_type" => "gastoable_type"
         "related_foreignKey" => "code"
       ]
-
      */
     protected function isMorphTo()
     {

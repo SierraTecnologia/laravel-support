@@ -77,7 +77,8 @@ class ApplicationBuilder extends BuilderAbstract
                     // Register DataType/DataRow
                     $this->registerDataType($this->entity->models[$result->getClassName()]);
                 } catch (EloquentTableNotExistException $th) {
-                    dd('BuildException',
+                    dd(
+                        'BuildException',
                         $th
                     );
                 }
@@ -158,7 +159,7 @@ class ApplicationBuilder extends BuilderAbstract
 
                 $dataRow = $this->dataRow($modelDataType, $column->getColumnName());
                 if (!$dataRow->exists) {
-                    if (empty($column->getColumnName())){
+                    if (empty($column->getColumnName())) {
                         throw new \Exception('Problema na tabela '.$result->code.' coluna '.print_r($column, true));
                     }
                     $dataRow->fill(

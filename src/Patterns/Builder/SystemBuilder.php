@@ -67,12 +67,14 @@ class SystemBuilder extends BuilderAbstract
 
     public function prepare(): void
     {
-        $this->entity->tables = (new Collection($this->renderDatabase))->mapWithKeys(function (Table $table) {
-            $primary = $this->returnRelationPrimaryKey($table);
-            return [
+        $this->entity->tables = (new Collection($this->renderDatabase))->mapWithKeys(
+            function (Table $table) {
+                $primary = $this->returnRelationPrimaryKey($table);
+                return [
                 $primary => $table
-            ];
-        });
+                ];
+            }
+        );
         // dd($this->entity->tables);
     }
     
@@ -346,7 +348,8 @@ class SystemBuilder extends BuilderAbstract
                     $reference
                 );
                 // } catch (\Exception $e) {
-                dd('LaravelSupport>Database>> Não era pra Cair Erro aqui',
+                dd(
+                    'LaravelSupport>Database>> Não era pra Cair Erro aqui',
                     $e,
                     $relation,
                     $relation['name'],

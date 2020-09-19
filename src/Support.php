@@ -141,9 +141,11 @@ class Support
 
     public function afterFormFields($row, $dataType, $dataTypeContent)
     {
-        return collect($this->afterFormFields)->filter(function ($after) use ($row, $dataType, $dataTypeContent) {
-            return $after->visible($row, $dataType, $dataTypeContent, $row->details);
-        });
+        return collect($this->afterFormFields)->filter(
+            function ($after) use ($row, $dataType, $dataTypeContent) {
+                return $after->visible($row, $dataType, $dataTypeContent, $row->details);
+            }
+        );
     }
 
     public function addFormField($handler)
@@ -173,9 +175,11 @@ class Support
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver", 'mysql');
 
-        return collect($this->formFields)->filter(function ($after) use ($driver) {
-            return $after->supports($driver);
-        });
+        return collect($this->formFields)->filter(
+            function ($after) use ($driver) {
+                return $after->supports($driver);
+            }
+        );
     }
 
     public function addAction($action)
@@ -277,7 +281,7 @@ class Support
 
     public function routes()
     {
-        require __DIR__.'/../routes/facilitador.php';
+        include __DIR__.'/../routes/facilitador.php';
     }
 
     public function getVersion()
@@ -517,14 +521,14 @@ class Support
         } elseif (method_exists($item, $column)) {
             return call_user_func([$item, $column]);
 
-        // Else if the column is a property, echo it
+            // Else if the column is a property, echo it
         } elseif (array_key_exists($column, $attributes)) {
 
             // Format date if appropriate
             if ($convert_dates && preg_match('/^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/', $item->$column)) {
                 return date($date_formats[$convert_dates], strtotime($item->$column));
 
-            // If the column name has a plural form as a static array or method on the model, use the key
+                // If the column name has a plural form as a static array or method on the model, use the key
                 // against that array and pull the value.  This is designed to handle my convention
                 // of setting the source for pulldowns, radios, and checkboxes as static arrays
                 // on the model.
@@ -549,7 +553,7 @@ class Support
                     )
                 );
 
-            // Just display the column value
+                // Just display the column value
             } else {
                 return $item->$column;
             }

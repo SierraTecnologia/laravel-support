@@ -50,8 +50,8 @@ class RiCaService
     /**
      * Get a file download response
      *
-     * @param  string $fileName
-     * @param  string $realFileName
+     * @param string $fileName
+     * @param string $realFileName
      *
      * @return Response
      */
@@ -77,8 +77,8 @@ class RiCaService
     /**
      * Links for each supported language
      *
-     * @param  string $linkClass
-     * @param  string $itemClass
+     * @param string $linkClass
+     * @param string $itemClass
      *
      * @return string
      */
@@ -235,7 +235,7 @@ class RiCaService
     /**
      * SierraTecnologia CMS url generator - handles custom siravel url
      *
-     * @param  string $string
+     * @param string $string
      *
      * @return string
      */
@@ -249,7 +249,7 @@ class RiCaService
     /**
      * SierraTecnologia CMS route generator
      *
-     * @param  string $string
+     * @param string $string
      *
      * @return string
      */
@@ -313,11 +313,13 @@ class RiCaService
     public function collectSiteMapItems()
     {
         $itemCollection = [];
-        $modules = config('site-mapped-modules', [
+        $modules = config(
+            'site-mapped-modules', [
             'blog' => 'Siravel\Repositories\BlogRepository',
             'page' => 'Siravel\Repositories\PageRepository',
             'events' => 'Siravel\Repositories\EventRepository',
-        ]);
+            ]
+        );
 
         foreach ($modules as $module => $repository) {
             try {

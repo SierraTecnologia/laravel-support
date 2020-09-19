@@ -17,9 +17,9 @@ class EloquentTableNotExistException extends EloquentHasErrorException
     public $tableName;
 
     /**
-     * @param string $className
-     * @param string                          $tableName
-     * @param integer                         $code
+     * @param string  $className
+     * @param string  $tableName
+     * @param integer $code
      */
     public function __construct(string $className, $tableName, $code = 0)
     {

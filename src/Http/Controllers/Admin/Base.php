@@ -286,14 +286,14 @@ class Base extends BaseController
         if ($this->parent_controller == $this->controller && method_exists($this->model, $this->parent_to_self.'AsChild')) {
             $this->self_to_parent = $this->parent_to_self.'AsChild';
 
-        // If the parent relationship is a polymorphic one-many, then the
+            // If the parent relationship is a polymorphic one-many, then the
             // relationship function on the child model will be the model name plus
             // "able".  For instance, the Link model would have it's relationship to
             // parent called "linkable".
         } elseif (is_a($this->parentRelation(), 'Illuminate\Database\Eloquent\Relations\MorphMany')) {
             $this->self_to_parent = Support::belongsToName($this->model).'able';
 
-        // Save out to self to parent relationship.  It will be singular if the
+            // Save out to self to parent relationship.  It will be singular if the
             // relationship is a many to many.
         } else {
             $this->self_to_parent = $this->isChildInManyToMany()?
@@ -349,7 +349,6 @@ class Base extends BaseController
      * @return Illuminate\Contracts\View\Factory
      */
     public function index()
-    // public function index(Request $request)
     {
         // Look for overriden views
         $this->overrideViews();
@@ -376,7 +375,6 @@ class Base extends BaseController
      * @return Illuminate\Contracts\View\Factory
      */
     public function create()
-    // public function create(Request $request)
     {
         // Look for overriden views
         $this->overrideViews();
@@ -952,9 +950,9 @@ class Base extends BaseController
      * Creates a success message for CRUD commands
      *
      * @param  Support\Model\Base|string $title The model instance that is
-     *                                              being worked on  or a string
-     *                                              containing the title
-     * @param  string                        $verb  Default: 'saved'. Past tense CRUD verb (created, saved, etc)
+     *                                          being worked on  or a string
+     *                                          containing the title
+     * @param  string                    $verb  Default: 'saved'. Past tense CRUD verb (created, saved, etc)
      * @return string                        The CRUD success message string
      */
     protected function successMessage($input = '', $verb = 'saved')

@@ -22,7 +22,7 @@ class ApplicationService
 
     public function getEntity()
     {
-        if (!$this->entity && !$this->entity = ApplicationEntity::recover()){
+        if (!$this->entity && !$this->entity = ApplicationEntity::recover()) {
             $this->forceBuilder();
         }
         return $this->entity;

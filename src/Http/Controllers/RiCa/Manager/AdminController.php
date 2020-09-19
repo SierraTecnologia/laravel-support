@@ -49,7 +49,7 @@ class AdminController extends Controller
                 // return empty($item['count']);
             }
         )->SortByDesc('count')
-        ->groupBy('group_type');
+            ->groupBy('group_type');
 
         $htmlGenerator = new \Support\Generators\FacilitadorGenerator($this->facilitadorService);
         // dd($models, 'Debug AdminController');

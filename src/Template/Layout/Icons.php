@@ -22,7 +22,8 @@ class Icons
         $icon = array_rand(self::icons(), 1);
 
         if (!isset(self::icons()[$icon]['class'])) {
-            dd('IconsDeuPau',
+            dd(
+                'IconsDeuPau',
                 self::icons()[$icon],
                 $icon
             );

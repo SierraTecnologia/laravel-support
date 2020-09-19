@@ -253,7 +253,8 @@ class EloquentRender implements Arrayable
 
         } catch(LogicException|ErrorException|RuntimeException|OutOfBoundsException|TypeError|ValidationException|FatalThrowableError|FatalErrorException|Exception|Throwable  $e) {
             $this->setErrors($e);
-            dd( 'Erro EloloquentRender generateRelations',
+            dd(
+                'Erro EloloquentRender generateRelations',
                 $e
             );
             // @todo Tratar aqui

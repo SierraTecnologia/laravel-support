@@ -132,7 +132,7 @@ class Listing extends Field
      * duplicate controller instantations when invoked from the base controller.
      *
      * @param  Support\Http\Controllers\Admin\Base $controller
-     * @param  LengthAwarePaginator                    $items
+     * @param  LengthAwarePaginator                $items
      * @return Support\Field\Listing
      */
     public static function createFromController(Base $controller, $items)

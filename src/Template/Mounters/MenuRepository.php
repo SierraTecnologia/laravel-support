@@ -33,7 +33,6 @@ class MenuRepository
 
         $this->menus = $this->getInOrder(
             array_values($mergeByCode)
-        
         );
         // dd(
 
@@ -75,7 +74,7 @@ class MenuRepository
         if (is_object($arrayMenu[0])) {
             usort(
                 $arrayMenu,
-                function($a, $b) {
+                function ($a, $b) {
                     return $a->getOrder() > $b->getOrder();
                 }
             );

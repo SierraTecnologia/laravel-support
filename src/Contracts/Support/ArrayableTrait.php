@@ -57,7 +57,7 @@ trait ArrayableTrait
             }
         }
 
-        if(method_exists($this, 'getErrors')){
+        if(method_exists($this, 'getErrors')) {
             if ($multiDimensional) {
                 $dataToReturn['Errors'] = [];
                 $dataToReturn['Errors']['errors'] = $this->getErrors();
@@ -94,7 +94,7 @@ trait ArrayableTrait
             }
         }
 
-        if(method_exists($this, 'mergeErrors')){
+        if(method_exists($this, 'mergeErrors')) {
             if ($multiDimensional) {
                 if (isset($datas['Errors'])) {
                     if (isset($datas['Errors']['errors'])) {
@@ -124,7 +124,8 @@ trait ArrayableTrait
                 $display[] = $infos;
             }
         }
-        dd('Displau',
+        dd(
+            'Displau',
             ...$display
         );
     }

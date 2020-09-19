@@ -14,7 +14,8 @@ class CodeRender extends RenderAbstract
 
     protected function renderChildrens(): Collection
     {
-        $configModelsAlias = \Illuminate\Support\Facades\Config::get('generators.loader.models_alias', [
+        $configModelsAlias = \Illuminate\Support\Facades\Config::get(
+            'generators.loader.models_alias', [
             'App\Models',
             // 'Support\Models',
     
@@ -42,7 +43,8 @@ class CodeRender extends RenderAbstract
             'Siravel\Models',
             'Boravel\Models',
             'Socrates\Models',
-        ]);
+            ]
+        );
         $composerParser = resolve(\Support\Patterns\Parser\ComposerParser::class);
         
         $eloquentClasses = $composerParser->returnClassesByAlias($configModelsAlias);

@@ -34,7 +34,7 @@ class ParseClass implements Arrayable
      * Nomenclatura da Class
      * Nome Correspondente
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -43,7 +43,7 @@ class ParseClass implements Arrayable
     /**
      * Nome da Classe
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -52,7 +52,7 @@ class ParseClass implements Arrayable
     /**
      * Tipo da Classe
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -100,36 +100,38 @@ class ParseClass implements Arrayable
     {
 
 
-        $this->forceExecute(function() use ($classOrReflectionClass) {
-            $this->className = $classOrReflectionClass;
-            $this->type = $this->detectType();
-            if (!$this->supportModelCodeClass = Classer::find($this->className)) {
-                $this->supportModelCodeClass = new Classer;
-                $this->supportModelCodeClass->class_name = $this->getClassName();
-                $this->supportModelCodeClass->filename = $this->getFilename();
-                $this->supportModelCodeClass->parent_class = $this->getParentClassName();
-                $this->supportModelCodeClass->type = $this->getType();
-                $this->supportModelCodeClass->data = $this->data = $this->toArray();
-                $this->supportModelCodeClass->save();
-            } else {
-                if (is_object($this->supportModelCodeClass->data)) {
-                    dd('Debug ParseClass', $this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
+        $this->forceExecute(
+            function () use ($classOrReflectionClass) {
+                $this->className = $classOrReflectionClass;
+                $this->type = $this->detectType();
+                if (!$this->supportModelCodeClass = Classer::find($this->className)) {
+                    $this->supportModelCodeClass = new Classer;
+                    $this->supportModelCodeClass->class_name = $this->getClassName();
+                    $this->supportModelCodeClass->filename = $this->getFilename();
+                    $this->supportModelCodeClass->parent_class = $this->getParentClassName();
+                    $this->supportModelCodeClass->type = $this->getType();
+                    $this->supportModelCodeClass->data = $this->data = $this->toArray();
+                    $this->supportModelCodeClass->save();
+                } else {
+                    if (is_object($this->supportModelCodeClass->data)) {
+                        dd('Debug ParseClass', $this->supportModelCodeClass, get_class($this->supportModelCodeClass->data), $this->supportModelCodeClass->data);
+                    }
+                    $this->data = $this->supportModelCodeClass->data;
+                    $this->fromArray($this->supportModelCodeClass->data);
                 }
-                $this->data = $this->supportModelCodeClass->data;
-                $this->fromArray($this->supportModelCodeClass->data);
-            }
-            // @debug
-            // dd($this->reflectionClass->getProperties());
-            // dd($this->reflectionClass->getMethods());
+                // @debug
+                // dd($this->reflectionClass->getProperties());
+                // dd($this->reflectionClass->getMethods());
 
-            // dd(
-            //     $this->reflectionClass->getProperty('fillable'),
-            //     $this->reflectionClass->getProperty('primaryKey'),
-            //     // $this->reflectionClass->getProperty('cast'),
-            //     $this->reflectionClass->getProperty('table')
-            // );
-            // var_dump($this->reflectionClass->getFileName());
-        });
+                // dd(
+                //     $this->reflectionClass->getProperty('fillable'),
+                //     $this->reflectionClass->getProperty('primaryKey'),
+                //     // $this->reflectionClass->getProperty('cast'),
+                //     $this->reflectionClass->getProperty('table')
+                // );
+                // var_dump($this->reflectionClass->getFileName());
+            }
+        );
         
     }
     

@@ -41,7 +41,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param  \Throwable $exception
      * @return void
      *
      * @throws \Exception
@@ -55,15 +55,19 @@ class Handler extends ExceptionHandler
             if (app()->bound('sentry')) {
                 // Sentry Report
                 try {
-                    \Sentry\configureScope(function (Scope $scope): void {
-                        if ($user = auth()->user()) {
-                            $scope->setUser([
-                                'id' => $user->id,
-                                'email' => $user->email,
-                                'cpf' => $user->cpf
-                            ]);
+                    \Sentry\configureScope(
+                        function (Scope $scope): void {
+                            if ($user = auth()->user()) {
+                                $scope->setUser(
+                                    [
+                                    'id' => $user->id,
+                                    'email' => $user->email,
+                                    'cpf' => $user->cpf
+                                    ]
+                                );
+                            }
                         }
-                    });
+                    );
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
@@ -78,8 +82,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Throwable               $exception
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable

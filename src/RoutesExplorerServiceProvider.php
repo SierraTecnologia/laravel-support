@@ -15,22 +15,28 @@ class RoutesExplorerServiceProvider extends ServiceProvider
     {
         $configPath = __DIR__ . '/../config/routes_explorer.php';
 
-        $this->publishes([
+        $this->publishes(
+            [
             $configPath => config_path('infyom/routes_explorer.php'),
-        ]);
+            ]
+        );
 
         $migrationPath = __DIR__ . '/../stubs/migration.stub';
         $fileName = date('Y_m_d_His') . '_' . 'create_api_calls_count_table.php';
 
-        $this->publishes([
+        $this->publishes(
+            [
             $migrationPath => database_path('migrations/' . $fileName),
-        ], 'migrations');
+            ], 'migrations'
+        );
 
         $viewPath = __DIR__ . '/../views/routes.blade.php';
 
-        $this->publishes([
+        $this->publishes(
+            [
             $viewPath => resource_path('views/routes/routes.blade.php'),
-        ], 'views');
+            ], 'views'
+        );
 
         $this->loadViewsFrom(__DIR__ . '/../views', 'infyomlabs');
 

@@ -18,8 +18,8 @@ use Illuminate\Support\Str;
  *   <li>current controller</li>
  * </ul>
  *
- * @package    HieuLe\Active
- * @author     Hieu Le <letrunghieu.cse09@gmail.com>
+ * @package HieuLe\Active
+ * @author  Hieu Le <letrunghieu.cse09@gmail.com>
  */
 class Active
 {
@@ -102,7 +102,7 @@ class Active
     /**
      * Get the active class if the condition is not falsy
      *
-     * @param        $condition
+     * @param $condition
      * @param string $activeClass
      * @param string $inactiveClass
      *
@@ -180,8 +180,10 @@ class Active
         // if the `key` exists in the query string with the correct value
         // OR it exists with any value
         // OR its value is an array that contains the specific value
-        if (($queryValue == $value) || ($queryValue !== null && $value === false) || (is_array($queryValue) && in_array($value,
-                    $queryValue))
+        if (($queryValue == $value) || ($queryValue !== null && $value === false) || (is_array($queryValue) && in_array(
+            $value,
+            $queryValue
+        ))
         ) {
             return true;
         }

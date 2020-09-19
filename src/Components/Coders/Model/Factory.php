@@ -56,7 +56,7 @@ class Factory
      *
      * @param \Illuminate\Database\DatabaseManager    $db
      * @param \Illuminate\Filesystem\Filesystem       $files
-     * @param \Muleta\Utils\Debugger\Classify        $writer
+     * @param \Muleta\Utils\Debugger\Classify         $writer
      * @param \Support\Components\Coders\Model\Config $config
      */
     public function __construct(DatabaseManager $db, Filesystem $files, Classify $writer, Config $config)

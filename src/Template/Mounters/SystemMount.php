@@ -51,10 +51,12 @@ class SystemMount
         }
 
         if (Session::get('original_user')) {
-            $event->menu->add([
+            $event->menu->add(
+                [
                 'text' => 'Return to your Login',
                 'url' => '/users/switch-back',
-            ]);
+                ]
+            );
         }
 
 

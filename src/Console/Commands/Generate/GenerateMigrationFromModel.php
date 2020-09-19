@@ -79,7 +79,8 @@ class GenerateMigrationFromModel extends AbstractGeneratorCommand
         $increment = $parserModelClass->getIncrementing();
         $foreignKey = $parserModelClass->getForeignKey();
 
-        dd('Generate dispath',
+        dd(
+            'Generate dispath',
             $parserModelClass->toArray(),
             $tableName,
             $fields,

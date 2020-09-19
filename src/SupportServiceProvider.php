@@ -264,9 +264,11 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadLogger();
 
         // Add strip_tags validation rule
-        Validator::extend('strip_tags', function ($attribute, $value) {
-            return strip_tags($value) === $value;
-        }, trans('validation.invalid_strip_tags'));
+        Validator::extend(
+            'strip_tags', function ($attribute, $value) {
+                return strip_tags($value) === $value;
+            }, trans('validation.invalid_strip_tags')
+        );
 
         /**
         // if ($this->app->runningInConsole()) {

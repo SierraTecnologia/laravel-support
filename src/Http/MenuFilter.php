@@ -16,7 +16,7 @@ class MenuFilter implements FilterInterface
         // if (isset($item['permission']) && ! Laratrust::can($item['permission'])) {
         //     return false;
         // }
-//         if (!isset($item['header']) && $item['text']!=="Dashboard" && $item['text']!=="Visitas" && $item['text']!=="Plugins" && $item['text']!=="Others" )
+        //         if (!isset($item['header']) && $item['text']!=="Dashboard" && $item['text']!=="Visitas" && $item['text']!=="Plugins" && $item['text']!=="Others" )
         // dd($item);
         $user = Auth::user();
 

@@ -16,7 +16,7 @@ abstract class CodeError
     /**
      * Target do erro
      *
-     * @var string
+     * @var    string
      * @getter true
      * @setter true
      */
@@ -26,7 +26,7 @@ abstract class CodeError
      * Informação a mais personalizado.
      * Extra Information
      *
-     * @var array
+     * @var    array
      * @getter true
      * @setter true
      */

@@ -60,9 +60,11 @@ class ParseModelClass extends ParseClass
     public function getInstanceClassForUse()
     {
         if (!$this->instanceClass) {
-            $this->forceExecute(function() {
-                $this->instanceClass = ClasserExtractor::returnInstanceForClass($this->className);
-            });
+            $this->forceExecute(
+                function () {
+                    $this->instanceClass = ClasserExtractor::returnInstanceForClass($this->className);
+                }
+            );
         }
         return $this->instanceClass;
     }

@@ -186,7 +186,7 @@ class BelongsTo extends Field
         if ($parent = $this->parentModel()) {
             $this->value = $parent->getAdminTitleAttribute();
 
-        // Else, if there is no parent (it's a create page), set the value if a
+            // Else, if there is no parent (it's a create page), set the value if a
             // title was set
         } elseif ($this->title) {
             $this->value = $this->title;

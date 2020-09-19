@@ -48,7 +48,6 @@ class MapperCommand extends Command
      * @param \Illuminate\Contracts\Config\Repository  $config
      */
     public function __construct(ApplicationService $applicationService)
-    // public function __construct(Factory $models, Repository $config)
     {
         parent::__construct();
 

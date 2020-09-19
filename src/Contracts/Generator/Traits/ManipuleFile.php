@@ -67,7 +67,6 @@ trait ManipuleFile
                 $namespacePure
             ),
             $this->getComposerParser()->getFilePathFromClass($name)
-            
         )[0];
     }
 
