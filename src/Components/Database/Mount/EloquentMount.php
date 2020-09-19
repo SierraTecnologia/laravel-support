@@ -21,15 +21,15 @@ use Illuminate\Http\Request;
 use App;
 use Log;
 use Artisan;
-use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Elements\Entities\EloquentColumn;
+use Pedreiro\Elements\DataTypes\Varchar;
+use Support\Entities\EloquentColumn;
 use Support\Patterns\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-use Support\Elements\Entities\EloquentEntity;
+use Support\Entities\EloquentEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 
 class EloquentMount

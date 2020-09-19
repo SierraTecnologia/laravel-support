@@ -7,14 +7,14 @@ namespace Support\Services;
 
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Http\Request;
-use Support\Elements\Entities\Relationships;
+use Support\Entities\Relationships;
 use App;
 use Log;
 use Exception;
 use Artisan;
 use Illuminate\Support\Collection;
-use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Elements\Entities\EloquentColumn;
+use Pedreiro\Elements\DataTypes\Varchar;
+use Support\Entities\EloquentColumn;
 use ReflectionClass;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Services\EloquentService;
@@ -22,7 +22,7 @@ use Support\Routing\UrlGenerator;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
 use Support\Services\DatabaseService;
-use Support\Elements\Entities\EloquentEntity;
+use Support\Entities\EloquentEntity;
 use Support\Models\Code\Classer;
 use Support\Contracts\Services\EloquentInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Entities;
+namespace Support\Entities;
 
 class Field
 {

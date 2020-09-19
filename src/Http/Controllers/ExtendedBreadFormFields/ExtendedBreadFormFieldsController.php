@@ -7,8 +7,8 @@ use Facilitador\Http\Controllers\FacilitadorBaseController;
 use Facilitador\Http\Controllers\Controller;
 use Support\Facades\Support;
 
-use Support\Elements\ContentTypes\MultipleImagesWithAttrsContentType;
-use Support\Elements\ContentTypes\KeyValueJsonContentType;
+use Pedreiro\Elements\ContentTypes\MultipleImagesWithAttrsContentType;
+use Pedreiro\Elements\ContentTypes\KeyValueJsonContentType;
 
 class ExtendedBreadFormFieldsController extends FacilitadorBaseController
 {

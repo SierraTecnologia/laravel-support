@@ -19,7 +19,7 @@ use Illuminate\Support\Collection;
 use Support\Services\EloquentService;
 use Support\Patterns\Parser\ComposerParser;
 use Illuminate\Support\Facades\Cache;
-use Support\Elements\Entities\RelationshipEntity;
+use Support\Entities\RelationshipEntity;
 use Support\Components\Database\Types\Type;
 use Log;
 use Support\Components\Database\Schema\SchemaManager;

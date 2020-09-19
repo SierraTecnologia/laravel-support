@@ -3,7 +3,7 @@
 namespace Support\Services;
 
 use Support\Components\Database\Mount\DatabaseMount;
-use Support\Elements\Entities\EloquentEntity;
+use Support\Entities\EloquentEntity;
 use Support\Patterns\Parser\ComposerParser;
 use Illuminate\Support\Collection;
 use Support\Exceptions\Coder\EloquentNotExistException;

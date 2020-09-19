@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
 use App;
 use Log;
 use Artisan;
-use Support\Elements\Entities\DataTypes\Varchar;
+use Pedreiro\Elements\DataTypes\Varchar;
 use Support\Patterns\Entity\EloquentColumnEntity;
 use Support\Patterns\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Entities;
+namespace Support\Entities;
 
 
 use Muleta\Utils\Compare\StringCompare;
@@ -19,8 +19,8 @@ use Illuminate\Http\Request;
 use App;
 use Log;
 use Artisan;
-use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Elements\Entities\EloquentColumn;
+use Pedreiro\Elements\DataTypes\Varchar;
+use Support\Entities\EloquentColumn;
 use Support\Patterns\Parser\ParseModelClass;
 use Symfony\Component\Inflector\Inflector;
 

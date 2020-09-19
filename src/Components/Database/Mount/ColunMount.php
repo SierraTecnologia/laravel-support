@@ -24,7 +24,7 @@ use Support\Patterns\Parser\ParseModelClass;
 
 use Support\Patterns\Parser\ComposerParser;
 use Muleta\Utils\Searchers\ArraySearcher;
-use Support\Elements\Entities\EloquentColumn;
+use Support\Entities\EloquentColumn;
 
 class ColunMount
 {

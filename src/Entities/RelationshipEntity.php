@@ -1,6 +1,6 @@
 <?php
 
-namespace Support\Elements\Entities;
+namespace Support\Entities;
 
 use Muleta\Utils\Modificators\StringModificator;
 

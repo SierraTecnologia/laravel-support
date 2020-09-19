@@ -25,9 +25,9 @@ use Muleta\Utils\Modificators\StringModificator;
 use Muleta\Utils\Extratores\ArrayExtractor;
 use Support\Patterns\Parser\ComposerParser;
 
-use Support\Elements\Entities\DatabaseEntity;
-use Support\Elements\Entities\EloquentEntity;
-use Support\Elements\Entities\RelationshipEntity;
+use Support\Entities\DatabaseEntity;
+use Support\Entities\EloquentEntity;
+use Support\Entities\RelationshipEntity;
 use Illuminate\Support\Facades\Cache;
 
 use Log;

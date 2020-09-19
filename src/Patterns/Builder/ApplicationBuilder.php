@@ -13,7 +13,7 @@ use Log;
 use Support\Contracts\Manager\BuilderAbstract;
 use Support\Patterns\Entity\ApplicationEntity;
 use Illuminate\Database\Eloquent\Collection;
-use Support\Elements\Entities\RelationshipEntity;
+use Support\Entities\RelationshipEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;

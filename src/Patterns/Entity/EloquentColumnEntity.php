@@ -7,10 +7,10 @@ use Support\Contracts\Manager\EntityAbstract;
 use Illuminate\Support\Collection;
 use Support\Services\ModelService;
 use Support\Services\RepositoryService;
-use Support\Elements\Entities\DataType;
+use Support\Entities\DataType;
 use Illuminate\Database\Eloquent\Model;
 
-use Support\Elements\Entities\DataTypes\Varchar;
+use Pedreiro\Elements\DataTypes\Varchar;
 use Support\Services\EloquentService;
 use Muleta\Traits\Coder\GetSetTrait;
 

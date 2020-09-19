@@ -21,14 +21,14 @@ use Illuminate\Http\Request;
 use App;
 use Log;
 use Artisan;
-use Support\Elements\Entities\DataTypes\Varchar;
-use Support\Elements\Entities\EloquentColumn;
+use Pedreiro\Elements\DataTypes\Varchar;
+use Support\Entities\EloquentColumn;
 use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
-use Support\Elements\Entities\EloquentEntity;
+use Support\Entities\EloquentEntity;
 use Support\Exceptions\Coder\EloquentTableNotExistException;
 
 use Muleta\Utils\Extratores\ArrayExtractor;
@@ -41,7 +41,7 @@ use Muleta\Utils\Modificators\StringModificator;
 use Muleta\Utils\Extratores\ClasserExtractor;
 use Support\Contracts\Manager\BuilderAbstract;
 use Support\Patterns\Entity\SystemEntity;
-use Support\Elements\Entities\RelationshipEntity;
+use Support\Entities\RelationshipEntity;
 
 class SystemBuilder extends BuilderAbstract
 {

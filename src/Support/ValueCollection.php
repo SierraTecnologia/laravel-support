@@ -130,7 +130,7 @@ class ValueCollection extends EloquentCollection
      *
      * @param \Illuminate\Support\Collection|array $values
      *
-     * @return \Facilitador\Models\Value[]
+     * @return \Pedreiro\Models\Value[]
      */
     protected function buildValues($values)
     {

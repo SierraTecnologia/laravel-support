@@ -2,7 +2,7 @@
 
 namespace Support;
 
-use Support\Elements\Alert\ComponentInterface;
+use Pedreiro\Elements\Alert\ComponentInterface;
 
 class Alert
 {
