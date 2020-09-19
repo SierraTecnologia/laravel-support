@@ -12,14 +12,14 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 @if (is_array($model))
-                    <span class="info-box-icon bg-aqua">{!! \Support\Template\Layout\Icons::withHtml($model['icon']) !!}</span>
+                    <span class="info-box-icon bg-aqua">{!! \Pedreiro\Template\Layout\Icons::withHtml($model['icon']) !!}</span>
 
                     <div class="info-box-content">
                     <span class="info-box-text"><a href="{{$model['url']}}">{{$model['name']}}</a></span>
                     <span class="info-box-number">{{$model['count']}}</span>
                     </div>
                 @else
-                    <span class="info-box-icon bg-aqua">{!! \Support\Template\Layout\Icons::withHtml($model->getIcon()) !!}</span>
+                    <span class="info-box-icon bg-aqua">{!! \Pedreiro\Template\Layout\Icons::withHtml($model->getIcon()) !!}</span>
 
                     <div class="info-box-content">
                     <span class="info-box-text"><a href="{{$model->getUrl()}}">{{$model->getName()}}</a></span>

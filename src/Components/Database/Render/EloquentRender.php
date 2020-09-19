@@ -230,7 +230,7 @@ class EloquentRender implements Arrayable
 
     public function generateIcon()
     {
-        return \Support\Template\Layout\Icons::getForNameAndCache($this->name, false);
+        return \Pedreiro\Template\Layout\Icons::getForNameAndCache($this->name, false);
     }
 
 

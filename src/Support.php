@@ -33,10 +33,10 @@ use Support\Events\AlertsCollection;
 use Support\Models\Application\DataRelationship;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
-use Support\Template\Actions\DeleteAction;
-use Support\Template\Actions\EditAction;
-use Support\Template\Actions\RestoreAction;
-use Support\Template\Actions\ViewAction;
+use Pedreiro\Template\Actions\DeleteAction;
+use Pedreiro\Template\Actions\EditAction;
+use Pedreiro\Template\Actions\RestoreAction;
+use Pedreiro\Template\Actions\ViewAction;
 use Translation\Traits\HasTranslations;
 use View;
 

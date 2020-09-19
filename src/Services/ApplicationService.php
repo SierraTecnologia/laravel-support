@@ -1,15 +1,18 @@
 <?php
+/**
+ * @todo Deveria ir pro faciltador {NOVA REORGANIZACAO}
+ */
 
 namespace Support\Services;
 
+use Illuminate\Support\Collection;
 use Support\Components\Database\Mount\DatabaseMount;
 use Support\Entities\EloquentEntity;
-use Support\Patterns\Parser\ComposerParser;
-use Illuminate\Support\Collection;
-use Support\Exceptions\Coder\EloquentNotExistException;
-use Support\Exceptions\Coder\EloquentHasErrorException;
+use Pedreiro\Exceptions\Coder\EloquentHasErrorException;
+use Pedreiro\Exceptions\Coder\EloquentNotExistException;
 use Support\Patterns\Builder\ApplicationBuilder;
 use Support\Patterns\Entity\ApplicationEntity;
+use Support\Patterns\Parser\ComposerParser;
 
 class ApplicationService
 {
@@ -17,7 +20,6 @@ class ApplicationService
 
     public function __construct()
     {
-
     }
 
     public function getEntity()
@@ -32,5 +34,4 @@ class ApplicationService
     {
         return $this->entity = ApplicationBuilder::make('')();
     }
-
 }

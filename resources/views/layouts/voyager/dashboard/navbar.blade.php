@@ -50,7 +50,7 @@
                         </li>
                     @endif
                     <li class="divider"></li>
-                    <?php $navItens = (new \Support\Template\Mounters\SystemMount())->loadMenuForArray(); ?>
+                    <?php $navItens = (new \Pedreiro\Template\Mounters\SystemMount())->loadMenuForArray(); ?>
                     @if(is_array($navItens) && !empty($navItens))
                         @foreach($navItens as $name => $item)
                             @if(is_string($item))

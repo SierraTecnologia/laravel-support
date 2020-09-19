@@ -34,9 +34,9 @@ use Log;
 use Support\Contracts\Support\Arrayable;
 use Support\Contracts\Support\ArrayableTrait;
 
-use Support\Exceptions\Coder\EloquentHasErrorException;
-use Support\Exceptions\Coder\EloquentNotExistException;
-use Support\Exceptions\Coder\EloquentEntityFailedException;
+use Pedreiro\Exceptions\Coder\EloquentHasErrorException;
+use Pedreiro\Exceptions\Coder\EloquentNotExistException;
+use Pedreiro\Exceptions\Coder\EloquentEntityFailedException;
 
 class DatabaseMount implements Arrayable
 {

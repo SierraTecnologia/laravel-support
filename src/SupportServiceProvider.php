@@ -36,7 +36,7 @@ use Support\Facades\Support as SupportFacade;
 use Support\Services\ModelService;
 use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
-use Support\Support;
+use Pedreiro\Support;
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -206,7 +206,7 @@ class SupportServiceProvider extends ServiceProvider
         // ],
     ];
     public static $aliasProviders = [
-        'Active' => \Support\Facades\Active::class,
+        'Active' => \Pedreiro\Facades\Active::class,
 
         // Form field generation
         'Former' => \Former\Facades\Former::class,
@@ -319,7 +319,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->app->singleton(
             'rica.breadcrumbs',
             function ($app) {
-                $breadcrumbs = new \Support\Template\Layout\Breadcrumbs();
+                $breadcrumbs = new \Pedreiro\Template\Layout\Breadcrumbs();
                 $breadcrumbs->set($breadcrumbs->parseURL());
 
                 return $breadcrumbs;

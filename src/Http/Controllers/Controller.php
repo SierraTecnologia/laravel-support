@@ -17,16 +17,16 @@ use stdClass;
 use Validator;
 use Route;
 use Illuminate\Support\Str;
-use Support\Template\Input\Search;
+use Pedreiro\Template\Input\Search;
 use Bkwld\Library\Utils\File;
-use Support\Template\Input\Sidebar;
+use Pedreiro\Template\Input\Sidebar;
 use Pedreiro\Elements\Fields\Listing;
 use Translation\Template\Localize;
-use Support\Template\Input\Position;
-use Support\Template\Input\NestedModels;
-use Support\Template\Input\ModelValidator;
+use Pedreiro\Template\Input\Position;
+use Pedreiro\Template\Input\NestedModels;
+use Pedreiro\Template\Input\ModelValidator;
 use Support\Models\Base as BaseModel;
-use Support\Exceptions\ValidationFail;
+use Pedreiro\Exceptions\ValidationFail;
 use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
 
 class Controller extends BaseController

@@ -30,7 +30,7 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;
 
 use Support\Entities\EloquentEntity;
-use Support\Exceptions\Coder\EloquentTableNotExistException;
+use Pedreiro\Exceptions\Coder\EloquentTableNotExistException;
 
 class EloquentMount
 {

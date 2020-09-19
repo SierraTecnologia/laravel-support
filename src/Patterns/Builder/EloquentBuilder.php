@@ -49,7 +49,7 @@ class EloquentBuilder extends BuilderAbstract
         $this->entity->setTablename($parseModelClass->getTableName());
         $this->entity->setName($parseModelClassArray['name']);
         $this->entity->setDisplayName($this->getDisplayName($databaseTableObject, $databaseTableArray['columns'], $parseModelClass->getPrimaryKey()));
-        $this->entity->setIcon(\Support\Template\Layout\Icons::getForNameAndCache($parseModelClassArray['name'], false));
+        $this->entity->setIcon(\Pedreiro\Template\Layout\Icons::getForNameAndCache($parseModelClassArray['name'], false));
         $this->entity->setPrimaryKey($parseModelClass->getPrimaryKey());
         $this->entity->setIndexes($databaseTableArray['indexes']);
 

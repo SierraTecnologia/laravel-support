@@ -5,7 +5,7 @@ namespace Support\Routing;
 use App;
 use Event;
 use Illuminate\Support\Str;
-use Support\Exceptions\Exception;
+use Pedreiro\Exceptions\Exception;
 use Support\Repositories\RouteRepository;
 
 /**

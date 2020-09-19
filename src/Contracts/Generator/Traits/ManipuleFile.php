@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Support\Contracts\Generator\Traits;
 
 use Support\Patterns\Parser\ClassReader;
-use Support\Exceptions\SetterGetterException;
+use Pedreiro\Exceptions\SetterGetterException;
 use Support\Patterns\Parser\ComposerParser;
 use Illuminate\Filesystem\Filesystem;
 

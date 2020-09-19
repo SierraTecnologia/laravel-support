@@ -10,7 +10,7 @@ use Muleta\Utils\Extratores\ClasserExtractor;
 use Support\Patterns\Parser\ParseClass;
 use Muleta\Traits\Debugger\HasErrors;
 use Support\Patterns\Parser\ParseModelClass;
-use Support\Exceptions\Coder\EloquentTableNotExistException;
+use Pedreiro\Exceptions\Coder\EloquentTableNotExistException;
 use Muleta\Utils\Searchers\ArraySearcher;
 use Support\Components\Errors\TableNotExistError;
 use Support\Components\Database\Schema\Table;
