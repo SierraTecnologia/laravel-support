@@ -3,7 +3,7 @@
 namespace Support\Template\Input;
 
 use Facilitador;
-use Stalker\Models\Image;
+use MediaManager\Models\Image;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**

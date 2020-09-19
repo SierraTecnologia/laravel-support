@@ -32,10 +32,6 @@ use Support\Components\Coders\Model\Config as GenerateConfig;
 use Support\Components\Coders\Model\Factory as ModelFactory;
 use Support\Console\Commands\CodeModelsCommand;
 
-use Support\Elements\FormFields\After\DescriptionHandler;
-use Support\Elements\FormFields\KeyValueJsonFormField;
-use Support\Elements\FormFields\MultipleImagesWithAttrsFormField;
-use Support\Events\FormFieldsRegistered;
 use Support\Facades\Support as SupportFacade;
 use Support\Services\ModelService;
 use Support\Services\RegisterService;
@@ -369,10 +365,6 @@ class SupportServiceProvider extends ServiceProvider
             }
         );
 
-        // ExtendedBreadFormFieldsServiceProvider
-
-        SupportFacade::addFormField(KeyValueJsonFormField::class);
-        SupportFacade::addFormField(MultipleImagesWithAttrsFormField::class);
 
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorBaseController',
@@ -415,7 +407,6 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadLocalExternalPackages();
 
 
-        $this->registerFormFields();
         $this->registerAlertComponents();
     }
 
@@ -863,43 +854,6 @@ class SupportServiceProvider extends ServiceProvider
                 $this->app->register(IdeHelperServiceProvider::class);
             }
         }
-    }
-    protected function registerFormFields()
-    {
-        $formFields = [
-            'checkbox',
-            'multiple_checkbox',
-            'color',
-            'date',
-            'file',
-            'image',
-            'multiple_images',
-            'media_picker',
-            'number',
-            'password',
-            'radio_btn',
-            'rich_text_box',
-            'code_editor',
-            'markdown_editor',
-            'select_dropdown',
-            'select_multiple',
-            'text',
-            'text_area',
-            'time',
-            'timestamp',
-            'hidden',
-            'coordinates',
-        ];
-
-        foreach ($formFields as $formField) {
-            $class = Str::studly("{$formField}_handler");
-
-            SupportFacade::addFormField("Support\\Elements\\FormFields\\{$class}");
-        }
-
-        SupportFacade::addAfterFormField(DescriptionHandler::class);
-
-        event(new FormFieldsRegistered($formFields));
     }
 
     /**

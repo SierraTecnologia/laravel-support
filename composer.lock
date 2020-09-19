@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7065e02b00a53011fb33df3cd3d32164",
+    "content-hash": "03bda4c920485105fe44b6bbd6215bc5",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -2945,6 +2945,51 @@
             "time": "2015-09-27T15:35:21+00:00"
         },
         {
+            "name": "jordanbrauer/unit-converter",
+            "version": "v0.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jordanbrauer/unit-converter.git",
+                "reference": "be778e107bdd19494be2f1b246612ddf51a5a30d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jordanbrauer/unit-converter/zipball/be778e107bdd19494be2f1b246612ddf51a5a30d",
+                "reference": "be778e107bdd19494be2f1b246612ddf51a5a30d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.19.12",
+                "consolidation/robo": "^1.2",
+                "phpmetrics/phpmetrics": "^2.4",
+                "phpunit/phpunit": "^6.3",
+                "symfony/var-dumper": "^3.3",
+                "vlucas/phpdotenv": "^2.4"
+            },
+            "type": "component",
+            "autoload": {
+                "psr-4": {
+                    "UnitConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jordanbrauer",
+                    "email": "18744334+jordanbrauer@users.noreply.github.com"
+                }
+            ],
+            "description": "Convert standard units from one to another with this easy to use, lightweight package",
+            "time": "2020-04-28T00:05:02+00:00"
+        },
+        {
             "name": "justinrainbow/json-schema",
             "version": "5.2.10",
             "source": {
@@ -3016,12 +3061,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "6328a94d44240a991f72d5fb9a21dddc4eb62cfa"
+                "reference": "8c23b072256f3985dbc1622c71a3596f80f69a3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6328a94d44240a991f72d5fb9a21dddc4eb62cfa",
-                "reference": "6328a94d44240a991f72d5fb9a21dddc4eb62cfa",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/8c23b072256f3985dbc1622c71a3596f80f69a3d",
+                "reference": "8c23b072256f3985dbc1622c71a3596f80f69a3d",
                 "shasum": ""
             },
             "type": "library",
@@ -3067,7 +3112,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2020-09-13T06:05:48+00:00"
+            "time": "2020-09-14T17:50:23+00:00"
         },
         {
             "name": "laracasts/flash",
@@ -3268,16 +3313,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.1.0",
+            "version": "v8.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d769a497a20e4a374ff7454dde7eee65145e3659"
+                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d769a497a20e4a374ff7454dde7eee65145e3659",
-                "reference": "d769a497a20e4a374ff7454dde7eee65145e3659",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/1c57ab5e375d0a897c22b29e8352453be514131e",
+                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e",
                 "shasum": ""
             },
             "require": {
@@ -3307,7 +3352,7 @@
                 "symfony/routing": "^5.1",
                 "symfony/var-dumper": "^5.1",
                 "tijsverkoyen/css-to-inline-styles": "^2.2.2",
-                "vlucas/phpdotenv": "^5.0",
+                "vlucas/phpdotenv": "^5.2",
                 "voku/portable-ascii": "^1.4.8"
             },
             "conflict": {
@@ -3427,7 +3472,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-09-11T14:24:58+00:00"
+            "time": "2020-09-16T16:13:13+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -3484,30 +3529,30 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v10.0.0",
+            "version": "v10.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "71d1a70a920f991e4f459f4896b9a32fefb3f5d5"
+                "reference": "4e53f1b237a9e51ac10f0b30c6ebedd68f6848ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/71d1a70a920f991e4f459f4896b9a32fefb3f5d5",
-                "reference": "71d1a70a920f991e4f459f4896b9a32fefb3f5d5",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/4e53f1b237a9e51ac10f0b30c6ebedd68f6848ab",
+                "reference": "4e53f1b237a9e51ac10f0b30c6ebedd68f6848ab",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "firebase/php-jwt": "^5.0",
-                "illuminate/auth": "^8.0",
-                "illuminate/console": "^8.0",
-                "illuminate/container": "^8.0",
-                "illuminate/contracts": "^8.0",
-                "illuminate/cookie": "^8.0",
-                "illuminate/database": "^8.0",
-                "illuminate/encryption": "^8.0",
-                "illuminate/http": "^8.0",
-                "illuminate/support": "^8.0",
+                "illuminate/auth": "^8.2",
+                "illuminate/console": "^8.2",
+                "illuminate/container": "^8.2",
+                "illuminate/contracts": "^8.2",
+                "illuminate/cookie": "^8.2",
+                "illuminate/database": "^8.2",
+                "illuminate/encryption": "^8.2",
+                "illuminate/http": "^8.2",
+                "illuminate/support": "^8.2",
                 "league/oauth2-server": "^8.1",
                 "nyholm/psr7": "^1.3",
                 "php": "^7.3",
@@ -3552,7 +3597,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2020-09-08T15:27:48+00:00"
+            "time": "2020-09-15T16:41:42+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -5158,16 +5203,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.39.2",
+            "version": "2.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "326efde1bc09077a26cb77f6e2e32e13f06c27f2"
+                "reference": "6c7646154181013ecd55e80c201b9fd873c6ee5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/326efde1bc09077a26cb77f6e2e32e13f06c27f2",
-                "reference": "326efde1bc09077a26cb77f6e2e32e13f06c27f2",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/6c7646154181013ecd55e80c201b9fd873c6ee5d",
+                "reference": "6c7646154181013ecd55e80c201b9fd873c6ee5d",
                 "shasum": ""
             },
             "require": {
@@ -5243,7 +5288,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-10T12:16:42+00:00"
+            "time": "2020-09-11T19:00:58+00:00"
         },
         {
             "name": "nicolaslopezj/searchable",
@@ -6776,11 +6821,11 @@
             "dist": {
                 "type": "path",
                 "url": "../minify",
-                "reference": "f7501fc95e9bee69220a20613545436e6b786410"
+                "reference": "bb2c1e0299a501148be3a8cbeffde5398ac0d4c9"
             },
             "require": {
-                "illuminate/filesystem": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
+                "illuminate/filesystem": "^7.0 || ^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
                 "natxet/cssmin": "3.*",
                 "php": ">=5.4.0",
                 "tedivm/jshrink": "~1.0"
@@ -6833,7 +6878,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Translation",
-                "reference": "80c9266c73c51221fe3e71e7db9825d85662c0da"
+                "reference": "658c4b758d0b713007d25be1da8c75f43f20c972"
             },
             "archive": {
                 "exclude": [
@@ -6844,9 +6889,9 @@
                 "doctrine/dbal": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "illuminate/database": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
-                "illuminate/validation": "^7.0|^8.0",
+                "illuminate/database": "^7.0 || ^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
+                "illuminate/validation": "^7.0 || ^8.0",
                 "php": ">=7.4",
                 "spatie/laravel-translatable": ">=4.2"
             },
@@ -7215,11 +7260,11 @@
             "dist": {
                 "type": "path",
                 "url": "../CrudMaker",
-                "reference": "3c19408ffab5522e8b4c53a408e55265be753b8c"
+                "reference": "0a28a6f63c375ac824bfa43a89d55f11025f9f38"
             },
             "require": {
                 "doctrine/dbal": "^2.5",
-                "illuminate/support": "^7.0|^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
                 "php": ">=7.4",
                 "sierratecnologia/formmaker": "dev-master"
             },
@@ -7275,21 +7320,21 @@
             "dist": {
                 "type": "path",
                 "url": "../Crypto",
-                "reference": "02d567070177156d3649c4a218e9581815147ebc"
+                "reference": "8c5f9274c70040165278ebb150f2e09bb32e7871"
             },
             "require": {
                 "defuse/php-encryption": "^2.2",
                 "ext-gmp": "*",
-                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^5.0 || ^6.0 || ^7.0 || ^8.0",
                 "mdanter/ecc": "^0.5",
-                "php": "^7.0",
+                "php": ">=5.0",
                 "ramsey/uuid": "^3.8|^4.0"
             },
             "require-dev": {
                 "mikey179/vfsstream": ">=1.6",
                 "mockery/mockery": ">=0.9.4",
                 "orchestra/testbench": "^4.0|^5.0|^6.0",
-                "phpunit/phpunit": "^7.0|^8.0|^9.0|^10.0"
+                "phpunit/phpunit": "^8.0|^9.0|^10.0"
             },
             "type": "library",
             "extra": {
@@ -7345,17 +7390,17 @@
             "dist": {
                 "type": "path",
                 "url": "../former",
-                "reference": "0fb97021094bb20c987dbf5bca053147e5cc84a1"
+                "reference": "4ca71960daf0972f4946ddef8731bd777cc1fd65"
             },
             "require": {
                 "anahkiasen/html-object": ">=1.4",
-                "illuminate/config": "^7.0|^8.0",
-                "illuminate/container": "^7.0|^8.0",
-                "illuminate/http": "^7.0|^8.0",
-                "illuminate/routing": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
-                "illuminate/translation": "^7.0|^8.0",
-                "illuminate/view": "^7.0|^8.0",
+                "illuminate/config": "^7.0 || ^8.0",
+                "illuminate/container": "^7.0 || ^8.0",
+                "illuminate/http": "^7.0 || ^8.0",
+                "illuminate/routing": "^7.0 || ^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
+                "illuminate/translation": "^7.0 || ^8.0",
+                "illuminate/view": "^7.0 || ^8.0",
                 "php": "^7.4"
             },
             "replace": {
@@ -7363,7 +7408,7 @@
                 "weotch/former": "*"
             },
             "require-dev": {
-                "illuminate/database": "^7.0|^8.0",
+                "illuminate/database": "^7.0 || ^8.0",
                 "mockery/mockery": ">=0.9.1",
                 "phpunit/phpunit": ">=4"
             },
@@ -7418,11 +7463,11 @@
             "dist": {
                 "type": "path",
                 "url": "../FormMaker",
-                "reference": "66e429ad2271028bba9df12a6d67b76aaa320dee"
+                "reference": "b87f1c38577eaa02e55f92bbaf585e2597cecec5"
             },
             "require": {
                 "doctrine/dbal": "^2.5",
-                "illuminate/support": "^7.0|^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
                 "laravelcollective/html": "^6.1",
                 "php": ">=7.4",
                 "sierratecnologia/former": "^5.0.4"
@@ -7490,14 +7535,15 @@
             "dist": {
                 "type": "path",
                 "url": "../Locaravel",
-                "reference": "057d6b69d5fb12f87d89272b24763ec56280a7f1"
+                "reference": "a90263eb935a37c919f33dfcd1059cdcf95123de"
             },
             "require": {
                 "doctrine/dbal": "^2.0",
                 "geo-io/wkb-parser": "^1.0",
-                "illuminate/database": "^7.0|^8.0",
-                "illuminate/support": "^7.0|^8.0",
+                "illuminate/database": "^7.0 || ^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
                 "jmikola/geojson": "^1.0",
+                "jordanbrauer/unit-converter": "^0.8.4",
                 "php": "^7.4",
                 "ricardosierra/database": "^0.21",
                 "ricardosierra/translation": "dev-master",
@@ -7580,7 +7626,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Muleta",
-                "reference": "d20a3f6a83553521bb0dc359a71a090ceb020627"
+                "reference": "81730ce55b58a7bdb28bbe04396f0521feda190e"
             },
             "require": {
                 "php": "^7.4",
@@ -7662,10 +7708,12 @@
             "dist": {
                 "type": "path",
                 "url": "../Pedreiro",
-                "reference": "4e406deadc7dc28764a4870a38ed2b30e36dea48"
+                "reference": "19b135ee734a5f4f812408e6df97144146c71c3f"
             },
             "require": {
+                "anahkiasen/html-object": "^1.4",
                 "php": "^7.4",
+                "sierratecnologia/former": "dev-master",
                 "spatie/laravel-validation-rules": "^2.6"
             },
             "require-dev": {
@@ -7738,7 +7786,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Templeiro",
-                "reference": "fa4be9a4b818ec920991e08f9d065aa077c11bd4"
+                "reference": "52d84cfa77a930cb696e2b7957c880531a267af5"
             },
             "require": {
                 "league/plates": "^3.1|^4.0|^5.0",
@@ -7746,7 +7794,7 @@
                 "sierratecnologia/crypto": "dev-master"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.0|^8.0|^9.0|^10.0"
+                "phpunit/phpunit": "^8.0|^9.0|^10.0"
             },
             "type": "library",
             "extra": {
@@ -7860,16 +7908,16 @@
         },
         {
             "name": "spatie/eloquent-sortable",
-            "version": "3.8.3",
+            "version": "3.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/eloquent-sortable.git",
-                "reference": "7087d3050b19f29348faead5385eddee50d4c3b5"
+                "reference": "51bca09f0c49ac2da8cd480e1e667ddcfce5a3f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/eloquent-sortable/zipball/7087d3050b19f29348faead5385eddee50d4c3b5",
-                "reference": "7087d3050b19f29348faead5385eddee50d4c3b5",
+                "url": "https://api.github.com/repos/spatie/eloquent-sortable/zipball/51bca09f0c49ac2da8cd480e1e667ddcfce5a3f2",
+                "reference": "51bca09f0c49ac2da8cd480e1e667ddcfce5a3f2",
                 "shasum": ""
             },
             "require": {
@@ -7883,6 +7931,13 @@
                 "phpunit/phpunit": "^8.0|^9.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\EloquentSortable\\EloquentSortableServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Spatie\\EloquentSortable\\": "src/"
@@ -7914,7 +7969,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-08T18:12:01+00:00"
+            "time": "2020-09-15T06:48:07+00:00"
         },
         {
             "name": "spatie/laravel-backup",
@@ -8061,16 +8116,16 @@
         },
         {
             "name": "spatie/laravel-schemaless-attributes",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-schemaless-attributes.git",
-                "reference": "c4a02a00c1f4a927862b0d126deff5f2f3492108"
+                "reference": "4699ca007ad040ba4fcae08e5a29e41454a71442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/c4a02a00c1f4a927862b0d126deff5f2f3492108",
-                "reference": "c4a02a00c1f4a927862b0d126deff5f2f3492108",
+                "url": "https://api.github.com/repos/spatie/laravel-schemaless-attributes/zipball/4699ca007ad040ba4fcae08e5a29e41454a71442",
+                "reference": "4699ca007ad040ba4fcae08e5a29e41454a71442",
                 "shasum": ""
             },
             "require": {
@@ -8121,7 +8176,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-09-08T21:48:10+00:00"
+            "time": "2020-09-16T20:54:04+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
@@ -11095,16 +11150,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v5.1.0",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "448c76d7a9e30c341ff5bc367a923af74ae18467"
+                "reference": "fba64139db67123c7a57072e5f8d3db10d160b66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/448c76d7a9e30c341ff5bc367a923af74ae18467",
-                "reference": "448c76d7a9e30c341ff5bc367a923af74ae18467",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/fba64139db67123c7a57072e5f8d3db10d160b66",
+                "reference": "fba64139db67123c7a57072e5f8d3db10d160b66",
                 "shasum": ""
             },
             "require": {
@@ -11127,7 +11182,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -11167,7 +11222,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-14T19:26:25+00:00"
+            "time": "2020-09-14T15:57:31+00:00"
         },
         {
             "name": "voku/portable-ascii",
@@ -11923,16 +11978,16 @@
         },
         {
             "name": "codedungeon/phpunit-result-printer",
-            "version": "0.29.0",
+            "version": "0.29.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikeerickson/phpunit-pretty-result-printer.git",
-                "reference": "03057304968193301e2c6b78a622f2be4d87f7bc"
+                "reference": "65075c1f92cd47c64f850bcab567e33e6cd0475f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikeerickson/phpunit-pretty-result-printer/zipball/03057304968193301e2c6b78a622f2be4d87f7bc",
-                "reference": "03057304968193301e2c6b78a622f2be4d87f7bc",
+                "url": "https://api.github.com/repos/mikeerickson/phpunit-pretty-result-printer/zipball/65075c1f92cd47c64f850bcab567e33e6cd0475f",
+                "reference": "65075c1f92cd47c64f850bcab567e33e6cd0475f",
                 "shasum": ""
             },
             "require": {
@@ -11971,7 +12026,7 @@
                 "result-printer",
                 "testing"
             ],
-            "time": "2020-09-13T18:18:55+00:00"
+            "time": "2020-09-13T23:26:30+00:00"
         },
         {
             "name": "hassankhan/config",
@@ -12460,16 +12515,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.1.8",
+            "version": "9.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "f98f8466126d83b55b924a94d2244c53c216b8fb"
+                "reference": "cf6582906d4b2502c5f4c6be6a3d0b4cd5b3ef7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f98f8466126d83b55b924a94d2244c53c216b8fb",
-                "reference": "f98f8466126d83b55b924a94d2244c53c216b8fb",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/cf6582906d4b2502c5f4c6be6a3d0b4cd5b3ef7f",
+                "reference": "cf6582906d4b2502c5f4c6be6a3d0b4cd5b3ef7f",
                 "shasum": ""
             },
             "require": {
@@ -12477,7 +12532,7 @@
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
                 "nikic/php-parser": "^4.8",
-                "php": "^7.3 || ^8.0",
+                "php": ">=7.3",
                 "phpunit/php-file-iterator": "^3.0.3",
                 "phpunit/php-text-template": "^2.0.2",
                 "sebastian/code-unit-reverse-lookup": "^2.0.2",
@@ -12529,7 +12584,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-07T08:07:10+00:00"
+            "time": "2020-09-15T06:14:11+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",

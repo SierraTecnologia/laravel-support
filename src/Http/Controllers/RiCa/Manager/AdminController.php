@@ -8,7 +8,7 @@ use App\Models\Banner;
 use App\Models\Link;
 use App\Models\ActiveUser;
 use App\Models\HotTopic;
-use Stalker\Models\Image;
+use MediaManager\Models\Image;
 use Illuminate\Http\Request;
 use Auth;
 use Telefonica\Models\Actors;

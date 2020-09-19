@@ -4,7 +4,7 @@ namespace Support\Template\Input;
 
 use Validator;
 use Illuminate\Support\Arr;
-use Stalker\Models\Image;
+use MediaManager\Models\Image;
 use Facilitador\Models\Base as BaseModel;
 use Support\Exceptions\ValidationFail;
 use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;

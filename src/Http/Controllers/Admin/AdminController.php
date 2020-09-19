@@ -10,7 +10,7 @@ use App\Models\HotTopic;
 use App\Models\Link;
 use Auth;
 use Illuminate\Http\Request;
-use Stalker\Models\Image;
+use MediaManager\Models\Image;
 use Telefonica\Models\Actors;
 
 class AdminController extends Controller
