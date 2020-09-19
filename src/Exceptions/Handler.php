@@ -2,20 +2,19 @@
 
 namespace Support\Exceptions;
 
-use Throwable;
 use Exception;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Sentry\State\Scope;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Support\Models\RedirectRule;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Log;
+use Sentry\State\Scope;
+use Support\Models\RedirectRule;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
-
     public static $DEFAULT_MESSAGE = 'Algo que não esta certo deu errado! Por favor, entre em contato conosco.';
 
     public $reportSendToSentry = false;
@@ -55,15 +54,19 @@ class Handler extends ExceptionHandler
 
             if (app()->bound('sentry')) {
                 // Sentry Report
-                \Sentry\configureScope(function (Scope $scope): void {
-                    if ($user = auth()->user()) {
-                        $scope->setUser([
-                            'id' => $user->id,
-                            'email' => $user->email,
-                            'cpf' => $user->cpf
-                        ]);
-                    }
-                });
+                try {
+                    \Sentry\configureScope(function (Scope $scope): void {
+                        if ($user = auth()->user()) {
+                            $scope->setUser([
+                                'id' => $user->id,
+                                'email' => $user->email,
+                                'cpf' => $user->cpf
+                            ]);
+                        }
+                    });
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
                 app('sentry')->captureException($exception);
                 $this->reportSendToSentry = true;
             }
@@ -96,6 +99,10 @@ class Handler extends ExceptionHandler
             return $response;
         }
 
+        if ($exception instanceof ValidationException && $request->expectsJson()) {
+            return response()->json(['message' => 'The given data was invalid.', 'errors' => $exception->validator->getMessageBag()], 422);
+        }
+
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException/* && $request->wantsJson()*/) {
             return response()->json(
                 [
@@ -106,8 +113,7 @@ class Handler extends ExceptionHandler
             );
         }
 
-        if ($request->ajax() || $request->wantsJson())
-        {
+        if ($request->ajax() || $request->wantsJson()) {
             $json = [
                 'success' => false,
                 'message' => $exception->getMessage(),
@@ -117,6 +123,12 @@ class Handler extends ExceptionHandler
                     'message' => $exception->getMessage(),
                 ],
             ];
+            if (config('app.env')=='production') {
+                $json = [
+                    'success' => false,
+                    'message' => $exception->getMessage()
+                ];
+            }
             return response()->json($json, 400);
         }
         
@@ -125,7 +137,7 @@ class Handler extends ExceptionHandler
         // instead of our own view in resources/views/errors/500.blade.php
         if (config('app.env')=='production' && $this->shouldReport($exception) && !$this->isHttpException($exception) && !config('app.debug')) {
             $exception = new HttpException(500, 'Whoops!');
-        } else if (config('app.debug') && $this->shouldReport($exception)) {
+        } elseif (config('app.debug') && $this->shouldReport($exception)) {
             dd('Error Handler', $exception);
         }
 
@@ -183,7 +195,7 @@ class Handler extends ExceptionHandler
      */
     private function getErrorMessage($exception)
     {
-        if (config('app.env')=='production'){
+        if (config('app.env')=='production') {
             return self::$DEFAULT_MESSAGE;
         }
         Log::info('[Payment] Enviando para o cliente a mensagem: '.$exception->getMessage());
@@ -209,31 +221,30 @@ class Handler extends ExceptionHandler
      * Redirect users to the previous page with validation errors
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Exception               $e
+     * @param  \Exception               $exception
      * @return \Illuminate\Http\Response
      */
-    protected function handleValidation($request, $e)
+    protected function handleValidation($request, $exception)
     {
-        if (!is_a($e, ValidationFail::class)) {
+        if (!is_a($exception, ValidationFail::class)) {
             return;
         }
 
         // Log validation errors so Reporter will output them
-        // if (Config::get('app.debug')) Log::debug(print_r($e->validation->messages(), true));
+        // if (Config::get('app.debug')) Log::debug(print_r($exception->validation->messages(), true));
 
         // Respond
-        if ($request->ajax()) {
-            return response()->json($e->validation->messages(), 400);
+        if ($request->ajax() || $request->wantsJson()) {
+            // return response()->json($exception->validation->messages(), 400);
+            return response()->json(
+                [
+                    'message' => 'Os dados fornecidos não são válidos.',
+                    'errors' => $exception->validator->getMessageBag()
+                ],
+                422
+            );
         }
 
-        // return response()->json(
-        //     [
-        //         'message' => 'Os dados fornecidos não são válidos.',
-        //         'errors' => $exception->validator->getMessageBag()
-        //     ],
-        //     422
-        // );
-
-        return back()->withInput()->withErrors($e->validation);
+        return back()->withInput()->withErrors($exception->validation);
     }
 }
