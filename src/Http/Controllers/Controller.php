@@ -25,7 +25,7 @@ use Translation\Template\Localize;
 use Pedreiro\Template\Input\Position;
 use Pedreiro\Template\Input\NestedModels;
 use Pedreiro\Template\Input\ModelValidator;
-use Support\Models\Base as BaseModel;
+use Pedreiro\Models\Base as BaseModel;
 use Pedreiro\Exceptions\ValidationFail;
 use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
 

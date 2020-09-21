@@ -19,7 +19,7 @@ use SupportURL;
 use Pedreiro\Elements\Fields\Listing;
 use Pedreiro\Exceptions\ValidationFail;
 use Support\Http\Controllers\Controller as BaseController;
-use Support\Models\Base as BaseModel;
+use Pedreiro\Models\Base as BaseModel;
 use Pedreiro\Template\Input\ModelValidator;
 use Pedreiro\Template\Input\NestedModels;
 use Pedreiro\Template\Input\Position;
@@ -959,7 +959,7 @@ class Base extends BaseController
     {
         // Figure out the title and wrap it in quotes
         $title = $input;
-        if (is_a($input, '\Support\Models\Base')) {
+        if (is_a($input, '\Pedreiro\Models\Base')) {
             $title = $input->getAdminTitleAttribute();
         }
 
@@ -977,7 +977,7 @@ class Base extends BaseController
         }
 
         // Add extra messaging if the creation was begun from the localize UI
-        if ($verb == 'duplicated' && is_a($input, '\Support\Models\Base') && !empty($input->locale)) {
+        if ($verb == 'duplicated' && is_a($input, '\Pedreiro\Models\Base') && !empty($input->locale)) {
             $message .= __('facilitador::base.success_localized', ['locale' => \Illuminate\Support\Facades\Config::get('sitec.site.locales')[$input->locale]]);
         }
 

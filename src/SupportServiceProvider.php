@@ -36,7 +36,7 @@ use Support\Facades\Support as SupportFacade;
 use Support\Services\ModelService;
 use Support\Services\RegisterService;
 use Support\Services\RepositoryService;
-use Pedreiro\Support;
+use Support\Support;
 
 // class CodersServiceProvider extends ServiceProvider
 class SupportServiceProvider extends ServiceProvider
@@ -50,6 +50,17 @@ class SupportServiceProvider extends ServiceProvider
     //  */
     // protected $defer = true;
 
+    public static $aliasProviders = [
+        'SupportURL' => \Support\Facades\SupportURL::class,
+    ];
+
+    // public static $providers = [
+    public static $providers = [
+            /**
+             * Layoults
+             */
+            \Pedreiro\PedreiroServiceProvider::class,
+        ];
 
     public static $menuItens = [
         // [
@@ -205,35 +216,6 @@ class SupportServiceProvider extends ServiceProvider
         //     ],
         // ],
     ];
-    public static $aliasProviders = [
-        'Active' => \Pedreiro\Facades\Active::class,
-
-        // Form field generation
-        'Former' => \Former\Facades\Former::class,
-
-        'SupportURL' => \Support\Facades\SupportURL::class,
-    ];
-
-    // public static $providers = [
-    public static $providers = [
-        /**
-         * Layoults
-         */
-        \RicardoSierra\Minify\MinifyServiceProvider::class,
-        \Collective\Html\HtmlServiceProvider::class,
-        \Laracasts\Flash\FlashServiceProvider::class,
-
-        /**
-         * VEio pelo Facilitador
-         **/
-        \Former\FormerServiceProvider::class,
-        \Bkwld\Upchuck\ServiceProvider::class,
-
-        /**
-         * Outros
-         */
-        \Laravel\Tinker\TinkerServiceProvider::class,
-    ];
     /**
      * Bootstrap the application services.
      *
@@ -250,26 +232,7 @@ class SupportServiceProvider extends ServiceProvider
         // Register global and named middlewares
         $this->registerMiddlewares();
 
-        /**
-         * Load Active https://github.com/letrunghieu/active
-         */
-        // Update the instances each time a request is resolved and a route is matched
-        $instance = app('active');
-        app('router')->matched(
-            function (RouteMatched $event) use ($instance) {
-                $instance->updateInstances($event->route, $event->request);
-            }
-        );
-
         $this->loadLogger();
-
-        // Add strip_tags validation rule
-        Validator::extend(
-            'strip_tags', function ($attribute, $value) {
-                return strip_tags($value) === $value;
-            }, trans('validation.invalid_strip_tags')
-        );
-
         /**
         // if ($this->app->runningInConsole()) {
         //     $this->publishes(
@@ -284,26 +247,19 @@ class SupportServiceProvider extends ServiceProvider
         //         ]
         //     );
         // }
+        */
 
-        // //ExtendedBreadFormFieldsServiceProvider
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'extended-fields');
-            */
-        // Config Former
-        $this->configureFormer();
-
-        $this->registerViewComposers();
-
+        
+        // Register the routes.
+        if (\Illuminate\Support\Facades\Config::get('site.core.register_routes', true) && !$this->app->routesAreCached()) {
+            $this->app['support.router']->registerAll();
+        }
         $event->listen(
             'facilitador.alerts.collecting',
             function () {
                 $this->addStorageSymlinkAlert();
             }
         );
-        
-        // Register the routes.
-        if (\Illuminate\Support\Facades\Config::get('site.core.register_routes', true) && !$this->app->routesAreCached()) {
-            $this->app['support.router']->registerAll();
-        }
     }
 
     /**
@@ -341,19 +297,6 @@ class SupportServiceProvider extends ServiceProvider
             'support.url',
             function ($app) {
                 return new \Support\Routing\UrlGenerator($app['request']->path());
-            }
-        );
-
-
-        /**
-         * Load Active https://github.com/letrunghieu/active
-         */
-        $this->app->singleton(
-            'active',
-            function ($app) {
-                $instance = new Active($app['router']->getCurrentRequest());
-
-                return $instance;
             }
         );
 
@@ -407,27 +350,10 @@ class SupportServiceProvider extends ServiceProvider
 
         $this->loadExternalPackages();
         $this->loadLocalExternalPackages();
-
-
-        $this->registerAlertComponents();
     }
 
 
 
-
-    /**
-     * Register view composers.
-     */
-    protected function registerViewComposers()
-    {
-        // Register alerts
-        View::composer(
-            'support::*',
-            function ($view) {
-                $view->with('alerts', SupportFacade::alerts());
-            }
-        );
-    }
 
     /**
      * Add storage symlink alert.
@@ -485,23 +411,6 @@ class SupportServiceProvider extends ServiceProvider
         SupportFacade::addAlert($alert);
     }
 
-    /**
-     * Register alert components.
-     */
-    protected function registerAlertComponents()
-    {
-        $components = ['title', 'text', 'button'];
-
-        foreach ($components as $component) {
-            $class = 'Support\\Elements\\Alert\\'.ucfirst(Str::camel($component)).'Component';
-
-            $this->app->bind("facilitador.alert.components.{$component}", $class);
-        }
-    }
-
-
-
-
     
 
     /**
@@ -523,8 +432,6 @@ class SupportServiceProvider extends ServiceProvider
             }
         );
     }
-
-
 
 
     /**
@@ -606,7 +513,6 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishes(
             [
                 // Paths
-                $this->getPublishesPath('config/elements') => config_path('elements'),
                 $this->getPublishesPath('config/generators') => config_path('generators'),
                 $this->getPublishesPath('config/housekeepers') => config_path('housekeepers'),
                 // Files
@@ -617,34 +523,6 @@ class SupportServiceProvider extends ServiceProvider
             ],
             ['config',  'sitec', 'sitec-config']
         );
-    }
-
-    /**
-     * Config Former
-     *
-     * @return void
-     */
-    protected function configureFormer()
-    {
-        // Use Bootstrap 3
-        Config::set('former.framework', 'TwitterBootstrap3');
-
-        // Reduce the horizontal form's label width
-        Config::set('former.TwitterBootstrap3.labelWidths', []);
-
-        // @todo desfazer pq da erro qnd falta tabela model_translactions
-        // // Change Former's required field HTML
-        // Config::set(
-        //     'former.required_text', ' <span class="glyphicon glyphicon-exclamation-sign js-tooltip required" title="' .
-        //     __('facilitador::login.form.required') . '"></span>'
-        // );
-
-        // Make pushed checkboxes have an empty string as their value
-        Config::set('former.unchecked_value', '');
-
-        // Add Facilitador's custom Fields to Former so they can be invoked using the "Former::"
-        // namespace and so we can take advantage of sublassing Former's Field class.
-        $this->app['former.dispatcher']->addRepository('Support\\Elements\\Fields\\');
     }
 
     
@@ -677,7 +555,6 @@ class SupportServiceProvider extends ServiceProvider
     {
         
         // // Merge own configs into user configs
-        $this->mergeConfigFrom($this->getPublishesPath('config/elements/fields.php'), 'elements.fields');
         $this->mergeConfigFrom($this->getPublishesPath('config/generators/core.php'), 'generators.core');
         $this->mergeConfigFrom($this->getPublishesPath('config/generators/loader.php'), 'generators.loader');
         $this->mergeConfigFrom($this->getPublishesPath('config/generators/model.php'), 'generators.model');
@@ -751,7 +628,7 @@ class SupportServiceProvider extends ServiceProvider
 
 
         // Arrumar um jeito de fazer o Base do facilitador passar por cima do support
-        // use Support\Models\Base;
+        // use Pedreiro\Models\Base;
         // @todo
 
         $this->app->bind(

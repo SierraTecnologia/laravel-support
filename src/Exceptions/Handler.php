@@ -1,6 +1,6 @@
 <?php
 
-namespace Pedreiro\Exceptions;
+namespace Support\Exceptions;
 
 use Pedreiro\Exceptions\Handler as ExceptionHandler;
 
