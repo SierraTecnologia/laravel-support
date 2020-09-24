@@ -27,16 +27,10 @@ use Session;
 use Siravel\Models\Blog\Category;
 use Siravel\Models\Blog\Post;
 use Siravel\Models\Negocios\Page;
-use Pedreiro\Elements\FormFields\After\HandlerInterface as AfterHandlerInterface;
-use Pedreiro\Elements\FormFields\HandlerInterface;
 use Support\Events\AlertsCollection;
 use Support\Models\Application\DataRelationship;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
-use Pedreiro\Template\Actions\DeleteAction;
-use Pedreiro\Template\Actions\EditAction;
-use Pedreiro\Template\Actions\RestoreAction;
-use Pedreiro\Template\Actions\ViewAction;
 use Translation\Traits\HasTranslations;
 use View;
 
@@ -521,14 +515,14 @@ class Support
         } elseif (method_exists($item, $column)) {
             return call_user_func([$item, $column]);
 
-            // Else if the column is a property, echo it
+        // Else if the column is a property, echo it
         } elseif (array_key_exists($column, $attributes)) {
 
             // Format date if appropriate
             if ($convert_dates && preg_match('/^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/', $item->$column)) {
                 return date($date_formats[$convert_dates], strtotime($item->$column));
 
-                // If the column name has a plural form as a static array or method on the model, use the key
+            // If the column name has a plural form as a static array or method on the model, use the key
                 // against that array and pull the value.  This is designed to handle my convention
                 // of setting the source for pulldowns, radios, and checkboxes as static arrays
                 // on the model.
@@ -553,7 +547,7 @@ class Support
                     )
                 );
 
-                // Just display the column value
+            // Just display the column value
             } else {
                 return $item->$column;
             }
@@ -603,37 +597,6 @@ class Support
             ->has($key);
     }
 
-    /**
-     * Is Facilitador handling the request?  Check if the current path is exactly "admin" or if
-     * it contains admin/*
-     *
-     * @return boolean
-     */
-    private $is_handling;
-
-    public function handling()
-    {
-        if (!is_null($this->is_handling)) {
-            return $this->is_handling;
-        }
-        if (env('DECOY_TESTING')) {
-            return true;
-        }
-        $this->is_handling = preg_match('#^'.Config::get('application.routes.main').'($|/)'.'#i', Request::path());
-
-        return $this->is_handling;
-    }
-
-    /**
-     * Force Facilitador to believe that it's handling or not handling the request
-     *
-     * @param  boolean $bool
-     * @return void
-     */
-    public function forceHandling($bool)
-    {
-        $this->is_handling = $bool;
-    }
 
     /**
      * Set or return the current locale.  Default to the first key from
