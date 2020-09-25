@@ -32,7 +32,7 @@ class PainelController extends Controller
     {
         return view(
             'layouts.app'
-            // 'support::layouts.app'
+            // 'pedreiro::layouts.app'
             // compact('models', 'htmlGenerator')
         );
     }

@@ -3,7 +3,7 @@
     $add  = is_null($dataTypeContent->getKey());
 @endphp
 
-@extends('support::layouts.voyager.master')
+@extends('pedreiro::layouts.voyager.master')
 
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">

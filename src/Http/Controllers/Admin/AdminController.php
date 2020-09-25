@@ -34,11 +34,11 @@ class AdminController extends Controller
     //  *
     //  * @return \Illuminate\Http\Response
     //  */
-    public function index()
+    public function index(Request $request)
     {
         return view(
             'layouts.app'
-            // 'support::layouts.app'
+            // 'pedreiro::layouts.app'
             // compact('models', 'htmlGenerator')
         );
     }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Support\Facades\Support;
 
-class PorteiroAuthController extends Controller
+class SupportAuthController extends Controller
 {
     use AuthenticatesUsers;
 
@@ -17,7 +17,7 @@ class PorteiroAuthController extends Controller
             return redirect()->route('rica.dashboard');
         }
 
-        return Support::view('support::layouts.voyager.login');
+        return Support::view('pedreiro::layouts.voyager.login');
     }
 
     public function postLogin(Request $request)

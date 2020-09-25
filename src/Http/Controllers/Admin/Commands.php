@@ -3,13 +3,13 @@
 namespace Support\Http\Controllers\Admin;
 
 // Deps
-use Artisan;
 use App;
+use Artisan;
+use Illuminate\Console\Application as ConsoleApplication;
 use Response;
 use Support\Models\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
-use Illuminate\Console\Application as ConsoleApplication;
 
 // Run tasks from the admin
 class Commands extends Base
@@ -34,10 +34,11 @@ class Commands extends Base
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return $this->populateView(
-            'support::tools.commands.index', [
+            'support::tools.commands.index',
+            [
             'commands' => Command::all(),
             ]
         );

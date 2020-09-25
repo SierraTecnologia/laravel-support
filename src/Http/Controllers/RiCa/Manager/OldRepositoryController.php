@@ -16,7 +16,7 @@ class OldRepositoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $service = $this->repositoryService;
         $registros = $service->getTableData();

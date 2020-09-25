@@ -1,4 +1,4 @@
-@extends('support::layouts.voyager.master')
+@extends('pedreiro::layouts.voyager.master')
 
 @section('page_title', $dataType->getTranslatedAttribute('display_name_plural') . ' ' . __('support::cruds.bread.order'))
 

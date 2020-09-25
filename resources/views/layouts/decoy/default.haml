@@ -26,12 +26,12 @@
 	%body(class=Facilitador::bodyClass())
 
 		-# Sidebar
-		!= view('support::layouts.decoy.sidebar._sidebar')
+		!= view('pedreiro::layouts.decoy.sidebar._sidebar')
 
 		-# Header
-		!= view('support::layouts.decoy._header', $__data)
-		!= view('support::layouts.decoy._breadcrumbs', $__data)
-		!= view('support::layouts.decoy._notifications', $__data)
+		!= view('pedreiro::layouts.decoy._header', $__data)
+		!= view('pedreiro::layouts.decoy._breadcrumbs', $__data)
+		!= view('pedreiro::layouts.decoy._notifications', $__data)
 
 		-# The main page content
 		#main!= $content

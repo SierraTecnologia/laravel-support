@@ -45,7 +45,7 @@ class Routers extends Base
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return $this->populateView(
             'support::tools.routers.index', [
