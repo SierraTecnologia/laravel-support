@@ -22,7 +22,7 @@ class Routers extends Base
     /**
      * @var string
      */
-    protected $title = 'Routers';
+    public $title = 'Routers';
 
     /**
      * @var string

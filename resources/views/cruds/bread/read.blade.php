@@ -29,7 +29,7 @@
             {{ __('facilitador::generic.return_to_list') }}
         </a>
     </h1>
-    @include('support::shared.forms.multilingual.language-selector')
+    @include('pedreiro::multilingual.language-selector')
 @stop
 
 @section('content')
@@ -119,7 +119,7 @@
                                 @if(is_array($dataTypeContent->{$row->field}))
                                     <p>{!! implode(', ',$dataTypeContent->{$row->field}) !!}</p>
                                 @else
-                                    @include('support::shared.forms.multilingual.input-hidden-bread-read')
+                                    @include('pedreiro::multilingual.input-hidden-bread-read')
                                     <p>{!! $dataTypeContent->{$row->field} !!}</p>
                                 @endif
                             @elseif($row->type == 'file')
@@ -139,7 +139,7 @@
                                 @if(is_array($dataTypeContent->{$row->field}))
                                     <p>{!! implode(', ', $dataTypeContent->{$row->field}) !!}</p>
                                 @else
-                                    @include('support::shared.forms.multilingual.input-hidden-bread-read')
+                                    @include('pedreiro::multilingual.input-hidden-bread-read')
                                     <p>{{ $dataTypeContent->{$row->field} }}</p>
                                 @endif
                             @endif

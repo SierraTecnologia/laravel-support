@@ -22,7 +22,7 @@ class Commands extends Base
     /**
      * @var string
      */
-    protected $title = 'Commands';
+    public $title = 'Commands';
 
     /**
      * @var string

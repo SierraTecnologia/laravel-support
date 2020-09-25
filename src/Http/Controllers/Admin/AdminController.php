@@ -15,6 +15,8 @@ use Telefonica\Models\Actors;
 
 class AdminController extends Controller
 {
+    public $controller;
+    public $model = "";
     /**
      * Controller Class ou array
      */
@@ -23,6 +25,10 @@ class AdminController extends Controller
         'url' => '/',
     ];
 
+    public function title()
+    {
+    }
+    
     // /**
     //  * Display a listing of the resource.
     //  *

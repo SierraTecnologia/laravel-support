@@ -1,8 +1,8 @@
 <?php
 
-namespace Support\Http\Controllers\Admin;
+namespace Support\Http\Controllers\Generate;
 
-use Pedreiro\Http\Controllers\Admin\Base as BaseController;
+use Support\Http\Controllers\Controller as BaseController;
 
 /**
  * The base controller is gives Facilitador most of the magic/for-free mojo

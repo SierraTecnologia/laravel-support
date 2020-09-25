@@ -2,9 +2,9 @@
 
 namespace Support\Http\Controllers\RiCa\Manipule;
 
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\ResponseFactory;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExcelController extends Controller
@@ -20,7 +20,8 @@ class ExcelController extends Controller
     public function download(Request $request, ResponseFactory $response): BinaryFileResponse
     {
         $data = $this->validate(
-            $request, [
+            $request,
+            [
             'path'     => 'required',
             'filename' => 'required',
             ]

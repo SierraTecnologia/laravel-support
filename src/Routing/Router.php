@@ -133,28 +133,28 @@ class Router
     {
         Route::get('/', [
             'as' => 'facilitador.account@login',
-            'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@showLoginForm',
+            'uses' => '\Support\Http\Controllers\Auth\LoginController@showLoginForm',
         ]);
 
         Route::post('/', [
             'as' => 'facilitador.account@postLogin',
-            'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@login',
+            'uses' => '\Support\Http\Controllers\Auth\LoginController@login',
         ]);
 
         Route::get('logout', [
             'as' => 'facilitador.account@logout',
-            'uses' => '\Facilitador\Http\Controllers\Auth\LoginController@logout',
+            'uses' => '\Support\Http\Controllers\Auth\LoginController@logout',
         ]);
 
         /**
          * Facilitador Admin
          */
         Route::get('login', [
-            'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@login',
+            'uses' => '\Support\Http\Controllers\Auth\SupportAuthController@login',
             'as' => 'rica.login'
         ]);
         Route::post('login', [
-            'uses' => '\Facilitador\Http\Controllers\Auth\FacilitadorAuthController@postLogin',
+            'uses' => '\Support\Http\Controllers\Auth\SupportAuthController@postLogin',
             'as' => 'facilitador.postlogin'
         ]);
     }
@@ -167,19 +167,19 @@ class Router
     public function registerResetPassword()
     {
         Route::get('forgot', ['as' => 'facilitador.account@forgot',
-            'uses' => '\Facilitador\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm',
+            'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm',
         ]);
 
         Route::post('forgot', ['as' => 'facilitador.account@postForgot',
-            'uses' => '\Facilitador\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail',
+            'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail',
         ]);
 
         Route::get('password/reset/{code}', ['as' => 'facilitador.account@reset',
-            'uses' => '\Facilitador\Http\Controllers\Auth\ResetPasswordController@showResetForm',
+            'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@showResetForm',
         ]);
 
         Route::post('password/reset/{code}', ['as' => 'facilitador.account@postReset',
-            'uses' => '\Facilitador\Http\Controllers\Auth\ResetPasswordController@reset',
+            'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@reset',
         ]);
     }
 

@@ -2,8 +2,8 @@
 
 namespace Support\Http\Controllers\RiCa\Manager;
 
-use Facilitador\Http\Controllers\RiCa\Controller as BaseController;
 use Facilitador\Services\FacilitadorService;
+use Support\Http\Controllers\RiCa\Controller as BaseController;
 use Support\Services\RepositoryService;
 
 class Controller extends BaseController
@@ -25,5 +25,4 @@ class Controller extends BaseController
         $this->repositoryService = $repositoryService;
         parent::__construct($facilitadorService);
     }
-
 }

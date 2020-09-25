@@ -32,7 +32,7 @@
                 @include('support::cruds.bread.partials.actions', ['action' => $action, 'data' => null])
             @endif
         @endforeach
-        @include('support::shared.forms.multilingual.language-selector')
+        @include('pedreiro::multilingual.language-selector')
     </div>
 @stop
 

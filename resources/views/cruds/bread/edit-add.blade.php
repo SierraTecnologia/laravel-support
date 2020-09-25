@@ -16,7 +16,7 @@
         <i class="{{ $dataType->icon }}"></i>
         {{ __('facilitador::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
     </h1>
-    @include('support::shared.forms.multilingual.language-selector')
+    @include('pedreiro::multilingual.language-selector')
 @stop
 
 @section('content')
@@ -70,7 +70,7 @@
                                 <div class="form-group @if($row->type == 'hidden') hidden @endif col-md-{{ $display_options->width ?? 12 }} {{ (isset($errors) && $errors->has($row->field)) ? 'has-error' : '' }}" @if(isset($display_options->id)){{ "id=$display_options->id" }}@endif>
                                     {{ $row->slugify }}
                                     <label class="control-label" for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
-                                    @include('support::shared.forms.multilingual.input-hidden-bread-edit-add')
+                                    @include('pedreiro::multilingual.input-hidden-bread-edit-add')
                                     @if (isset($row->details->view))
                                         @include($row->details->view, ['row' => $row, 'dataType' => $dataType, 'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field}, 'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'), 'options' => $row->details])
                                     @elseif ($row->type == 'relationship')
