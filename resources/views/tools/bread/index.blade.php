@@ -53,7 +53,7 @@
                                 </a>
                             @else
                                 <a href="{{ route('facilitador.bread.create', $table->name) }}"
-                                   class="_btn btn-default btn-sm pull-right">
+                                   class="_btn btn-secondary btn-sm float-right">
                                     <i class="facilitador-plus"></i> {{ __('facilitador::bread.add_bread') }}
                                 </a>
                             @endif
@@ -79,7 +79,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="submit" class="btn btn-danger" value="{{ __('facilitador::bread.delete_bread_conf') }}">
                     </form>
-                    <button type="button" class="btn btn-outline pull-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -118,7 +118,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-right" data-dismiss="modal">{{ __('facilitador::generic.close') }}</button>
+                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('facilitador::generic.close') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

@@ -16,8 +16,8 @@
                     <td>
                         {!! Form::open(['route' => ['rica.destroy', $service->getModelService()->getCryptName(), Crypto::shareableEncrypt($cobertura->{$service->getDiscoverService()->getPrimaryKey()})], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{!! route('rica.show', [ $service->getModelService()->getCryptName(), Crypto::shareableEncrypt($cobertura->{$service->getDiscoverService()->getPrimaryKey()})]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                            <a href="{!! route('rica.edit', [ $service->getModelService()->getCryptName(), Crypto::shareableEncrypt($cobertura->{$service->getDiscoverService()->getPrimaryKey()})]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="{!! route('rica.show', [ $service->getModelService()->getCryptName(), Crypto::shareableEncrypt($cobertura->{$service->getDiscoverService()->getPrimaryKey()})]) !!}" class='btn btn-secondary btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+                            <a href="{!! route('rica.edit', [ $service->getModelService()->getCryptName(), Crypto::shareableEncrypt($cobertura->{$service->getDiscoverService()->getPrimaryKey()})]) !!}" class='btn btn-secondary btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
                             {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('".trans('phrases.areYouSure')."')"]) !!}
                         </div>
                         {!! Form::close() !!}
@@ -91,9 +91,9 @@ if (isset($registros) && !isset($showCheckboxColumn)) {
                     @if ($isServerSide)
                         @if ($row->isCurrentSortField($orderBy))
                             @if ($sortOrder == 'asc')
-                                <i class="facilitador-angle-up pull-right"></i>
+                                <i class="facilitador-angle-up float-right"></i>
                             @else
-                                <i class="facilitador-angle-down pull-right"></i>
+                                <i class="facilitador-angle-down float-right"></i>
                             @endif
                         @endif
                         </a>

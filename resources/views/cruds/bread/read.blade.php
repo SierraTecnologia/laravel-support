@@ -14,7 +14,7 @@
         @endcan
         @can('delete', $dataTypeContent)
             @if($isSoftDeleted)
-                <a href="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'restore', $dataTypeContent->getKey()) }}" title="{{ __('facilitador::generic.restore') }}" class="btn btn-default restore" data-id="{{ $dataTypeContent->getKey() }}" id="restore-{{ $dataTypeContent->getKey() }}">
+                <a href="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'restore', $dataTypeContent->getKey()) }}" title="{{ __('facilitador::generic.restore') }}" class="btn btn-secondary restore" data-id="{{ $dataTypeContent->getKey() }}" id="restore-{{ $dataTypeContent->getKey() }}">
                     <i class="facilitador-trash"></i> <span class="hidden-xs hidden-sm">{{ __('facilitador::generic.restore') }}</span>
                 </a>
             @else
@@ -57,16 +57,16 @@
                             @if (isset($row->details->view))
                                 @include($row->details->view, ['row' => $row, 'dataType' => $dataType, 'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field}, 'action' => 'read', 'view' => 'read', 'options' => $row->details])
                             @elseif($row->type == "image")
-                                <img class="img-responsive"
+                                <img class="img-fluid"
                                      src="{{ filter_var($dataTypeContent->{$row->field}, FILTER_VALIDATE_URL) ? $dataTypeContent->{$row->field} : Facilitador::image($dataTypeContent->{$row->field}) }}">
                             @elseif($row->type == 'multiple_images')
                                 @if(json_decode($dataTypeContent->{$row->field}))
                                     @foreach(json_decode($dataTypeContent->{$row->field}) as $file)
-                                        <img class="img-responsive"
+                                        <img class="img-fluid"
                                              src="{{ filter_var($file, FILTER_VALIDATE_URL) ? $file : Facilitador::image($file) }}">
                                     @endforeach
                                 @else
-                                    <img class="img-responsive"
+                                    <img class="img-fluid"
                                          src="{{ filter_var($dataTypeContent->{$row->field}, FILTER_VALIDATE_URL) ? $dataTypeContent->{$row->field} : Facilitador::image($dataTypeContent->{$row->field}) }}">
                                 @endif
                             @elseif($row->type == 'relationship')
@@ -166,10 +166,10 @@
                     <form action="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'index') }}" id="delete_form" method="POST">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-danger pull-right delete-confirm"
+                        <input type="submit" class="btn btn-danger float-right delete-confirm"
                                value="{{ __('facilitador::generic.delete_confirm') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_singular')) }}">
                     </form>
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

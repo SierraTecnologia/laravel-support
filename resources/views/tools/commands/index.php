@@ -9,7 +9,7 @@
                         <tr data-js-view="task-method">
                             <td>
                                 <a data-action="<?php echo route('rica.support.commands@execute', $command->getName())?>"
-                                   class="btn btn-default"><?php echo __('facilitador::commands.execute')?></a>
+                                   class="btn btn-secondary"><?php echo __('facilitador::commands.execute')?></a>
                             </td>
                             <td>
                                 <p>

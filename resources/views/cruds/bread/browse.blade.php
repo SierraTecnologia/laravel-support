@@ -95,7 +95,7 @@
 
                         </div>
                         @if ($isServerSide)
-                            <div class="pull-left">
+                            <div class="float-left">
                                 <div role="status" class="show-res" aria-live="polite">{{ trans_choice(
                                     'facilitador::generic.showing_entries', $dataTypeContent->total(), [
                                         'from' => $dataTypeContent->firstItem(),
@@ -103,7 +103,7 @@
                                         'all' => $dataTypeContent->total()
                                     ]) }}</div>
                             </div>
-                            <div class="pull-right">
+                            <div class="float-right">
                                 {{ $dataTypeContent->appends([
                                     's' => $search->value,
                                     'filter' => $search->filter,
@@ -132,9 +132,9 @@
                     <form action="#" id="delete_form" method="POST">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-danger pull-right delete-confirm" value="{{ __('facilitador::generic.delete_confirm') }}">
+                        <input type="submit" class="btn btn-danger float-right delete-confirm" value="{{ __('facilitador::generic.delete_confirm') }}">
                     </form>
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

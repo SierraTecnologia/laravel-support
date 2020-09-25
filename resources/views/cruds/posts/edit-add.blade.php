@@ -285,7 +285,7 @@
             </div>
 
             @section('submit-buttons')
-                <button type="submit" class="btn btn-primary pull-right">
+                <button type="submit" class="btn btn-primary float-right">
                      @if($edit){{ __('facilitador::post.update') }}@else <i class="icon wb-plus-circle"></i> {{ __('facilitador::post.new') }} @endif
                 </button>
             @stop
@@ -293,7 +293,7 @@
         </form>
 
         <iframe id="form_target" name="form_target" style="display:none"></iframe>
-        <form id="my_form" action="{{ route('profile.upload') }}" target="form_target" method="post"
+        <form id="my_form" action="{{ route('profile.porteiro.upload') }}" target="form_target" method="post"
                 enctype="multipart/form-data" style="width:0;height:0;overflow:hidden">
             <input name="image" id="upload_file" type="file"
                      onchange="$('#my_form').submit();this.value='';">
@@ -317,7 +317,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
                     <button type="button" class="btn btn-danger" id="confirm_delete">{{ __('facilitador::generic.delete_confirm') }}</button>
                 </div>
             </div>

@@ -45,7 +45,7 @@
                                     <i class="facilitador-plus"></i> {{ __('facilitador::database.browse_bread') }}
                                 </a>
                                 <a href="{{ route('facilitador.bread.edit', $table->name) }}"
-                                   class="btn-sm btn-default edit">
+                                   class="btn-sm btn-secondary edit">
                                    {{ __('facilitador::bread.edit_bread') }}
                                 </a>
                                 <a data-id="{{ $table->dataTypeId }}" data-name="{{ $table->name }}"
@@ -54,7 +54,7 @@
                                 </a>
                             @else
                                 <a href="{{ route('facilitador.bread.create', $table->name) }}"
-                                   class="btn-sm btn-default">
+                                   class="btn-sm btn-secondary">
                                     <i class="facilitador-plus"></i> {{ __('facilitador::bread.add_bread') }}
                                 </a>
                             @endif
@@ -62,17 +62,17 @@
                         </td>
 
                         <td class="actions">
-                            <a class="btn btn-danger btn-sm pull-right delete_table @if($table->dataTypeId) remove-bread-warning @endif"
+                            <a class="btn btn-danger btn-sm float-right delete_table @if($table->dataTypeId) remove-bread-warning @endif"
                                data-table="{{ $table->prefix.$table->name }}">
                                <i class="facilitador-trash"></i> {{ __('facilitador::generic.delete') }}
                             </a>
                             <a href="{{ route('facilitador.database.edit', $table->prefix.$table->name) }}"
-                               class="btn btn-sm btn-primary pull-right" style="display:inline; margin-right:10px;">
+                               class="btn btn-sm btn-primary float-right" style="display:inline; margin-right:10px;">
                                <i class="facilitador-edit"></i> {{ __('facilitador::generic.edit') }}
                             </a>
                             <a href="{{ route('facilitador.database.show', $table->prefix.$table->name) }}"
                                data-name="{{ $table->name }}"
-                               class="btn btn-sm btn-warning pull-right desctable" style="display:inline; margin-right:10px;">
+                               class="btn btn-sm btn-warning float-right desctable" style="display:inline; margin-right:10px;">
                                <i class="facilitador-eye"></i> {{ __('facilitador::generic.view') }}
                             </a>
                         </td>
@@ -98,7 +98,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="submit" class="btn btn-danger" value="{{ __('facilitador::bread.delete_bread_conf') }}">
                     </form>
-                    <button type="button" class="btn btn-outline pull-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -116,8 +116,8 @@
                     <form action="#" id="delete_table_form" method="POST">
                         {{ method_field('DELETE') }}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="submit" class="btn btn-danger pull-right" value="{{ __('facilitador::database.delete_table_confirm') }}">
-                        <button type="button" class="btn btn-outline pull-right" style="margin-right:10px;"
+                        <input type="submit" class="btn btn-danger float-right" value="{{ __('facilitador::database.delete_table_confirm') }}">
+                        <button type="button" class="btn btn-outline float-right" style="margin-right:10px;"
                                 data-dismiss="modal">{{ __('facilitador::generic.cancel') }}
                         </button>
                     </form>
@@ -160,7 +160,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-right" data-dismiss="modal">{{ __('facilitador::generic.close') }}</button>
+                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('facilitador::generic.close') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

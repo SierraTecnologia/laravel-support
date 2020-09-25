@@ -65,7 +65,7 @@
                     
                     if(tableNames.length > 0)
                     {
-                        $(form).append($(document.createElement("button")).addClass("btn btn-default").prop({type: 'button'}).css("margin-right", "5px").html("<span class='glyphicon glyphicon-hand-up'></span> Toggle Selection").on('click', toggleSelection));
+                        $(form).append($(document.createElement("button")).addClass("btn btn-secondary").prop({type: 'button'}).css("margin-right", "5px").html("<span class='glyphicon glyphicon-hand-up'></span> Toggle Selection").on('click', toggleSelection));
                         $(form).append($(document.createElement("button")).addClass("btn btn-success").prop({type: 'submit', id: 'btnGenerateMigrations', disabled: 'disabled'}).html("<span class='glyphicon glyphicon-triangle-right'></span> Generate Migrations"));
                     }
                     

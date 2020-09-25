@@ -80,7 +80,7 @@
     </div><!-- .panel-body -->
 
     <div class="panel-footer">
-        <input type="submit" class="btn btn-primary pull-right"
+        <input type="submit" class="btn btn-primary float-right"
                value="@if($db->action == 'update'){{ __('facilitador::database.update_table') }}@else{{ __('facilitador::database.create_new_table') }}@endif"
                :disabled="!tableHasColumns">
         <div style="clear:both"></div>

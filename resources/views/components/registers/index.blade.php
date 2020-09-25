@@ -22,17 +22,17 @@
 
         <div class="col-lg-12 margin-tb">
 
-            <div class="pull-left">
+            <div class="float-left">
 
                 <h2> Show {!! $service->getModelService()->getName() !!}</h2>
 
                 
             </div>
 
-            <div class="pull-right">
+            <div class="float-right">
 
                 {!! $htmlGenerator->optionsButtons() !!}
-                <a href="{!! route('facilitador.index', [ $service->getModelService()->getCryptName()]) !!}" class="btn btn-default">{!! trans('words.back') !!}</a>
+                <a href="{!! route('facilitador.index', [ $service->getModelService()->getCryptName()]) !!}" class="btn btn-secondary">{!! trans('words.back') !!}</a>
 
             </div>
 

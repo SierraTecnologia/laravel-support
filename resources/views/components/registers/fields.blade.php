@@ -24,5 +24,5 @@
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit(trans('words.save'), ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('facilitador.index') !!}" class="btn btn-default">{!! trans('words.cancel') !!}</a>
+    <a href="{!! route('facilitador.index') !!}" class="btn btn-secondary">{!! trans('words.cancel') !!}</a>
 </div>

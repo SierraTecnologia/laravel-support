@@ -80,7 +80,7 @@
 			    </div>
 			    <div class="modal-footer">
 			    	<div class="relationship-btn-container">
-			    		<button type="button" class="btn btn-default" data-dismiss="modal">{{ __('facilitador::database.relationship.cancel') }}</button>
+			    		<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('facilitador::database.relationship.cancel') }}</button>
 	                    @if(isset($dataType->id))
 	                    	<button class="btn btn-danger btn-relationship"><i class="facilitador-plus"></i> <span>{{ __('facilitador::database.relationship.add_new') }}</span></button>
 	                	@endif

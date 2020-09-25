@@ -17,7 +17,7 @@
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
         </ul>
         </li>
-        <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+        <li class="float-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
     </ul>
     <div class="tab-content">
         @foreach ($models as $groupName=>$realModels)

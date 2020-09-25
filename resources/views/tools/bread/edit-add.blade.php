@@ -412,7 +412,7 @@
                         </div>
                     </div><!-- .panel -->
 
-                    <button type="submit" class="btn pull-right btn-primary">{{ __('facilitador::generic.submit') }}</button>
+                    <button type="submit" class="btn float-right btn-primary">{{ __('facilitador::generic.submit') }}</button>
 
                 </form>
             </div><!-- .col-md-12 -->
