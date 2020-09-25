@@ -2,11 +2,11 @@
 
 namespace Support\Contracts\Manager;
 
-use Support\Models\Application\DataType;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
+use Support\Models\Application\DataType;
 
 /**
  * Allows the registering of transforming callbacks that get applied when the
@@ -14,13 +14,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 trait RelationshipableTrait
 {
-
     public function removeRelationshipField(DataType $dataType, $bread_type = 'browse')
     {
         $forget_keys = [];
         foreach ($dataType->{$bread_type.'Rows'} as $key => $row) {
             if ($row->type == 'relationship') {
-                if ($row->details->type == 'belongsTo') {
+                if ($row->details && $row->details->type == 'belongsTo') {
                     $relationshipField = @$row->details->column;
                     $keyInCollection = key($dataType->{$bread_type.'Rows'}->where('field', '=', $relationshipField)->toArray());
                     array_push($forget_keys, $keyInCollection);

@@ -163,14 +163,14 @@
                                         $display_options = $row->details->display ?? NULL;
                                     @endphp
                                     @if (isset($row->details->formfields_custom))
-                                        @include('support::shared.forms.fields.custom.' . $row->details->formfields_custom)
+                                        @include('pedreiro::shared.forms.fields.custom.' . $row->details->formfields_custom)
                                     @else
                                         <div class="form-group @if($row->type == 'hidden') hidden @endif @if(isset($display_options->width)){{ 'col-md-' . $display_options->width }}@endif" @if(isset($display_options->id)){{ "id=$display_options->id" }}@endif>
                                             {{ $row->slugify }}
                                             <label for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
                                             @include('pedreiro::multilingual.input-hidden-bread-edit-add')
                                             @if($row->type == 'relationship')
-                                                @include('support::shared.forms.fields.relationship', ['options' => $row->details])
+                                                @include('pedreiro::shared.forms.fields.relationship', ['options' => $row->details])
                                             @else
                                                 {!! app('facilitador')->formField($row, $dataType, $dataTypeContent) !!}
                                             @endif

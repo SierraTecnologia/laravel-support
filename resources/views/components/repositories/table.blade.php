@@ -125,7 +125,7 @@ if (isset($registros) && !isset($showCheckboxColumn)) {
                         @elseif($row->type == 'image')
                             <img src="@if( !filter_var($data->{$row->field}, FILTER_VALIDATE_URL)){{ Facilitador::image( $data->{$row->field} ) }}@else{{ $data->{$row->field} }}@endif" style="width:100px">
                         @elseif($row->type == 'relationship')
-                            @include('support::shared.forms.fields.relationship', ['view' => 'browse','options' => $row->details])
+                            @include('pedreiro::shared.forms.fields.relationship', ['view' => 'browse','options' => $row->details])
                         @elseif($row->type == 'select_multiple')
                             @if(property_exists($row->details, 'relationship'))
 

@@ -74,7 +74,7 @@
                                     @if (isset($row->details->view))
                                         @include($row->details->view, ['row' => $row, 'dataType' => $dataType, 'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field}, 'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'), 'options' => $row->details])
                                     @elseif ($row->type == 'relationship')
-                                        @include('support::shared.forms.fields.relationship', ['options' => $row->details])
+                                        @include('pedreiro::shared.forms.fields.relationship', ['options' => $row->details])
                                     @else
                                         {!! app('facilitador')->formField($row, $dataType, $dataTypeContent) !!}
                                     @endif

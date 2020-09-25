@@ -6,6 +6,7 @@ namespace Support\Http\Controllers\Admin;
 use App;
 use Artisan;
 use Illuminate\Console\Application as ConsoleApplication;
+use Illuminate\Http\Request;
 use Response;
 use Support\Models\Command;
 use Symfony\Component\Console\Input\ArrayInput;
