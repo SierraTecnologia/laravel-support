@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Str;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 if (! function_exists('extract_title')) {
     /**
@@ -354,30 +354,32 @@ if (!function_exists('current_action')) {
 }
 
 
-/**
- * Get a unique string (based on cryptographically secure pseudo-random function).
- *
- * @param  int    $length
- * @param  string $alphabet
- * @return string
- * @throws InvalidArgumentException
- * @throws Exception
- */
-function str_unique(int $length = 40, string $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'): string
-{
-    if ($length < 1) {
-        throw new InvalidArgumentException('Length parameter value should be greater than or equals to 1.');
+if (!function_exists('str_unique')) {
+    /**
+     * Get a unique string (based on cryptographically secure pseudo-random function).
+     *
+     * @param  int    $length
+     * @param  string $alphabet
+     * @return string
+     * @throws InvalidArgumentException
+     * @throws Exception
+     */
+    function str_unique(int $length = 40, string $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'): string
+    {
+        if ($length < 1) {
+            throw new InvalidArgumentException('Length parameter value should be greater than or equals to 1.');
+        }
+
+        $str = '';
+
+        $alphabetLength = \Illuminate\Support\Str::length($alphabet);
+
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $alphabet[random_int(0, $alphabetLength - 1)];
+        }
+
+        return $str;
     }
-
-    $str = '';
-
-    $alphabetLength = \Illuminate\Support\Str::length($alphabet);
-
-    for ($i = 0; $i < $length; $i++) {
-        $str .= $alphabet[random_int(0, $alphabetLength - 1)];
-    }
-
-    return $str;
 }
 
 /**
@@ -386,15 +388,17 @@ function str_unique(int $length = 40, string $alphabet = 'ABCDEFGHIJKLMNOPQRSTUV
  * @param  mixed $html
  * @return string|null
  */
-function html_purify($html): ?string
-{
-    $value = value($html);
+if (!function_exists('html_purify')) {
+    function html_purify($html): ?string
+    {
+        $value = value($html);
 
-    if (is_null($value)) {
-        return null;
+        if (is_null($value)) {
+            return null;
+        }
+
+        return app()->make('HTMLPurifier')->purify($value);
     }
-
-    return app()->make('HTMLPurifier')->purify($value);
 }
 
 /**
@@ -406,21 +410,23 @@ function html_purify($html): ?string
  * @param  array $schema
  * @return array
  */
-function array_filter_schema(array $array, array $schema): array
-{
-    $result = [];
+if (!function_exists('array_filter_schema')) {
+    function array_filter_schema(array $array, array $schema): array
+    {
+        $result = [];
 
-    foreach ($array as $key => $value) {
-        if (array_key_exists($key, $schema)) {
-            $result[$key] = is_array($value) && is_array($schema[$key]) ? array_filter_schema($value, $schema[$key]) : $value;
-        } elseif (is_int($key) && array_key_exists('*', $schema)) {
-            $result[$key] = is_array($value) && is_array($schema['*']) ? array_filter_schema($value, $schema['*']) : $value;
-        } elseif (in_array($key, $schema, true)) {
-            $result[$key] = $value;
+        foreach ($array as $key => $value) {
+            if (array_key_exists($key, $schema)) {
+                $result[$key] = is_array($value) && is_array($schema[$key]) ? array_filter_schema($value, $schema[$key]) : $value;
+            } elseif (is_int($key) && array_key_exists('*', $schema)) {
+                $result[$key] = is_array($value) && is_array($schema['*']) ? array_filter_schema($value, $schema['*']) : $value;
+            } elseif (in_array($key, $schema, true)) {
+                $result[$key] = $value;
+            }
         }
-    }
 
-    return $result;
+        return $result;
+    }
 }
 
 /**
@@ -431,15 +437,17 @@ function array_filter_schema(array $array, array $schema): array
  * @param  array $array
  * @return array
  */
-function array_remove_dot_notation(array $array): array
-{
-    $result = [];
+if (!function_exists('array_remove_dot_notation')) {
+    function array_remove_dot_notation(array $array): array
+    {
+        $result = [];
 
-    foreach ($array as $key => $value) {
-        array_set($result, $key, $value);
+        foreach ($array as $key => $value) {
+            array_set($result, $key, $value);
+        }
+
+        return $result;
     }
-
-    return $result;
 }
 
 /**
@@ -449,7 +457,9 @@ function array_remove_dot_notation(array $array): array
  * @param  array $rules
  * @return array
  */
-function validator_filter_attributes(array $attributes, array $rules): array
-{
-    return array_filter_schema($attributes, array_remove_dot_notation(array_flip(array_keys($rules))));
+if (!function_exists('validator_filter_attributes')) {
+    function validator_filter_attributes(array $attributes, array $rules): array
+    {
+        return array_filter_schema($attributes, array_remove_dot_notation(array_flip(array_keys($rules))));
+    }
 }
