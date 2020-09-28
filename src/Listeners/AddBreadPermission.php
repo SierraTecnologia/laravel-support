@@ -2,7 +2,7 @@
 
 namespace Support\Listeners;
 
-use Support\Events\BreadAdded;
+use Pedreiro\Events\BreadAdded;
 use Support\Facades\Support;
 
 class AddBreadPermission

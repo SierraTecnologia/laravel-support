@@ -2,7 +2,7 @@
 
 namespace Support\Listeners;
 
-use Support\Events\BreadDeleted;
+use Pedreiro\Events\BreadDeleted;
 use Support\Facades\Support;
 
 class DeleteBreadMenuItem

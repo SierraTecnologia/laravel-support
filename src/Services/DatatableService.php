@@ -18,11 +18,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Support\Components\Database\Schema\SchemaManager;
-use Support\Events\BreadDataAdded;
-use Support\Events\BreadDataDeleted;
-use Support\Events\BreadDataRestored;
-use Support\Events\BreadDataUpdated;
-use Support\Events\BreadImagesDeleted;
+use Pedreiro\Events\BreadDataAdded;
+use Pedreiro\Events\BreadDataDeleted;
+use Pedreiro\Events\BreadDataRestored;
+use Pedreiro\Events\BreadDataUpdated;
+use Pedreiro\Events\BreadImagesDeleted;
 use Support\Facades\Support;
 use Support\Contracts\Manager\RelationshipableTrait;
 

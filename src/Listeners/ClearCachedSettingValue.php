@@ -3,7 +3,7 @@
 namespace Support\Listeners;
 
 use Cache;
-use Support\Events\SettingUpdated;
+use Pedreiro\Events\SettingUpdated;
 
 class ClearCachedSettingValue
 {
