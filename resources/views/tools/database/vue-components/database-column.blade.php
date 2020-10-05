@@ -33,11 +33,11 @@
                 :disabled="column.type.notSupportIndex"
                 class="form-control">
             <option value=""></option>
-            <option value="INDEX">{{ __('facilitador::database.index') }}</option>
-            <option value="UNIQUE">{{ __('facilitador::database.unique') }}</option>
-            <option value="PRIMARY">{{ __('facilitador::database.primary') }}</option>
+            <option value="INDEX">{{ __('pedreiro::database.index') }}</option>
+            <option value="UNIQUE">{{ __('pedreiro::database.unique') }}</option>
+            <option value="PRIMARY">{{ __('pedreiro::database.primary') }}</option>
         </select>
-        <small v-if="column.composite" v-once>{{ __('facilitador::database.composite_warning') }}</small>
+        <small v-if="column.composite" v-once>{{ __('pedreiro::database.composite_warning') }}</small>
     </td>
 
     <td>
@@ -101,7 +101,7 @@
             },
             onIndexTypeChange(event) {
                 if (this.column.name == '') {
-                    return toastr.error("{{ __('facilitador::database.name_warning') }}");
+                    return toastr.error("{{ __('pedreiro::database.name_warning') }}");
                 }
 
                 return this.$emit('indexChanged', {

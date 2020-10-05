@@ -1,12 +1,12 @@
 @extends('support::master')
 
-@section('page_title', __('facilitador::generic.viewing').' '.__('facilitador::generic.database'))
+@section('page_title', __('pedreiro::generic.viewing').' '.__('pedreiro::generic.database'))
 
 @section('page_header')
     <h1 class="page-title">
-        <i class="facilitador-data"></i> {{ __('facilitador::generic.database') }}
+        <i class="facilitador-data"></i> {{ __('pedreiro::generic.database') }}
         <a href="{{ route('facilitador.database.create') }}" class="btn btn-success"><i class="facilitador-plus"></i>
-            {{ __('facilitador::database.create_new_table') }}</a>
+            {{ __('pedreiro::database.create_new_table') }}</a>
     </h1>
 @stop
 
@@ -20,8 +20,8 @@
                 <table class="table table-striped database-tables">
                     <thead>
                         <tr>
-                            <th>{{ __('facilitador::database.table_name') }}</th>
-                            <th style="text-align:right" colspan="2">{{ __('facilitador::database.table_actions') }}</th>
+                            <th>{{ __('pedreiro::database.table_name') }}</th>
+                            <th style="text-align:right" colspan="2">{{ __('pedreiro::database.table_actions') }}</th>
                         </tr>
                     </thead>
 
@@ -42,20 +42,20 @@
                             @if($table->dataTypeId)
                                 <a href="{{ route('facilitador.' . $table->slug . '.index') }}"
                                    class="btn-sm btn-warning browse_bread">
-                                    <i class="facilitador-plus"></i> {{ __('facilitador::database.browse_bread') }}
+                                    <i class="facilitador-plus"></i> {{ __('pedreiro::database.browse_bread') }}
                                 </a>
                                 <a href="{{ route('facilitador.bread.edit', $table->name) }}"
                                    class="btn-sm btn-secondary edit">
-                                   {{ __('facilitador::bread.edit_bread') }}
+                                   {{ __('pedreiro::bread.edit_bread') }}
                                 </a>
                                 <a data-id="{{ $table->dataTypeId }}" data-name="{{ $table->name }}"
                                      class="btn-sm btn-danger delete">
-                                     {{ __('facilitador::bread.delete_bread') }}
+                                     {{ __('pedreiro::bread.delete_bread') }}
                                 </a>
                             @else
                                 <a href="{{ route('facilitador.bread.create', $table->name) }}"
                                    class="btn-sm btn-secondary">
-                                    <i class="facilitador-plus"></i> {{ __('facilitador::bread.add_bread') }}
+                                    <i class="facilitador-plus"></i> {{ __('pedreiro::bread.add_bread') }}
                                 </a>
                             @endif
                             </div>
@@ -64,16 +64,16 @@
                         <td class="actions">
                             <a class="btn btn-danger btn-sm float-right delete_table @if($table->dataTypeId) remove-bread-warning @endif"
                                data-table="{{ $table->prefix.$table->name }}">
-                               <i class="facilitador-trash"></i> {{ __('facilitador::generic.delete') }}
+                               <i class="facilitador-trash"></i> {{ __('pedreiro::generic.delete') }}
                             </a>
                             <a href="{{ route('facilitador.database.edit', $table->prefix.$table->name) }}"
                                class="btn btn-sm btn-primary float-right" style="display:inline; margin-right:10px;">
-                               <i class="facilitador-edit"></i> {{ __('facilitador::generic.edit') }}
+                               <i class="facilitador-edit"></i> {{ __('pedreiro::generic.edit') }}
                             </a>
                             <a href="{{ route('facilitador.database.show', $table->prefix.$table->name) }}"
                                data-name="{{ $table->name }}"
                                class="btn btn-sm btn-warning float-right desctable" style="display:inline; margin-right:10px;">
-                               <i class="facilitador-eye"></i> {{ __('facilitador::generic.view') }}
+                               <i class="facilitador-eye"></i> {{ __('pedreiro::generic.view') }}
                             </a>
                         </td>
                     </tr>
@@ -88,17 +88,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('facilitador::generic.close') }}"><span
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('pedreiro::generic.close') }}"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="facilitador-trash"></i>  {!! __('facilitador::bread.delete_bread_quest', ['table' => '<span id="delete_bread_name"></span>']) !!}</h4>
+                    <h4 class="modal-title"><i class="facilitador-trash"></i>  {!! __('pedreiro::bread.delete_bread_quest', ['table' => '<span id="delete_bread_name"></span>']) !!}</h4>
                 </div>
                 <div class="modal-footer">
                     <form action="#" id="delete_bread_form" method="POST">
                         {{ method_field('DELETE') }}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="submit" class="btn btn-danger" value="{{ __('facilitador::bread.delete_bread_conf') }}">
+                        <input type="submit" class="btn btn-danger" value="{{ __('pedreiro::bread.delete_bread_conf') }}">
                     </form>
-                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('pedreiro::generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -108,17 +108,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('facilitador::generic.close') }}"><span
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('pedreiro::generic.close') }}"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="facilitador-trash"></i> {!! __('facilitador::database.delete_table_question', ['table' => '<span id="delete_table_name"></span>']) !!}</h4>
+                    <h4 class="modal-title"><i class="facilitador-trash"></i> {!! __('pedreiro::database.delete_table_question', ['table' => '<span id="delete_table_name"></span>']) !!}</h4>
                 </div>
                 <div class="modal-footer">
                     <form action="#" id="delete_table_form" method="POST">
                         {{ method_field('DELETE') }}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="submit" class="btn btn-danger float-right" value="{{ __('facilitador::database.delete_table_confirm') }}">
+                        <input type="submit" class="btn btn-danger float-right" value="{{ __('pedreiro::database.delete_table_confirm') }}">
                         <button type="button" class="btn btn-outline float-right" style="margin-right:10px;"
-                                data-dismiss="modal">{{ __('facilitador::generic.cancel') }}
+                                data-dismiss="modal">{{ __('pedreiro::generic.cancel') }}
                         </button>
                     </form>
 
@@ -131,7 +131,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('facilitador::generic.close') }}"><span
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('pedreiro::generic.close') }}"><span
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"><i class="facilitador-data"></i> @{{ table.name }}</h4>
                 </div>
@@ -139,12 +139,12 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>{{ __('facilitador::database.field') }}</th>
-                            <th>{{ __('facilitador::database.type') }}</th>
-                            <th>{{ __('facilitador::database.null') }}</th>
-                            <th>{{ __('facilitador::database.key') }}</th>
-                            <th>{{ __('facilitador::database.default') }}</th>
-                            <th>{{ __('facilitador::database.extra') }}</th>
+                            <th>{{ __('pedreiro::database.field') }}</th>
+                            <th>{{ __('pedreiro::database.type') }}</th>
+                            <th>{{ __('pedreiro::database.null') }}</th>
+                            <th>{{ __('pedreiro::database.key') }}</th>
+                            <th>{{ __('pedreiro::database.default') }}</th>
+                            <th>{{ __('pedreiro::database.extra') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -160,7 +160,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('facilitador::generic.close') }}</button>
+                    <button type="button" class="btn btn-outline float-right" data-dismiss="modal">{{ __('pedreiro::generic.close') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -213,7 +213,7 @@
             $('td.actions').on('click', '.delete_table', function (e) {
                 table = $(this).data('table');
                 if ($(this).hasClass('remove-bread-warning')) {
-                    toastr.warning('{{ __('facilitador::database.delete_bread_before_table') }}');
+                    toastr.warning('{{ __('pedreiro::database.delete_bread_before_table') }}');
                 } else {
                     $('#delete_table_name').text(table);
 

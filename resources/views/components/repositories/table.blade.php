@@ -100,7 +100,7 @@ if (isset($registros) && !isset($showCheckboxColumn)) {
                     @endif
                 </th>
                 @endforeach
-                <th class="actions text-right">{{ __('facilitador::generic.actions') }}</th>
+                <th class="actions text-right">{{ __('pedreiro::generic.actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -141,7 +141,7 @@ if (isset($registros) && !isset($showCheckboxColumn)) {
                                         @endif
                                     @endforeach
                                 @else
-                                    {{ __('facilitador::generic.none') }}
+                                    {{ __('pedreiro::generic.none') }}
                                 @endif
                             @endif
 
@@ -153,7 +153,7 @@ if (isset($registros) && !isset($showCheckboxColumn)) {
                                         @endif
                                     @endforeach
                                 @else
-                                    {{ __('facilitador::generic.none') }}
+                                    {{ __('pedreiro::generic.none') }}
                                 @endif
 
                         @elseif(($row->type == 'select_dropdown' || $row->type == 'radio_btn') && property_exists($row->details, 'options'))
@@ -252,7 +252,7 @@ if (isset($registros) && !isset($showCheckboxColumn)) {
                                     </ul>
                                 @endif
                                 @if (count($files) > 3)
-                                    {{ __('facilitador::media.files_more', ['count' => (count($files) - 3)]) }}
+                                    {{ __('pedreiro::media.files_more', ['count' => (count($files) - 3)]) }}
                                 @endif
                             @elseif (is_array($files) && count($files) == 0)
                                 {{ trans_choice('facilitador::tools.media.files', 0) }}

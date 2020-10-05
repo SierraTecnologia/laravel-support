@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="panel panel-bordered">
                 <div class="panel-heading">
-                    <p class="panel-title" style="color:#777">{{ __('facilitador::generic.drag_drop_info') }}</p>
+                    <p class="panel-title" style="color:#777">{{ __('pedreiro::generic.drag_drop_info') }}</p>
                 </div>
 
                 <div class="panel-body" style="padding:30px;">

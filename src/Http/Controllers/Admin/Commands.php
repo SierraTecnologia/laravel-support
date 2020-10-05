@@ -72,8 +72,8 @@ class Commands extends Base
      */
     public function __construct()
     {
-        $this->title = __('facilitador::commands.controller.title');
-        $this->description = __('facilitador::commands.controller.description');
+        $this->title = __('pedreiro::commands.controller.title');
+        $this->description = __('pedreiro::commands.controller.description');
 
         parent::__construct();
     }

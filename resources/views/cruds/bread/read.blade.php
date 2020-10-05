@@ -1,32 +1,32 @@
 @extends('pedreiro::layouts.voyager.master')
 
-@section('page_title', __('facilitador::generic.view').' '.$dataType->getTranslatedAttribute('display_name_singular'))
+@section('page_title', __('pedreiro::generic.view').' '.$dataType->getTranslatedAttribute('display_name_singular'))
 
 @section('page_header')
     <h1 class="page-title">
-        <i class="{{ $dataType->icon }}"></i> {{ __('facilitador::generic.viewing') }} {{ ucfirst($dataType->getTranslatedAttribute('display_name_singular')) }} &nbsp;
+        <i class="{{ $dataType->icon }}"></i> {{ __('pedreiro::generic.viewing') }} {{ ucfirst($dataType->getTranslatedAttribute('display_name_singular')) }} &nbsp;
 
         @can('edit', $dataTypeContent)
             <a href="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'edit', $dataTypeContent->getKey()) }}" class="btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                {{ __('facilitador::generic.edit') }}
+                {{ __('pedreiro::generic.edit') }}
             </a>
         @endcan
         @can('delete', $dataTypeContent)
             @if($isSoftDeleted)
-                <a href="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'restore', $dataTypeContent->getKey()) }}" title="{{ __('facilitador::generic.restore') }}" class="btn btn-secondary restore" data-id="{{ $dataTypeContent->getKey() }}" id="restore-{{ $dataTypeContent->getKey() }}">
-                    <i class="facilitador-trash"></i> <span class="hidden-xs hidden-sm">{{ __('facilitador::generic.restore') }}</span>
+                <a href="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'restore', $dataTypeContent->getKey()) }}" title="{{ __('pedreiro::generic.restore') }}" class="btn btn-secondary restore" data-id="{{ $dataTypeContent->getKey() }}" id="restore-{{ $dataTypeContent->getKey() }}">
+                    <i class="facilitador-trash"></i> <span class="hidden-xs hidden-sm">{{ __('pedreiro::generic.restore') }}</span>
                 </a>
             @else
-                <a href="javascript:;" title="{{ __('facilitador::generic.delete') }}" class="btn btn-danger delete" data-id="{{ $dataTypeContent->getKey() }}" id="delete-{{ $dataTypeContent->getKey() }}">
-                    <i class="facilitador-trash"></i> <span class="hidden-xs hidden-sm">{{ __('facilitador::generic.delete') }}</span>
+                <a href="javascript:;" title="{{ __('pedreiro::generic.delete') }}" class="btn btn-danger delete" data-id="{{ $dataTypeContent->getKey() }}" id="delete-{{ $dataTypeContent->getKey() }}">
+                    <i class="facilitador-trash"></i> <span class="hidden-xs hidden-sm">{{ __('pedreiro::generic.delete') }}</span>
                 </a>
             @endif
         @endcan
 
         <a href="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'index') }}" class="btn btn-warning">
             <span class="glyphicon glyphicon-list"></span>&nbsp;
-            {{ __('facilitador::generic.return_to_list') }}
+            {{ __('pedreiro::generic.return_to_list') }}
         </a>
     </h1>
     @include('pedreiro::multilingual.language-selector')
@@ -90,7 +90,7 @@
                                             @endif
                                         @endforeach
                                     @else
-                                        {{ __('facilitador::generic.none') }}
+                                        {{ __('pedreiro::generic.none') }}
                                     @endif
                                 @endif
                             @elseif($row->type == 'date' || $row->type == 'timestamp')
@@ -132,7 +132,7 @@
                                     @endforeach
                                 @else
                                     <a href="{{ Storage::disk(\Illuminate\Support\Facades\Config::get('sitec.facilitador.storage.disk'))->url($row->field) ?: '' }}">
-                                        {{ __('facilitador::generic.download') }}
+                                        {{ __('pedreiro::generic.download') }}
                                     </a>
                                 @endif
                             @else
@@ -159,17 +159,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('facilitador::generic.close') }}"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="facilitador-trash"></i> {{ __('facilitador::generic.delete_question') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_singular')) }}?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('pedreiro::generic.close') }}"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="facilitador-trash"></i> {{ __('pedreiro::generic.delete_question') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_singular')) }}?</h4>
                 </div>
                 <div class="modal-footer">
                     <form action="{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'index') }}" id="delete_form" method="POST">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
                         <input type="submit" class="btn btn-danger float-right delete-confirm"
-                               value="{{ __('facilitador::generic.delete_confirm') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_singular')) }}">
+                               value="{{ __('pedreiro::generic.delete_confirm') }} {{ strtolower($dataType->getTranslatedAttribute('display_name_singular')) }}">
                     </form>
-                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">{{ __('pedreiro::generic.cancel') }}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

@@ -9,12 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @stop
 
-@section('page_title', __('facilitador::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular'))
+@section('page_title', __('pedreiro::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular'))
 
 @section('page_header')
     <h1 class="page-title">
         <i class="{{ $dataType->icon }}"></i>
-        {{ __('facilitador::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
+        {{ __('pedreiro::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
     </h1>
     @include('pedreiro::multilingual.language-selector')
 @stop
@@ -94,7 +94,7 @@
 
                         <div class="panel-footer">
                             @section('submit-buttons')
-                                <button type="submit" class="btn btn-primary save">{{ __('facilitador::generic.save') }}</button>
+                                <button type="submit" class="btn btn-primary save">{{ __('pedreiro::generic.save') }}</button>
                             @stop
                             @yield('submit-buttons')
                         </div>
@@ -121,16 +121,16 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"
                             aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="facilitador-warning"></i> {{ __('facilitador::generic.are_you_sure') }}</h4>
+                    <h4 class="modal-title"><i class="facilitador-warning"></i> {{ __('pedreiro::generic.are_you_sure') }}</h4>
                 </div>
 
                 <div class="modal-body">
-                    <h4>{{ __('facilitador::generic.are_you_sure_delete') }} '<span class="confirm_delete_name"></span>'</h4>
+                    <h4>{{ __('pedreiro::generic.are_you_sure_delete') }} '<span class="confirm_delete_name"></span>'</h4>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
-                    <button type="button" class="btn btn-danger" id="confirm_delete">{{ __('facilitador::generic.delete_confirm') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('pedreiro::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-danger" id="confirm_delete">{{ __('pedreiro::generic.delete_confirm') }}</button>
                 </div>
             </div>
         </div>

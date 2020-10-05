@@ -9,7 +9,7 @@
         </optgroup>
     </select>
     <div v-if="column.type.notSupported">
-        <small>{{ __('facilitador::database.type_not_supported') }}</small>
+        <small>{{ __('pedreiro::database.type_not_supported') }}</small>
     </div>
 </div>
 
@@ -33,7 +33,7 @@
             }
         }
 
-        toastr.error("{{ __('facilitador::database.unknown_type') }}: " + name);
+        toastr.error("{{ __('pedreiro::database.unknown_type') }}: " + name);
 
         // fallback to a default type
         return databaseTypes.Numbers[0];

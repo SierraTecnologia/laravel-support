@@ -54,12 +54,12 @@
     </style>
 @stop
 
-@section('page_title', __('facilitador::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular'))
+@section('page_title', __('pedreiro::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular'))
 
 @section('page_header')
     <h1 class="page-title">
         <i class="{{ $dataType->icon }}"></i>
-        {{ __('facilitador::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
+        {{ __('pedreiro::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
     </h1>
     @include('pedreiro::multilingual.language-selector')
 @stop
@@ -89,8 +89,8 @@
 
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                <i class="facilitador-character"></i> {{ __('facilitador::post.title') }}
-                                <span class="panel-desc"> {{ __('facilitador::post.title_sub') }}</span>
+                                <i class="facilitador-character"></i> {{ __('pedreiro::post.title') }}
+                                <span class="panel-desc"> {{ __('pedreiro::post.title_sub') }}</span>
                             </h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
@@ -101,14 +101,14 @@
                                 '_field_name'  => 'title',
                                 '_field_trans' => get_field_translations($dataTypeContent, 'title')
                             ])
-                            <input type="text" class="form-control" id="title" name="title" placeholder="{{ __('facilitador::generic.title') }}" value="{{ $dataTypeContent->title ?? '' }}">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="{{ __('pedreiro::generic.title') }}" value="{{ $dataTypeContent->title ?? '' }}">
                         </div>
                     </div>
 
                     <!-- ### CONTENT ### -->
                     <div class="panel">
                         <div class="panel-heading">
-                            <h3 class="panel-title">{{ __('facilitador::post.content') }}</h3>
+                            <h3 class="panel-title">{{ __('pedreiro::post.content') }}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-resize-full" data-toggle="panel-fullscreen" aria-hidden="true"></a>
                             </div>
@@ -130,7 +130,7 @@
                     <!-- ### EXCERPT ### -->
                     <div class="panel">
                         <div class="panel-heading">
-                            <h3 class="panel-title">{!! __('facilitador::post.excerpt') !!}</h3>
+                            <h3 class="panel-title">{!! __('pedreiro::post.excerpt') !!}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
@@ -146,7 +146,7 @@
 
                     <div class="panel">
                         <div class="panel-heading">
-                            <h3 class="panel-title">{{ __('facilitador::post.additional_fields') }}</h3>
+                            <h3 class="panel-title">{{ __('pedreiro::post.additional_fields') }}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
@@ -190,14 +190,14 @@
                     <!-- ### DETAILS ### -->
                     <div class="panel panel panel-bordered panel-warning">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="icon wb-clipboard"></i> {{ __('facilitador::post.details') }}</h3>
+                            <h3 class="panel-title"><i class="icon wb-clipboard"></i> {{ __('pedreiro::post.details') }}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="slug">{{ __('facilitador::post.slug') }}</label>
+                                <label for="slug">{{ __('pedreiro::post.slug') }}</label>
                                 @include('pedreiro::multilingual.input-hidden', [
                                     '_field_name'  => 'slug',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'slug')
@@ -208,15 +208,15 @@
                                     value="{{ $dataTypeContent->slug ?? '' }}">
                             </div>
                             <div class="form-group">
-                                <label for="status">{{ __('facilitador::post.status') }}</label>
+                                <label for="status">{{ __('pedreiro::post.status') }}</label>
                                 <select class="form-control" name="status">
-                                    <option value="PUBLISHED"@if(isset($dataTypeContent->status) && $dataTypeContent->status == 'PUBLISHED') selected="selected"@endif>{{ __('facilitador::post.status_published') }}</option>
-                                    <option value="DRAFT"@if(isset($dataTypeContent->status) && $dataTypeContent->status == 'DRAFT') selected="selected"@endif>{{ __('facilitador::post.status_draft') }}</option>
-                                    <option value="PENDING"@if(isset($dataTypeContent->status) && $dataTypeContent->status == 'PENDING') selected="selected"@endif>{{ __('facilitador::post.status_pending') }}</option>
+                                    <option value="PUBLISHED"@if(isset($dataTypeContent->status) && $dataTypeContent->status == 'PUBLISHED') selected="selected"@endif>{{ __('pedreiro::post.status_published') }}</option>
+                                    <option value="DRAFT"@if(isset($dataTypeContent->status) && $dataTypeContent->status == 'DRAFT') selected="selected"@endif>{{ __('pedreiro::post.status_draft') }}</option>
+                                    <option value="PENDING"@if(isset($dataTypeContent->status) && $dataTypeContent->status == 'PENDING') selected="selected"@endif>{{ __('pedreiro::post.status_pending') }}</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="category_id">{{ __('facilitador::post.category') }}</label>
+                                <label for="category_id">{{ __('pedreiro::post.category') }}</label>
                                 <select class="form-control" name="category_id">
                                     @foreach(Facilitador::model('Category')::all() as $category)
                                         <option value="{{ $category->id }}"@if(isset($dataTypeContent->category_id) && $dataTypeContent->category_id == $category->id) selected="selected"@endif>{{ $category->name }}</option>
@@ -224,7 +224,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="featured">{{ __('facilitador::generic.featured') }}</label>
+                                <label for="featured">{{ __('pedreiro::generic.featured') }}</label>
                                 <input type="checkbox" name="featured"@if(isset($dataTypeContent->featured) && $dataTypeContent->featured) checked="checked"@endif>
                             </div>
                         </div>
@@ -233,7 +233,7 @@
                     <!-- ### IMAGE ### -->
                     <div class="panel panel-bordered panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="icon wb-image"></i> {{ __('facilitador::post.image') }}</h3>
+                            <h3 class="panel-title"><i class="icon wb-image"></i> {{ __('pedreiro::post.image') }}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
@@ -249,14 +249,14 @@
                     <!-- ### SEO CONTENT ### -->
                     <div class="panel panel-bordered panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="icon wb-search"></i> {{ __('facilitador::post.seo_content') }}</h3>
+                            <h3 class="panel-title"><i class="icon wb-search"></i> {{ __('pedreiro::post.seo_content') }}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-down" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="meta_description">{{ __('facilitador::post.meta_description') }}</label>
+                                <label for="meta_description">{{ __('pedreiro::post.meta_description') }}</label>
                                 @include('pedreiro::multilingual.input-hidden', [
                                     '_field_name'  => 'meta_description',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'meta_description')
@@ -264,7 +264,7 @@
                                 <textarea class="form-control" name="meta_description">{{ $dataTypeContent->meta_description ?? '' }}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="meta_keywords">{{ __('facilitador::post.meta_keywords') }}</label>
+                                <label for="meta_keywords">{{ __('pedreiro::post.meta_keywords') }}</label>
                                 @include('pedreiro::multilingual.input-hidden', [
                                     '_field_name'  => 'meta_keywords',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'meta_keywords')
@@ -272,7 +272,7 @@
                                 <textarea class="form-control" name="meta_keywords">{{ $dataTypeContent->meta_keywords ?? '' }}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="seo_title">{{ __('facilitador::post.seo_title') }}</label>
+                                <label for="seo_title">{{ __('pedreiro::post.seo_title') }}</label>
                                 @include('pedreiro::multilingual.input-hidden', [
                                     '_field_name'  => 'seo_title',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'seo_title')
@@ -286,7 +286,7 @@
 
             @section('submit-buttons')
                 <button type="submit" class="btn btn-primary float-right">
-                     @if($edit){{ __('facilitador::post.update') }}@else <i class="icon wb-plus-circle"></i> {{ __('facilitador::post.new') }} @endif
+                     @if($edit){{ __('pedreiro::post.update') }}@else <i class="icon wb-plus-circle"></i> {{ __('pedreiro::post.new') }} @endif
                 </button>
             @stop
             @yield('submit-buttons')
@@ -309,16 +309,16 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"
                             aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="facilitador-warning"></i> {{ __('facilitador::generic.are_you_sure') }}</h4>
+                    <h4 class="modal-title"><i class="facilitador-warning"></i> {{ __('pedreiro::generic.are_you_sure') }}</h4>
                 </div>
 
                 <div class="modal-body">
-                    <h4>{{ __('facilitador::generic.are_you_sure_delete') }} '<span class="confirm_delete_name"></span>'</h4>
+                    <h4>{{ __('pedreiro::generic.are_you_sure_delete') }} '<span class="confirm_delete_name"></span>'</h4>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('facilitador::generic.cancel') }}</button>
-                    <button type="button" class="btn btn-danger" id="confirm_delete">{{ __('facilitador::generic.delete_confirm') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('pedreiro::generic.cancel') }}</button>
+                    <button type="button" class="btn btn-danger" id="confirm_delete">{{ __('pedreiro::generic.delete_confirm') }}</button>
                 </div>
             </div>
         </div>

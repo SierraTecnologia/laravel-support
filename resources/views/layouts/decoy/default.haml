@@ -20,7 +20,7 @@
 		%link(rel="stylesheet" href=config('site.core.stylesheet') type="text/css")
 
 		-# Passthrough javascript translations
-		- $localization = json_encode(__('facilitador::javascript'), JSON_HEX_APOS)
+		- $localization = json_encode(__('pedreiro::javascript'), JSON_HEX_APOS)
 		!= "<script>var LOCALIZATIONS = JSON.parse('$localization');</script>";
 
 	%body(class=Facilitador::bodyClass())

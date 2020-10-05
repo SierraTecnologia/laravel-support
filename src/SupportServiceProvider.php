@@ -386,9 +386,9 @@ class SupportServiceProvider extends ServiceProvider
         } elseif ($storage_disk == 'public') {
             if (!file_exists(public_path('storage')) || @readlink(public_path('storage')) == public_path('storage')) {
                 $alert = (new Alert('missing-storage-symlink', 'warning'))
-                    ->title(__('facilitador::error.symlink_missing_title'))
-                    ->text(__('facilitador::error.symlink_missing_text'))
-                    ->button(__('facilitador::error.symlink_missing_button'), '?fix-missing-storage-symlink=1');
+                    ->title(__('pedreiro::error.symlink_missing_title'))
+                    ->text(__('pedreiro::error.symlink_missing_text'))
+                    ->button(__('pedreiro::error.symlink_missing_button'), '?fix-missing-storage-symlink=1');
                 SupportFacade::addAlert($alert);
             }
         }
@@ -400,12 +400,12 @@ class SupportServiceProvider extends ServiceProvider
 
         if (file_exists(public_path('storage'))) {
             $alert = (new Alert('fixed-missing-storage-symlink', 'success'))
-                ->title(__('facilitador::error.symlink_created_title'))
-                ->text(__('facilitador::error.symlink_created_text'));
+                ->title(__('pedreiro::error.symlink_created_title'))
+                ->text(__('pedreiro::error.symlink_created_text'));
         } else {
             $alert = (new Alert('failed-fixing-missing-storage-symlink', 'danger'))
-                ->title(__('facilitador::error.symlink_failed_title'))
-                ->text(__('facilitador::error.symlink_failed_text'));
+                ->title(__('pedreiro::error.symlink_failed_title'))
+                ->text(__('pedreiro::error.symlink_failed_text'));
         }
 
         SupportFacade::addAlert($alert);

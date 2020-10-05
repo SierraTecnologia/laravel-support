@@ -8,47 +8,47 @@
         @else
             <div class="col-md-6">
         @endif
-                <label for="name">{{ __('facilitador::database.table_name') }}</label><br>
-                <input v-model.trim="table.name" type="text" class="form-control" placeholder="{{ __('facilitador::database.table_name') }}" required pattern="{{ $db->identifierRegex }}">
+                <label for="name">{{ __('pedreiro::database.table_name') }}</label><br>
+                <input v-model.trim="table.name" type="text" class="form-control" placeholder="{{ __('pedreiro::database.table_name') }}" required pattern="{{ $db->identifierRegex }}">
             </div>
 
         @if($db->action == 'create')
             <div class="col-md-3 col-sm-4 col-xs-6">
-                <label for="create_model">{{ __('facilitador::database.create_model_table') }}</label><br>
+                <label for="create_model">{{ __('pedreiro::database.create_model_table') }}</label><br>
                 <input type="checkbox" name="create_model" data-toggle="toggle"
-                       data-on="{{ __('facilitador::generic.yes_please') }}" data-off="{{ __('facilitador::generic.no_thanks') }}">
+                       data-on="{{ __('pedreiro::generic.yes_please') }}" data-off="{{ __('pedreiro::generic.no_thanks') }}">
             </div>
             {{--
                 Hide migration button until feature is available.
                  <div class="col-md-3 col-sm-4 col-xs-6">
-                    <label for="create_migration">{{ __('facilitador::database.create_migration') }}</label><br>
+                    <label for="create_migration">{{ __('pedreiro::database.create_migration') }}</label><br>
                     <input disabled type="checkbox" name="create_migration" data-toggle="toggle"
-                           data-on="{{ __('facilitador::generic.yes_please') }}" data-off="{{ __('facilitador::generic.no_thanks') }}">
+                           data-on="{{ __('pedreiro::generic.yes_please') }}" data-off="{{ __('pedreiro::generic.no_thanks') }}">
                 </div>
             --}}
         @endif
         </div><!-- .panel-body .row -->
 
         <div v-if="compositeIndexes.length" v-once class="alert alert-danger">
-            <p>{{ __('facilitador::database.no_composites_warning') }}</p>
+            <p>{{ __('pedreiro::database.no_composites_warning') }}</p>
         </div>
 
         <div id="alertsContainer"></div>
 
         <template v-if="tableHasColumns">
-            <p>{{ __('facilitador::database.table_columns') }}</p>
+            <p>{{ __('pedreiro::database.table_columns') }}</p>
 
             <table class="table table-bordered" style="width:100%;">
                 <thead>
                 <tr>
-                    <th>{{ __('facilitador::generic.name') }}</th>
-                    <th>{{ __('facilitador::generic.type') }}</th>
-                    <th>{{ __('facilitador::generic.length') }}</th>
-                    <th>{{ __('facilitador::generic.not_null') }}</th>
-                    <th>{{ __('facilitador::generic.unsigned') }}</th>
-                    <th>{{ __('facilitador::generic.auto_increment') }}</th>
-                    <th>{{ __('facilitador::generic.index') }}</th>
-                    <th>{{ __('facilitador::generic.default') }}</th>
+                    <th>{{ __('pedreiro::generic.name') }}</th>
+                    <th>{{ __('pedreiro::generic.type') }}</th>
+                    <th>{{ __('pedreiro::generic.length') }}</th>
+                    <th>{{ __('pedreiro::generic.not_null') }}</th>
+                    <th>{{ __('pedreiro::generic.unsigned') }}</th>
+                    <th>{{ __('pedreiro::generic.auto_increment') }}</th>
+                    <th>{{ __('pedreiro::generic.index') }}</th>
+                    <th>{{ __('pedreiro::generic.default') }}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -69,7 +69,7 @@
             </table>
         </template>
         <div v-else>
-          <p>{{ __('facilitador::database.table_no_columns') }}</p>
+          <p>{{ __('pedreiro::database.table_no_columns') }}</p>
         </div>
 
         <div style="text-align:center">
@@ -81,7 +81,7 @@
 
     <div class="panel-footer">
         <input type="submit" class="btn btn-primary float-right"
-               value="@if($db->action == 'update'){{ __('facilitador::database.update_table') }}@else{{ __('facilitador::database.create_new_table') }}@endif"
+               value="@if($db->action == 'update'){{ __('pedreiro::database.update_table') }}@else{{ __('pedreiro::database.create_new_table') }}@endif"
                :disabled="!tableHasColumns">
         <div style="clear:both"></div>
     </div>
@@ -135,7 +135,7 @@
                 column.name = column.name.trim();
 
                 if (column.name && this.hasColumn(column.name)) {
-                    return toastr.error("{{ __('facilitador::database.column') }} " + column.name + " {{ __('facilitador::database.already_exists') }}");
+                    return toastr.error("{{ __('pedreiro::database.column') }} " + column.name + " {{ __('pedreiro::database.already_exists') }}");
                 }
 
                 this.table.columns.push(
@@ -158,7 +158,7 @@
 
                 let existingColumn;
                 if ((existingColumn = this.getColumn(newName)) && (existingColumn !== column)) {
-                    return toastr.error("{{ __('facilitador::database.column') }} " + newName + " {{ __('facilitador::database.already_exists') }}");
+                    return toastr.error("{{ __('pedreiro::database.column') }} " + newName + " {{ __('pedreiro::database.already_exists') }}");
                 }
 
                 let index = this.getColumnsIndex(column.name);
@@ -219,7 +219,7 @@
             addIndex(index) {
                 if (index.type == 'PRIMARY') {
                     if (this.table.primaryKeyName) {
-                        return toastr.error("{{ __('facilitador::database.table_has_index') }}");
+                        return toastr.error("{{ __('pedreiro::database.table_has_index') }}");
                     }
 
                     this.table.primaryKeyName = 'primary';
@@ -244,7 +244,7 @@
                     this.table.primaryKeyName = false;
                 } else if (newType == 'PRIMARY') {
                     if (this.table.primaryKeyName) {
-                        return toastr.error("{{ __('facilitador::database.table_has_index') }}");
+                        return toastr.error("{{ __('pedreiro::database.table_has_index') }}");
                     }
 
                     this.table.primaryKeyName = 'primary';

@@ -156,7 +156,7 @@ class RepositoryController extends Controller
 
             return $redirect->with(
                 [
-                    'message'    => __('facilitador::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+                    'message'    => __('pedreiro::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
                     'alert-type' => 'success',
                 ]
             );
@@ -371,7 +371,7 @@ class RepositoryController extends Controller
                 if (!$row->required && !$search) {
                     $results[] = [
                         'id'   => '',
-                        'text' => __('facilitador::generic.none'),
+                        'text' => __('pedreiro::generic.none'),
                     ];
                 }
 

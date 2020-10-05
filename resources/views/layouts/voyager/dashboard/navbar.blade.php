@@ -13,10 +13,10 @@
                     $mainUrl = route('rica.dashboard');
                 @endphp
                 @if(count($segments) == 0)
-                    <li class="active"><i class="facilitador-boat"></i> {{ __('facilitador::generic.dashboard') }}</li>
+                    <li class="active"><i class="facilitador-boat"></i> {{ __('pedreiro::generic.dashboard') }}</li>
                 @else
                     <li class="active">
-                        <a href="{{ route('rica.dashboard')}}"><i class="facilitador-boat"></i> {{ __('facilitador::generic.dashboard') }}</a>
+                        <a href="{{ route('rica.dashboard')}}"><i class="facilitador-boat"></i> {{ __('pedreiro::generic.dashboard') }}</a>
                     </li>
                     @foreach ($segments as $segment)
                         @php
@@ -34,7 +34,7 @@
             </ol>
             @show
         </div>
-        <ul class="nav navbar-nav @if (__('facilitador::generic.is_rtl') == 'true') navbar-left @else navbar-right @endif">
+        <ul class="nav navbar-nav @if (__('pedreiro::generic.is_rtl') == 'true') navbar-left @else navbar-right @endif">
             <li class="dropdown profile">
                 <a href="#" class="dropdown-toggle text-right" data-toggle="dropdown" role="button"
                    aria-expanded="false"><img src="{{ $user_avatar }}" class="profile-img"> <span

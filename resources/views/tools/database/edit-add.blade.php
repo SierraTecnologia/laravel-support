@@ -1,17 +1,17 @@
 @extends('support::master')
 @if($db->action == 'update')
-    @section('page_title', __('facilitador::database.editing_table', ['table' => $db->table->name]))
+    @section('page_title', __('pedreiro::database.editing_table', ['table' => $db->table->name]))
 @else
-    @section('page_title', __('facilitador::database.create_new_table'))
+    @section('page_title', __('pedreiro::database.create_new_table'))
 @endif
 
 @section('page_header')
     <h1 class="page-title">
         <i class="facilitador-data"></i>
         @if($db->action == 'update')
-            {{ __('facilitador::database.editing_table', ['table' => $db->table->name]) }}
+            {{ __('pedreiro::database.editing_table', ['table' => $db->table->name]) }}
         @else
-            {{ __('facilitador::database.create_new_table') }}
+            {{ __('pedreiro::database.create_new_table') }}
         @endif
     </h1>
 @stop
@@ -23,15 +23,15 @@
     </li>
     <li>
         <a href="{{ route('facilitador.database.index') }}">
-            {{ __('facilitador::generic.database') }}
+            {{ __('pedreiro::generic.database') }}
         </a>
     </li>
 
     @if($db->action == 'update')
-    <li class="active">{{ __('facilitador::generic.edit') }}</li>
+    <li class="active">{{ __('pedreiro::generic.edit') }}</li>
     <li class="active">{{ $db->table->name }}</li>
     @else
-    <li class="active">{{ __('facilitador::generic.add') }}</li>
+    <li class="active">{{ __('pedreiro::generic.add') }}</li>
     @endif
 </ol>
 @endsection

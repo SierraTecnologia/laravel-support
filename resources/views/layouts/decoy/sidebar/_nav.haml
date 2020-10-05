@@ -47,20 +47,20 @@
 		.main-nav(class=$open?'active open':null)
 			%a.top-level.parent
 				%span.glyphicon.glyphicon-cog
-				!= __('facilitador::sidebar.nav.settings')
+				!= __('pedreiro::sidebar.nav.settings')
 
 			.subnav
 
 				-if($admin->can('read', 'admins'))
-					%a(href=SupportURL::action('Facilitador\\Http\\Controllers\\Admin\\Admins@index') class=(Request::segment(2)=='admins'?'active':null))!= __('facilitador::sidebar.nav.admins')
+					%a(href=SupportURL::action('Facilitador\\Http\\Controllers\\Admin\\Admins@index') class=(Request::segment(2)=='admins'?'active':null))!= __('pedreiro::sidebar.nav.admins')
 				-else
-					%a(href=$admin->getUserUrl() class=(Request::segment(2)=='admins'?'active':null))!= __('facilitador::sidebar.nav.account')
+					%a(href=$admin->getUserUrl() class=(Request::segment(2)=='admins'?'active':null))!= __('pedreiro::sidebar.nav.account')
 
 				-if($admin->can('read', 'changes'))
-					%a(href=SupportURL::action('Facilitador\\Http\\Controllers\\Admin\\Changes@index') class=(Request::segment(2)=='changes'?'active':null))!= __('facilitador::sidebar.nav.changes')
+					%a(href=SupportURL::action('Facilitador\\Http\\Controllers\\Admin\\Changes@index') class=(Request::segment(2)=='changes'?'active':null))!= __('pedreiro::sidebar.nav.changes')
 
 				-if($admin->can('read', 'commands'))
-					%a(href=route('rica.support.commands') class=(Request::segment(2)=='commands'?'active':null))!= __('facilitador::sidebar.nav.commands')
+					%a(href=route('rica.support.commands') class=(Request::segment(2)=='commands'?'active':null))!= __('pedreiro::sidebar.nav.commands')
 
 				-if($admin->can('read', 'workers') && count(Support\Models\Worker::all()))
-					%a(href=route('rica.facilitador.workers')  class=(Request::segment(2)=='workers'?'active':null))!= __('facilitador::sidebar.nav.workers')
+					%a(href=route('rica.facilitador.workers')  class=(Request::segment(2)=='workers'?'active':null))!= __('pedreiro::sidebar.nav.workers')
