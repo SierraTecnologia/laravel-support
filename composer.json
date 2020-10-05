@@ -30,10 +30,10 @@
     ],
     "require": {
         "php": "^7.4",
-        "sierratecnologia/templeiro": "dev-master",
-        "sierratecnologia/pedreiro": "dev-master",
-        "sierratecnologia/crypto": "dev-master",
-        "sierratecnologia/muleta": "dev-master",
+        "sierratecnologia/templeiro": "^0.4.0",
+        "sierratecnologia/pedreiro": "^0.4.0",
+        "sierratecnologia/crypto": "^0.4.0",
+        "sierratecnologia/muleta": "^0.4.0",
         "ricardosierra/library": "^4.0",
         "cviebrock/eloquent-sluggable": ">=4.0",
         "league/plates": "^3.0|^4.0",
@@ -99,7 +99,6 @@
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
-    "repositories": [{"type": "path","url":"../**","options":{"symlink": true}}],
     "config": {
         "sort-packages": true,
         "preferred-install": "dist",
