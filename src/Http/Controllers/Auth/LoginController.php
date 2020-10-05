@@ -142,7 +142,7 @@ class LoginController extends Controller
         // Show the login homepage
         return view(
             'pedreiro::layouts.decoy.blank', [
-            'content' => view('facilitador::account.login'),
+            'content' => view('porteiro::account.login'),
             ]
         );
     }
