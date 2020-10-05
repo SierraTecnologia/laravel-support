@@ -98,7 +98,7 @@ class SupportServiceProvider extends ServiceProvider
         // // ],
         // // [
         // //     'text'        => 'Changelog',
-        // //     'route'       => 'admin.changelog',
+        // //     'route'       => 'admin.pedreiro.changelog',
         // //     'icon'        => 'fas fa-fw fa-user-secret',
         // // ],
         // // [
