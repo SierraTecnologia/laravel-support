@@ -55,7 +55,7 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="route('rica.larametrics::metrics.index')" class="small-box-footer card-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="route('admin.tracking.larametrics::metrics.index')" class="small-box-footer card-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
