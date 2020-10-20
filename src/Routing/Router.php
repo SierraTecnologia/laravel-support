@@ -292,7 +292,7 @@ class Router
     
     public function getRouteSpace()
     {
-        $req = explode('/', Request::path());
+        $req = explode(DIRECTORY_SEPARATOR, Request::path());
 
         $first = array_shift($req);
 

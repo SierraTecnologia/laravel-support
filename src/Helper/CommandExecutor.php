@@ -246,10 +246,10 @@ class CommandExecutor implements CommandExecutorInterface
      */
     protected function findBinaryGlobal($binary)
     {
-        if (is_file($this->rootDir . 'vendor/bin/' . $binary)) {
-            $this->logger->logDebug(sprintf('Found in %s (global): %s', 'vendor/bin', $binary));
+        if (is_file($this->rootDir . 'vendor'.DIRECTORY_SEPARATOR.'bin' . DIRECTORY_SEPARATOR . $binary)) {
+            $this->logger->logDebug(sprintf('Found in %s (global): %s', 'vendor'.DIRECTORY_SEPARATOR.'bin', $binary));
 
-            return $this->rootDir . 'vendor/bin/' . $binary;
+            return $this->rootDir . 'vendor'.DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR . $binary;
         }
 
         return false;
@@ -359,7 +359,7 @@ class CommandExecutor implements CommandExecutorInterface
             }
         }
 
-        throw new Exception(sprintf('Could not find %s', implode('/', $binary)));
+        throw new Exception(sprintf('Could not find %s', implode(DIRECTORY_SEPARATOR, $binary)));
     }
 
     /**
@@ -373,14 +373,16 @@ class CommandExecutor implements CommandExecutorInterface
     public function getComposerBinDir($path)
     {
         if (is_dir($path)) {
-            $composer = $path . '/composer.json';
+            $composer = $path . DIRECTORY_SEPARATOR.'composer.json';
             if (is_file($composer)) {
                 $json = json_decode(file_get_contents($composer));
 
                 if (isset($json->config->{"bin-dir"})) {
-                    return $path . '/' . $json->config->{"bin-dir"};
-                } elseif (is_dir($path . '/vendor/bin')) {
-                    return $path . '/vendor/bin';
+                    return $path . DIRECTORY_SEPARATOR . $json->config->{"bin-dir"};
+                }
+                
+                if (is_dir($path . DIRECTORY_SEPARATOR . 'vendor'.DIRECTORY_SEPARATOR.'bin')) {
+                    return $path . DIRECTORY_SEPARATOR . 'vendor'.DIRECTORY_SEPARATOR.'bin';
                 }
             }
         }
