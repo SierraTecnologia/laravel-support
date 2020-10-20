@@ -549,7 +549,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function loadMigrations()
     {
         // Register Migrations
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
     }
     protected function loadConfigs()
     {
