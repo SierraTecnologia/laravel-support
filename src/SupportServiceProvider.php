@@ -445,7 +445,7 @@ class SupportServiceProvider extends ServiceProvider
             'logging.channels.sitec-support',
             [
             'driver' => 'single',
-            'path' => storage_path('logs'.DIRECTORY_SEPARACTOR.'sitec-support.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-support.log'),
             'level' => $level,
             ]
         );
@@ -454,7 +454,7 @@ class SupportServiceProvider extends ServiceProvider
             'logging.channels.sitec-providers',
             [
             'driver' => 'single',
-            'path' => storage_path('logs'.DIRECTORY_SEPARACTOR.'sitec-providers.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-providers.log'),
             'level' => $level,
             ]
         );
