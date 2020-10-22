@@ -74,7 +74,7 @@
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^9.3",
         "psalm/plugin-laravel": "^1.2",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^4.0"
     },
     "suggest": {
         "hieu-le/active": "^7.0 || ^8.0",
