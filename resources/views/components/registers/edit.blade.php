@@ -17,7 +17,7 @@
            <div class="box-body panel-body card-body">
                <div class="row">
 
-                   @include('layouts.partials.message')
+                   @include('pedreiro::partials.message')
 
                    {!! Form::model($service->getModelService()->getModelClass(), ['url' => route('facilitador.index', [ $service->getModelService()->getCryptName(), $service->getCryptName()]), 'method' => 'patch']) !!}
 
