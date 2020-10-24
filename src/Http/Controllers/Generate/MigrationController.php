@@ -63,7 +63,7 @@ class MigrationController extends Controller
         $response = null;
 
         // Read in entire file
-        $fileLines = file(storage_path("uploads") . '/' . $localFileName);
+        $fileLines = file(storage_path("uploads") . DIRECTORY_SEPARATOR . $localFileName);
 
         try
         {
@@ -157,7 +157,7 @@ class MigrationController extends Controller
         /*
          * Generate a random direcotry name where to store generated migrations
          */
-        $destDirectory = storage_path("migrations") . '/' . self::generateRandomDirectoryName(Auth::user()->id);
+        $destDirectory = storage_path("migrations") . DIRECTORY_SEPARATOR . self::generateRandomDirectoryName(Auth::user()->id);
         /*
          * Create this directory so that Artisan command can use it to write output files
          */
@@ -184,7 +184,7 @@ class MigrationController extends Controller
         // Omitt connection specifier from migration
         $this->removeConnectionNameFromMigrations($destDirectory, $connection);
         // Generate a zip file name, to be downloaded later
-        $zipFileName = storage_path("migrations") . '/' . self::generateRandomFileName(Auth::user()->id, "migration_", ".zip");
+        $zipFileName = storage_path("migrations") . DIRECTORY_SEPARATOR . self::generateRandomFileName(Auth::user()->id, "migration_", ".zip");
         $zipFile = self::zip($destDirectory, $zipFileName);
 
         return response()->download($zipFileName);
@@ -303,7 +303,7 @@ class MigrationController extends Controller
         foreach ($fileNames as $fileName)
         {
             // Create absolute path of file
-            $filePath = $migrationsDirectory . "/" . $fileName;
+            $filePath = $migrationsDirectory . DIRECTORY_SEPARATOR . $fileName;
             // Read all contents of file
             $fileContent = file_get_contents($filePath);
             // Omitt the connection specifier

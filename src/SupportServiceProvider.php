@@ -445,7 +445,7 @@ class SupportServiceProvider extends ServiceProvider
             'logging.channels.sitec-support',
             [
             'driver' => 'single',
-            'path' => storage_path('logs/sitec-support.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-support.log'),
             'level' => $level,
             ]
         );
@@ -454,7 +454,7 @@ class SupportServiceProvider extends ServiceProvider
             'logging.channels.sitec-providers',
             [
             'driver' => 'single',
-            'path' => storage_path('logs/sitec-providers.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-providers.log'),
             'level' => $level,
             ]
         );
@@ -469,7 +469,7 @@ class SupportServiceProvider extends ServiceProvider
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang/vendor/support')
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'support')
             ],
             ['lang',  'sitec', 'sitec-lang', 'translations']
         );
@@ -485,7 +485,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->loadViewsFrom($viewsPath, 'support');
         $this->publishes(
             [
-            $viewsPath => base_path('resources/views/vendor/support'),
+            $viewsPath => base_path('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'support'),
             ],
             ['views',  'sitec', 'sitec-views']
         );
@@ -549,7 +549,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function loadMigrations()
     {
         // Register Migrations
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
     }
     protected function loadConfigs()
     {
