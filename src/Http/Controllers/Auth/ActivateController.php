@@ -2,8 +2,8 @@
 
 namespace Support\Http\Controllers\Auth;
 
-use Support\Services\UserService;
-use Support\Services\ActivateService;
+use Porteiro\Services\UserService;
+use Porteiro\Services\ActivateService;
 use App\Http\Controllers\Controller;
 
 class ActivateController extends Controller
