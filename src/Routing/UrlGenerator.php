@@ -199,7 +199,7 @@ class UrlGenerator extends BaseUrlGenerator
         if ($data) {
             $page = '/'.Crypto::shareableEncrypt($data).$page;
         }
-        return url(\Illuminate\Support\Facades\Config::get('applcation.routes.rica', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
+        return url(\Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
     }
 
     public static function routeForSlug($slug, $page = 'index', $data = false)

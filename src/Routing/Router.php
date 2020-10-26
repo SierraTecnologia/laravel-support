@@ -304,8 +304,12 @@ class Router
             return 'admin';
         }
 
+        if ($first == \Illuminate\Support\Facades\Config::get('application.routes.master', 'master')) {
+            return 'master';
+        }
+
         if ($first == \Illuminate\Support\Facades\Config::get('application.routes.painel', 'painel')) {
-            return 'admin';
+            return 'painel';
         }
 
         return 'main';
