@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Muleta\Utils\Extratores\ClasserExtractor;
 use SierraTecnologia\Crypto\Services\Crypto;
+use Pedreiro\Routing\UrlGenerator as BaseUrlGenerator;
 
 /**
  * This class exists to help make links between pages in Facilitador, which is
@@ -14,7 +15,7 @@ use SierraTecnologia\Crypto\Services\Crypto;
  * the relationships and breadcrumbs are created through controller, models,
  * and reading the current URL
  */
-class UrlGenerator
+class UrlGenerator extends BaseUrlGenerator
 {
     /**
      * DI properties
