@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Muleta\Utils\Extratores\ClasserExtractor;
 use SierraTecnologia\Crypto\Services\Crypto;
+use Pedreiro\Routing\UrlGenerator as BaseUrlGenerator;
 
 /**
  * This class exists to help make links between pages in Facilitador, which is
@@ -14,7 +15,7 @@ use SierraTecnologia\Crypto\Services\Crypto;
  * the relationships and breadcrumbs are created through controller, models,
  * and reading the current URL
  */
-class UrlGenerator
+class UrlGenerator extends BaseUrlGenerator
 {
     /**
      * DI properties
@@ -198,7 +199,7 @@ class UrlGenerator
         if ($data) {
             $page = '/'.Crypto::shareableEncrypt($data).$page;
         }
-        return url(\Illuminate\Support\Facades\Config::get('applcation.routes.rica', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
+        return url(\Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica').'/manager/'.Crypto::shareableEncrypt($slug).$page);
     }
 
     public static function routeForSlug($slug, $page = 'index', $data = false)

@@ -132,17 +132,17 @@ class Router
     public function registerLogin()
     {
         Route::get('/', [
-            'as' => 'facilitador.account@login',
+            'as' => 'porteiro.account@login',
             'uses' => '\Support\Http\Controllers\Auth\LoginController@showLoginForm',
         ]);
 
         Route::post('/', [
-            'as' => 'facilitador.account@postLogin',
+            'as' => 'porteiro.account@postLogin',
             'uses' => '\Support\Http\Controllers\Auth\LoginController@login',
         ]);
 
         Route::get('logout', [
-            'as' => 'facilitador.account@logout',
+            'as' => 'porteiro.account@logout',
             'uses' => '\Support\Http\Controllers\Auth\LoginController@logout',
         ]);
 
@@ -166,19 +166,19 @@ class Router
      */
     public function registerResetPassword()
     {
-        Route::get('forgot', ['as' => 'facilitador.account@forgot',
+        Route::get('forgot', ['as' => 'porteiro.account@forgot',
             'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm',
         ]);
 
-        Route::post('forgot', ['as' => 'facilitador.account@postForgot',
+        Route::post('forgot', ['as' => 'porteiro.account@postForgot',
             'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail',
         ]);
 
-        Route::get('password/reset/{code}', ['as' => 'facilitador.account@reset',
+        Route::get('password/reset/{code}', ['as' => 'porteiro.account@reset',
             'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@showResetForm',
         ]);
 
-        Route::post('password/reset/{code}', ['as' => 'facilitador.account@postReset',
+        Route::post('password/reset/{code}', ['as' => 'porteiro.account@postReset',
             'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@reset',
         ]);
     }
@@ -292,7 +292,7 @@ class Router
     
     public function getRouteSpace()
     {
-        $req = explode('/', Request::path());
+        $req = explode(DIRECTORY_SEPARATOR, Request::path());
 
         $first = array_shift($req);
 
@@ -304,8 +304,12 @@ class Router
             return 'admin';
         }
 
+        if ($first == \Illuminate\Support\Facades\Config::get('application.routes.master', 'master')) {
+            return 'master';
+        }
+
         if ($first == \Illuminate\Support\Facades\Config::get('application.routes.painel', 'painel')) {
-            return 'admin';
+            return 'painel';
         }
 
         return 'main';
