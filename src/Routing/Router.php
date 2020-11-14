@@ -132,17 +132,17 @@ class Router
     public function registerLogin()
     {
         Route::get('/', [
-            'as' => 'porteiro.account@login',
+            'as' => 'login',
             'uses' => '\Support\Http\Controllers\Auth\LoginController@showLoginForm',
         ]);
 
         Route::post('/', [
-            'as' => 'porteiro.account@postLogin',
+            'as' => 'postLogin',
             'uses' => '\Support\Http\Controllers\Auth\LoginController@login',
         ]);
 
         Route::get('logout', [
-            'as' => 'porteiro.account@logout',
+            'as' => 'logout',
             'uses' => '\Support\Http\Controllers\Auth\LoginController@logout',
         ]);
 
@@ -166,19 +166,19 @@ class Router
      */
     public function registerResetPassword()
     {
-        Route::get('forgot', ['as' => 'porteiro.account@forgot',
+        Route::get('forgot', ['as' => 'forgot',
             'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm',
         ]);
 
-        Route::post('forgot', ['as' => 'porteiro.account@postForgot',
+        Route::post('forgot', ['as' => 'postForgot',
             'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail',
         ]);
 
-        Route::get('password/reset/{code}', ['as' => 'porteiro.account@reset',
+        Route::get('password/reset/{code}', ['as' => 'reset',
             'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@showResetForm',
         ]);
 
-        Route::post('password/reset/{code}', ['as' => 'porteiro.account@postReset',
+        Route::post('password/reset/{code}', ['as' => 'postReset',
             'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@reset',
         ]);
     }

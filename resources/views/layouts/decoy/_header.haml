@@ -19,7 +19,7 @@
 			.pull-right.btn-toolbar
 				!=View::make('support::shared.form.relationships._many_to_many', $__data)->render()
 
-		- elseif(app('facilitador.user') && app('facilitador.user')->can('create', $controller) && !Route::is('porteiro.account@forgot', 'support::account@reset'))
+		- elseif(app('facilitador.user') && app('facilitador.user')->can('create', $controller) && !Route::is('forgot', 'support::account@reset'))
 
 			-# Controller actions
 			.pull-right.btn-toolbar
