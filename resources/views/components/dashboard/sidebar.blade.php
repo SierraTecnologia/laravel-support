@@ -24,7 +24,7 @@
                         <h4>{{ ucwords(Auth::user()->name) }}</h4>
                         <p>{{ Auth::user()->email }}</p>
 
-                        <a href="{{ route('profile.profile') }}" class="btn btn-primary">{{ __('pedreiro::generic.profile') }}</a>
+                        <a href="{{ route('profile.porteiro.profile') }}" class="btn btn-primary">{{ __('pedreiro::generic.profile') }}</a>
                         <div style="clear:both"></div>
                     @endif
                 </div>

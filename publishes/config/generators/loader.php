@@ -25,12 +25,15 @@ return [
     'models_alias' => [
         'App\Models',
         // 'Support\Models',
+        'Porteiro\Models',
+        'Pedreiro\Models',
 
         'Informate\Models',
         'Translation\Models',
         'Locaravel\Models',
         'Population\Models',
         'Telefonica\Models',
+        'MediaManager\Models',
         'Stalker\Models',
         'Audit\Models',
         'Tracking\Models',

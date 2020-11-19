@@ -10,7 +10,7 @@ use Crypto;
 use Facilitador\Models\Menu;
 use Facilitador\Models\MenuItem;
 use Facilitador\Models\Permission;
-use Facilitador\Models\Role;
+use Porteiro\Models\Role;
 use Facilitador\Models\Setting;
 use Facilitador\Models\Translation;
 use Illuminate\Database\Eloquent\Collection;

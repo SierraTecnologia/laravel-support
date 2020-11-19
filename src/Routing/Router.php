@@ -132,31 +132,32 @@ class Router
     public function registerLogin()
     {
         Route::get('/', [
-            'as' => 'porteiro.account@login',
-            'uses' => '\Support\Http\Controllers\Auth\LoginController@showLoginForm',
+            'as' => 'login',
+            'uses' => '\Porteiro\Http\Controllers\Auth\LoginController@showLoginForm',
         ]);
 
         Route::post('/', [
-            'as' => 'porteiro.account@postLogin',
-            'uses' => '\Support\Http\Controllers\Auth\LoginController@login',
+            'as' => 'postLogin',
+            'uses' => '\Porteiro\Http\Controllers\Auth\LoginController@login',
         ]);
 
         Route::get('logout', [
-            'as' => 'porteiro.account@logout',
-            'uses' => '\Support\Http\Controllers\Auth\LoginController@logout',
+            'as' => 'logout',
+            'uses' => '\Porteiro\Http\Controllers\Auth\LoginController@logout',
         ]);
 
-        /**
-         * Facilitador Admin
-         */
-        Route::get('login', [
-            'uses' => '\Support\Http\Controllers\Auth\SupportAuthController@login',
-            'as' => 'rica.login'
-        ]);
-        Route::post('login', [
-            'uses' => '\Support\Http\Controllers\Auth\SupportAuthController@postLogin',
-            'as' => 'facilitador.postlogin'
-        ]);
+        // /**
+        //  * Facilitador Admin
+        //  */
+        // // @todo Fazer login Rica
+        // Route::get('login', [
+        //     'uses' => '\Porteiro\Http\Controllers\Auth\SupportAuthController@login',
+        //     'as' => 'rica.login'
+        // ]);
+        // Route::post('login', [
+        //     'uses' => '\Porteiro\Http\Controllers\Auth\SupportAuthController@postLogin',
+        //     'as' => 'facilitador.postlogin'
+        // ]);
     }
 
     /**
@@ -166,20 +167,20 @@ class Router
      */
     public function registerResetPassword()
     {
-        Route::get('forgot', ['as' => 'porteiro.account@forgot',
-            'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm',
+        Route::get('forgot', ['as' => 'forgot',
+            'uses' => '\Porteiro\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm',
         ]);
 
-        Route::post('forgot', ['as' => 'porteiro.account@postForgot',
-            'uses' => '\Support\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail',
+        Route::post('forgot', ['as' => 'postForgot',
+            'uses' => '\Porteiro\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail',
         ]);
 
-        Route::get('password/reset/{code}', ['as' => 'porteiro.account@reset',
-            'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@showResetForm',
+        Route::get('password/reset/{code}', ['as' => 'reset',
+            'uses' => '\Porteiro\Http\Controllers\Auth\ResetPasswordController@showResetForm',
         ]);
 
-        Route::post('password/reset/{code}', ['as' => 'porteiro.account@postReset',
-            'uses' => '\Support\Http\Controllers\Auth\ResetPasswordController@reset',
+        Route::post('password/reset/{code}', ['as' => 'postReset',
+            'uses' => '\Porteiro\Http\Controllers\Auth\ResetPasswordController@reset',
         ]);
     }
 
