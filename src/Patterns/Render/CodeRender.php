@@ -16,33 +16,37 @@ class CodeRender extends RenderAbstract
     {
         $configModelsAlias = \Illuminate\Support\Facades\Config::get(
             'generators.loader.models_alias', [
-            'App\Models',
-            // 'Support\Models',
-    
-            'Informate\Models',
-            'Translation\Models',
-            'Locaravel\Models',
-            'Population\Models',
-            'Telefonica\Models',
-            'Stalker\Models',
-            'Audit\Models',
-            'Tracking\Models',
-    
-            'Integrations\Models',
-            'Transmissor\Models',
-            'Bancario\Models',
-            'Operador\Models',
-            'Fabrica\Models',
-            'Finder\Models',
-            'Casa\Models',
-    
-            'Trainner\Models',
-            'Gamer\Models',
-    
-            'Facilitador\Models',
-            'Siravel\Models',
-            'Boravel\Models',
-            'Socrates\Models',
+                'App\Models',
+                // 'Support\Models',
+                'Porteiro\Models',
+                'Pedreiro\Models',
+        
+                'Informate\Models',
+                'Translation\Models',
+                'Locaravel\Models',
+                'Population\Models',
+                'Telefonica\Models',
+                'MediaManager\Models',
+                'Stalker\Models',
+                'Audit\Models',
+                'Tracking\Models',
+        
+                'Integrations\Models',
+                'Transmissor\Models',
+                'Market\Models',
+                'Bancario\Models',
+                'Operador\Models',
+                'Fabrica\Models',
+                'Finder\Models',
+                'Casa\Models',
+        
+                'Trainner\Models',
+                'Gamer\Models',
+        
+                'Facilitador\Models',
+                'Siravel\Models',
+                'Boravel\Models',
+                'Socrates\Models',
             ]
         );
         $composerParser = resolve(\Support\Patterns\Parser\ComposerParser::class);
