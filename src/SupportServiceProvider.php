@@ -142,7 +142,7 @@ class SupportServiceProvider extends ServiceProvider
         //         'label_color' => 'success',
         //         'space'      => 'rica',
         //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //         //  'access' => \App\Models\Role::$ADMIN
+        //         //  'access' => \Porteiro\Models\Role::$ADMIN
         //     ],
         //     [
         //         'text' => 'Manipule',
@@ -169,7 +169,7 @@ class SupportServiceProvider extends ServiceProvider
         //             'label_color' => 'success',
         //             'space'      => 'rica',
         //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \App\Models\Role::$ADMIN
+        //             //  'access' => \Porteiro\Models\Role::$ADMIN
         //         ],
         //         [
         //             'text'        => 'Database',
@@ -179,7 +179,7 @@ class SupportServiceProvider extends ServiceProvider
         //             'label_color' => 'success',
         //             'space'      => 'rica',
         //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \App\Models\Role::$ADMIN
+        //             //  'access' => \Porteiro\Models\Role::$ADMIN
         //         ],
         //         [
         //             'text'        => 'Commands',
@@ -189,7 +189,7 @@ class SupportServiceProvider extends ServiceProvider
         //             'label_color' => 'success',
         //             'space'      => 'rica',
         //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \App\Models\Role::$ADMIN
+        //             //  'access' => \Porteiro\Models\Role::$ADMIN
         //         ],
         //         [
         //             'text'        => 'Routers',
@@ -199,7 +199,7 @@ class SupportServiceProvider extends ServiceProvider
         //             'label_color' => 'success',
         //             'space'      => 'rica',
         //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \App\Models\Role::$ADMIN
+        //             //  'access' => \Porteiro\Models\Role::$ADMIN
         //         ],
         //     ],
         //     'Debugger' => [
@@ -211,7 +211,7 @@ class SupportServiceProvider extends ServiceProvider
         //             'label_color' => 'success',
         //             'space'      => 'rica',
         //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \App\Models\Role::$ADMIN
+        //             //  'access' => \Porteiro\Models\Role::$ADMIN
         //         ],
         //     ],
         // ],
