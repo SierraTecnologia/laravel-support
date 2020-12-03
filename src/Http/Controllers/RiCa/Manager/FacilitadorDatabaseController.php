@@ -49,7 +49,7 @@ class FacilitadorDatabaseController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public function create(Request $request)
     {
         // $this->authorize('browse_database');
 
