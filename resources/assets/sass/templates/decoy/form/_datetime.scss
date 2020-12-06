@@ -1,8 +1,0 @@
-
-// Position the input groups inline
-.datetime-field .input-groups {
-	@include clearfix;
-	.input-group {
-		float: left;
-	}
-}

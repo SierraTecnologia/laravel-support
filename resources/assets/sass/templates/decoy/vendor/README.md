@@ -1,1 +1,0 @@
-This directory is needed because [SASS won't import CSS files](https://github.com/sass/sass/issues/193) and the [SASS-CSS-importer won't work](https://github.com/chriseppstein/sass-css-importer/pull/6) with import paths.

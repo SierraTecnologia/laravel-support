@@ -68,24 +68,6 @@ class SupportServiceProvider extends ServiceProvider
         //     'search' => true,
         //     'topnav' => true,
         // ],
-        [
-            'text'        => 'Workspace',
-            'url'         => 'painel',
-            'dontSection'     => 'painel',
-            'topnav' => true,
-        ],
-        [
-            'text'        => 'Painel Administrativo',
-            'url'         => 'admin',
-            'dontSection'     => 'admin',
-            'topnav' => true,
-        ],
-        [
-            'text'        => 'RiCa',
-            'url'         => 'rica',
-            'dontSection'     => 'rica',
-            'topnav' => true,
-        ],
         // // [
         // //     'text'        => 'Painel Admin',
         // //     'route'       => 'rica.dashboard',
