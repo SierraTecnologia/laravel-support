@@ -10,8 +10,8 @@ use Log;
 use Support\Models\Code\Classer;
 use Muleta\Traits\Debugger\HasErrors;
 
-use Support\Contracts\Support\Arrayable;
-use Support\Contracts\Support\ArrayableTrait;
+use Muleta\Contracts\Support\Arrayable;
+use Muleta\Contracts\Support\ArrayableTrait;
 use Muleta\Traits\Coder\GetSetTrait;
 use Muleta\Utils\Extratores\ClasserExtractor;
 

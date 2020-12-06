@@ -31,8 +31,8 @@ use Support\Entities\RelationshipEntity;
 use Illuminate\Support\Facades\Cache;
 
 use Log;
-use Support\Contracts\Support\Arrayable;
-use Support\Contracts\Support\ArrayableTrait;
+use Muleta\Contracts\Support\Arrayable;
+use Muleta\Contracts\Support\ArrayableTrait;
 
 use Pedreiro\Exceptions\Coder\EloquentHasErrorException;
 use Pedreiro\Exceptions\Coder\EloquentNotExistException;

@@ -26,7 +26,7 @@ use Support\Entities\EloquentEntity;
 use Support\Models\Code\Classer;
 use Support\Contracts\Services\EloquentInterface;
 
-use Support\Contracts\Output\OutputableTrait;
+use Muleta\Contracts\Output\OutputableTrait;
 /**
  * ModelService helper to make table and object form mapping easy.
  */

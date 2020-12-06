@@ -35,8 +35,8 @@ use Throwable;
 use Watson\Validating\ValidationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
-use Support\Contracts\Support\Arrayable;
-use Support\Contracts\Support\ArrayableTrait;
+use Muleta\Contracts\Support\Arrayable;
+use Muleta\Contracts\Support\ArrayableTrait;
 use Muleta\Traits\Debugger\HasErrors;
 use Muleta\Traits\Coder\GetSetTrait;
 use Muleta\Utils\Modificators\StringModificator;
