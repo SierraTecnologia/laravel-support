@@ -37,7 +37,7 @@ class CreateSupportCodeTables extends Migration
         );
         // Create table for storing roles
         Schema::create(
-            'support_code_entitys', function (Blueprint $table) {
+            'support_code_entities', function (Blueprint $table) {
                 $table->string('code')->primary()->unique();
                 $table->string('type')->nullable();
                 $table->string('parameter')->nullable();
@@ -72,7 +72,7 @@ class CreateSupportCodeTables extends Migration
     public function down()
     {
         Schema::dropIfExists('support_code_errors');
-        Schema::dropIfExists('support_code_entitys');
+        Schema::dropIfExists('support_code_entities');
         Schema::dropIfExists('support_code_classers');
     }
 }

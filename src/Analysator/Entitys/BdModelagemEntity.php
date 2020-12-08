@@ -5,7 +5,7 @@
  * nao usado pra porra nenhuma ainda
  */
 
-namespace Support\Analysator\Entitys;
+namespace Support\Analysator\Entities;
 
 use Support\Analysator\Information\Group\EloquentGroup;
 use Support\Analysator\Information\HistoryType\AbstractHistoryType;
