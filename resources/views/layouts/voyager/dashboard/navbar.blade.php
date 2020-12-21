@@ -23,10 +23,10 @@
                         $mainUrl .= '/'.$segment;
                         @endphp
                         @if ($loop->last)
-                            <li>{{ \Support\Routing\UrlGenerator::displayStringName($segment) }}</li>
+                            <li>{{ \Pedreiro\Routing\UrlGenerator::displayStringName($segment) }}</li>
                         @else
                             <li>
-                                <a href="{{ $mainUrl }}">{{ \Support\Routing\UrlGenerator::displayStringName($segment) }}</a>
+                                <a href="{{ $mainUrl }}">{{ \Pedreiro\Routing\UrlGenerator::displayStringName($segment) }}</a>
                             </li>
                         @endif
                     @endforeach

@@ -28,7 +28,7 @@
                     <!-- form start -->
                     <form role="form"
                             class="form-edit-add"
-                            action="{{ $edit ? \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'update', $dataTypeContent->getKey()) : \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'store') }}"
+                            action="{{ $edit ? \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'update', $dataTypeContent->getKey()) : \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'store') }}"
                             method="POST" enctype="multipart/form-data">
                         <!-- PUT Method if we are editing -->
                         @if($edit)
@@ -193,7 +193,7 @@
             $('.form-group').on('click', '.remove-single-file', deleteHandler('a', false));
 
             $('#confirm_delete').on('click', function(){
-                $.post('{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'media.remove') }}', params, function (response) {
+                $.post('{{ \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'media.remove') }}', params, function (response) {
                     if ( response
                         && response.data
                         && response.data.status

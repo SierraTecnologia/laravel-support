@@ -18,7 +18,7 @@ use Support\Entities\EloquentColumn;
 use ReflectionClass;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Services\EloquentService;
-use Support\Routing\UrlGenerator;
+use Pedreiro\Routing\UrlGenerator;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
 use Support\Services\DatabaseService;

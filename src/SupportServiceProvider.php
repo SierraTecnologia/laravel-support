@@ -278,7 +278,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->app->singleton(
             'support.url',
             function ($app) {
-                return new \Support\Routing\UrlGenerator($app['request']->path());
+                return new \Pedreiro\Routing\UrlGenerator($app['request']->path());
             }
         );
 
