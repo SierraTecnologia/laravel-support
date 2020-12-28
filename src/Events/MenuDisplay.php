@@ -3,7 +3,7 @@
 namespace Support\Events;
 
 use Illuminate\Queue\SerializesModels;
-use Facilitador\Models\Menu;
+use Siravel\Models\Negocios\Menu;
 
 class MenuDisplay
 {

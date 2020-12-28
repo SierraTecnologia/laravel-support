@@ -5,7 +5,7 @@
 @section('content')
 <!-- 
     <div class="col-md-12 mt-2">
-        include('features.widgets.breadcrumbs', ['location' => ['create']])
+        include('siravel::admin.components.widgets.breadcrumbs', ['location' => ['create']])
     </div> -->
 
     <div class="row">
