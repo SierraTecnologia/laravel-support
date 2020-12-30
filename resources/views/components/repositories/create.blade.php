@@ -20,7 +20,7 @@
                         {!! FormMaker::fromTable($service->getModelService()->getTableName(), $service->getModelService()->getFieldForForm()) !!}
 
                         <div class="form-group text-right">
-                            <a href="{!! $service->getModelService()->getUrl() !!}" class="btn btn-secondary raw-left">Cancel</a>
+                            <a href="{!! $service->getModelService()->getUrl() !!}" class="btn btn-secondary raw-left">{{ __('pedreiro::generic.cancel') }}</a>
                             {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                         </div>
 
