@@ -8142,7 +8142,7 @@
                 "fzaninotto/faker": ">=1.8",
                 "guzzlehttp/guzzle": "^6.3|^7.0",
                 "nesbot/carbon": ">=2.0|1.*",
-                "php": "^7.4"
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
                 "ext-intl": "*",
@@ -8562,7 +8562,7 @@
                 "illuminate/support": "^7.0 || ^8.0",
                 "illuminate/translation": "^7.0 || ^8.0",
                 "illuminate/view": "^7.0 || ^8.0",
-                "php": "^7.4"
+                "php": "^7.2|^8.0"
             },
             "replace": {
                 "anahkiasen/former": "*",
@@ -8705,7 +8705,7 @@
                 "illuminate/support": "^7.0 || ^8.0",
                 "jmikola/geojson": "^1.0",
                 "jordanbrauer/unit-converter": "^0.8.4",
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "ricardosierra/database": "^0.21",
                 "ricardosierra/translation": "dev-master",
                 "sierratecnologia/crypto": "dev-master",
@@ -8803,7 +8803,7 @@
                 "league/mime-type-detection": ">=1.1",
                 "league/pipeline": "*",
                 "nao-pon/flysystem-google-drive": "~1.1",
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "sierratecnologia/muleta": "dev-master",
                 "spatie/laravel-medialibrary": "^8.0",
                 "srmklive/flysystem-dropbox-v2": "*"
@@ -8872,7 +8872,7 @@
                 "reference": "8589b755a5949aa4e0e0e948662f2480e9da14eb"
             },
             "require": {
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "ricardosierra/changelog": "~1.4",
                 "sierratecnologia/crypto": "dev-master"
             },
@@ -8955,7 +8955,7 @@
             },
             "require": {
                 "anahkiasen/html-object": "^1.4",
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "sierratecnologia/former": "dev-master",
                 "sierratecnologia/media-manager": "dev-master",
                 "spatie/laravel-validation-rules": "^2.6"
@@ -9040,7 +9040,7 @@
             },
             "require": {
                 "league/plates": "^3.1|^4.0|^5.0",
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "sierratecnologia/crypto": "dev-master"
             },
             "require-dev": {
@@ -9435,7 +9435,7 @@
                 "illuminate/support": "^6.18|^7.0|^8.0",
                 "league/flysystem": "^1.0.64",
                 "maennchen/zipstream-php": "^1.0|^2.0",
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "spatie/image": "^1.4.0",
                 "spatie/temporary-directory": "^1.1",
                 "symfony/console": "^4.4|^5.0"
@@ -9649,7 +9649,7 @@
             "require": {
                 "illuminate/database": "^7.0",
                 "illuminate/support": "^7.0",
-                "php": "^7.4"
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^5.0",
@@ -16612,7 +16612,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4"
+        "php": "^7.2|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"

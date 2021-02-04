@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.2|^8.0",
         "sierratecnologia/templeiro": "dev-master",
         "sierratecnologia/pedreiro": "dev-master",
         "sierratecnologia/crypto": "dev-master",

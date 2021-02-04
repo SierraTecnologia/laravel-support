@@ -236,12 +236,6 @@ class SupportServiceProvider extends ServiceProvider
         if (\Illuminate\Support\Facades\Config::get('site.core.register_routes', true) && !$this->app->routesAreCached()) {
             $this->app['support.router']->registerAll();
         }
-        $event->listen(
-            'facilitador.alerts.collecting',
-            function () {
-                $this->addStorageSymlinkAlert();
-            }
-        );
     }
 
     /**

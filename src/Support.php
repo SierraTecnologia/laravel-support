@@ -32,7 +32,7 @@ use Session;
 use Siravel\Models\Blog\Category;
 use Siravel\Models\Blog\Post;
 use Siravel\Models\Negocios\Page;
-use Support\Events\AlertsCollection;
+use Pedreiro\Events\AlertsCollection;
 use Support\Models\Application\DataRelationship;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
