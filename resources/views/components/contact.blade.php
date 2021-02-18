@@ -1,5 +1,5 @@
 <div class="contact-form">
-    {{ Form::open(array('action' => 'PagesController@contact', 'role' => 'form', 'id' => 'contact-form')) }}
+    {!! Form::open(array('action' => 'PagesController@contact', 'role' => 'form', 'id' => 'contact-form'))  !!}
         <div class="row">
             <div class="form-group col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                 <input type="text" name="name" class="form-control" id="first-name" placeholder="{{ trans('homepage.contact_name') }}" required="required">
@@ -16,5 +16,5 @@
                 </div>
             </div>
         </div>
-    {{ Form::close() }}
+    {!! Form::close()  !!}
 </div>
