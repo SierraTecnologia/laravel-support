@@ -22,7 +22,7 @@ use Redirect;
 use Request;
 use Response;
 use Route;
-use SupportURL;
+use PedreiroURL;
 use Translation\Template\Localize;
 use URL;
 use Validator;

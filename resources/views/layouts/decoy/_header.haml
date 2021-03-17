@@ -24,7 +24,7 @@
 			-# Controller actions
 			.pull-right.btn-toolbar
 				.btn-group
-					%a.btn.outline.new(href=URL::to(SupportURL::relative('create')))
+					%a.btn.outline.new(href=URL::to(PedreiroURL::relative('create')))
 						%span.glyphicon.glyphicon-plus
 					!=View::make('pedreiro::shared.form._create-locales', $__data)->render()
 

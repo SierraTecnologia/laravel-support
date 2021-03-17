@@ -5,7 +5,7 @@ namespace Support\Http\Middleware;
 use Closure;
 use Request;
 use Session;
-use SupportURL;
+use PedreiroURL;
 use Redirect;
 
 /**
@@ -37,7 +37,7 @@ class SaveRedirect
 
         // Go to new form by stripping the last segment from the URL
         if (request('_save') == 'new') {
-            Session::flash('save_redirect', SupportURL::relative('create'));
+            Session::flash('save_redirect', PedreiroURL::relative('create'));
         }
 
         // Chain

@@ -51,7 +51,7 @@ class SupportServiceProvider extends ServiceProvider
     // protected $defer = true;
 
     public static $aliasProviders = [
-        'SupportURL' => \Support\Facades\SupportURL::class,
+
     ];
 
     // public static $providers = [
@@ -265,14 +265,6 @@ class SupportServiceProvider extends ServiceProvider
                 $dir = \Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica');
 
                 return new \Support\Routing\Router($dir);
-            }
-        );
-
-        // Register URL Generators as "SupportURL".
-        $this->app->singleton(
-            'support.url',
-            function ($app) {
-                return new \Pedreiro\Routing\UrlGenerator($app['request']->path());
             }
         );
 
@@ -781,7 +773,7 @@ class SupportServiceProvider extends ServiceProvider
             ModelFactory::class,
             'rica.breadcrumbs',
             'support.router',
-            'support.url',
+            'pedreiro.url',
         ];
     }
 }
