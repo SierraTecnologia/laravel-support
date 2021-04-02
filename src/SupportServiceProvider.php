@@ -69,16 +69,6 @@ class SupportServiceProvider extends ServiceProvider
         //     'topnav' => true,
         // ],
         // // [
-        // //     'text'        => 'Painel Admin',
-        // //     'route'       => 'rica.dashboard',
-        // //     'icon'        => 'share',
-        // //     'icon_color'  => 'red',
-        // //     'label_color' => 'success',
-        // //     // 'space'     => 'painel',
-        // //     'level'       => 3,
-        // //     'topnav' => true,
-        // // ],
-        // // [
         // //     'text'        => 'Changelog',
         // //     'route'       => 'admin.pedreiro.changelog',
         // //     'icon'        => 'fas fa-fw fa-user-secret',
@@ -88,26 +78,6 @@ class SupportServiceProvider extends ServiceProvider
         // //     'url'         => 'docs',
         // //     'icon'        => 'fas fa-fw fa-user-secret',
         // // ],
-        // [
-        //     'text'        => 'Business Admin',
-        //     'route'       => 'rica.dashboard',
-        //     'icon'        => 'share',
-        //     'icon_color'  => 'red',
-        //     'label_color' => 'success',
-        //     // 'space'     => 'painel',
-        //     'level'       => 3,
-        //     'topnav' => true,
-        // ],
-        // [
-        //     'text'        => 'RiCa Admin',
-        //     'route'       => 'rica.dashboard',
-        //     'icon'        => 'share',
-        //     'icon_color'  => 'red',
-        //     'label_color' => 'success',
-        //     // 'space'     => 'painel',
-        //     'level'       => 3,
-        //     'topnav' => true,
-        // ],
         // // [
         // //     'text' => 'System',
         // //     'icon' => 'fas fa-fw fa-search',
@@ -247,17 +217,6 @@ class SupportServiceProvider extends ServiceProvider
     {
 
 
-        // Build the Breadcrumbs store
-        $this->app->singleton(
-            'rica.breadcrumbs',
-            function ($app) {
-                $breadcrumbs = new \Pedreiro\Template\Layout\Breadcrumbs();
-                $breadcrumbs->set($breadcrumbs->parseURL());
-
-                return $breadcrumbs;
-            }
-        );
-
         // Registers explicit rotues and wildcarding routing
         $this->app->singleton(
             'support.router',
@@ -278,15 +237,15 @@ class SupportServiceProvider extends ServiceProvider
             }
         );
 
-
+        // @todo la no Pedreiro
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorBaseController',
-            'Support\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsController'
+            'Pedreiro\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsController'
         );
 
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorMediaController',
-            'Support\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsMediaController'
+            'Pedreiro\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsMediaController'
         );
 
         $this->registerModelFactory();
