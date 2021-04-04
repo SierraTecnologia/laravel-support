@@ -116,6 +116,21 @@ class ComposerParser
         );
     }
 
+    public function returnClassesWithPartialsAlias($alias)
+    {
+        return collect($this->classes)->filter(
+            function ($path, $class) use ($alias) {
+                // if (!is_string($class)) dd($path, $class, $alias);
+                // try {
+                return Str::endsWith($class, $alias);
+
+                // }catch(\Exception $e) {
+                //     dd('Aqui', $path, $class, $alias);
+                // }
+            }
+        );
+    }
+
     protected function getComposerFolder()
     {
         if (!$this->composerFolder) {

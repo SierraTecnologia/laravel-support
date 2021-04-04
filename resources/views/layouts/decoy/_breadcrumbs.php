@@ -13,7 +13,7 @@ $breadcrumb_count = count($breadcrumbs);
         <?php if ($back && !Route::is('forgot', 'support::account@reset')) : ?>
             <a href="<?php echo $back?>" class="back">
                 <span class="glyphicon glyphicon-arrow-left"></span>
-            <?php echo __('support::cruds.breadcrumbs.back_to_listing'); ?>
+            <?php echo __('breadcrumbs.back_to_listing'); ?>
             </a>
         <?php endif?>
 

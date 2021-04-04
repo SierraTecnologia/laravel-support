@@ -1,4 +1,4 @@
-@extends('support::master')
+@extends('layouts.page')
 
 @section('page_title', __('pedreiro::generic.viewing').' '.__('pedreiro::generic.bread'))
 

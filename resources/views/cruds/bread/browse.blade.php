@@ -18,13 +18,13 @@
         @can('edit', app($dataType->model_name))
             @if(isset($dataType->order_column) && isset($dataType->order_display_column))
                 <a href="{!! $dataType->getModelService()->getUrl('order') !!}" class="btn btn-primary btn-add-new">
-                    <i class="facilitador-list"></i> <span>{{ __('support::cruds.bread.order') }}</span>
+                    <i class="facilitador-list"></i> <span>{{ __('bread.order') }}</span>
                 </a>
             @endif
         @endcan
         @can('delete', app($dataType->model_name))
             @if($usesSoftDeletes)
-                <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('support::cruds.bread.soft_deletes_off') }}" data-off="{{ __('support::cruds.bread.soft_deletes_on') }}">
+                <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('bread.soft_deletes_off') }}" data-off="{{ __('bread.soft_deletes_on') }}">
             @endif
         @endcan
         @foreach($actions as $action)
@@ -32,7 +32,7 @@
                 @include('support::cruds.bread.partials.actions', ['action' => $action, 'data' => null])
             @endif
         @endforeach
-        @include('pedreiro::multilingual.language-selector')
+        @include('pedreiro::shared.forms.multilingual.language-selector')
     </div>
 @stop
 

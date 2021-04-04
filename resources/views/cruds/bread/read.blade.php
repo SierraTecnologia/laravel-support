@@ -29,7 +29,7 @@
             {{ __('pedreiro::generic.return_to_list') }}
         </a>
     </h1>
-    @include('pedreiro::multilingual.language-selector')
+    @include('pedreiro::shared.forms.multilingual.language-selector')
 @stop
 
 @section('content')

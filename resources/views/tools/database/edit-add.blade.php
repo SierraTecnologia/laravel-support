@@ -1,4 +1,5 @@
-@extends('support::master')
+@extends('layouts.page')
+
 @if($db->action == 'update')
     @section('page_title', __('pedreiro::database.editing_table', ['table' => $db->table->name]))
 @else

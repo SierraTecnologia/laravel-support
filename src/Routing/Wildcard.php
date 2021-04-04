@@ -103,19 +103,41 @@ class Wildcard
         $paths = explode('/', $this->path);
 
         $rootNamespace = 'App';
-        if ($paths[0] == 'rica') {
+        $group = '';
+        if ($paths[0] == 'rica' || $paths[0] == 'root') {
+            $group = 'RiCa\\';
             array_shift($paths);
-            $rootNamespace = Str::studly(Str::singular(array_shift($paths)));
+        }else if ($paths[0] == 'admin') {
+            $group = 'Admin\\';
+            array_shift($paths);
+        }else if ($paths[0] == 'master') {
+            $group = 'Master\\';
+            array_shift($paths);
+        }else if ($paths[0] == 'painel') {
+            $group = 'Painel\\';
+            array_shift($paths);
+        }else if ($paths[0] == 'profile') {
+            $group = 'Profile\\';
+            array_shift($paths);
         }
-        $local = $rootNamespace.'\Http\Controllers';
-        foreach($paths as $path) {
-            $local .= '\\'.Str::studly(Str::singular($path));
-        }
-        $local .= "Controller";
+        $candidateForController = Str::studly(Str::singular(array_shift($paths)));
+        $local = $rootNamespace.'\Http\Controllers\\'.$group.$candidateForController."Controller";
+        // foreach($paths as $path) {
+        //     $local .= '\\'.Str::studly(Str::singular($path));
+        // }
         if (class_exists($local)) {
             return $local;
         }
 
+        $composerParser = resolve(\Support\Patterns\Parser\ComposerParser::class);        
+        $eloquentClasses = $composerParser->returnClassesWithPartialsAlias($group.$candidateForController."Controller");
+        foreach ($eloquentClasses as $classCandidate => $classFile) {
+            if (class_exists($classCandidate)) {
+                return $classCandidate;
+            }
+        }
+
+        // @todo Refatorar Daqui pra Baixo
         // Setup the two schemes
         if (!$class_name) {
             $class_name = $this->detectControllerClass();
@@ -129,8 +151,6 @@ class Wildcard
         }
         
         $facilitador = 'Facilitador\Http\Controllers\Admin\\'.$class_name;
-
-        
         if (class_exists($facilitador)) {
             return $facilitador;
         }

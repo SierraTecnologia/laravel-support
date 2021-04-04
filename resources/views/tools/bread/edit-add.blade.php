@@ -1,4 +1,4 @@
-@extends('support::master')
+@extends('layouts.page')
 
 @if (isset($dataType->id))
     @section('page_title', __('pedreiro::bread.edit_bread_for_table', ['table' => $dataType->name]))
@@ -25,7 +25,7 @@
             $table = $dataType->name;
         }
     @endphp
-    @include('support::multilingual.language-selector')
+    @include('pedreiro::shared.forms.multilingual.language-selector')
 @stop
 
 @section('breadcrumbs')
