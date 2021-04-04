@@ -15,7 +15,7 @@
                     <h3 class="box-title panel-title card-title">{!! $service->getModelService()->getName() !!}</h3>
                 </div>
                 <div class="box-body panel-body card-body">
-                    {!! Form::open(['url' => route('facilitador.store', [ $service->getModelService()->getCryptName()]), 'class' => 'add']) !!}
+                    {!! Form::open(['url' => route('rica.facilitador.store', [ $service->getModelService()->getCryptName()]), 'class' => 'add']) !!}
 
                         {!! FormMaker::fromTable($service->getModelService()->getTableName(), $service->getModelService()->getFieldForForm()) !!}
 

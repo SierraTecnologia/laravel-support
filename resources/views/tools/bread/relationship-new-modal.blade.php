@@ -1,5 +1,5 @@
 <!-- !!! Add form action below -->
-<form role="form" action="{{ route('facilitador.bread.relationship') }}" method="POST">
+<form role="form" action="{{ route('rica.facilitador.bread.relationship') }}" method="POST">
 	<div class="modal fade modal-danger modal-relationships" id="new_relationship_modal">
 		<div class="modal-dialog relationship-panel">
 		    <div class="model-content">

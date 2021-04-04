@@ -66,7 +66,7 @@
 
 @section('content')
     <div class="page-content container-fluid">
-        <form class="form-edit-add" role="form" action="@if($edit){{ route('facilitador.posts.update', $dataTypeContent->id) }}@else{{ route('facilitador.posts.store') }}@endif" method="POST" enctype="multipart/form-data">
+        <form class="form-edit-add" role="form" action="@if($edit){{ route('rica.facilitador.posts.update', $dataTypeContent->id) }}@else{{ route('rica.facilitador.posts.store') }}@endif" method="POST" enctype="multipart/form-data">
             <!-- PUT Method if we are editing -->
             @if($edit)
                 {{ method_field("PUT") }}

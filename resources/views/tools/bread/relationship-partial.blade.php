@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="col-md-12 facilitador-relationship-details">
-        <a href="{{ route('facilitador.bread.delete_relationship', $relationship['id']) }}" class="delete_relationship"><i class="facilitador-trash"></i> {{ __('voyager::database.relationship.delete') }}</a>
+        <a href="{{ route('rica.facilitador.bread.delete_relationship', $relationship['id']) }}" class="delete_relationship"><i class="facilitador-trash"></i> {{ __('voyager::database.relationship.delete') }}</a>
         <div class="relationship_details_content">
             <p class="relationship_table_select">{{ \Illuminate\Support\Str::singular(ucfirst($table)) }}</p>
             <select class="relationship_type select2" name="relationship_type_{{ $relationship['field'] }}">

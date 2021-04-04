@@ -151,7 +151,7 @@ class ModelService implements EloquentInterface
         if (empty($this->modelClass)) {
             Artisan::call('cache:clear');
             Artisan::call('view:clear');
-            // return redirect()->route('facilitador.dash');
+            // return redirect()->route('rica.facilitador.dash');
 
             throw new Exception('Criptografia inválida ' . $this->modelClass);
         }

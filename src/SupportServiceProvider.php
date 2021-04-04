@@ -113,16 +113,16 @@ class SupportServiceProvider extends ServiceProvider
         //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         //     ],
         //     'Manipule' => [
-        //         [
-        //             'text'        => 'Crud Builder',
-        //             'route'       => 'rica.facilitador.bread.index',
-        //             'icon'        => 'fas fa-fw fa-eye',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
+                [
+                    'text'        => 'Crud Builder',
+                    'route'       => 'rica.facilitador.bread.index',
+                    'icon'        => 'fas fa-fw fa-eye',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'space'      => 'rica',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    //  'access' => \Porteiro\Models\Role::$ADMIN
+                ],
                 [
                     'text'        => 'Admin Search',
                     'route'       => 'admin.globalsearch',

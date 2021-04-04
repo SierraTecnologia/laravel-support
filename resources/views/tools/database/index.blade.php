@@ -5,7 +5,7 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="facilitador-data"></i> {{ __('pedreiro::generic.database') }}
-        <a href="{{ route('facilitador.database.create') }}" class="btn btn-success"><i class="facilitador-plus"></i>
+        <a href="{{ route('rica.facilitador.database.create') }}" class="btn btn-success"><i class="facilitador-plus"></i>
             {{ __('pedreiro::database.create_new_table') }}</a>
     </h1>
 @stop
@@ -30,7 +30,7 @@
                     <tr>
                         <td>
                             <p class="name">
-                                <a href="{{ route('facilitador.database.show', $table->prefix.$table->name) }}"
+                                <a href="{{ route('rica.facilitador.database.show', $table->prefix.$table->name) }}"
                                    data-name="{{ $table->prefix.$table->name }}" class="desctable">
                                    {{ $table->name }}
                                 </a>
@@ -40,11 +40,11 @@
                         <td>
                             <div class="bread_actions">
                             @if($table->dataTypeId)
-                                <a href="{{ route('facilitador.' . $table->slug . '.index') }}"
+                                <a href="{{ route('rica.facilitador.' . $table->slug . '.index') }}"
                                    class="btn-sm btn-warning browse_bread">
                                     <i class="facilitador-plus"></i> {{ __('pedreiro::database.browse_bread') }}
                                 </a>
-                                <a href="{{ route('facilitador.bread.edit', $table->name) }}"
+                                <a href="{{ route('rica.facilitador.bread.edit', $table->name) }}"
                                    class="btn-sm btn-secondary edit">
                                    {{ __('pedreiro::bread.edit_bread') }}
                                 </a>
@@ -53,7 +53,7 @@
                                      {{ __('pedreiro::bread.delete_bread') }}
                                 </a>
                             @else
-                                <a href="{{ route('facilitador.bread.create', $table->name) }}"
+                                <a href="{{ route('rica.facilitador.bread.create', $table->name) }}"
                                    class="btn-sm btn-secondary">
                                     <i class="facilitador-plus"></i> {{ __('pedreiro::bread.add_bread') }}
                                 </a>
@@ -66,11 +66,11 @@
                                data-table="{{ $table->prefix.$table->name }}">
                                <i class="facilitador-trash"></i> {{ __('pedreiro::generic.delete') }}
                             </a>
-                            <a href="{{ route('facilitador.database.edit', $table->prefix.$table->name) }}"
+                            <a href="{{ route('rica.facilitador.database.edit', $table->prefix.$table->name) }}"
                                class="btn btn-sm btn-primary float-right" style="display:inline; margin-right:10px;">
                                <i class="facilitador-edit"></i> {{ __('pedreiro::generic.edit') }}
                             </a>
-                            <a href="{{ route('facilitador.database.show', $table->prefix.$table->name) }}"
+                            <a href="{{ route('rica.facilitador.database.show', $table->prefix.$table->name) }}"
                                data-name="{{ $table->name }}"
                                class="btn btn-sm btn-warning float-right desctable" style="display:inline; margin-right:10px;">
                                <i class="facilitador-eye"></i> {{ __('pedreiro::generic.view') }}
@@ -217,7 +217,7 @@
                 } else {
                     $('#delete_table_name').text(table);
 
-                    $('#delete_table_form')[0].action = '{{ route('facilitador.database.destroy', ['database' => '__database']) }}'.replace('__database', table)
+                    $('#delete_table_form')[0].action = '{{ route('rica.facilitador.database.destroy', ['database' => '__database']) }}'.replace('__database', table)
                     $('#delete_modal').modal('show');
                 }
             });
@@ -229,7 +229,7 @@
                 name = $(this).data('name');
 
                 $('#delete_bread_name').text(name);
-                $('#delete_bread_form')[0].action = '{{ route('facilitador.bread.delete', '__id') }}'.replace('__id', id);
+                $('#delete_bread_form')[0].action = '{{ route('rica.facilitador.bread.delete', '__id') }}'.replace('__id', id);
                 $('#delete_bread_modal').modal('show');
             });
         });

@@ -109,7 +109,7 @@ class FacilitadorDatabaseController extends Controller
             event(new TableAdded($table));
 
             return redirect()
-                ->route('facilitador.database.index')
+                ->route('rica.facilitador.database.index')
                 ->with($this->alertSuccess(__('pedreiro::database.success_create_table', ['table' => $table->name])));
         } catch (Exception $e) {
             return back()->with($this->alertException($e))->withInput();
@@ -129,7 +129,7 @@ class FacilitadorDatabaseController extends Controller
 
         if (!SchemaManager::tableExists($table)) {
             return redirect()
-                ->route('facilitador.database.index')
+                ->route('rica.facilitador.database.index')
                 ->with($this->alertError(__('pedreiro::database.edit_table_not_exist')));
         }
 
@@ -161,7 +161,7 @@ class FacilitadorDatabaseController extends Controller
         }
 
         return redirect()
-            ->route('facilitador.database.index')
+            ->route('rica.facilitador.database.index')
             ->with($this->alertSuccess(__('pedreiro::database.success_create_table', ['table' => $table['name']])));
     }
 
@@ -174,7 +174,7 @@ class FacilitadorDatabaseController extends Controller
 
         if ($action == 'update') {
             $db->table = SchemaManager::listTableDetails($table);
-            $db->formAction = route('facilitador.database.update', $table);
+            $db->formAction = route('rica.facilitador.database.update', $table);
         } else {
             $db->table = new Table('New Table');
 
@@ -189,7 +189,7 @@ class FacilitadorDatabaseController extends Controller
 
             $db->table->setPrimaryKey(['id'], 'primary');
 
-            $db->formAction = route('facilitador.database.store');
+            $db->formAction = route('rica.facilitador.database.store');
         }
 
         $oldTable = old('table');
@@ -279,7 +279,7 @@ class FacilitadorDatabaseController extends Controller
             event(new TableDeleted($table));
 
             return redirect()
-                ->route('facilitador.database.index')
+                ->route('rica.facilitador.database.index')
                 ->with($this->alertSuccess(__('pedreiro::database.success_delete_table', ['table' => $table])));
         } catch (Exception $e) {
             return back()->with($this->alertException($e));

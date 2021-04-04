@@ -203,9 +203,9 @@
             $(function() {
                 $('#show_soft_deletes').change(function() {
                     if ($(this).prop('checked')) {
-                        $('#dataTable').before('<a id="redir" href="{{ (route('facilitador.index', array_merge($params, ['showSoftDeleted' => 1]), true)) }}"></a>');
+                        $('#dataTable').before('<a id="redir" href="{{ (route('rica.facilitador.index', array_merge($params, ['showSoftDeleted' => 1]), true)) }}"></a>');
                     }else{
-                        $('#dataTable').before('<a id="redir" href="{{ (route('facilitador.index', array_merge($params, ['showSoftDeleted' => 0]), true)) }}"></a>');
+                        $('#dataTable').before('<a id="redir" href="{{ (route('rica.facilitador.index', array_merge($params, ['showSoftDeleted' => 0]), true)) }}"></a>');
                     }
 
                     $('#redir')[0].click();
