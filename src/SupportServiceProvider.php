@@ -86,16 +86,16 @@ class SupportServiceProvider extends ServiceProvider
         // //     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         // // ],
         // 'System|450' => [
-        //     [
-        //         'text'        => 'Manager',
-        //         'route'       => 'rica.dashboard',
-        //         'icon'        => 'fas fa-fw fa-edit', //television
-        //         'icon_color'  => 'blue',
-        //         'label_color' => 'success',
-        //         'space'      => 'rica',
-        //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //         //  'access' => \Porteiro\Models\Role::$ADMIN
-        //     ],
+            [
+                'text'        => 'Manager',
+                'route'       => 'rica.dashboard',
+                'icon'        => 'fas fa-fw fa-edit', //television
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'space'      => 'rica',
+                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                //  'access' => \Porteiro\Models\Role::$ADMIN
+            ],
         //     [
         //         'text' => 'Manipule',
         //         'icon' => 'fas fa-fw fa-eye',
@@ -123,36 +123,46 @@ class SupportServiceProvider extends ServiceProvider
         //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         //             //  'access' => \Porteiro\Models\Role::$ADMIN
         //         ],
-        //         [
-        //             'text'        => 'Database',
-        //             'route'       => 'rica.facilitador.database.index',
-        //             'icon'        => 'fas fa-fw fa-database',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
-        //         [
-        //             'text'        => 'Commands',
-        //             'route'       => 'rica.support.commands',
-        //             'icon'        => 'fas fa-fw fa-asterisk',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
-        //         [
-        //             'text'        => 'Routers',
-        //             'route'       => 'rica.support.routers',
-        //             'icon'        => 'fas fa-fw fa-folder',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
+                [
+                    'text'        => 'Admin Search',
+                    'route'       => 'admin.globalsearch',
+                    'icon'        => 'fas fa-fw fa-database',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'space'      => 'admin',
+                    'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    //  'access' => \Porteiro\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Database',
+                    'route'       => 'rica.facilitador.database.index',
+                    'icon'        => 'fas fa-fw fa-database',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'space'      => 'rica',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    //  'access' => \Porteiro\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Commands',
+                    'route'       => 'rica.support.commands',
+                    'icon'        => 'fas fa-fw fa-asterisk',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'space'      => 'rica',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    //  'access' => \Porteiro\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Routers',
+                    'route'       => 'rica.support.routers',
+                    'icon'        => 'fas fa-fw fa-folder',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'space'      => 'rica',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    //  'access' => \Porteiro\Models\Role::$ADMIN
+                ],
         //     ],
         //     'Debugger' => [
         //         [
