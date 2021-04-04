@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            @include('pedreiro::multilingual.input-hidden', [
+                            @include('pedreiro::shared.forms.multilingual.input-hidden', [
                                 '_field_name'  => 'title',
                                 '_field_trans' => get_field_translations($dataTypeContent, 'title')
                             ])
@@ -115,7 +115,7 @@
                         </div>
 
                         <div class="panel-body">
-                            @include('pedreiro::multilingual.input-hidden', [
+                            @include('pedreiro::shared.forms.multilingual.input-hidden', [
                                 '_field_name'  => 'body',
                                 '_field_trans' => get_field_translations($dataTypeContent, 'body')
                             ])
@@ -136,7 +136,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            @include('pedreiro::multilingual.input-hidden', [
+                            @include('pedreiro::shared.forms.multilingual.input-hidden', [
                                 '_field_name'  => 'excerpt',
                                 '_field_trans' => get_field_translations($dataTypeContent, 'excerpt')
                             ])
@@ -168,7 +168,7 @@
                                         <div class="form-group @if($row->type == 'hidden') hidden @endif @if(isset($display_options->width)){{ 'col-md-' . $display_options->width }}@endif" @if(isset($display_options->id)){{ "id=$display_options->id" }}@endif>
                                             {{ $row->slugify }}
                                             <label for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
-                                            @include('pedreiro::multilingual.input-hidden-bread-edit-add')
+                                            @include('pedreiro::shared.forms.multilingual.input-hidden-bread-edit-add')
                                             @if($row->type == 'relationship')
                                                 @include('pedreiro::shared.forms.fields.relationship', ['options' => $row->details])
                                             @else
@@ -198,7 +198,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="slug">{{ __('pedreiro::post.slug') }}</label>
-                                @include('pedreiro::multilingual.input-hidden', [
+                                @include('pedreiro::shared.forms.multilingual.input-hidden', [
                                     '_field_name'  => 'slug',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'slug')
                                 ])
@@ -257,7 +257,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="meta_description">{{ __('pedreiro::post.meta_description') }}</label>
-                                @include('pedreiro::multilingual.input-hidden', [
+                                @include('pedreiro::shared.forms.multilingual.input-hidden', [
                                     '_field_name'  => 'meta_description',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'meta_description')
                                 ])
@@ -265,7 +265,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="meta_keywords">{{ __('pedreiro::post.meta_keywords') }}</label>
-                                @include('pedreiro::multilingual.input-hidden', [
+                                @include('pedreiro::shared.forms.multilingual.input-hidden', [
                                     '_field_name'  => 'meta_keywords',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'meta_keywords')
                                 ])
@@ -273,7 +273,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="seo_title">{{ __('pedreiro::post.seo_title') }}</label>
-                                @include('pedreiro::multilingual.input-hidden', [
+                                @include('pedreiro::shared.forms.multilingual.input-hidden', [
                                     '_field_name'  => 'seo_title',
                                     '_field_trans' => get_field_translations($dataTypeContent, 'seo_title')
                                 ])

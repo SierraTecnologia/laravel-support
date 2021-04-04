@@ -119,7 +119,7 @@
                                 @if(is_array($dataTypeContent->{$row->field}))
                                     <p>{!! implode(', ',$dataTypeContent->{$row->field}) !!}</p>
                                 @else
-                                    @include('pedreiro::multilingual.input-hidden-bread-read')
+                                    @include('pedreiro::shared.forms.multilingual.input-hidden-bread-read')
                                     <p>{!! $dataTypeContent->{$row->field} !!}</p>
                                 @endif
                             @elseif($row->type == 'file')
@@ -139,7 +139,7 @@
                                 @if(is_array($dataTypeContent->{$row->field}))
                                     <p>{!! implode(', ', $dataTypeContent->{$row->field}) !!}</p>
                                 @else
-                                    @include('pedreiro::multilingual.input-hidden-bread-read')
+                                    @include('pedreiro::shared.forms.multilingual.input-hidden-bread-read')
                                     <p>{{ $dataTypeContent->{$row->field} }}</p>
                                 @endif
                             @endif
