@@ -4,7 +4,7 @@ namespace Support;
 
 use App\Models\User;
 use Arrilot\Widgets\Facade as Widget;
-use Bkwld\Library;
+use Muleta\Library;
 use Config;
 use Crypto;
 use Siravel\Models\Negocios\Menu;
