@@ -3,8 +3,8 @@
 namespace Support\Http\Controllers;
 
 use App;
-use Bkwld\Library\Laravel\Validator as BkwldLibraryValidator;
-use Bkwld\Library\Utils\File;
+use Muleta\Library\Laravel\Validator as BkwldLibraryValidator;
+use Muleta\Library\Utils\File;
 use Event;
 use Facilitador;
 use Former;
@@ -22,7 +22,7 @@ use Redirect;
 use Request;
 use Response;
 use Route;
-use SupportURL;
+use PedreiroURL;
 use Translation\Template\Localize;
 use URL;
 use Validator;

@@ -133,7 +133,7 @@ class SystemBuilder extends BuilderAbstract
         //     $results["Informate\Models\Entytys\Fisicos\Weapon"]
         // );
         /**
-         * Remove quem nao tem tabela no banco de dados e armazena os entitys
+         * Remove quem nao tem tabela no banco de dados e armazena os entities
          */
         $results->reject(
             function (ParseModelClass $result): bool {

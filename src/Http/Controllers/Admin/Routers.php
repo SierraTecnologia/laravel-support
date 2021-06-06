@@ -49,7 +49,7 @@ class Routers extends Base
     public function index(Request $request)
     {
         return $this->populateView(
-            'support::tools.routers.index',
+            'pedreiro::tools.routers.index',
             [
             'routers' => Router::all(),
             ]

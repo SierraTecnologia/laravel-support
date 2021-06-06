@@ -18,7 +18,7 @@ use Support\Entities\EloquentColumn;
 use ReflectionClass;
 use Support\Components\Database\Schema\SchemaManager;
 use Support\Services\EloquentService;
-use Support\Routing\UrlGenerator;
+use Pedreiro\Routing\UrlGenerator;
 use Support\Models\Application\DataRow;
 use Support\Models\Application\DataType;
 use Support\Services\DatabaseService;
@@ -26,7 +26,7 @@ use Support\Entities\EloquentEntity;
 use Support\Models\Code\Classer;
 use Support\Contracts\Services\EloquentInterface;
 
-use Support\Contracts\Output\OutputableTrait;
+use Muleta\Contracts\Output\OutputableTrait;
 /**
  * ModelService helper to make table and object form mapping easy.
  */
@@ -151,7 +151,7 @@ class ModelService implements EloquentInterface
         if (empty($this->modelClass)) {
             Artisan::call('cache:clear');
             Artisan::call('view:clear');
-            // return redirect()->route('facilitador.dash');
+            // return redirect()->route('rica.facilitador.dash');
 
             throw new Exception('Criptografia inválida ' . $this->modelClass);
         }

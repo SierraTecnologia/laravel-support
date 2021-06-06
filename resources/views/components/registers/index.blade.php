@@ -32,7 +32,7 @@
             <div class="float-right">
 
                 {!! $htmlGenerator->optionsButtons() !!}
-                <a href="{!! route('facilitador.index', [ $service->getModelService()->getCryptName()]) !!}" class="btn btn-secondary">{!! trans('words.back') !!}</a>
+                <a href="{!! route('rica.facilitador.index', [ $service->getModelService()->getCryptName()]) !!}" class="btn btn-secondary">{!! trans('words.back') !!}</a>
 
             </div>
 

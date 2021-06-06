@@ -31,8 +31,8 @@ use Support\Entities\RelationshipEntity;
 use Illuminate\Support\Facades\Cache;
 
 use Log;
-use Support\Contracts\Support\Arrayable;
-use Support\Contracts\Support\ArrayableTrait;
+use Muleta\Contracts\Support\Arrayable;
+use Muleta\Contracts\Support\ArrayableTrait;
 
 use Pedreiro\Exceptions\Coder\EloquentHasErrorException;
 use Pedreiro\Exceptions\Coder\EloquentNotExistException;
@@ -54,7 +54,7 @@ class DatabaseMount implements Arrayable
 
     protected $eloquentClasses = false;
     protected $eloquentRenders = false;
-    protected $eloquentEntitys = false;
+    protected $eloquentEntities = false;
 
 
     protected $renderDatabase = false;
@@ -124,7 +124,7 @@ class DatabaseMount implements Arrayable
         
 
 
-        $this->eloquentEntitys = $eloquentRenders->reject(
+        $this->eloquentEntities = $eloquentRenders->reject(
             function ($eloquentData, $className) {
                 return $this->eloquentHasError($className);
             }
@@ -136,11 +136,11 @@ class DatabaseMount implements Arrayable
 
     }
 
-    public function getAllEloquentsEntitys(): array
+    public function getAllEloquentsEntities(): array
     {
         //     $this->renderDatabaseArray['AplicationTemp']['tempErrorClasses']
         // );
-        return $this->eloquentEntitys->toArray();
+        return $this->eloquentEntities->toArray();
     }
 
     public function getEloquentEntityFromClassName($className): EloquentEntity
@@ -153,8 +153,8 @@ class DatabaseMount implements Arrayable
             throw new EloquentHasErrorException($className, $this->renderDatabaseArray['AplicationTemp']['tempErrorClasses'][$className]);
         }
 
-        if (isset($this->eloquentEntitys->toArray()[$className])) {
-            return $this->eloquentEntitys->toArray()[$className];
+        if (isset($this->eloquentEntities->toArray()[$className])) {
+            return $this->eloquentEntities->toArray()[$className];
         }
 
 
@@ -165,7 +165,7 @@ class DatabaseMount implements Arrayable
         $this->renderDatabase->registerAndMapperDisplayClassesFromEloquentRender($eloquentRender);
         $this->loadRenderDatabaseArray();
 
-        return $this->eloquentEntitys[$className] = (new EloquentMount($className, $this->renderDatabaseArray))->getEntity();
+        return $this->eloquentEntities[$className] = (new EloquentMount($className, $this->renderDatabaseArray))->getEntity();
     }
 
     public function eloquentHasError($className)

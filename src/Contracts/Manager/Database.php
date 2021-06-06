@@ -16,7 +16,7 @@ interface Database
 
     public function getRenderDatabase();
 
-    public function getAllEloquentsEntitys();
+    public function getAllEloquentsEntities();
 
     public function getEloquentEntityFromClassName($class);
 

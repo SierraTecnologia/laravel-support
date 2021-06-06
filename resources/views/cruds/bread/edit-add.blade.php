@@ -16,7 +16,7 @@
         <i class="{{ $dataType->icon }}"></i>
         {{ __('pedreiro::generic.'.($edit ? 'edit' : 'add')).' '.$dataType->getTranslatedAttribute('display_name_singular') }}
     </h1>
-    @include('pedreiro::multilingual.language-selector')
+    @include('pedreiro::shared.forms.multilingual.language-selector')
 @stop
 
 @section('content')
@@ -28,7 +28,7 @@
                     <!-- form start -->
                     <form role="form"
                             class="form-edit-add"
-                            action="{{ $edit ? \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'update', $dataTypeContent->getKey()) : \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'store') }}"
+                            action="{{ $edit ? \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'update', $dataTypeContent->getKey()) : \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'store') }}"
                             method="POST" enctype="multipart/form-data">
                         <!-- PUT Method if we are editing -->
                         @if($edit)
@@ -70,7 +70,7 @@
                                 <div class="form-group @if($row->type == 'hidden') hidden @endif col-md-{{ $display_options->width ?? 12 }} {{ (isset($errors) && $errors->has($row->field)) ? 'has-error' : '' }}" @if(isset($display_options->id)){{ "id=$display_options->id" }}@endif>
                                     {{ $row->slugify }}
                                     <label class="control-label" for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
-                                    @include('pedreiro::multilingual.input-hidden-bread-edit-add')
+                                    @include('pedreiro::shared.forms.multilingual.input-hidden-bread-edit-add')
                                     @if (isset($row->details->view))
                                         @include($row->details->view, ['row' => $row, 'dataType' => $dataType, 'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field}, 'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'), 'options' => $row->details])
                                     @elseif ($row->type == 'relationship')
@@ -193,7 +193,7 @@
             $('.form-group').on('click', '.remove-single-file', deleteHandler('a', false));
 
             $('#confirm_delete').on('click', function(){
-                $.post('{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'media.remove') }}', params, function (response) {
+                $.post('{{ \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'media.remove') }}', params, function (response) {
                     if ( response
                         && response.data
                         && response.data.status

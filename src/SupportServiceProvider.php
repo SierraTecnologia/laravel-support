@@ -51,7 +51,7 @@ class SupportServiceProvider extends ServiceProvider
     // protected $defer = true;
 
     public static $aliasProviders = [
-        'SupportURL' => \Support\Facades\SupportURL::class,
+
     ];
 
     // public static $providers = [
@@ -68,34 +68,6 @@ class SupportServiceProvider extends ServiceProvider
         //     'search' => true,
         //     'topnav' => true,
         // ],
-        [
-            'text'        => 'Workspace',
-            'url'         => 'painel',
-            'dontSection'     => 'painel',
-            'topnav' => true,
-        ],
-        [
-            'text'        => 'Painel Administrativo',
-            'url'         => 'admin',
-            'dontSection'     => 'admin',
-            'topnav' => true,
-        ],
-        [
-            'text'        => 'RiCa',
-            'url'         => 'rica',
-            'dontSection'     => 'rica',
-            'topnav' => true,
-        ],
-        // // [
-        // //     'text'        => 'Painel Admin',
-        // //     'route'       => 'rica.dashboard',
-        // //     'icon'        => 'share',
-        // //     'icon_color'  => 'red',
-        // //     'label_color' => 'success',
-        // //     // 'space'     => 'painel',
-        // //     'level'       => 3,
-        // //     'topnav' => true,
-        // // ],
         // // [
         // //     'text'        => 'Changelog',
         // //     'route'       => 'admin.pedreiro.changelog',
@@ -106,102 +78,101 @@ class SupportServiceProvider extends ServiceProvider
         // //     'url'         => 'docs',
         // //     'icon'        => 'fas fa-fw fa-user-secret',
         // // ],
-        // [
-        //     'text'        => 'Business Admin',
-        //     'route'       => 'rica.dashboard',
-        //     'icon'        => 'share',
-        //     'icon_color'  => 'red',
-        //     'label_color' => 'success',
-        //     // 'space'     => 'painel',
-        //     'level'       => 3,
-        //     'topnav' => true,
-        // ],
-        // [
-        //     'text'        => 'RiCa Admin',
-        //     'route'       => 'rica.dashboard',
-        //     'icon'        => 'share',
-        //     'icon_color'  => 'red',
-        //     'label_color' => 'success',
-        //     // 'space'     => 'painel',
-        //     'level'       => 3,
-        //     'topnav' => true,
-        // ],
-        // // [
-        // //     'text' => 'System',
-        // //     'icon' => 'fas fa-fw fa-search',
-        // //     'icon_color' => "blue",
-        // //     'label_color' => "success",
-        // //     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        // // ],
-        // 'System|450' => [
-        //     [
-        //         'text'        => 'Manager',
-        //         'route'       => 'rica.dashboard',
-        //         'icon'        => 'fas fa-fw fa-edit', //television
-        //         'icon_color'  => 'blue',
-        //         'label_color' => 'success',
-        //         'space'      => 'rica',
-        //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //         //  'access' => \Porteiro\Models\Role::$ADMIN
-        //     ],
-        //     [
-        //         'text' => 'Manipule',
-        //         'icon' => 'fas fa-fw fa-eye',
-        //         'icon_color' => "blue",
-        //         'label_color' => "success",
-        //         'space'      => 'rica',
-        //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //     ],
+        [
+            'text'        => 'Admin Search',
+            'route'       => 'admin.globalsearch',
+            'icon'        => 'fas fa-fw fa-database',
+            'icon_color'  => 'blue',
+            'label_color' => 'success',
+            'section'      => 'admin',
+            'order' => 2250,
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            //  'access' => \Porteiro\Models\Role::$ADMIN
+        ],
+        [
+            'text' => 'System',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'order' => 4500,
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
+        'System' => [
+            [
+                'text'        => 'Manager',
+                'route'       => 'rica.dashboard',
+                'icon'        => 'fas fa-fw fa-edit', //television
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section'      => 'rica',
+                'order' => 4550,
+                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                //  'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'Commands',
+                'route'       => 'rica.support.commands',
+                'icon'        => 'fas fa-fw fa-asterisk',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section'      => 'rica',
+                'order' => 4550,
+                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                //  'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'Routers',
+                'route'       => 'rica.support.routers',
+                'icon'        => 'fas fa-fw fa-folder',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section'      => 'rica',
+                'order' => 4550,
+                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                //  'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+        ],
+        [
+            'text' => 'Modelagem',
+            'icon' => 'fas fa-fw fa-eye',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'section'      => 'rica',
+            'order' => 4600,
+            'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
         //     [
         //         'text' => 'Debugger',
         //         'icon' => 'fas fa-fw fa-bug', //shield
         //         'icon_color' => "blue",
         //         'label_color' => "success",
-        //         'space'      => 'rica',
+        //         'section'      => 'rica',
         //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         //     ],
-        //     'Manipule' => [
-        //         [
-        //             'text'        => 'Crud Builder',
-        //             'route'       => 'rica.facilitador.bread.index',
-        //             'icon'        => 'fas fa-fw fa-eye',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
-        //         [
-        //             'text'        => 'Database',
-        //             'route'       => 'rica.facilitador.database.index',
-        //             'icon'        => 'fas fa-fw fa-database',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
-        //         [
-        //             'text'        => 'Commands',
-        //             'route'       => 'rica.support.commands',
-        //             'icon'        => 'fas fa-fw fa-asterisk',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
-        //         [
-        //             'text'        => 'Routers',
-        //             'route'       => 'rica.support.routers',
-        //             'icon'        => 'fas fa-fw fa-folder',
-        //             'icon_color'  => 'blue',
-        //             'label_color' => 'success',
-        //             'space'      => 'rica',
-        //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        //             //  'access' => \Porteiro\Models\Role::$ADMIN
-        //         ],
-        //     ],
+            'Modelagem' => [
+                [
+                    'text'        => 'Crud Builder',
+                    'route'       => 'rica.facilitador.bread.index',
+                    'icon'        => 'fas fa-fw fa-eye',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section'     => 'rica',
+                    'order' => 4650,
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    //  'access' => \Porteiro\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Database',
+                    'route'       => 'rica.facilitador.database.index',
+                    'icon'        => 'fas fa-fw fa-database',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section'      => 'rica',
+                    'order' => 4680,
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    //  'access' => \Porteiro\Models\Role::$ADMIN
+                ],
+            ],
         //     'Debugger' => [
         //         [
         //             'text'        => 'View Errors',
@@ -209,7 +180,7 @@ class SupportServiceProvider extends ServiceProvider
         //             'icon'        => 'fas fa-fw fa-bug', //times, warning
         //             'icon_color'  => 'blue',
         //             'label_color' => 'success',
-        //             'space'      => 'rica',
+        //             'section'      => 'rica',
         //             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         //             //  'access' => \Porteiro\Models\Role::$ADMIN
         //         ],
@@ -254,12 +225,6 @@ class SupportServiceProvider extends ServiceProvider
         if (\Illuminate\Support\Facades\Config::get('site.core.register_routes', true) && !$this->app->routesAreCached()) {
             $this->app['support.router']->registerAll();
         }
-        $event->listen(
-            'facilitador.alerts.collecting',
-            function () {
-                $this->addStorageSymlinkAlert();
-            }
-        );
     }
 
     /**
@@ -271,17 +236,6 @@ class SupportServiceProvider extends ServiceProvider
     {
 
 
-        // Build the Breadcrumbs store
-        $this->app->singleton(
-            'rica.breadcrumbs',
-            function ($app) {
-                $breadcrumbs = new \Pedreiro\Template\Layout\Breadcrumbs();
-                $breadcrumbs->set($breadcrumbs->parseURL());
-
-                return $breadcrumbs;
-            }
-        );
-
         // Registers explicit rotues and wildcarding routing
         $this->app->singleton(
             'support.router',
@@ -289,14 +243,6 @@ class SupportServiceProvider extends ServiceProvider
                 $dir = \Illuminate\Support\Facades\Config::get('application.routes.rica', 'rica');
 
                 return new \Support\Routing\Router($dir);
-            }
-        );
-
-        // Register URL Generators as "SupportURL".
-        $this->app->singleton(
-            'support.url',
-            function ($app) {
-                return new \Support\Routing\UrlGenerator($app['request']->path());
             }
         );
 
@@ -310,15 +256,15 @@ class SupportServiceProvider extends ServiceProvider
             }
         );
 
-
+        // @todo la no Pedreiro
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorBaseController',
-            'Support\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsController'
+            'Pedreiro\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsController'
         );
 
         $this->app->bind(
             'Facilitador\Http\Controllers\FacilitadorMediaController',
-            'Support\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsMediaController'
+            'Pedreiro\Http\Controllers\ExtendedBreadFormFields\ExtendedBreadFormFieldsMediaController'
         );
 
         $this->registerModelFactory();
@@ -805,7 +751,7 @@ class SupportServiceProvider extends ServiceProvider
             ModelFactory::class,
             'rica.breadcrumbs',
             'support.router',
-            'support.url',
+            'pedreiro.url',
         ];
     }
 }

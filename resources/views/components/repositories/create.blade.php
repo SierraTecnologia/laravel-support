@@ -5,7 +5,7 @@
 @section('content')
 <!-- 
     <div class="col-md-12 mt-2">
-        include('features.widgets.breadcrumbs', ['location' => ['create']])
+        include('siravel::admin.components.widgets.breadcrumbs', ['location' => ['create']])
     </div> -->
 
     <div class="row">
@@ -15,12 +15,12 @@
                     <h3 class="box-title panel-title card-title">{!! $service->getModelService()->getName() !!}</h3>
                 </div>
                 <div class="box-body panel-body card-body">
-                    {!! Form::open(['url' => route('facilitador.store', [ $service->getModelService()->getCryptName()]), 'class' => 'add']) !!}
+                    {!! Form::open(['url' => route('rica.facilitador.store', [ $service->getModelService()->getCryptName()]), 'class' => 'add']) !!}
 
                         {!! FormMaker::fromTable($service->getModelService()->getTableName(), $service->getModelService()->getFieldForForm()) !!}
 
                         <div class="form-group text-right">
-                            <a href="{!! $service->getModelService()->getUrl() !!}" class="btn btn-secondary raw-left">Cancel</a>
+                            <a href="{!! $service->getModelService()->getUrl() !!}" class="btn btn-secondary raw-left">{{ __('pedreiro::generic.cancel') }}</a>
                             {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                         </div>
 

@@ -21,10 +21,10 @@
                         $url .= '/'.$segment;
                         @endphp
                         @if ($loop->last)
-                            <li>{{ \Support\Routing\UrlGenerator::displayStringName($segment) }}</li>
+                            <li>{{ \Pedreiro\Routing\UrlGenerator::displayStringName($segment) }}</li>
                         @else
                             <li>
-                                <a href="{{ $url }}">{{ \Support\Routing\UrlGenerator::displayStringName($segment) }}</a>
+                                <a href="{{ $url }}">{{ \Pedreiro\Routing\UrlGenerator::displayStringName($segment) }}</a>
                             </li>
                         @endif
                     @endforeach
@@ -58,7 +58,7 @@
                             @else
                                 <li {!! isset($item['classes']) && !empty($item['classes']) ? 'class="'.$item['classes'].'"' : '' !!}>
                                     @if(isset($item['route']) && $item['route'] == 'facilitador.logout')
-                                    <form action="{{ route('facilitador.logout') }}" method="POST">
+                                    <form action="{{ route('rica.facilitador.logout') }}" method="POST">
                                         {{ csrf_field() }}
                                         <button type="submit" class="btn btn-danger btn-block">
                                             @if(isset($item['icon']) && !empty($item['icon']))

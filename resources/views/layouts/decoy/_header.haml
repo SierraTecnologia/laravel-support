@@ -17,16 +17,16 @@
 		- if(!empty($many_to_many) && app('facilitador.user')->can('update', $controller))
 			-# If we've declared this relationship a many to many one, show the autocomplete
 			.pull-right.btn-toolbar
-				!=View::make('support::shared.form.relationships._many_to_many', $__data)->render()
+				!=View::make('pedreiro::shared.form.relationships._many_to_many', $__data)->render()
 
 		- elseif(app('facilitador.user') && app('facilitador.user')->can('create', $controller) && !Route::is('forgot', 'support::account@reset'))
 
 			-# Controller actions
 			.pull-right.btn-toolbar
 				.btn-group
-					%a.btn.outline.new(href=URL::to(SupportURL::relative('create')))
+					%a.btn.outline.new(href=URL::to(PedreiroURL::relative('create')))
 						%span.glyphicon.glyphicon-plus
-					!=View::make('support::shared.form._create-locales', $__data)->render()
+					!=View::make('pedreiro::shared.form._create-locales', $__data)->render()
 
 	-# Description of the controller
 	-if($description)

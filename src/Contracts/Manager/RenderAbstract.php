@@ -1,8 +1,8 @@
 <?php
 namespace Support\Contracts\Manager;
 
-use Support\Contracts\Support\Arrayable;
-use Support\Contracts\Support\ArrayableTrait;
+use Muleta\Contracts\Support\Arrayable;
+use Muleta\Contracts\Support\ArrayableTrait;
 use Muleta\Traits\Debugger\HasErrors;
 use Muleta\Traits\Coder\GetSetTrait;
 use Illuminate\Database\Eloquent\Collection;

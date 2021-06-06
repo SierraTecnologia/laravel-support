@@ -22,7 +22,7 @@
                 <div class="panel panel-bordered">
                     <!-- form start -->
                     <form class="form-edit-add" role="form"
-                          action="@if(isset($dataTypeContent->id)){{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'update', $dataTypeContent->id) }}@else{{ \Support\Routing\UrlGenerator::managerRoute($dataType->slug, 'store') }}@endif"
+                          action="@if(isset($dataTypeContent->id)){{ \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'update', $dataTypeContent->id) }}@else{{ \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'store') }}@endif"
                           method="POST" enctype="multipart/form-data">
 
                         <!-- PUT Method if we are editing -->

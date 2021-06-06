@@ -31,8 +31,8 @@ use Muleta\Utils\Extratores\ClasserExtractor;
 
 use Support\Patterns\Parser\ParseClass;
 
-use Support\Contracts\Support\Arrayable;
-use Support\Contracts\Support\ArrayableTrait;
+use Muleta\Contracts\Support\Arrayable;
+use Muleta\Contracts\Support\ArrayableTrait;
 use Muleta\Traits\Debugger\HasErrors;
 
 class DatabaseRender implements Arrayable

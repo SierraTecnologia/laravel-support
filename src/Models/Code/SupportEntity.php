@@ -1,6 +1,6 @@
 <?php
 /**
- * Cache dos Entitys
+ * Cache dos Entities
  */
 
 namespace Support\Models\Code;
@@ -11,7 +11,7 @@ class SupportEntity extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'support_code_entitys';
+    protected $table = 'support_code_entities';
     protected $primaryKey = 'code';
     protected $keyType = 'string';
 

@@ -260,22 +260,22 @@ class Router
     public function registerElements()
     {
         Route::get('elements/field/{key}', [
-            'as' => 'facilitador.elements@field',
+            'as' => 'pedreiro.elements@field',
             'uses' => '\Facilitador\Http\Controllers\Admin\Elements@field',
         ]);
 
         Route::post('elements/field/{key}', [
-            'as' => 'facilitador.elements@field-update',
+            'as' => 'pedreiro.elements@field-update',
             'uses' => '\Facilitador\Http\Controllers\Admin\Elements@fieldUpdate',
         ]);
 
         Route::get('elements/{locale?}/{tab?}', [
-            'as' => 'facilitador.elements',
+            'as' => 'pedreiro.elements',
             'uses' => '\Facilitador\Http\Controllers\Admin\Elements@index',
         ]);
 
         Route::post('elements/{locale?}/{tab?}', [
-            'as' => 'facilitador.elements@store',
+            'as' => 'pedreiro.elements@store',
             'uses' => '\Facilitador\Http\Controllers\Admin\Elements@store',
         ]);
     }

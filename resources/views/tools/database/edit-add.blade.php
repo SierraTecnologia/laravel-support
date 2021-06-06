@@ -1,4 +1,5 @@
-@extends('support::master')
+@extends('layouts.page')
+
 @if($db->action == 'update')
     @section('page_title', __('pedreiro::database.editing_table', ['table' => $db->table->name]))
 @else
@@ -22,7 +23,7 @@
         <a href="{{ route('rica.dashboard')}}"><i class="facilitador-boat"></i> {{ __('voyager::generic.dashboard') }}</a>
     </li>
     <li>
-        <a href="{{ route('facilitador.database.index') }}">
+        <a href="{{ route('rica.facilitador.database.index') }}">
             {{ __('pedreiro::generic.database') }}
         </a>
     </li>
