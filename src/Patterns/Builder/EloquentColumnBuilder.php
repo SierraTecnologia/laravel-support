@@ -443,6 +443,15 @@ class EloquentColumnBuilder extends BuilderAbstract
             return 'text';
         }
 
+        if (in_array(
+            $type, [
+            'varbinary'
+            ]
+        )
+        ) {
+            return 'text-area';
+        }
+
         Log::channel('sitec-support')->error(
             'EloquentBuilder: Não tratando tipo '.$type
         );
