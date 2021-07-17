@@ -113,6 +113,10 @@ class SystemEntity extends EntityAbstract
         if (is_null($className) || empty($className)) {
             return true;
         }
+        if (method_exists($className, 'hasFeatureHability') && $className::hasFeatureHability()) {
+            \Log::debug('Class '.$className.' foi ignorada porque nao tem feature ativada');
+            return true;
+        }
 
         if ($childrens = $this->haveChildren($className)) {
             foreach ($childrens as $children) {

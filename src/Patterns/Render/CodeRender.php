@@ -42,6 +42,7 @@ class CodeRender extends RenderAbstract
         
                 'Trainner\Models',
                 'Gamer\Models',
+                'Jogos\Models',
         
                 'Facilitador\Models',
                 'Siravel\Models',
