@@ -235,7 +235,6 @@ class SupportServiceProvider extends ServiceProvider
     public function register()
     {
 
-
         // Registers explicit rotues and wildcarding routing
         $this->app->singleton(
             'support.router',
