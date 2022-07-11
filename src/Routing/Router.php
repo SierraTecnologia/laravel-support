@@ -14,7 +14,7 @@ use Route;
 class Router
 {
     use ConsoleTools;
-    
+
     /**
      * Action for current wildcard request
      *
@@ -74,7 +74,7 @@ class Router
             }
         );
         /**
-         * RiCa Routes
+         * RiCa Routes // @todo anaisar rica aqui
          */
         Route::group(
             [
@@ -290,7 +290,7 @@ class Router
     {
         Route::post('redactor', '\Facilitador\Http\Controllers\Admin\Redactor@store');
     }
-    
+
     public function getRouteSpace()
     {
         $req = explode(DIRECTORY_SEPARATOR, Request::path());

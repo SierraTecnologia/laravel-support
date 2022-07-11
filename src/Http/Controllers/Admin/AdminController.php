@@ -28,7 +28,7 @@ class AdminController extends Controller
     public function title()
     {
     }
-    
+
     // /**
     //  * Display a listing of the resource.
     //  *
@@ -48,7 +48,7 @@ class AdminController extends Controller
     //  *
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function search()
+    // public function search(Request $request)
     // {
     //     $registros = $this->facilitadorService->search($request->user()->id, $request->search);
 

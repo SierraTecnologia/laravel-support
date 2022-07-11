@@ -23,8 +23,8 @@ if (!function_exists('isFieldSlugAutoGenerator')) {
     /**
      * Determine the details field, for a given dataTypeContent.
      *
-     * @param Illuminate\Database\Eloquent\Collection $dType    Data type
-     * @param Illuminate\Database\Eloquent\Collection $dContent Data type Content
+     * @param \Illuminate\Database\Eloquent\Collection $dType    Data type
+     * @param \Illuminate\Database\Eloquent\Collection $dContent Data type Content
      * @param string                                  $field    Field name
      *
      * @return string HTML output.

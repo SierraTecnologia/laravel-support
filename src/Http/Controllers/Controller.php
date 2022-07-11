@@ -27,7 +27,6 @@ use Translation\Template\Localize;
 use URL;
 use Validator;
 use View;
-use stdClass;
 
 class Controller extends BaseController
 {

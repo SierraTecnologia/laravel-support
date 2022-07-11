@@ -5,8 +5,9 @@ namespace Support\Repositories;
 use Carbon\Carbon;
 use Translation\Repositories\TranslationRepository;
 use Illuminate\Support\Facades\Schema;
+use Muleta\Modules\Eloquents\Displays\RepositoryAbstract;
 
-class BaseRepository
+class BaseRepository extends RepositoryAbstract
 {
     public $translationRepo;
 
