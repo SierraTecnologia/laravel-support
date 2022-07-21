@@ -8,10 +8,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">MySQL Database to Laravel Migrations Generator</div>
+            <div class="card card-default">
+                <div class="box-header panel-heading card-header">MySQL Database to Laravel Migrations Generator</div>
 
-                <div class="panel-body">
+                <div class="box-body panel-body card-body">
                     <form action="{{route('dump.upload')}}" method="POST" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="form-group">
@@ -37,7 +37,7 @@
                     browseLabel: "Browse",
                     showPreview: false,
                     allowedFileExtensions: ['sql']
-                   }); 
+                   });
                 });
             </script>
     @endsection

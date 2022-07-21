@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="panel panel-bordered">
+                <div class="card card-bordered">
                     <!-- form start -->
                     <form class="form-edit-add" role="form"
                           action="@if(isset($dataTypeContent->id)){{ \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'update', $dataTypeContent->id) }}@else{{ \Pedreiro\Routing\UrlGenerator::managerRoute($dataType->slug, 'store') }}@endif"
@@ -33,7 +33,7 @@
                         <!-- CSRF TOKEN -->
                         {{ csrf_field() }}
 
-                        <div class="panel-body">
+                        <div class="box-body panel-body card-body">
 
                             @if (count($errors) > 0)
                                 <div class="alert alert-danger">

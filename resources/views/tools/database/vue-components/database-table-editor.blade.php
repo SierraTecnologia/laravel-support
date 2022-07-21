@@ -1,7 +1,7 @@
 @section('database-table-editor-template')
 
-<div class="panel panel-bordered">
-    <div class="panel-body">
+<div class="card card-bordered">
+    <div class="box-body panel-body card-body">
         <div class="row">
         @if($db->action == 'update')
             <div class="col-md-12">

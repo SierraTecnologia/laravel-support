@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">MySQL Database to Laravel Migrations Generator</div>
+            <div class="card card-default">
+                <div class="box-header panel-heading card-header">MySQL Database to Laravel Migrations Generator</div>
 
-                <div class="panel-body">
+                <div class="box-body panel-body card-body">
                     <div id="lblMsg">
                         <p>
                             File has been uploaded successfully!
@@ -51,27 +51,27 @@
                         }
                     });
                 });
-                
+
                 function showTableNames(tableNames)
                 {
                     $("#lblMsg").html("<label>Select the tables for which you want to generate migrations:</label>");
-                    
+
                     var form = $(document.createElement("form")).prop({action: "{{route('migrations.generate')}}", method: "POST"});
                     $(form).append('{{csrf_field()}}');
                     $.each(tableNames, function(index, tableName)
                     {
                        $(form).append(createCheckbox(tableName));
                     });
-                    
+
                     if(tableNames.length > 0)
                     {
                         $(form).append($(document.createElement("button")).addClass("btn btn-secondary").prop({type: 'button'}).css("margin-right", "5px").html("<span class='glyphicon glyphicon-hand-up'></span> Toggle Selection").on('click', toggleSelection));
                         $(form).append($(document.createElement("button")).addClass("btn btn-success").prop({type: 'submit', id: 'btnGenerateMigrations', disabled: 'disabled'}).html("<span class='glyphicon glyphicon-triangle-right'></span> Generate Migrations"));
                     }
-                    
+
                     $("#tablesList").html(form);
                 }
-                
+
                 function createCheckbox(tableName)
                 {
                     return $(document.createElement("div")).addClass("checkbox")
@@ -80,9 +80,9 @@
                                 .prop({value: tableName, name:"tables[]", type: "checkbox"})
                                 .on('change', tableSelectionChanged))
                             .append(tableName));
-                    
+
                 }
-                
+
                 function toggleSelection()
                 {
                     $("input[type=checkbox]").each(function(index, checkbox)
@@ -90,10 +90,10 @@
                        var isChecked = $(checkbox).prop('checked');
                        isChecked = $(checkbox).prop('checked', !isChecked);
                     });
-                    
+
                     tableSelectionChanged(); // Need to call it manually to enable/disable 'Generate Migrations' button
                 }
-                
+
                 function tableSelectionChanged()
                 {
                     if($("input:checked").length > 0)
