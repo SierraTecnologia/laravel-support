@@ -55,7 +55,7 @@
         "zencoder/zencoder-php": ">=2.2",
         "larapack/hooks": ">=1.0.5",
         "league/fractal": ">=0.18.0",
-        "guzzlehttp/guzzle": "^6.0 || ^7.0",
+        "guzzlehttp/guzzle": "^6.0|^7.0|^8.0",
         "league/pipeline": "^1.0",
         "spatie/laravel-backup": "^6.0",
         "laravel/passport": "^9.0 || ^10.0",
