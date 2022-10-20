@@ -69,16 +69,16 @@
                     <!-- CSRF TOKEN -->
                     {{ csrf_field() }}
 
-                    <div class="panel panel-primary panel-bordered">
+                    <div class="card card-primary panel-bordered">
 
-                        <div class="panel-heading">
+                        <div class="box-header panel-heading card-header">
                             <h3 class="panel-title panel-icon"><i class="facilitador-bread"></i> {{ ucfirst($table) }} {{ __('pedreiro::bread.bread_info') }}</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
                         </div>
 
-                        <div class="panel-body">
+                        <div class="box-body panel-body card-body">
                             <div class="row clearfix">
                                 <div class="col-md-6 form-group">
                                     <label for="name">{{ __('pedreiro::database.table_name') }}</label>
@@ -274,15 +274,15 @@
                     </div><!-- .panel -->
 
 
-                    <div class="panel panel-primary panel-bordered">
-                        <div class="panel-heading">
+                    <div class="card card-primary panel-bordered">
+                        <div class="box-header panel-heading card-header">
                             <h3 class="panel-title panel-icon"><i class="facilitador-window-list"></i> {{ __('pedreiro::bread.edit_rows', ['table' => $table]) }}:</h3>
                             <div class="panel-actions">
                                 <a class="panel-action facilitador-angle-up" data-toggle="panel-collapse" aria-hidden="true"></a>
                             </div>
                         </div>
 
-                        <div class="panel-body">
+                        <div class="box-body panel-body card-body">
                             <div class="row fake-table-hd">
                                 <div class="col-xs-2">{{ __('pedreiro::database.field') }}</div>
                                 <div class="col-xs-2">{{ __('pedreiro::database.visibility') }}</div>

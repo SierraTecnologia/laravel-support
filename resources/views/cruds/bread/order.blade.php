@@ -12,12 +12,12 @@
 <div class="page-content container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-bordered">
-                <div class="panel-heading">
+            <div class="card card-bordered">
+                <div class="box-header panel-heading card-header">
                     <p class="panel-title" style="color:#777">{{ __('pedreiro::generic.drag_drop_info') }}</p>
                 </div>
 
-                <div class="panel-body" style="padding:30px;">
+                <div class="box-body panel-body card-body" style="padding:30px;">
                     <div class="dd">
                         <ol class="dd-list">
                             @foreach ($results as $result)

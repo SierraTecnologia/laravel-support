@@ -41,8 +41,8 @@
         @include('facilitador::alerts')
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-bordered">
-                    <div class="panel-body">
+                <div class="card card-bordered">
+                    <div class="box-body panel-body card-body">
                         @if ($isServerSide)
                             <form method="get" class="form-search">
                                 <div id="search-input">

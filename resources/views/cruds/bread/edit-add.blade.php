@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="panel panel-bordered">
+                <div class="card card-bordered">
                     <!-- form start -->
                     <form role="form"
                             class="form-edit-add"
@@ -38,7 +38,7 @@
                         <!-- CSRF TOKEN -->
                         {{ csrf_field() }}
 
-                        <div class="panel-body">
+                        <div class="box-body panel-body card-body">
 
                             @if (isset($errors) && count($errors) > 0)
                                 <div class="alert alert-danger">
