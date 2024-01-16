@@ -1,0 +1,22 @@
+<?php
+
+namespace SiObjects\Mount\BigData\Contracts;
+
+/**
+ * Interface Builder.
+ *
+ * @package SiObjects\Mount\SiteMap\Contracts
+ */
+interface Builder
+{
+    /**
+     * @return array
+     */
+    public function getItems(): array;
+
+    /**
+     * @param  array $items
+     * @return $this
+     */
+    public function setItems(array $items);
+}

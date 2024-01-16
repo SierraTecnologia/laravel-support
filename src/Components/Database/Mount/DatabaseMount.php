@@ -67,7 +67,7 @@ class DatabaseMount implements Arrayable
 
 
 
-    public function __construct($eloquentClasses)
+    public function __construct(array $eloquentClasses)
     {
         Log::debug(
             'Mount Database -> Iniciando'
@@ -89,7 +89,7 @@ class DatabaseMount implements Arrayable
     protected function render(): void
     {
         $eloquentClasses = $this->eloquentClasses;
-        
+
         $this->loadRenderDatabaseArray();
         $renderDatabaseArray = $this->renderDatabaseArray;
 
@@ -99,10 +99,10 @@ class DatabaseMount implements Arrayable
         // dd(
         //     'Olaaaa Database Mount',
         //     $eloquentClasses,
-        //     $this->ignoretedClasses 
+        //     $this->ignoretedClasses
         // );
 
-        
+
         $this->relationships = $eloquentRenders->map(
             function ($eloquentData, $className) use ($renderDatabaseArray) {
 
@@ -121,7 +121,7 @@ class DatabaseMount implements Arrayable
                 }
             }
         );
-        
+
 
 
         $this->eloquentEntities = $eloquentRenders->reject(
