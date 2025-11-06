@@ -1,0 +1,20 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    level: 8
+    paths:
+        - src
+
+    # Ignora erros conhecidos de bibliotecas externas
+    excludePaths:
+        - src/Components/Database/Meta/
+
+    # Configurações adicionais
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+
+    # Ignora erros específicos se necessário
+    ignoreErrors:
+        - '#Call to an undefined method Illuminate\\Support\\Facades#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model#'

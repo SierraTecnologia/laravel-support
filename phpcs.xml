@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ruleset name="Laravel Support Coding Standard">
+    <description>PSR-12 coding standard for Laravel Support package</description>
+
+    <!-- Arquivos a verificar -->
+    <file>src</file>
+    <file>tests</file>
+
+    <!-- Excluir arquivos/diretórios -->
+    <exclude-pattern>*/database/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/publishes/*</exclude-pattern>
+    <exclude-pattern>*/resources/views/*</exclude-pattern>
+
+    <!-- Usar PSR-12 como base -->
+    <rule ref="PSR12"/>
+
+    <!-- Configurações adicionais -->
+    <arg name="colors"/>
+    <arg value="sp"/>
+    <arg name="parallel" value="75"/>
+    <arg name="cache" value=".phpcs-cache"/>
+
+    <!-- Ignorar avisos sobre tamanho de linha (Laravel usa linhas longas) -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="180"/>
+        </properties>
+    </rule>
+
+    <!-- Configurações específicas do Laravel -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>*/database/migrations/*</exclude-pattern>
+    </rule>
+
+    <!-- Permitir arrays curtos [] ao invés de array() -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+</ruleset>
