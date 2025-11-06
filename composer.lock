@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "988385e58431691c41a44b15cd12ed41",
+    "content-hash": "7c273d4fa805227fe9ff064e52810cb2",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -2340,39 +2340,33 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.23.1",
+            "version": "v1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "bfb4fe148adbf78eff521199619b93a52ae3554b"
+                "reference": "84220cf137a9344acffb10374e781fed785ff307"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/bfb4fe148adbf78eff521199619b93a52ae3554b",
-                "reference": "bfb4fe148adbf78eff521199619b93a52ae3554b",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/84220cf137a9344acffb10374e781fed785ff307",
+                "reference": "84220cf137a9344acffb10374e781fed785ff307",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
-                "psr/container": "^1.0 || ^2.0",
-                "symfony/deprecation-contracts": "^2.2 || ^3.0"
+                "php": "^5.3.3 || ^7.0"
             },
             "conflict": {
-                "fzaninotto/faker": "*"
+                "ergebnis/faker": "!=1.9.2",
+                "fzaninotto/faker": "!=1.9.2"
+            },
+            "replace": {
+                "ergebnis/faker": "1.9.2",
+                "fzaninotto/faker": "1.9.2"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
-                "doctrine/persistence": "^1.3 || ^2.0",
                 "ext-intl": "*",
-                "phpunit/phpunit": "^9.5.26",
-                "symfony/phpunit-bridge": "^5.4.16"
-            },
-            "suggest": {
-                "doctrine/orm": "Required to use Faker\\ORM\\Doctrine",
-                "ext-curl": "Required by Faker\\Provider\\Image to download images.",
-                "ext-dom": "Required by Faker\\Provider\\HtmlLorem for generating random HTML.",
-                "ext-iconv": "Required by Faker\\Provider\\ru_RU\\Text::realText() for generating real Russian text.",
-                "ext-mbstring": "Required for multibyte Unicode string functionality."
+                "phpunit/phpunit": "^4.8.35 || ^5.7",
+                "squizlabs/php_codesniffer": "^2.9.2"
             },
             "type": "library",
             "autoload": {
@@ -2397,9 +2391,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.23.1"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.9.2"
             },
-            "time": "2024-01-02T13:46:09+00:00"
+            "time": "2020-12-11T14:32:13+00:00"
         },
         {
             "name": "fgrosse/phpasn1",
@@ -2533,6 +2527,102 @@
                 "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
             },
             "time": "2021-11-08T20:18:51+00:00"
+        },
+        {
+            "name": "geo-io/interface",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geo-io/interface.git",
+                "reference": "cf46fe7b013de20ab8b601238c7d91b480810644"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geo-io/interface/zipball/cf46fe7b013de20ab8b601238c7d91b480810644",
+                "reference": "cf46fe7b013de20ab8b601238c7d91b480810644",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GeoIO\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com"
+                }
+            ],
+            "description": "Geo I/O base interfaces.",
+            "keywords": [
+                "geo",
+                "geometry",
+                "io"
+            ],
+            "support": {
+                "issues": "https://github.com/geo-io/interface/issues",
+                "source": "https://github.com/geo-io/interface/tree/v1.0.1"
+            },
+            "time": "2016-07-28T07:17:02+00:00"
+        },
+        {
+            "name": "geo-io/wkb-parser",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geo-io/wkb-parser.git",
+                "reference": "d6c3101e6fa255c2a5064fedb33551c4d50e58f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geo-io/wkb-parser/zipball/d6c3101e6fa255c2a5064fedb33551c4d50e58f6",
+                "reference": "d6c3101e6fa255c2a5064fedb33551c4d50e58f6",
+                "shasum": ""
+            },
+            "require": {
+                "geo-io/interface": "~1.0",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GeoIO\\WKB\\Parser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com"
+                }
+            ],
+            "description": "Well-known binary (WKB) Parser.",
+            "keywords": [
+                "geo",
+                "geometry",
+                "io",
+                "parser",
+                "wkb"
+            ],
+            "support": {
+                "issues": "https://github.com/geo-io/wkb-parser/issues",
+                "source": "https://github.com/geo-io/wkb-parser/tree/v1.0.2"
+            },
+            "time": "2022-01-15T16:29:24+00:00"
         },
         {
             "name": "google/recaptcha",
@@ -3301,6 +3391,114 @@
                 "source": "https://github.com/slampenny/Swaggervel/tree/master"
             },
             "time": "2016-01-25T15:38:17+00:00"
+        },
+        {
+            "name": "jmikola/geojson",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jmikola/geojson.git",
+                "reference": "3699d2be8961f2c2f20b33041b6f0608d2cf4332"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jmikola/geojson/zipball/3699d2be8961f2c2f20b33041b6f0608d2cf4332",
+                "reference": "3699d2be8961f2c2f20b33041b6f0608d2cf4332",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0",
+                "symfony/polyfill-php80": "^1.25"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5",
+                "scrutinizer/ocular": "^1.8.1",
+                "slevomat/coding-standard": "^8.0",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GeoJson\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Mikola",
+                    "email": "jmikola@gmail.com"
+                }
+            ],
+            "description": "GeoJSON implementation for PHP",
+            "homepage": "https://github.com/jmikola/geojson",
+            "keywords": [
+                "geo",
+                "geojson",
+                "geospatial"
+            ],
+            "support": {
+                "issues": "https://github.com/jmikola/geojson/issues",
+                "source": "https://github.com/jmikola/geojson/tree/1.1.2"
+            },
+            "time": "2023-02-20T01:27:38+00:00"
+        },
+        {
+            "name": "jordanbrauer/unit-converter",
+            "version": "v0.8.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jordanbrauer/unit-converter.git",
+                "reference": "0b8dc7fdef9c86489e3c2361cabbdc5fba77c72e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jordanbrauer/unit-converter/zipball/0b8dc7fdef9c86489e3c2361cabbdc5fba77c72e",
+                "reference": "0b8dc7fdef9c86489e3c2361cabbdc5fba77c72e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-intl": "*",
+                "php": "^7.3 || ~8.0.0 || ~8.1.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.13",
+                "marcocesarato/php-conventional-changelog": "^1.9",
+                "pestphp/pest": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/var-dumper": "^3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "UnitConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jordanbrauer",
+                    "email": "18744334+jordanbrauer@users.noreply.github.com"
+                }
+            ],
+            "description": "Convert standard units from one to another with this easy to use, lightweight package",
+            "support": {
+                "issues": "https://github.com/jordanbrauer/unit-converter/issues",
+                "source": "https://github.com/jordanbrauer/unit-converter/tree/v0.8.8"
+            },
+            "time": "2021-12-30T00:51:06+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -7628,6 +7826,67 @@
             "time": "2020-06-03T22:12:35+00:00"
         },
         {
+            "name": "ricardosierra/database",
+            "version": "0.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ricardosierra/database.git",
+                "reference": "b90e75cb86aea6ce28c7dd4bc15b370a1890d630"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ricardosierra/database/zipball/b90e75cb86aea6ce28c7dd4bc15b370a1890d630",
+                "reference": "b90e75cb86aea6ce28c7dd4bc15b370a1890d630",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.5",
+                "illuminate/database": "^5.0|^6.0|^7.0|^8.0",
+                "php": ">=5.5",
+                "ramsey/uuid": "^3.0|^4.0"
+            },
+            "replace": {
+                "bosnadev/database": "*"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0.3.2",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bosnadev\\Database\\": "src/Bosnadev/Database/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mirza Pasic",
+                    "email": "mirza@bosnadev.com"
+                },
+                {
+                    "name": "Peter Haza",
+                    "email": "peter.haza@gmail.com"
+                }
+            ],
+            "description": "Eloquent Extended, added some PostgreSQL features",
+            "homepage": "https://bosnadev.com",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "postgresql"
+            ],
+            "support": {
+                "source": "https://github.com/ricardosierra/database/tree/1.0"
+            },
+            "time": "2020-09-13T18:24:43+00:00"
+        },
+        {
             "name": "ricardosierra/laravel-haml",
             "version": "2.4.2",
             "source": {
@@ -7715,11 +7974,17 @@
         },
         {
             "name": "ricardosierra/minify",
-            "version": "dev-master",
+            "version": "0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ricardosierra/minify.git",
+                "reference": "7d79b734eac0fa350989a3b0b7c19043fcf0ca6e"
+            },
             "dist": {
-                "type": "path",
-                "url": "../minify",
-                "reference": "0564d879e75689a002d074cbaddf04c0e1f4ad64"
+                "type": "zip",
+                "url": "https://api.github.com/repos/ricardosierra/minify/zipball/7d79b734eac0fa350989a3b0b7c19043fcf0ca6e",
+                "reference": "7d79b734eac0fa350989a3b0b7c19043fcf0ca6e",
+                "shasum": ""
             },
             "require": {
                 "illuminate/filesystem": "^7.0 || ^8.0",
@@ -7732,12 +7997,8 @@
                 "devfactory/minify": "*"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "orchestra/testbench": "^5.0|^6.0",
-                "phpro/grumphp": ">=1.3",
-                "phpunit/phpunit": "^9.3",
-                "psalm/plugin-laravel": "^1.5",
-                "vimeo/psalm": "^4.0"
+                "mikey179/vfsstream": "1.2.*",
+                "phpspec/phpspec": ">=2.0.0"
             },
             "type": "library",
             "extra": {
@@ -7755,23 +8016,7 @@
                     "RicardoSierra\\Minify\\": "src/"
                 }
             },
-            "scripts": {
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ],
-                "format": [
-                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
-                ],
-                "post-install-cmd": [],
-                "post-update-cmd": [],
-                "post-create-project-cmd": []
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7786,30 +8031,134 @@
                 "laravel5",
                 "minify"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/ricardosierra/minify/tree/0.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-06-05T19:46:04+00:00"
+        },
+        {
+            "name": "ricardosierra/translation",
+            "version": "0.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ricardosierra/translation.git",
+                "reference": "658c4b758d0b713007d25be1da8c75f43f20c972"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ricardosierra/translation/zipball/658c4b758d0b713007d25be1da8c75f43f20c972",
+                "reference": "658c4b758d0b713007d25be1da8c75f43f20c972",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "illuminate/database": "^7.0 || ^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
+                "illuminate/validation": "^7.0 || ^8.0",
+                "php": ">=7.4",
+                "spatie/laravel-translatable": ">=4.2"
+            },
+            "replace": {
+                "waavi/translation": "*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Translation\\TranslationServiceProvider"
+                    ],
+                    "aliases": {
+                        "Translation": "Translation\\Facades\\Translation"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\": "src/",
+                    "Waavi\\Translation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SierraTecnologia",
+                    "email": "help@sierratecnologia.com.br",
+                    "homepage": "https://sierratecnologia.com.br"
+                },
+                {
+                    "name": "Ricardo Sierra",
+                    "email": "ricardo@ricardosierra.com.br"
+                },
+                {
+                    "name": "Kunle Adekoya",
+                    "email": "crfystoline@gmail.com"
+                },
+                {
+                    "name": "Steve Bauman",
+                    "email": "steven_bauman@outlook.com"
+                },
+                {
+                    "name": "Levan Velijanashvili",
+                    "email": "me@stichoza.com"
+                }
+            ],
+            "description": "An easy automatic database driven translator for Laravel 5.*",
+            "homepage": "https://sierratecnologia.com/packages/translation/",
+            "keywords": [
+                "SierraTecnologia",
+                "lang",
+                "laravel",
+                "localization",
+                "localize",
+                "translate",
+                "translation"
+            ],
+            "support": {
+                "docs": "https://github.com/ricardosierra/translation/blob/master/README.md",
+                "email": "help@sierratecnologia.com",
+                "issues": "https://github.com/ricardosierra/translation/issues",
+                "source": "https://github.com/ricardosierra/translation"
+            },
+            "time": "2020-09-14T12:56:04+00:00"
         },
         {
             "name": "ricardosierra/validate",
-            "version": "dev-master",
+            "version": "0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ricardosierra/validate.git",
+                "reference": "a5283c973ca5bebe2b6a4398bd0b343ad1c042a3"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Validate",
-                "reference": "8faaf43a09f09d05513a256af6f4633a8239061a"
+                "type": "zip",
+                "url": "https://api.github.com/repos/ricardosierra/validate/zipball/a5283c973ca5bebe2b6a4398bd0b343ad1c042a3",
+                "reference": "a5283c973ca5bebe2b6a4398bd0b343ad1c042a3",
+                "shasum": ""
             },
             "require": {
-                "fakerphp/faker": "^1.5",
-                "guzzlehttp/guzzle": "^6.0|^7.0|^8.0",
+                "fzaninotto/faker": ">=1.8",
+                "guzzlehttp/guzzle": "^6.3|^7.0|^8.0",
                 "nesbot/carbon": ">=2.0|1.*",
-                "php": "^7.2|^8.0"
+                "php": "^7.0"
             },
             "require-dev": {
                 "ext-intl": "*",
-                "phpro/grumphp": "^1.3",
-                "phpunit/phpunit": ">=4.0",
-                "psalm/plugin-laravel": "^1.5"
+                "phpunit/phpunit": ">=4.0"
             },
             "type": "library",
             "extra": {
@@ -7822,19 +8171,15 @@
                     "Validate\\": "src/Validate/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Validate\\Test\\": "test/Validate/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "SierraTecnologia",
-                    "homepage": "https://sierratecnologia.com.br",
-                    "email": "help@sierratecnologia.com.br"
+                    "email": "help@sierratecnologia.com.br",
+                    "homepage": "https://sierratecnologia.com.br"
                 },
                 {
                     "name": "Ricardo Rebello Sierra",
@@ -7844,21 +8189,28 @@
             "description": "Validate is a PHP library that validate and filter data for you.",
             "homepage": "https://sierratecnologia.com/packages/validate/",
             "keywords": [
+                "SierraTecnologia",
                 "data",
                 "filter",
-                "sierratecnologia",
                 "validate"
             ],
             "support": {
+                "docs": "https://github.com/sierratecnologia/validate/blob/master/README.md",
                 "email": "help@sierratecnologia.com.br",
                 "issues": "https://github.com/sierratecnologia/validate/issues",
-                "source": "https://github.com/sierratecnologia/validate",
-                "docs": "https://github.com/sierratecnologia/validate/blob/master/README.md"
+                "source": "https://github.com/sierratecnologia/validate"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-23T00:43:56+00:00"
         },
         {
             "name": "sabre/uri",
@@ -8164,24 +8516,29 @@
         },
         {
             "name": "sierratecnologia/crudmaker",
-            "version": "dev-master",
+            "version": "0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/CrudMaker.git",
+                "reference": "e1d6185f83cfe83915ea008c5e7d5bde28a398f8"
+            },
             "dist": {
-                "type": "path",
-                "url": "../CrudMaker",
-                "reference": "30f6075b00d18cff0f01f8f2a3825e3f4756ee73"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/CrudMaker/zipball/e1d6185f83cfe83915ea008c5e7d5bde28a398f8",
+                "reference": "e1d6185f83cfe83915ea008c5e7d5bde28a398f8",
+                "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^2.5",
                 "illuminate/support": "^7.0 || ^8.0",
-                "php": "^7.2|^8.0",
-                "sierratecnologia/formmaker": "dev-master"
+                "php": ">=7.4",
+                "sierratecnologia/formmaker": "^0.4.0"
             },
             "require-dev": {
                 "mikey179/vfsstream": ">=1.6",
                 "mockery/mockery": ">=1.0",
                 "orchestra/testbench": "^4.0|^5.0|^6.0",
-                "phpunit/phpunit": ">=8.0",
-                "psalm/plugin-laravel": "^1.5"
+                "phpunit/phpunit": ">=8.0"
             },
             "type": "library",
             "extra": {
@@ -8192,18 +8549,14 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "SierraTecnologia\\CrudMaker\\": "src/"
-                },
                 "files": [
                     "src/Helpers/namespace.php"
-                ]
+                ],
+                "psr-4": {
+                    "SierraTecnologia\\CrudMaker\\": "src/"
+                }
             },
-            "autoload-dev": {
-                "classmap": [
-                    "tests/TestCase.php"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -8218,18 +8571,34 @@
                 }
             ],
             "description": "An incredibly powerful and some say magical CRUD maker for Laravel",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/SierraTecnologia/CrudMaker/tree/0.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-06-05T19:30:50+00:00"
         },
         {
             "name": "sierratecnologia/crypto",
-            "version": "dev-master",
+            "version": "0.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/Crypto.git",
+                "reference": "2a3ade20a685f664ec277f6a2979df9d9c8f52f8"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Crypto",
-                "reference": "fe6d910b8c9cc0a721a55237cdd301db6dc20603"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/Crypto/zipball/2a3ade20a685f664ec277f6a2979df9d9c8f52f8",
+                "reference": "2a3ade20a685f664ec277f6a2979df9d9c8f52f8",
+                "shasum": ""
             },
             "require": {
                 "defuse/php-encryption": "^2.2",
@@ -8256,52 +8625,61 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "SierraTecnologia\\Crypto\\": "src/"
-                },
                 "files": [
                     "src/Helpers/crypto.php"
-                ]
-            },
-            "autoload-dev": {
+                ],
                 "psr-4": {
-                    "SierraTecnologia\\Crypto\\Test\\": "test/"
+                    "SierraTecnologia\\Crypto\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "SierraTecnologia",
-                    "homepage": "https://sierratecnologia.com.br",
-                    "email": "help@sierratecnologia.com.br"
+                    "email": "help@sierratecnologia.com.br",
+                    "homepage": "https://sierratecnologia.com.br"
                 }
             ],
             "description": "Cryptography tools for Laravel and Lumen",
             "homepage": "https://sierratecnologia.com/packages/crypto/",
             "keywords": [
-                "crypto",
-                "sierratecnologia"
+                "SierraTecnologia",
+                "crypto"
             ],
             "support": {
+                "docs": "https://github.com/sierratecnologia/crypto/blob/master/README.md",
                 "email": "help@sierratecnologia.com.br",
                 "issues": "https://github.com/sierratecnologia/crypto/issues",
-                "source": "https://github.com/sierratecnologia/crypto",
-                "docs": "https://github.com/sierratecnologia/crypto/blob/master/README.md"
+                "source": "https://github.com/sierratecnologia/crypto"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-19T18:02:42+00:00"
         },
         {
             "name": "sierratecnologia/former",
-            "version": "dev-master",
+            "version": "0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/former.git",
+                "reference": "b6bdec26b34784b81495064fa54a3ad48c09ff17"
+            },
             "dist": {
-                "type": "path",
-                "url": "../former",
-                "reference": "1b0a792393781f5244f33ae39d125d2dff531607"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/former/zipball/b6bdec26b34784b81495064fa54a3ad48c09ff17",
+                "reference": "b6bdec26b34784b81495064fa54a3ad48c09ff17",
+                "shasum": ""
             },
             "require": {
                 "anahkiasen/html-object": ">=1.4",
@@ -8322,8 +8700,7 @@
                 "illuminate/database": "^7.0 || ^8.0",
                 "mockery/mockery": ">=0.9.1",
                 "phpro/grumphp": "^1.3",
-                "phpunit/phpunit": ">=4",
-                "psalm/plugin-laravel": "^1.5"
+                "phpunit/phpunit": ">=4"
             },
             "type": "library",
             "extra": {
@@ -8348,6 +8725,7 @@
                     "Laravel\\": "src/Laravel"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -8365,33 +8743,48 @@
                 "foundation",
                 "laravel"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/SierraTecnologia/former/tree/0.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-06-05T19:45:46+00:00"
         },
         {
             "name": "sierratecnologia/formmaker",
-            "version": "dev-master",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/FormMaker.git",
+                "reference": "510e60cdb3e73768e6a424cd811c013b71ad76cb"
+            },
             "dist": {
-                "type": "path",
-                "url": "../FormMaker",
-                "reference": "d1236e4a1be2269684019cf58b10d932b60cf496"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/FormMaker/zipball/510e60cdb3e73768e6a424cd811c013b71ad76cb",
+                "reference": "510e60cdb3e73768e6a424cd811c013b71ad76cb",
+                "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^2.5",
                 "illuminate/support": "^7.0 || ^8.0",
                 "laravelcollective/html": "^6.1",
-                "php": "^7.2|^8.0",
-                "sierratecnologia/former": "^5.0.4"
+                "php": ">=7.4",
+                "sierratecnologia/former": "^0.4.0"
             },
             "require-dev": {
                 "mikey179/vfsstream": ">=1.6",
                 "mockery/mockery": ">=1.0",
                 "orchestra/database": ">=3.8",
                 "orchestra/testbench": "^4.0|^5.0|^6.0",
-                "phpunit/phpunit": ">=8.0",
-                "psalm/plugin-laravel": "^1.5"
+                "phpunit/phpunit": ">=8.0"
             },
             "type": "library",
             "extra": {
@@ -8402,28 +8795,16 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "SierraTecnologia\\FormMaker\\": "src/"
-                },
                 "files": [
                     "utils/form.php",
                     "utils/form_maker.php",
                     "utils/input_maker.php"
-                ]
-            },
-            "autoload-dev": {
-                "classmap": [
-                    "tests/TestCase.php"
-                ]
-            },
-            "scripts": {
-                "check-style": [
-                    "phpcs -p --standard=PSR12 src --extensions=php"
                 ],
-                "fix-style": [
-                    "phpcbf -p --standard=PSR12 src --extensions=php"
-                ]
+                "psr-4": {
+                    "SierraTecnologia\\FormMaker\\": "src/"
+                }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -8438,86 +8819,177 @@
                 }
             ],
             "description": "A remarkably magical form and input maker tool for Laravel.",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/SierraTecnologia/FormMaker/tree/0.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-10-06T12:32:24+00:00"
         },
         {
-            "name": "sierratecnologia/muleta",
-            "version": "dev-master",
+            "name": "sierratecnologia/locaravel",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/Locaravel.git",
+                "reference": "6932d4b13acc6475ee3751472ba9f89fca06c419"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Muleta",
-                "reference": "6e11d9ee64473634432580872f58781cc339a325"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/Locaravel/zipball/6932d4b13acc6475ee3751472ba9f89fca06c419",
+                "reference": "6932d4b13acc6475ee3751472ba9f89fca06c419",
+                "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "doctrine/dbal": "^2.0",
+                "geo-io/wkb-parser": "^1.0",
+                "illuminate/database": "^7.0 || ^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
+                "jmikola/geojson": "^1.0",
+                "jordanbrauer/unit-converter": "^0.8.4",
+                "php": "^7.4",
+                "ricardosierra/database": "^0.21",
+                "ricardosierra/translation": "^0.4.0",
+                "ricardosierra/validate": "^0.4.0",
+                "sierratecnologia/crypto": "^0.4.0",
+                "sierratecnologia/pedreiro": "^0.4.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "orchestra/testbench": "^5.0|^6.0",
-                "phpro/grumphp": ">=1.3",
-                "phpunit/phpunit": "^9.3",
-                "psalm/plugin-laravel": ">=1.5",
-                "vimeo/psalm": ">=4.0"
+                "myclabs/php-enum": "^1.6",
+                "orchestra/testbench": "^4.0|^5.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "spatie/enum": "^2.2"
             },
             "suggest": {
-                "illuminate/database": "Required to helper class to use laravel eloquent without laravel",
-                "laravel/helpers": "^1.1",
-                "ricardosierra/changelog": "^1.4",
-                "sierratecnologia/crypto": "dev-master",
-                "vanderlee/php-sentence": ">=1.0"
+                "igaster/laravel_cities": "^1.0"
             },
             "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Muleta\\": "src/",
-                    "SiUtils\\": "arsenal/utils/",
-                    "SiHelper\\": "arsenal/helper/",
-                    "SiLogic\\": "arsenal/logic/",
-                    "SiObjects\\": "arsenal/objects/",
-                    "SiPlugins\\": "arsenal/plugins/",
-                    "SiWeapons\\": "arsenal/recursos/",
-                    "SiSeed\\": "arsenal/seed/"
-                },
-                "classmap": [
-                    "utils/classes"
-                ],
-                "files": [
-                    "utils/funcs/load-laravel.php",
-                    "utils/funcs/helperSlugify.php",
-                    "utils/funcs/helpers.php",
-                    "utils/funcs/Reflection.php"
-                ]
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Muleta\\Tests\\": "tests"
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Locaravel\\LocaravelProvider"
+                    ],
+                    "dont-discover": [
+                        "scaffold-interface"
+                    ]
                 }
             },
-            "scripts": {
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ],
-                "format": [
-                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
-                ]
+            "autoload": {
+                "psr-4": {
+                    "Locaravel\\": "src/"
+                }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "SierraTecnologia",
-                    "homepage": "https://sierratecnologia.com.br",
-                    "email": "help@sierratecnologia.com.br"
+                    "email": "help@sierratecnologia.com.br",
+                    "homepage": "https://sierratecnologia.com.br"
+                },
+                {
+                    "name": "Ricardo Rebello Sierra",
+                    "email": "contato@ricardosierra.com.br"
+                }
+            ],
+            "description": "Recursos para GeoLocalização",
+            "homepage": "https://sierratecnologia.com/packages/locaravel/",
+            "keywords": [
+                "SierraTecnologia",
+                "locaravel"
+            ],
+            "support": {
+                "docs": "https://github.com/sierratecnologia/locaravel/blob/master/README.md",
+                "email": "help@sierratecnologia.com.br",
+                "issues": "https://github.com/sierratecnologia/locaravel/issues",
+                "source": "https://github.com/sierratecnologia/locaravel"
+            },
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-10-05T07:06:15+00:00"
+        },
+        {
+            "name": "sierratecnologia/muleta",
+            "version": "0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/muleta.git",
+                "reference": "5878b9aeda5efaa57b4f253ce3ee81db3fd1b864"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/muleta/zipball/5878b9aeda5efaa57b4f253ce3ee81db3fd1b864",
+                "reference": "5878b9aeda5efaa57b4f253ce3ee81db3fd1b864",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/helpers": "^1.1",
+                "php": "^7.2|^8.0",
+                "ricardosierra/changelog": "~1.4",
+                "sierratecnologia/crypto": "^0.4.0",
+                "vanderlee/php-sentence": ">=1.0"
+            },
+            "require-dev": {
+                "barryvdh/laravel-debugbar": "^3.2",
+                "barryvdh/laravel-ide-helper": "^2.6",
+                "codedungeon/phpunit-result-printer": ">=0.27.0",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "fzaninotto/faker": "^1.4",
+                "laravel/browser-kit-testing": "^6.0",
+                "laravel/dusk": "^6.2",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.0",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "utils/funcs/load-laravel.php",
+                    "utils/funcs/helperSlugify.php",
+                    "utils/funcs/Reflection.php"
+                ],
+                "psr-4": {
+                    "Muleta\\": "src/",
+                    "SiSeed\\": "arsenal/seed/",
+                    "SiLogic\\": "arsenal/logic/",
+                    "SiUtils\\": "arsenal/utils/",
+                    "SiHelper\\": "arsenal/helper/",
+                    "SiObjects\\": "arsenal/objects/",
+                    "SiPlugins\\": "arsenal/plugins/",
+                    "SiWeapons\\": "arsenal/recursos/"
+                },
+                "classmap": [
+                    "utils/classes"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SierraTecnologia",
+                    "email": "help@sierratecnologia.com.br",
+                    "homepage": "https://sierratecnologia.com.br"
                 },
                 {
                     "name": "Ricardo Rebello Sierra",
@@ -8527,34 +8999,47 @@
             "description": "SierraTecnologia common support helpers, contracts, and traits required by various SierraTecnologia packages. Validator functionality, and basic controller included out-of-the-box.",
             "homepage": "https://sierratecnologia.com/packages/muleta/",
             "keywords": [
+                "SierraTecnologia",
                 "contract",
                 "helper",
                 "laravel",
                 "mimetype",
-                "sierratecnologia",
                 "support",
                 "timezones",
                 "trait",
                 "validator"
             ],
             "support": {
+                "docs": "https://github.com/sierratecnologia/muleta/blob/master/README.md",
                 "email": "help@sierratecnologia.com.br",
                 "issues": "https://github.com/sierratecnologia/muleta/issues",
-                "source": "https://github.com/sierratecnologia/muleta",
-                "docs": "https://github.com/sierratecnologia/muleta/blob/master/README.md"
+                "source": "https://github.com/sierratecnologia/muleta"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-07-17T07:00:42+00:00"
         },
         {
             "name": "sierratecnologia/pedreiro",
-            "version": "dev-master",
+            "version": "0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/Pedreiro.git",
+                "reference": "90999af9e5a5c0a1798b22b5373c82b41f587129"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Pedreiro",
-                "reference": "0916674bfbddde3ac01f9a40860a7ce4305250dc"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/Pedreiro/zipball/90999af9e5a5c0a1798b22b5373c82b41f587129",
+                "reference": "90999af9e5a5c0a1798b22b5373c82b41f587129",
+                "shasum": ""
             },
             "require": {
                 "anahkiasen/html-object": "^1.4",
@@ -8573,13 +9058,14 @@
                 "php": "^7.2|^8.0",
                 "ramsey/uuid": "^4.0",
                 "rap2hpoutre/fast-excel": "^1.7|^2.0",
-                "ricardosierra/changelog": "^1.4",
+                "ricardosierra/changelog": "~1.4",
                 "ricardosierra/laravel-haml": "^2.0",
-                "ricardosierra/minify": "dev-master",
-                "ricardosierra/validate": "dev-master",
-                "sierratecnologia/crudmaker": "dev-master",
-                "sierratecnologia/former": "dev-master",
-                "sierratecnologia/muleta": "dev-master",
+                "ricardosierra/minify": "^0.3.0 | ^0.4.0",
+                "ricardosierra/validate": "^0.4.0",
+                "sierratecnologia/crudmaker": "^0.4.0",
+                "sierratecnologia/former": "^0.4.0",
+                "sierratecnologia/locaravel": "^0.4.0",
+                "sierratecnologia/muleta": "^0.4.0",
                 "spatie/laravel-pjax": ">=1.3",
                 "spatie/laravel-sluggable": "^2.6",
                 "spatie/laravel-validation-rules": "^2.6",
@@ -8590,11 +9076,10 @@
                 "yajra/laravel-datatables-oracle": "^9.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "orchestra/testbench": "^5.0|^6.0",
-                "phpro/grumphp": ">=1.3",
-                "phpunit/phpunit": "^9.3",
-                "psalm/plugin-laravel": "^1.5",
+                "friendsofphp/php-cs-fixer": ">=2.16",
+                "orchestra/testbench": ">=5.0",
+                "phpunit/phpunit": ">=9.3",
+                "psalm/plugin-laravel": "^1.2",
                 "vimeo/psalm": "^4.0"
             },
             "type": "library",
@@ -8609,29 +9094,17 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "utils/funcs/load-laravel.php",
+                    "utils/funcs/helpers.php",
+                    "utils/funcs/helperSlugify.php",
+                    "utils/funcs/Reflection.php"
+                ],
                 "psr-4": {
                     "Pedreiro\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Pedreiro\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ],
-                "format": [
-                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -8646,35 +9119,52 @@
             "description": ":package_description",
             "homepage": "https://github.com/sierratecnologia/pedreiro",
             "keywords": [
-                "pedreiro",
-                "sierratecnologia"
+                "SierraTecnologia",
+                "pedreiro"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/SierraTecnologia/Pedreiro/issues",
+                "source": "https://github.com/SierraTecnologia/Pedreiro/tree/0.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-07-17T03:46:23+00:00"
         },
         {
             "name": "sierratecnologia/templeiro",
-            "version": "dev-master",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SierraTecnologia/Templeiro.git",
+                "reference": "e5b80cd221817e14af044e093487e61462c32558"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Templeiro",
-                "reference": "d96952b74ce7fc9dc30b2b31747e4790cce7f41b"
+                "type": "zip",
+                "url": "https://api.github.com/repos/SierraTecnologia/Templeiro/zipball/e5b80cd221817e14af044e093487e61462c32558",
+                "reference": "e5b80cd221817e14af044e093487e61462c32558",
+                "shasum": ""
             },
             "require": {
                 "laravel/helpers": "^1.1",
                 "league/plates": "^3.1|^4.0|^5.0",
-                "php": "^7.2|^8.0",
-                "sierratecnologia/crypto": "dev-master",
-                "sierratecnologia/pedreiro": "dev-master"
+                "php": "^7.4",
+                "sierratecnologia/crypto": "^0.4.0",
+                "sierratecnologia/pedreiro": "^0.4.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16",
                 "orchestra/testbench": "^5.0",
                 "phpunit/phpunit": "^9.3",
                 "psalm/plugin-laravel": "^1.2",
-                "vimeo/psalm": "^4.0"
+                "vimeo/psalm": "^3.11"
             },
             "type": "library",
             "extra": {
@@ -8691,52 +9181,40 @@
                     "Templeiro\\": "src/"
                 }
             },
-            "scripts": {
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ],
-                "format": [
-                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
-                ],
-                "check-style": [
-                    "phpcs -p --standard=PSR12 src --extensions=php"
-                ],
-                "fix-style": [
-                    "phpcbf -p --standard=PSR12 src --extensions=php"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
                     "name": "SierraTecnologia",
-                    "homepage": "https://sierratecnologia.com.br",
-                    "email": "help@sierratecnologia.com.br"
+                    "email": "help@sierratecnologia.com.br",
+                    "homepage": "https://sierratecnologia.com.br"
                 }
             ],
             "description": "Templeiro de Projetos",
             "homepage": "https://sierratecnologia.com/packages/templeiro/",
             "keywords": [
-                "sierratecnologia",
+                "SierraTecnologia",
                 "templeiro"
             ],
             "support": {
+                "docs": "https://github.com/sierratecnologia/templeiro/blob/master/README.md",
                 "email": "help@sierratecnologia.com",
                 "issues": "https://github.com/sierratecnologia/templeiro/issues",
-                "source": "https://github.com/sierratecnologia/templeiro",
-                "docs": "https://github.com/sierratecnologia/templeiro/blob/master/README.md"
+                "source": "https://github.com/sierratecnologia/templeiro"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "funding": [
+                {
+                    "url": "https://ricasolucoes.com.br/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/ricasolucoes",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-10-05T07:07:35+00:00"
         },
         {
             "name": "spatie/db-dumper",
@@ -9217,6 +9695,89 @@
                 }
             ],
             "time": "2021-03-20T18:07:00+00:00"
+        },
+        {
+            "name": "spatie/laravel-translatable",
+            "version": "5.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-translatable.git",
+                "reference": "06aa692efc2eed838ac47a6324dc179167a97b0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/06aa692efc2eed838ac47a6324dc179167a97b0b",
+                "reference": "06aa692efc2eed838ac47a6324dc179167a97b0b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^7.0|^8.0",
+                "illuminate/support": "^7.0|^8.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.6"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Translatable\\TranslatableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Translatable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Mohamed Said",
+                    "email": "theMohamedSaid@gmail.com",
+                    "role": "Original idea"
+                }
+            ],
+            "description": "A trait to make an Eloquent model hold translations",
+            "homepage": "https://github.com/spatie/laravel-translatable",
+            "keywords": [
+                "eloquent",
+                "i8n",
+                "laravel-translatable",
+                "model",
+                "multilingual",
+                "spatie",
+                "translate"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-translatable/issues",
+                "source": "https://github.com/spatie/laravel-translatable/tree/5.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-10-04T14:59:49+00:00"
         },
         {
             "name": "spatie/laravel-validation-rules",
@@ -12092,6 +12653,54 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.2.7"
             },
             "time": "2023-12-08T13:03:43+00:00"
+        },
+        {
+            "name": "vanderlee/php-sentence",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vanderlee/php-sentence.git",
+                "reference": "ed7ce41ef815bd21e61f62b692418740f988451f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vanderlee/php-sentence/zipball/ed7ce41ef815bd21e61f62b692418740f988451f",
+                "reference": "ed7ce41ef815bd21e61f62b692418740f988451f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^3.6.12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Vanderlee\\Sentence\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple text sentence splitting and counting. Supports atleast english, german and dutch, possibly more.",
+            "homepage": "https://github.com/vanderlee/php-sentence.git",
+            "keywords": [
+                "boundary",
+                "count",
+                "disambiguation",
+                "segmentation",
+                "sentence",
+                "split"
+            ],
+            "support": {
+                "issues": "https://github.com/vanderlee/php-sentence/issues",
+                "source": "https://github.com/vanderlee/php-sentence"
+            },
+            "time": "2022-03-24T16:25:31+00:00"
         },
         {
             "name": "venturecraft/revisionable",
@@ -16558,10 +17167,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "sierratecnologia/templeiro": 20,
-        "sierratecnologia/pedreiro": 20,
-        "sierratecnologia/crypto": 20,
-        "sierratecnologia/muleta": 20,
         "jlapp/swaggervel": 20
     },
     "prefer-stable": true,
