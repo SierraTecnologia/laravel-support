@@ -14,8 +14,7 @@ class CreateDataRelationsTable extends Migration
     public function up()
     {
         // Create table for storing roles
-        Schema::create(
-            'data_relations', function (Blueprint $table) {
+        Schema::hasTable('data_relations') || Schema::create('data_relations', function (Blueprint $table) {
                 $table->string('code')->primary()->unique();
 
 

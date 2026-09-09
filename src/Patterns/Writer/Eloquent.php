@@ -21,7 +21,6 @@ use Artisan;
 use Pedreiro\Elements\DataTypes\Varchar;
 use Support\Entities\EloquentColumn;
 use Support\Patterns\Parser\ParseModelClass;
-use Symfony\Component\Inflector\Inflector;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\DBALException;

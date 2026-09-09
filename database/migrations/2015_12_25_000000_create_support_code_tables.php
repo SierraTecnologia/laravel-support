@@ -13,21 +13,20 @@ class CreateSupportCodeTables extends Migration
     public function up()
     {
         // // Create table for storing roles
-        // Schema::create('support_code_namespace', function (Blueprint $table) {
+        // Schema::hasTable('support_code_namespace') || Schema::create('support_code_namespace', function (Blueprint $table) {
         //     $table->increments('id');
         //     $table->string('name')->unique();
         //     $table->timestamps();
         // });
         // // Create table for storing roles
-        // Schema::create('support_code_classe_types', function (Blueprint $table) {
+        // Schema::hasTable('support_code_classe_types') || Schema::create('support_code_classe_types', function (Blueprint $table) {
         //     $table->increments('id');
         //     $table->string('name')->unique();
         //     $table->timestamps();
         // });
 
         // Create table for storing roles
-        Schema::create(
-            'support_code_classers', function (Blueprint $table) {
+        Schema::hasTable('support_code_classers') || Schema::create('support_code_classers', function (Blueprint $table) {
                 $table->string('class_name')->primary()->unique();
                 $table->string('filename')->unique();
                 $table->string('parent_class')->nullable();
@@ -36,8 +35,7 @@ class CreateSupportCodeTables extends Migration
             }
         );
         // Create table for storing roles
-        Schema::create(
-            'support_code_entities', function (Blueprint $table) {
+        Schema::hasTable('support_code_entities') || Schema::create('support_code_entities', function (Blueprint $table) {
                 $table->string('code')->primary()->unique();
                 $table->string('type')->nullable();
                 $table->string('parameter')->nullable();
@@ -49,8 +47,7 @@ class CreateSupportCodeTables extends Migration
             }
         );
         // Create table for storing roles
-        Schema::create(
-            'support_code_errors', function (Blueprint $table) {
+        Schema::hasTable('support_code_errors') || Schema::create('support_code_errors', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->nullable();
 
