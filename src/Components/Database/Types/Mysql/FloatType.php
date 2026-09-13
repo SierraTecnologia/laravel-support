@@ -9,7 +9,7 @@ class FloatType extends Type
 {
     const NAME = 'float';
 
-    public function getSQLDeclaration(array $field, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $field, AbstractPlatform $platform): string
     {
         return 'float';
     }

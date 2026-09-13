@@ -20,12 +20,14 @@ class AdminMiddleware
         if (config('app.debug')) {
             return $next($request); //@todo
         }
-        auth()->setDefaultDriver(app('FacilitadorGuard'));
-        // dd(config('auth.guards'), auth());
 
-        // dd(Auth::user());
-        if (!Auth::guest()) {
-            $user = Auth::user();
+        // Keep the guard selected by Laravel's application configuration. The
+        // old FacilitadorGuard override could replace the restored web
+        // session after the `auth` middleware had already authenticated it.
+        $guard = config('auth.defaults.guard', 'web');
+
+        if (! Auth::guard($guard)->guest()) {
+            $user = Auth::guard($guard)->user();
             app()->setLocale($user->locale ?? app()->getLocale());
             return  $next($request); //@todo
             return $user->hasPermission('browse_admin') ? $next($request) : redirect('/');

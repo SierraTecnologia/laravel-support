@@ -13,14 +13,24 @@ class AddFieldsToDataTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table(
-            'data_types', function (Blueprint $table) {
-                $table->string('table_name')->nullable()->after('model_name');
-                $table->string('key_name')->nullable()->after('table_name');
-                $table->string('key_type')->nullable()->after('key_name');
-                $table->string('foreign_key')->nullable()->after('key_type');
-            }
-        );
+        if (Schema::hasTable('data_types')) {
+            Schema::table(
+                'data_types', function (Blueprint $table) {
+                    if (! Schema::hasColumn('data_types', 'table_name')) {
+                        $table->string('table_name')->nullable()->after('model_name');
+                    }
+                    if (! Schema::hasColumn('data_types', 'key_name')) {
+                        $table->string('key_name')->nullable()->after('table_name');
+                    }
+                    if (! Schema::hasColumn('data_types', 'key_type')) {
+                        $table->string('key_type')->nullable()->after('key_name');
+                    }
+                    if (! Schema::hasColumn('data_types', 'foreign_key')) {
+                        $table->string('foreign_key')->nullable()->after('key_type');
+                    }
+                }
+            );
+        }
     }
 
     /**
@@ -30,13 +40,16 @@ class AddFieldsToDataTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table(
-            'data_types', function (Blueprint $table) {
-                $table->dropColumn('foreign_key');
-                $table->dropColumn('key_type');
-                $table->dropColumn('key_name');
-                $table->dropColumn('table_name');
-            }
-        );
+        if (Schema::hasTable('data_types')) {
+            Schema::table(
+                'data_types', function (Blueprint $table) {
+                    foreach (['foreign_key', 'key_type', 'key_name', 'table_name'] as $column) {
+                        if (Schema::hasColumn('data_types', $column)) {
+                            $table->dropColumn($column);
+                        }
+                    }
+                }
+            );
+        }
     }
 }

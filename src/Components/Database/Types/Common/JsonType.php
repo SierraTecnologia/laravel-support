@@ -9,7 +9,7 @@ class JsonType extends Type
 {
     const NAME = 'json';
 
-    public function getSQLDeclaration(array $field, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $field, AbstractPlatform $platform): string
     {
         return 'json';
     }

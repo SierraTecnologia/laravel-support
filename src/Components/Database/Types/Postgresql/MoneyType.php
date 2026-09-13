@@ -9,7 +9,7 @@ class MoneyType extends Type
 {
     const NAME = 'money';
 
-    public function getSQLDeclaration(array $field, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $field, AbstractPlatform $platform): string
     {
         return 'money';
     }

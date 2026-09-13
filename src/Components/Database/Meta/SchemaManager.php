@@ -11,9 +11,11 @@ use ArrayIterator;
 use RuntimeException;
 use IteratorAggregate;
 use Illuminate\Database\MySqlConnection;
+use Illuminate\Database\PostgresConnection;
 use Illuminate\Database\SQLiteConnection;
 use Illuminate\Database\ConnectionInterface;
 use Support\Components\Database\Meta\MySql\Schema as MySqlSchema;
+use Support\Components\Database\Meta\Postgresql\Schema as PostgresqlSchema;
 use Support\Components\Database\Meta\Sqlite\Schema as SqliteSchema;
 
 class SchemaManager implements IteratorAggregate
@@ -23,6 +25,7 @@ class SchemaManager implements IteratorAggregate
      */
     protected static $lookup = [
         MySqlConnection::class => MySqlSchema::class,
+        PostgresConnection::class => PostgresqlSchema::class,
         SQLiteConnection::class => SqliteSchema::class,
         \Larapack\DoctrineSupport\Connections\MySqlConnection::class => MySqlSchema::class,
     ];

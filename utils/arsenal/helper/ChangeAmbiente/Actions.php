@@ -9,11 +9,6 @@ class Actions
 {
     public static $description = 'São ações executadas por agentes externos';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Quem pode ser agent (causador) dessa ação
      *

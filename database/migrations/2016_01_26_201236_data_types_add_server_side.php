@@ -13,11 +13,13 @@ class DataTypesAddServerSide extends Migration
      */
     public function up()
     {
-        Schema::table(
-            'data_types', function (Blueprint $table) {
-                $table->tinyInteger('server_side')->default(0)->after('generate_permissions');
-            }
-        );
+        if (Schema::hasTable('data_types') && ! Schema::hasColumn('data_types', 'server_side')) {
+            Schema::table(
+                'data_types', function (Blueprint $table) {
+                    $table->tinyInteger('server_side')->default(0)->after('generate_permissions');
+                }
+            );
+        }
     }
 
     /**
@@ -27,10 +29,12 @@ class DataTypesAddServerSide extends Migration
      */
     public function down()
     {
-        Schema::table(
-            'data_types', function (Blueprint $table) {
-                $table->dropColumn('server_side');
-            }
-        );
+        if (Schema::hasTable('data_types') && Schema::hasColumn('data_types', 'server_side')) {
+            Schema::table(
+                'data_types', function (Blueprint $table) {
+                    $table->dropColumn('server_side');
+                }
+            );
+        }
     }
 }

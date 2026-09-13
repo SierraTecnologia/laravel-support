@@ -4,6 +4,7 @@ namespace Support\Components\Database\Schema;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\Schema\Table as DoctrineTable;
+use Doctrine\DBAL\DriverManager;
 use Illuminate\Support\Facades\DB;
 use Support\Components\Database\Types\Type;
 
@@ -18,12 +19,54 @@ abstract class SchemaManager
 
     public static function manager()
     {
-        return DB::connection()->getDoctrineSchemaManager();
+        $connection = static::getDatabaseConnection();
+
+        if (method_exists($connection, 'createSchemaManager')) {
+            return $connection->createSchemaManager();
+        }
+
+        return $connection->getSchemaManager();
     }
 
     public static function getDatabaseConnection()
     {
-        return DB::connection()->getDoctrineConnection();
+        $connection = DB::connection();
+
+        if (method_exists($connection, 'getDoctrineConnection')) {
+            return $connection->getDoctrineConnection();
+        }
+
+        $config = $connection->getConfig();
+        $driver = match ($config['driver'] ?? null) {
+            'mysql' => 'pdo_mysql',
+            'pgsql' => 'pdo_pgsql',
+            'sqlsrv' => 'pdo_sqlsrv',
+            'sqlite' => 'pdo_sqlite',
+            default => throw new \RuntimeException('Driver de banco não suportado pelo adaptador DBAL.'),
+        };
+
+        $parameters = [
+            'driver' => $driver,
+            'user' => $config['username'] ?? null,
+            'password' => $config['password'] ?? null,
+            'host' => $config['host'] ?? null,
+            'port' => $config['port'] ?? null,
+            'dbname' => $config['database'] ?? null,
+        ];
+
+        if ($driver === 'pdo_sqlite') {
+            $parameters = [
+                'driver' => $driver,
+                'path' => $config['database'] ?? ':memory:',
+            ];
+        }
+
+        return DriverManager::getConnection($parameters);
+    }
+
+    public static function getDatabasePlatform()
+    {
+        return static::getDatabaseConnection()->getDatabasePlatform();
     }
 
     public static function tableExists($table)

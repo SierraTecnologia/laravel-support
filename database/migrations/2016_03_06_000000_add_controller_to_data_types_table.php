@@ -13,11 +13,13 @@ class AddControllerToDataTypesTable extends Migration
      */
     public function up()
     {
-        Schema::table(
-            'data_types', function (Blueprint $table) {
-                $table->string('controller')->nullable()->after('model_name');
-            }
-        );
+        if (Schema::hasTable('data_types') && ! Schema::hasColumn('data_types', 'controller')) {
+            Schema::table(
+                'data_types', function (Blueprint $table) {
+                    $table->string('controller')->nullable()->after('model_name');
+                }
+            );
+        }
     }
 
     /**
@@ -27,10 +29,12 @@ class AddControllerToDataTypesTable extends Migration
      */
     public function down()
     {
-        Schema::table(
-            'data_types', function (Blueprint $table) {
-                $table->dropColumn('controller');
-            }
-        );
+        if (Schema::hasTable('data_types') && Schema::hasColumn('data_types', 'controller')) {
+            Schema::table(
+                'data_types', function (Blueprint $table) {
+                    $table->dropColumn('controller');
+                }
+            );
+        }
     }
 }

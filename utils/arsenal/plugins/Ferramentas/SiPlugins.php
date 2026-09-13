@@ -6,9 +6,7 @@ class SiPlugins
 {
     public function __construct()
     {
-
-
-        parent::__construct();
+        // This legacy helper is a standalone class; it has no parent class.
     }
     
 }

@@ -24,7 +24,7 @@ abstract class Type extends DoctrineType
 
     // Note: length, precision and scale need default values manually
 
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }
@@ -53,7 +53,7 @@ abstract class Type extends DoctrineType
         $platform = SchemaManager::getDatabasePlatform();
 
         static::$platformTypes = Platform::getPlatformTypes(
-            $platform->getName(),
+            static::getPlatformName($platform),
             static::getPlatformTypeMapping($platform)
         );
 
@@ -86,7 +86,7 @@ abstract class Type extends DoctrineType
         }
 
         $platform = SchemaManager::getDatabasePlatform();
-        $platformName = ucfirst($platform->getName());
+        $platformName = ucfirst(static::getPlatformName($platform));
 
         $customTypes = array_merge(
             static::getPlatformCustomTypes('Common'),
@@ -110,6 +110,26 @@ abstract class Type extends DoctrineType
         static::addCustomTypeOptions($platformName);
 
         static::$customTypesRegistered = true;
+    }
+
+    /**
+     * Return the stable platform key used by the package's adapters.
+     *
+     * Doctrine DBAL 4 removed AbstractPlatform::getName(), while the
+     * application still needs the driver key to load its custom types.
+     */
+    public static function getPlatformName(DoctrineAbstractPlatform $platform): string
+    {
+        $className = basename(str_replace('\\', '/', get_class($platform)));
+        $platformName = preg_replace('/Platform$/', '', $className);
+
+        return match (strtolower($platformName)) {
+            'mysql' => 'mysql',
+            'postgresql' => 'postgresql',
+            'sqlite' => 'sqlite',
+            'sqlserver' => 'sqlsrv',
+            default => strtolower($platformName),
+        };
     }
 
     protected static function addCustomTypeOptions($platformName)

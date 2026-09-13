@@ -36,7 +36,7 @@
 
                                     Route::get('/order', 'RepositoryController@order')->name('order');
                                     Route::post('/action', 'RepositoryController@action')->name('action');
-                                    Route::post('/order', 'RepositoryController@update_order')->name('order');
+                                    Route::post('/order', 'RepositoryController@update_order')->name('order.update');
                                     Route::get('/relation', 'RepositoryController@relation')->name('relation');
 
                                     Route::get('/', 'RepositoryController@index')->name('index');
@@ -51,7 +51,7 @@
                                             Route::prefix('{identify}')->group(
                                                 function () {
                                                     Route::get('/', 'RegisterController@index')->name('show');
-                                                    Route::get('/show', 'RegisterController@index')->name('show');
+                                                    Route::get('/show', 'RegisterController@index')->name('show.detail');
                                                     Route::get('/edit', 'RegisterController@edit')->name('edit');
                                                     Route::put('/', 'RegisterController@update')->name('update');
                                                     Route::delete('/', 'RegisterController@destroy')->name('destroy');

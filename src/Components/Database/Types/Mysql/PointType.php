@@ -9,7 +9,7 @@ class PointType extends Type
 {
     const NAME = 'point';
 
-    public function getSQLDeclaration(array $field, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $field, AbstractPlatform $platform): string
     {
         return 'point';
     }

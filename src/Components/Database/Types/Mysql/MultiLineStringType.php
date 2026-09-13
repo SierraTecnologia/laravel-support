@@ -9,7 +9,7 @@ class MultiLineStringType extends Type
 {
     const NAME = 'multilinestring';
 
-    public function getSQLDeclaration(array $field, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $field, AbstractPlatform $platform): string
     {
         return 'multilinestring';
     }

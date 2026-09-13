@@ -142,7 +142,7 @@ class Router
         ]);
 
         Route::get('logout', [
-            'as' => 'logout',
+            'as' => 'rica.logout',
             'uses' => '\Porteiro\Http\Controllers\Auth\LoginController@logout',
         ]);
 
@@ -195,23 +195,10 @@ class Router
             'prefix' => 'wildcard',
         ], function () {
             // Setup a wildcarded catch all route
-            Route::any('{path}', ['as' => 'facilitador.wildcard', function ($path) {
-
-                // Remember the detected route
-                App::make('events')->listen('wildcard.detection', function ($controller, $action) {
-                    $this->action($controller.'@'.$action);
-                });
-
-                // Do the detection
-                $router = App::make('facilitador.wildcard');
-                $response = $router->detectAndExecute();
-                if (is_a($response, 'Symfony\Component\HttpFoundation\Response')
-                    || is_a($response, 'Illuminate\View\View')) { // Possible when layout is involved
-                    return $response;
-                } else {
-                    App::abort(404);
-                }
-            }])->where('path', '.*');
+            Route::any('{path}', [
+                'as' => 'facilitador.wildcard',
+                'uses' => '\\Support\\Http\\Controllers\\RiCa\\WildcardController@__invoke',
+            ])->where('path', '.*');
         });
     }
 

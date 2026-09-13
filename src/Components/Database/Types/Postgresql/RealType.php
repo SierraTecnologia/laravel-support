@@ -10,7 +10,7 @@ class RealType extends Type
     const NAME = 'real';
     const DBTYPE = 'float4';
 
-    public function getSQLDeclaration(array $field, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $field, AbstractPlatform $platform): string
     {
         return 'real';
     }

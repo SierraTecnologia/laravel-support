@@ -10,7 +10,7 @@ class SmallIntType extends Type
     const NAME = 'smallint';
     const DBTYPE = 'int2';
 
-    public function getSQLDeclaration(array $field, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $field, AbstractPlatform $platform): string
     {
         $commonIntegerTypeDeclaration = call_protected_method($platform, '_getCommonIntegerTypeDeclarationSQL', $field);
 
