@@ -668,7 +668,9 @@ class SupportServiceProvider extends ServiceProvider
     protected function loadLocalExternalPackages()
     {
         if ($this->app->environment('local', 'testing')) {
-            $this->app->register(DuskServiceProvider::class);
+            if (class_exists(DuskServiceProvider::class)) {
+                $this->app->register(DuskServiceProvider::class);
+            }
         }
         if ($this->app->environment('local')) {
             if (class_exists(DebugService::class)) {
