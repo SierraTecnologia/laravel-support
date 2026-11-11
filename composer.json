@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "sierratecnologia/templeiro": "^2.0",
         "sierratecnologia/pedreiro": "^2.0",
         "sierratecnologia/crypto": "^2.0",
@@ -50,8 +50,8 @@
         "doctrine/dbal": "^4.4",
         "league/flysystem": "^3.36",
         "jenssegers/agent": "^2.6",
-        "league/fractal": "^0.20",
-        "guzzlehttp/guzzle": "^7.10",
+        "league/fractal": "^0.21",
+        "guzzlehttp/guzzle": "^8.0",
         "league/pipeline": "^1.1",
         "spatie/laravel-backup": "^10.3",
         "laravel/passport": "^13.8",
@@ -116,5 +116,5 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "2.3.0"
+    "version": "2.4.0"
 }
